@@ -1,0 +1,167 @@
+
+<!-- Internal user-settings component -->
+<!-- npm install -g grunt-cli - must be installed -->
+<!-- More Country and City selector made with angular Cascading-Drop-Down-->
+
+
+<!-- 23/05/2018 David 03:21 -->
+
+<div class="container bg-light">
+  <div class="row justify-content-center">
+      <div class= "col-md-12">          
+        <h2 class="text-center">let us know more about your buisness.</h2>
+        <br>
+      </div>
+  </div>
+
+    <div class="row justify-content-center">
+        <div class= "col-md-8">
+          <form #signupForm = "ngForm">
+                  <!-- Buisness Name Block -->
+                  <div class="form-group">
+                    <label for="inputBuisnessName">Buisness Name</label>
+                    <input type="text"
+                    ngModel
+                      name="inputBuisnessName"
+                      id="inputBuisnessName"
+                      placeholder="Name"
+                      class="form-control"
+                      required>
+                  </div>
+
+                  <!-- Buisness Type Block -->
+                  <div class="form-group">
+                      <label for="inputlastname">Buisness Type</label>
+
+                      <select 
+                              class="form-control"
+                              id="selectType"
+                              ngModel
+                              name = "country"
+                              placeholder="0X">
+                               
+                              <option value="0">
+                                --Select Type-- 
+                              </option>
+                              <option *ngFor="let Buisness of Buisness" >{{Buisness}}
+                      </select>
+
+                        
+                  </div>
+
+                  <!-- Mobile Phone  -->
+                    <div class="form-group ">
+                        <label for="select">mobile</label>
+                        <div class="input-group">
+                          <div class="col-md-4">
+                              <select 
+                              class="form-control"
+                              id="selectPre-Mobile"
+                              ngModel 
+                              name = "pre_mobile">
+                              <option *ngFor = "let pm of pre_mobile"
+                                [value] = "pm"> {{pm}} 
+                              </option>
+                            </select>
+
+                          </div>
+                          <label> - </label>
+                          <div class="col-md-7">
+                            <input type="text"
+                            ngModel 
+                            name="mobile"
+                            class="form-control"
+                            id="mobile" placeholder="number">
+                          </div>
+                        </div>                                                      
+                      </div>
+
+                      <!-- phone info  -->
+                    <div class="form-group ">
+                        <label for="select">Phone</label>
+                        <div class="input-group">
+                          <div class="col-md-4">
+                              <select 
+                              class="form-control"
+                              id="selectPre-Phone"
+                              ngModel
+                              name="pre_phone">
+                               
+                              <option *ngFor = "let pp of pre_phone"
+                                [value] = "pp"> {{pp}} 
+                              </option>
+                            </select>
+
+                          </div>
+                          <label> - </label>
+                          <div class="col-md-7">
+                              <input type="text"
+                            ngModel 
+                            name="phone"
+                            class="form-control"
+                            id="phone" placeholder="number">
+                          </div>
+                        </div>                                                      
+                      </div>
+
+                      <!-- country  -->
+                    <div class="form-group ">
+                        <label for="select">country</label>
+                        <div class="input-group">
+                          
+                              <select 
+                              class="form-control"
+                              id="selectCountry"
+                              [(ngModel)] ="selectedCountry.id" 
+                              (change)= "onSelect($event.target.value)"
+                              name = "country">
+                               
+                              <option value="0">
+                                --Select Country-- 
+                              </option>
+                              <option *ngFor="let country of countries" value={{country.id}}>{{country.name}}
+                            </select>
+                        </div>                                                      
+                      </div>       
+
+                    <!-- city  -->
+                    <div class="form-group ">
+                        <label for="select">city</label>
+                        <div class="input-group">
+                          
+                              <select 
+                              class="form-control"
+                              id="selectCity">
+                               
+                              <option *ngIf='selectedCountry.id == 0' value="0">
+                                --Select City-- 
+                              </option>
+                              <option *ngFor="let city of cities" value = {{city.id}}>{{city.name}}
+                            </select>
+                        </div>                                                      
+                      </div>   
+
+                  <!-- Buisness Address -->
+                  <div class="form-group">
+                    <label for="inputAddress">Buisness Address</label>
+                    <input type="text"
+                    ngModel
+                      name="inputAddress"
+                      id="inputAddress"
+                      placeholder="Address"
+                      class="form-control"
+                      required>
+                  </div>
+                  
+                 <!-- Buttons Block -->
+                  <div class="form-group">
+                      <button type="reset" class="btn btn-outline-default btn-lg">Back</button>
+                      <button type="submit" class="btn btn-outline-success btn-lg" [disabled]="!signupForm.form.valid">Next</button>
+                  </div>
+                  
+          </form>
+          <!-- Check data -->
+          <!-- {{signupForm.value | json }} -->
+        </div>
+      </div>
+</div>

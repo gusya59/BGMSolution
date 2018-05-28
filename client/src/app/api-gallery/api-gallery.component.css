@@ -1,0 +1,66 @@
+/* Making Img Overflow effect */
+.container-fluid{
+    background-color: rgba(190, 190, 190, 0.123);
+    padding: 0px 40px 40px;
+    /* padding-bottom: 120px; */
+}
+.container {
+    position: relative;
+    width: 100%;
+    
+  }
+  
+  .image {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  
+  .overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 120%;
+    opacity: 0;
+    transition: .5s ease;
+    /* background-color: rgb(240, 240, 240); */
+  }
+  
+  .container:hover .overlay {
+    opacity: 1;
+  }
+  
+  .text {
+    color: rgb(2, 1, 1);
+    font-size: 20px;
+    position: absolute;
+    top: 45%;
+    left: 45%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  /* Fixing the hr tag */
+
+hr{
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0; 
+}
+
+/* btn redirect to social */
+.btn-redirect{
+  position: absolute;
+  top: 112%;
+  left: 45%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
