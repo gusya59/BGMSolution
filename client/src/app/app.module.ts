@@ -17,6 +17,7 @@ import { RegistrationComponent } from './sign-up/registration/registration.compo
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { UserSettingsComponent } from './sign-up/user-settings/user-settings.component';
 import {countryService} from './countryService';
+import { FooterComponent } from './misc/footer/footer.component';
 
 
 
@@ -34,7 +35,8 @@ import {countryService} from './countryService';
     LoginUserComponent,
     RegistrationComponent,
     SignUpComponent,
-    UserSettingsComponent
+    UserSettingsComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
