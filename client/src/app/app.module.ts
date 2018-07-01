@@ -20,6 +20,8 @@ import {countryService} from './countryService';
 import { FooterComponent } from './misc/footer/footer.component';
 import { RecoveryComponent } from './login/recovery/recovery.component';
 import { WrongEPComponent } from './misc/wrong-e-p/wrong-e-p.component';
+import { WrongDataComponent } from './misc/wrong-data/wrong-data.component';
+import { InputErrorComponent } from './misc/input-error/input-error.component';
 
 
 
@@ -40,7 +42,9 @@ import { WrongEPComponent } from './misc/wrong-e-p/wrong-e-p.component';
     UserSettingsComponent,
     FooterComponent,
     RecoveryComponent,
-    WrongEPComponent
+    WrongEPComponent,
+    WrongDataComponent,
+    InputErrorComponent
   ],
   imports: [
     BrowserModule,
