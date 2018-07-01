@@ -22,6 +22,9 @@ import { RecoveryComponent } from './login/recovery/recovery.component';
 import { WrongEPComponent } from './misc/wrong-e-p/wrong-e-p.component';
 import { WrongDataComponent } from './misc/wrong-data/wrong-data.component';
 import { InputErrorComponent } from './misc/input-error/input-error.component';
+import { FinishComponent } from './sign-up/finish/finish.component';
+
+
 
 
 
@@ -44,7 +47,8 @@ import { InputErrorComponent } from './misc/input-error/input-error.component';
     RecoveryComponent,
     WrongEPComponent,
     WrongDataComponent,
-    InputErrorComponent
+    InputErrorComponent,
+    FinishComponent
   ],
   imports: [
     BrowserModule,
