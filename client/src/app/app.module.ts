@@ -18,6 +18,8 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { UserSettingsComponent } from './sign-up/user-settings/user-settings.component';
 import {countryService} from './countryService';
 import { FooterComponent } from './misc/footer/footer.component';
+import { RecoveryComponent } from './login/recovery/recovery.component';
+import { WrongEPComponent } from './misc/wrong-e-p/wrong-e-p.component';
 
 
 
@@ -36,7 +38,9 @@ import { FooterComponent } from './misc/footer/footer.component';
     RegistrationComponent,
     SignUpComponent,
     UserSettingsComponent,
-    FooterComponent
+    FooterComponent,
+    RecoveryComponent,
+    WrongEPComponent
   ],
   imports: [
     BrowserModule,
