@@ -10,98 +10,11 @@
         <app-menu-bar></app-menu-bar>
     </div>
   </div>
-  <div class="row">
-    <div class="col-lg-12">
-          <app-navigation-guest></app-navigation-guest>
-    </div>
-  </div>
-</div>
 
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-lg-12">
-      <app-api-gallery></app-api-gallery>
-    </div>
-  </div>
-</div>
-
-<!-- Start Login -->
-
-<div class="container-fluid bg-info">
-    <div class="row">
-      <div class="col-lg-12">
-        <app-login></app-login>
-      </div>
-    </div>
-  </div>
-
-  <div class="container-fluid bg-info">
-      <div class="row">
-        <div class="col-lg-12">
-          <app-login-user></app-login-user>
-        </div>
-      </div>
-    </div>
-
-    <div class="container-fluid bg-info">
-      <div class="row">
-        <div class="col-lg-12">
-          <app-wrong-e-p></app-wrong-e-p>
-        </div>
-      </div>
-    </div>
+  <!-- Page -->
+  <router-outlet></router-outlet>
   
-    <div class="container-fluid bg-info">
-      <div class="row">
-        <div class="col-lg-12 ">
-          <app-recovery></app-recovery>
-        </div>
-      </div>
-    </div>
-
-<!-- End Login -->
-<!-- Registration -->
-    <div class="container-fluid bg-info">
-        <div class="row">
-          <div class="col-lg-12 ">
-            <app-sign-up></app-sign-up>
-          </div>
-        </div>
-      </div>
-
-      <div class="container-fluid bg-info">
-          <div class="row">
-            <div class="col-lg-12 ">
-              <app-wrong-data></app-wrong-data>
-            </div>
-          </div>
-        </div>   
-
-        <div class="container-fluid bg-info">
-            <div class="row">
-              <div class="col-lg-12 ">
-                <app-input-error></app-input-error>
-              </div>
-            </div>
-        </div>   
-
-        <div class="container-fluid bg-info">
-            <div class="row">
-              <div class="col-lg-12 ">
-                <app-finish></app-finish>
-              </div>
-            </div>
-        </div>   
-        
-        <!-- <div class="container-fluid bg-info">
-            <div class="row">
-              <div class="col-lg-12 ">
-                <app-project-filler></app-project-filler>
-              </div>
-            </div>
-        </div>    -->
-
-    <!-- End Registration -->
+</div>
     
     <footer>
       <app-footer></app-footer>

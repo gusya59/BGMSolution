@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule }          from '@angular/forms';
 import { NgModule }                     from '@angular/core';
 import { BrowserModule }                from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -11,7 +13,7 @@ import { BrowserModule }                from '@angular/platform-browser';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  constructor(private route: ActivatedRoute, private http: HttpClient) { }
 
   ngOnInit() {
   }

@@ -23,14 +23,44 @@ import { WrongEPComponent } from './misc/wrong-e-p/wrong-e-p.component';
 import { WrongDataComponent } from './misc/wrong-data/wrong-data.component';
 import { InputErrorComponent } from './misc/input-error/input-error.component';
 import { FinishComponent } from './sign-up/finish/finish.component';
-import { TestComponent } from './test/test.component';
 import { GuestComponent } from './guest/guest.component';
+//router
+import { RouterModule, Routes } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
 
-
-
-
-
-
+const appRoutes: Routes = [
+  {
+    
+    path: '',
+    component: GuestComponent,
+    data: { title: 'Guest' }
+  },
+  {
+  path: 'login',
+  component: LoginComponent,
+  data: { title: 'login' }
+  },
+  {
+    path: 'loginUser',
+    component: LoginUserComponent,
+    data: { title: 'loginUser' }
+  },
+  {
+    path: 'signup',
+    component: SignUpComponent,
+    data: { title: 'signup' },
+    children: [ 
+      {path: '', component: RegistrationComponent},
+      {path: 'userSettings', component: UserSettingsComponent}, 
+      {path: 'userSettings/finish', component: FinishComponent},
+    ]
+  },
+  { path: '',
+    redirectTo: '/Guest',
+    pathMatch: 'full'
+  }
+];
 
 @NgModule({
   declarations: [
@@ -51,12 +81,17 @@ import { GuestComponent } from './guest/guest.component';
     WrongDataComponent,
     InputErrorComponent,
     FinishComponent,
-    TestComponent,
     GuestComponent
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule,
+    HttpModule,
+    RouterModule.forRoot(
+      appRoutes,
+      { enableTracing: true } // <-- debugging purposes only
+    )
   ],
   providers: [countryService],
   bootstrap: [AppComponent]

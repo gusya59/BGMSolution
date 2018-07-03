@@ -156,7 +156,7 @@
                  <!-- Buttons Block -->
                   <div class="form-group">
                       <button type="reset" class="btn btn-outline-default btn-lg">Back</button>
-                      <button type="submit" class="btn btn-outline-success btn-lg" [disabled]="!signupForm.form.valid">Next</button>
+                      <button type="submit" class="btn btn-outline-success btn-lg" routerLink="finish" routerLinkActive="active" [disabled]="!signupForm.form.valid">Next</button>
                   </div>
                   
           </form>

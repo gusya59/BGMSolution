@@ -8,8 +8,10 @@
           <label for="email">Email:</label>
           <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" >
           <br>
-          <button (click)="goPassword()" class="btn btn-outline-primary btn-lg">Continue</button>
-          <button (click)="newUser()" class="btn btn-outline-warning btn-lg">New User</button>
+          <!-- <button (click)="goPassword()" class="btn btn-outline-primary btn-lg">Continue</button>
+          <button (click)="newUser()" class="btn btn-outline-warning btn-lg">New User</button> -->
+          <button routerLink="/loginUser" routerLinkActive="active" class="btn btn-outline-primary btn-lg">Continue</button>
+          <button routerLink="/signup" routerLinkActive="active" class="btn btn-outline-warning btn-lg">New User</button>
       </form>
     </div>
   </div>
