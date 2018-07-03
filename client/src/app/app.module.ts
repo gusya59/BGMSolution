@@ -23,6 +23,8 @@ import { WrongEPComponent } from './misc/wrong-e-p/wrong-e-p.component';
 import { WrongDataComponent } from './misc/wrong-data/wrong-data.component';
 import { InputErrorComponent } from './misc/input-error/input-error.component';
 import { FinishComponent } from './sign-up/finish/finish.component';
+import { TestComponent } from './test/test.component';
+import { GuestComponent } from './guest/guest.component';
 
 
 
@@ -48,7 +50,9 @@ import { FinishComponent } from './sign-up/finish/finish.component';
     WrongEPComponent,
     WrongDataComponent,
     InputErrorComponent,
-    FinishComponent
+    FinishComponent,
+    TestComponent,
+    GuestComponent
   ],
   imports: [
     BrowserModule,
