@@ -5,6 +5,12 @@ import { company } from './../../company';
 import {countryService} from './../../countryService';
 import {country} from './../../country';
 import {city} from './../../city';
+//routing from location
+import { Location } from '@angular/common'; 
+
+
+
+
 
 
 @Component({
@@ -28,7 +34,7 @@ export class UserSettingsComponent implements OnInit {
       countries: country[];
       cities: city[];
 
-  constructor(private _countryService: countryService) {
+  constructor(private _countryService: countryService, private location: Location) {
     this.countries = this._countryService.getCountries();
     }
     onSelect(countryid) {
@@ -53,4 +59,8 @@ export class UserSettingsComponent implements OnInit {
     })
   }
 
+    //router back button
+    back() {
+      this.location.back();
+  }
 }
