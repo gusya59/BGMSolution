@@ -28,6 +28,8 @@ import { GuestComponent } from './guest/guest.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
+//MDB bootstrap
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 const appRoutes: Routes = [
   {
@@ -88,6 +90,7 @@ const appRoutes: Routes = [
     FormsModule,
     HttpClientModule,
     HttpModule,
+    MDBBootstrapModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only

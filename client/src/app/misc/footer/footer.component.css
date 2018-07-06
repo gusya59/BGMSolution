@@ -75,7 +75,7 @@
 	line-height: 42px;
 	margin: 10px 15px;
     vertical-align: middle;
-    background: #1eccd8;
+
 }
 
 .footer-set .footer-center i.fa-envelope{
@@ -134,7 +134,7 @@
 	width: 35px;
 	height: 35px;
 	cursor: pointer;
-	background-color:  #1eccd8;
+	background-color:  #8c9eff;
 	border-radius: 2px;
 
 	font-size: 20px;

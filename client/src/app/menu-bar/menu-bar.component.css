@@ -1,3 +1,8 @@
+  /* Placement of the bar */
+  .navbar{
+    margin-top: 3em;
+    padding-top: 2em;
+  }
   /* change the brand and text color */
   .navbar-brand {
     color: rgb(253, 253, 253);
