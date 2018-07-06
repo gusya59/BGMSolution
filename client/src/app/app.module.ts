@@ -31,6 +31,7 @@ import { HttpModule } from '@angular/http';
 //MDB bootstrap
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { AboutUsComponent } from './misc/about-us/about-us.component';
+import { VideoComponent } from './misc/video/video.component';
 
 const appRoutes: Routes = [
   {
@@ -91,7 +92,8 @@ const appRoutes: Routes = [
     InputErrorComponent,
     FinishComponent,
     GuestComponent,
-    AboutUsComponent
+    AboutUsComponent,
+    VideoComponent
   ],
   imports: [
     BrowserModule,
