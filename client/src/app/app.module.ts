@@ -30,6 +30,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 //MDB bootstrap
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { AboutUsComponent } from './misc/about-us/about-us.component';
 
 const appRoutes: Routes = [
   {
@@ -58,10 +59,16 @@ const appRoutes: Routes = [
       {path: 'userSettings/finish', component: FinishComponent},
     ]
   },
+  {
+    path: 'aboutUs',
+    component: AboutUsComponent,
+    data: { title: 'aboutUs' }
+  },
   { path: '',
     redirectTo: '/Guest',
     pathMatch: 'full'
   }
+
 ];
 
 @NgModule({
@@ -83,7 +90,8 @@ const appRoutes: Routes = [
     WrongDataComponent,
     InputErrorComponent,
     FinishComponent,
-    GuestComponent
+    GuestComponent,
+    AboutUsComponent
   ],
   imports: [
     BrowserModule,
