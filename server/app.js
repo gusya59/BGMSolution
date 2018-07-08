@@ -5,10 +5,10 @@ var path = require('path');
 var logger = require('morgan');
 var favicon = require('serve-favicon');
 var bodyParser = require('body-parser');
-//var mongoose = require('mongoose');
+var mongoose = require('mongoose');
 
 
-var app = express.Router();
+var app = express();
 
 
 //routes
@@ -22,6 +22,11 @@ var indexRouter = require('./routes/index');
 //   if(err) throw err;
 //   console.log("connected to data base");
 // }); 
+mongoose.Promise = require('bluebird');
+mongoose.connect('mongodb://localhost/mean-angular6', {promiseLibrary: require('bluebird') })
+  .then(() =>  console.log('connection succesful'))
+  .catch((err) => console.error(err));
+
 
 app.use(logger('dev'));
 app.use(express.json());
