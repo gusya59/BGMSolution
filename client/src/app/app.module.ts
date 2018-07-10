@@ -29,6 +29,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 
+//configuration objects
 const appRoutes: Routes = [
   {
     
