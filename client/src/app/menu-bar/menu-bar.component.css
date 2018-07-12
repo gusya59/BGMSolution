@@ -7,7 +7,7 @@
   .navbar-brand {
     color: rgb(253, 253, 253);
     font-size: 35px;
-    font: normal 36px 'Cookie', cursive;
+    font: normal 36px, Helvetica;
   }
 /* Prevent hover on navbar Brand name*/
 .navbar-inverse .navbar-brand:hover, 
