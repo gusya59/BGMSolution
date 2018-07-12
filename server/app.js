@@ -5,9 +5,9 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 
-var indexR = require('./routes/book');
+
 //routes
-//var indexRouter = require('./routes/index');
+var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 //var apiRouter = require ('./routes/api')
 var app = express();
@@ -15,10 +15,10 @@ var app = express();
 app.set('views', __dirname + '/views'); // general config
 app.set('view engine', 'pug');
 
-
+//connect to the DB
 var mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
-mongoose.connect('mongodb://localhost/myTest', {promiseLibrary: require('bluebird') })
+mongoose.connect('mongodb+srv://BGM:BgM123456@bgmsoultion-znmku.mongodb.net/test?retryWrites=true', {promiseLibrary: require('bluebird') })
   .then(() =>  console.log('connection succesful'))
   .catch((err) => console.error(err));
 
@@ -47,8 +47,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use('/', indexR);
-//app.use('/', indexRouter);
+app.use('/', indexRouter);
 app.use('/signup', usersRouter);
 //app.use('./api', apiRouter);
 
