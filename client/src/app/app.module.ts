@@ -32,6 +32,8 @@ import { HttpModule } from '@angular/http';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { AboutUsComponent } from './misc/about-us/about-us.component';
 import { VideoComponent } from './misc/video/video.component';
+import { UserComponent } from './user/user.component';
+import { PreviewComponent } from './user/preview/preview.component';
 
 const appRoutes: Routes = [
   {
@@ -49,6 +51,11 @@ const appRoutes: Routes = [
     path: 'loginUser',
     component: LoginUserComponent,
     data: { title: 'loginUser' }
+  },
+  {
+    path: 'user',
+    component: UserComponent,
+    data: { title: 'user' }
   },
   {
     path: 'signup',
@@ -93,7 +100,9 @@ const appRoutes: Routes = [
     FinishComponent,
     GuestComponent,
     AboutUsComponent,
-    VideoComponent
+    VideoComponent,
+    UserComponent,
+    PreviewComponent
   ],
   imports: [
     BrowserModule,
