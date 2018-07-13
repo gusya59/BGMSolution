@@ -34,6 +34,7 @@ import { AboutUsComponent } from './misc/about-us/about-us.component';
 import { VideoComponent } from './misc/video/video.component';
 import { UserComponent } from './user/user.component';
 import { PreviewComponent } from './user/preview/preview.component';
+import { OurServiceComponent } from './misc/our-service/our-service.component';
 
 const appRoutes: Routes = [
   {
@@ -102,7 +103,8 @@ const appRoutes: Routes = [
     AboutUsComponent,
     VideoComponent,
     UserComponent,
-    PreviewComponent
+    PreviewComponent,
+    OurServiceComponent
   ],
   imports: [
     BrowserModule,
