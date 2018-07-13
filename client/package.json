@@ -25,6 +25,7 @@
     "@angular/router": "^6.0.7",
     "@ng-bootstrap/ng-bootstrap": "^2.2.0",
     "angular-bootstrap-md": "^6.1.5",
+    "angular-font-awesome": "^3.1.2",
     "angular-popper": "^2.0.0",
     "angular5-csv": "^0.2.10",
     "bootstrap": "^4.1.0",

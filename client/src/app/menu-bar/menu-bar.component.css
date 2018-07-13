@@ -1,8 +1,13 @@
+  /* Placement of the bar */
+  .navbar{
+    margin-top: 3em;
+    padding-top: 2em;
+  }
   /* change the brand and text color */
   .navbar-brand {
     color: rgb(253, 253, 253);
     font-size: 35px;
-    font: normal 36px 'Cookie', cursive;
+    font: normal 36px, Helvetica;
   }
 /* Prevent hover on navbar Brand name*/
 .navbar-inverse .navbar-brand:hover, 

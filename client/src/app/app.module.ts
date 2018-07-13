@@ -28,6 +28,13 @@ import { GuestComponent } from './guest/guest.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
+//MDB bootstrap
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { AboutUsComponent } from './misc/about-us/about-us.component';
+import { VideoComponent } from './misc/video/video.component';
+import { UserComponent } from './user/user.component';
+import { PreviewComponent } from './user/preview/preview.component';
+import { OurServiceComponent } from './misc/our-service/our-service.component';
 
 //configuration objects
 const appRoutes: Routes = [
@@ -48,6 +55,11 @@ const appRoutes: Routes = [
     data: { title: 'loginUser' }
   },
   {
+    path: 'user',
+    component: UserComponent,
+    data: { title: 'user' }
+  },
+  {
     path: 'signup',
     component: SignUpComponent,
     data: { title: 'signup' },
@@ -57,10 +69,16 @@ const appRoutes: Routes = [
       {path: 'userSettings/finish', component: FinishComponent},
     ]
   },
+  {
+    path: 'aboutUs',
+    component: AboutUsComponent,
+    data: { title: 'aboutUs' }
+  },
   { path: '',
     redirectTo: '/Guest',
     pathMatch: 'full'
   }
+
 ];
 
 @NgModule({
@@ -82,13 +100,19 @@ const appRoutes: Routes = [
     WrongDataComponent,
     InputErrorComponent,
     FinishComponent,
-    GuestComponent
+    GuestComponent,
+    AboutUsComponent,
+    VideoComponent,
+    UserComponent,
+    PreviewComponent,
+    OurServiceComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
     HttpModule,
+    MDBBootstrapModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only

@@ -1,16 +1,22 @@
+<mdb-navbar SideClass="navbar nav-tabs fixed-top navbar-expand-lg navbar-dark indigo accent-3 scrolling-navbar intro-fixed-nav" [containerInside]="false">
 <!-- Lower Navigation bar will provide interchangeable content -->
-<ul class="nav nav-tabs nav-justified">
+<links>
+  <ul class="navbar-nav mr-auto">
     <li class="nav-item">
-      <a class="nav-link" routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Welcome</a>
+      <a class="nav-link waves-light" mdbWavesEffect routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Welcome</a>
+    </li>
+    <li class="nav-item"> 
+      <a class="nav-link  waves-light" mdbWavesEffect routerLink="/aboutUs" routerLinkActive="active">About us</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">About us</a>
+      <a class="nav-link  waves-light" mdbWavesEffect routerLink="/signup" routerLinkActive="active">Registration</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" routerLink="/signup" routerLinkActive="active">Registration</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link disabled" href="#">Disabled</a>
-    </li>
+      <a class="nav-link  waves-light" mdbWavesEffect href="/user">user - test</a>
+    </li> 
   </ul>
+  <button class="btn btn-warning btn-lg login-btn"  routerLink="/login" routerLinkActive="active"><span class="glyphicon glyphicon-user"></span> | <b>Login </b> </button>
+</links>
 
+
+</mdb-navbar>
