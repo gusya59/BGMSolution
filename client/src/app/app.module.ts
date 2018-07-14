@@ -36,6 +36,9 @@ import { UserComponent } from './user/user.component';
 import { PreviewComponent } from './user/preview/preview.component';
 import { OurServiceComponent } from './misc/our-service/our-service.component';
 
+//for the server side connection
+import { ReactiveFormsModule } from '@angular/forms';
+
 //configuration objects
 const appRoutes: Routes = [
   {
@@ -113,12 +116,13 @@ const appRoutes: Routes = [
     HttpClientModule,
     HttpModule,
     MDBBootstrapModule,
+    ReactiveFormsModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only
     )
   ],
-  providers: [countryService],
+  providers: [countryService,RegistrationComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

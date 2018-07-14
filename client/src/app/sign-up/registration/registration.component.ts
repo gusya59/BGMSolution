@@ -12,19 +12,24 @@ import { user } from './../../user';
 export class RegistrationComponent implements OnInit {
 
     //Property for the user
-    private user:user = new user();
+    private User:user = new user();
     
-  constructor() { }
+  constructor(private http: HttpClient, User: user) {
+    //this.sendParameters();
+   }
 
+   sendParameters(): void{ 
+    this.user.sendData(user.firstname, user.lastname,user.email,user.password);
+   }
   ngOnInit() {
         //Create a new user object
-        this.user = new user({
-          firstname:"",lastname:"",email:"", password: { pwd: "" , confirm_pwd: ""}, terms:false})
-      
+        // this.user = new user({
+        //   firstname:"",lastname:"",email:"", password: { pwd: "" , confirm_pwd: ""}, terms:false})
+        
   }
 
-  send(): void {
-    console.log(this.user.firstname);
-  }
+  // send(): void {
+  //   console.log(this.user.firstname);
+  // }
 
 }

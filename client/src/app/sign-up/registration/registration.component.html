@@ -109,7 +109,7 @@
                  <!-- Buttons Block -->
                   <div class="form-group">
                       <button type="reset" class="btn btn-outline-default btn-lg" routerLink="" routerLinkActive="active">Cancel</button>
-                      <button (click)="send()" type="submit" class="btn btn-outline-success btn-lg" routerLink="userSettings" routerLinkActive="active" [disabled]="!signupForm.form.valid">Next</button>
+                      <button (click)="sendData(user.firstname, user.lastname,email,password)" type="submit" class="btn btn-outline-success btn-lg" routerLink="userSettings" routerLinkActive="active" [disabled]="!signupForm.form.valid">Next</button>
                   </div>
                   
           </form>
