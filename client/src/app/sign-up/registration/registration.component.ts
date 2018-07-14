@@ -19,7 +19,7 @@ export class RegistrationComponent implements OnInit {
    }
 
    sendParameters(): void{ 
-    this.user.sendData(user.firstname, user.lastname,user.email,user.password);
+    // this.user.sendData(user.firstname, user.lastname,user.email,user.password);
    }
   ngOnInit() {
         //Create a new user object
