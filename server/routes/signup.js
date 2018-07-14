@@ -34,7 +34,7 @@ router.route('/').get(function (req, res) {
 });
 
 //registration
-router.route('/signup', async function (req, res) {
+router.route('/registration', async function (req, res) {
   
   //to add validation?
 
