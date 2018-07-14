@@ -8,7 +8,7 @@ var cors = require('cors');
 
 //routes
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var signupRouter = require('./routes/signup');
 //var apiRouter = require ('./routes/api')
 var app = express();
 
@@ -48,7 +48,7 @@ app.use(function (req, res, next) {
 });
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);  ///!!!!!!! need to be localhost/user/another stuff
+app.use('/signup', signupRouter);  ///!!!!!!! need to be localhost/user/another stuff
 
 //app.use('./api', apiRouter);
 
