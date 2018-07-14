@@ -33,6 +33,7 @@ router.route('/').get(function (req, res) {
    });
 });
 
+//registration
 router.route('/signup', async function (req, res) {
   
   //to add validation?
@@ -49,5 +50,11 @@ router.route('/signup', async function (req, res) {
       console.log(err);
   }) 
 })
+
+//login
+router.route('/login'), async function (req, res){
+
+}
+
 
 module.exports = router;

@@ -48,7 +48,8 @@ app.use(function (req, res, next) {
 });
 
 app.use('/', indexRouter);
-app.use('/signup', usersRouter);
+app.use('/users', usersRouter);  ///!!!!!!! need to be localhost/user/another stuff
+
 //app.use('./api', apiRouter);
 
 

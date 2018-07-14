@@ -41,8 +41,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 //configuration objects
 const appRoutes: Routes = [
-  {
-    
+  {  
     path: '',
     component: GuestComponent,
     data: { title: 'Guest' }
@@ -67,7 +66,7 @@ const appRoutes: Routes = [
     component: SignUpComponent,
     data: { title: 'signup' },
     children: [ 
-      {path: '', component: RegistrationComponent},
+      {path: 'registration', component: RegistrationComponent},
       {path: 'userSettings', component: UserSettingsComponent}, 
       {path: 'userSettings/finish', component: FinishComponent},
     ]
