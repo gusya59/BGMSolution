@@ -37,9 +37,12 @@ import { PreviewComponent } from './user/preview/preview.component';
 import { OurServiceComponent } from './misc/our-service/our-service.component';
 import { BarComponent } from './sign-up/bar/bar.component';
 
+//for the server side connection
+import { ReactiveFormsModule } from '@angular/forms';
+
+//configuration objects
 const appRoutes: Routes = [
-  {
-    
+  {  
     path: '',
     component: GuestComponent,
     data: { title: 'Guest' }
@@ -64,7 +67,7 @@ const appRoutes: Routes = [
     component: SignUpComponent,
     data: { title: 'signup' },
     children: [ 
-      {path: '', component: RegistrationComponent},
+      {path: 'registration', component: RegistrationComponent},
       {path: 'userSettings', component: UserSettingsComponent}, 
       {path: 'userSettings/finish', component: FinishComponent},
     ]
@@ -114,12 +117,13 @@ const appRoutes: Routes = [
     HttpClientModule,
     HttpModule,
     MDBBootstrapModule,
+    ReactiveFormsModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only
     )
   ],
-  providers: [countryService],
+  providers: [countryService,RegistrationComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

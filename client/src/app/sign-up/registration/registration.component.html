@@ -17,7 +17,7 @@
                   <div class="form-group">
                     <label for="inputfirstname">First Name</label>
                     <input type="text"
-                    ngModel
+                    [(ngModel)]="user.firstname"
                       name="inputfirstname"
                       id="inputfirstname"
                       placeholder="Name"
@@ -29,7 +29,7 @@
                   <div class="form-group">
                       <label for="inputlastname">Last Name</label>
                       <input type="text"
-                      ngModel
+                      [(ngModel)]="user.lastname"
                         name="inputlastname"
                         id="inputlastname"
                         placeholder="Last Name"
@@ -109,7 +109,7 @@
                  <!-- Buttons Block -->
                   <div class="form-group">
                       <button type="reset" class="btn btn-outline-default btn-lg" routerLink="" routerLinkActive="active">Cancel</button>
-                      <button type="submit" class="btn btn-outline-success btn-lg" routerLink="userSettings" routerLinkActive="active" [disabled]="!signupForm.form.valid">Next</button>
+                      <button (click)="sendData(user.firstname, user.lastname,email,password)" type="submit" class="btn btn-outline-success btn-lg" routerLink="userSettings" routerLinkActive="active" [disabled]="!signupForm.form.valid">Next</button>
                   </div>
                   
           </form>
