@@ -5,19 +5,41 @@
     </div>
   </div>
   
-<div class="container blue lighten-5 ">
-  <h1 class="text-center">Welcome! </h1>
-  <div class="row justify-content-center">
-    <div class="col-lg-8">
-      <form action="#">
-          <label for="email">Email:</label>
-          <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" >
-          <br>
-          <!-- <button (click)="goPassword()" class="btn btn-outline-primary btn-lg">Continue</button>
-          <button (click)="newUser()" class="btn btn-outline-warning btn-lg">New User</button> -->
-          <button routerLink="/loginUser" routerLinkActive="active" class="btn btn-outline-primary btn-lg">Continue</button>
-          <button routerLink="/signup" routerLinkActive="active" class="btn btn-outline-warning btn-lg">New User</button>
-      </form>
+<!-- unknown tokken login -->
+
+<div class="container ">
+    <div class="card">
+      <!--Header-->
+        <h3 class="card-header primary-color white-text">Welcome</h3>
+
+      
+      <div class="card-body">
+        <div class="row justify-content-center">
+          <div class="col-md-6 ">
+            <!-- Material form login -->
+            <form action="#">
+              <!-- Material input password -->
+            <div class="col-md-12">
+                <div class="md-form">
+                    <i class="fa fa-user prefix grey-text"></i>
+                    <input mdbInputDirective 
+                    type="email" 
+                    
+                    class="form-control" 
+                    id="email" 
+                    name="email" >
+                    <label for="email" class="">Email:</label>
+                  </div>
+  
+            </div>
+            <div class="text-center mt-8">
+              <br>
+              <button routerLink="/loginUser" routerLinkActive="active" class="btn btn-outline-primary btn-lg">Continue</button>
+              <button routerLink="/signup" routerLinkActive="active" class="btn btn-outline-warning btn-lg">New User</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
+    </div>
+  

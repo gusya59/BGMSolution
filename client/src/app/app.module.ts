@@ -35,6 +35,7 @@ import { VideoComponent } from './misc/video/video.component';
 import { UserComponent } from './user/user.component';
 import { PreviewComponent } from './user/preview/preview.component';
 import { OurServiceComponent } from './misc/our-service/our-service.component';
+import { BarComponent } from './sign-up/bar/bar.component';
 
 //for the server side connection
 import { ReactiveFormsModule } from '@angular/forms';
@@ -107,7 +108,8 @@ const appRoutes: Routes = [
     VideoComponent,
     UserComponent,
     PreviewComponent,
-    OurServiceComponent
+    OurServiceComponent,
+    BarComponent
   ],
   imports: [
     BrowserModule,
