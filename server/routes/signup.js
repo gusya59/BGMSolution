@@ -40,6 +40,7 @@ router.route('/registration', async function (req, res) {
 
   //create new user
   var newUser = new registrationSchema(req.body);
+  console.log('req.body');
   var isCreated = await registrationSchema.inputData(newUser).then(result =>{
     if (result)
     {

@@ -39,6 +39,8 @@ import { BarComponent } from './sign-up/bar/bar.component';
 
 //for the server side connection
 import { ReactiveFormsModule } from '@angular/forms';
+//user service
+import { UserService } from './user.service';
 
 //configuration objects
 const appRoutes: Routes = [
@@ -67,7 +69,7 @@ const appRoutes: Routes = [
     component: SignUpComponent,
     data: { title: 'signup' },
     children: [ 
-      {path: 'registration', component: RegistrationComponent},
+      {path: '', component: RegistrationComponent},
       {path: 'userSettings', component: UserSettingsComponent}, 
       {path: 'userSettings/finish', component: FinishComponent},
     ]
@@ -123,7 +125,7 @@ const appRoutes: Routes = [
       { enableTracing: true } // <-- debugging purposes only
     )
   ],
-  providers: [countryService,RegistrationComponent],
+  providers: [countryService,RegistrationComponent,UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
