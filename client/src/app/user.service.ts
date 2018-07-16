@@ -8,7 +8,7 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   addUser(inputfirstname, inputlastname, inputEmail, inputPassword, confirmPassword) {
-    const uri = 'http://localhost:4200/registarion/finish';
+    const uri = 'http://localhost:4200/signup/';
     const obj = {
 
     inputfirstname: inputfirstname,
