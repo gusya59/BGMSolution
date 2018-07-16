@@ -19,7 +19,7 @@ app.set('view engine', 'pug');
 //connect to the DB
 var mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
-mongoose.connect('mongodb+srv://BGM:BgM123456@bgmsoultion-znmku.mongodb.net/test', {promiseLibrary: require('bluebird') })
+mongoose.connect('mongodb+srv://BGM:BgM123456@bgmsoultion-znmku.mongodb.net/test',{ useNewUrlParser: true })
   .then(() =>  console.log('connection succesful'))
   .catch((err) => console.error(err));
 
