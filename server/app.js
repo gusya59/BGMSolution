@@ -4,7 +4,8 @@ var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var cors = require('cors');
-
+var passport = require('passport');
+var flash    = require('connect-flash');
 
 //routes
 var indexRouter = require('./routes/index');
@@ -18,9 +19,11 @@ app.set('view engine', 'pug');
 //connect to the DB
 var mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
-mongoose.connect('mongodb+srv://BGM:BgM123456@bgmsoultion-znmku.mongodb.net/test?retryWrites=true', {promiseLibrary: require('bluebird') })
+mongoose.connect('mongodb+srv://BGM:BgM123456@bgmsoultion-znmku.mongodb.net/test',{ useNewUrlParser: true })
   .then(() =>  console.log('connection succesful'))
   .catch((err) => console.error(err));
+
+require('./config/passport')(passport); // pass passport for configuration
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -52,6 +55,13 @@ app.use('/signup', signupRouter);  ///!!!!!!! need to be localhost/user/another 
 
 //app.use('./api', apiRouter);
 
+// required for passport
+//app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+app.use(flash()); // use connect-flash for flash messages stored in session
+
+//require('./routes/users.js')(passport);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -65,9 +65,9 @@ const appRoutes: Routes = [
     data: { title: 'user' }
   },
   {
-    path: 'signup',
+    path: 'registration',
     component: SignUpComponent,
-    data: { title: 'signup' },
+    data: { title: 'registration' },
     children: [ 
       {path: '', component: RegistrationComponent},
       {path: 'userSettings', component: UserSettingsComponent}, 

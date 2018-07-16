@@ -1,7 +1,6 @@
 import { Component, OnInit, NgModule } from '@angular/core';
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
 //import users class
-import { user } from './../../user';
 import {UserService} from './../../user.service'
 
 @Component({
@@ -11,9 +10,11 @@ import {UserService} from './../../user.service'
 })
 
 export class RegistrationComponent implements OnInit {
-    angForm: FormGroup;
+  angForm: FormGroup;
 
-  constructor(private userservice: UserService, private fb: FormBuilder) { }
+  constructor(private userservice: UserService, private fb: FormBuilder) { 
+    this.createForm();
+  }
 
   //user form
   createForm() {
