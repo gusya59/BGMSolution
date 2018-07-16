@@ -23,6 +23,7 @@ router.route('/next').post (function(req,res){
 
   // Defined get data(index or listing) route
 router.route('/').get(function (req, res) {
+  console.log(req.body);
   registrationSchema.find(function (err, data){
    if(err){
      console.log(err);
@@ -34,12 +35,13 @@ router.route('/').get(function (req, res) {
 });
 
 //registration
-router.route('/registration', async function (req, res) {
+router.route('/registration').post (async function (req, res) {
   
   //to add validation?
 
   //create new user
   var newUser = new registrationSchema(req.body);
+  console.log(req.body);
   var isCreated = await registrationSchema.inputData(newUser).then(result =>{
     if (result)
     {
