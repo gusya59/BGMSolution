@@ -8,16 +8,17 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   addUser(inputfirstname, inputlastname, inputEmail, inputPassword, confirmPassword) {
-    const uri = 'http://localhost:4200/signup/';
+    const uri = 'http://localhost:1234/signup/registration';
     const obj = {
-
+    
     inputfirstname: inputfirstname,
     inputlastname: inputlastname,
     inputEmail: inputEmail, 
     inputPassword: inputPassword,
     confirmPassword: confirmPassword
     };
+    console.log(obj)
     this.http.post(uri, obj)
-        .subscribe(res => console.log('Done'));
+        .subscribe(res => console.log(res)); //will priny the respond
   }
 }

@@ -2,60 +2,109 @@
     <div class="panel-heading">
       {{ test }}
     </div>
-    <div class="panel-body">
-        <form [formGroup]="angForm" novalidate>
+    <div class="row justify-content-center">
+        <div class= "col-md-8">
+          <form #signupForm = "ngForm">
+    
+                  <!-- First Name Block -->
+                  <div class="form-group">
+                    <label for="inputfirstname">First Name</label>
+                    <input type="text"
+                    [(ngModel)]="first_name"
+                      name="inputfirstname"
+                      id="inputfirstname"
+                      placeholder="Name"
+                      class="form-control"
+                      required>
+                  </div>
 
-            <div class="form-group">
-                <label class="col-md-4">inputfirstname</label>
-                <input type="text" class="form-control" formControlName="inputfirstname" #inputfirstname />
-            </div>
-            <div *ngIf="angForm.controls['inputfirstname'].invalid && (angForm.controls['inputfirstname'].dirty || angForm.controls['inputfirstname'].touched)" class="alert alert-danger">
-                <div *ngIf="angForm.controls['name'].errors.required">
-                    Name is required.
-                </div>
-            </div>
+                  <!-- last Name Block -->
+                  <div class="form-group">
+                      <label for="inputlastname">Last Name</label>
+                      <input type="text"
+                      [(ngModel)]="last_name"
+                        name="inputlastname"
+                        id="inputlastname"
+                        placeholder="Last Name"
+                        class="form-control"
+                        required>
+                  </div>
 
-            <div class="form-group">
-                <label class="col-md-4">lastname</label>
-                <input type="text" class="form-control" formControlName="inputlastname" #inputlastname/>
-            </div>
-            <div *ngIf="angForm.controls['inputlastname'].invalid && (angForm.controls['inputlastname'].dirty || angForm.controls['inputlastname'].touched)" class="alert alert-danger">
-                 <div *ngIf="angForm.controls['inputlastname'].errors.required">
-                     LastName is required.
-                </div>
-            </div>
+                  <!-- Email Block -->
+                  <div class="form-group">
+                    <label for="inputEmail">Email</label>
+                    <input type="text"
+                    [(ngModel)]="email"
+                      name="email"
+                      #email = "ngModel"
+                      id="inputEmail"
+                      placeholder="Email"
+                      class="form-control"
+                      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                      required>
+                      
+                  </div>
+                  <!-- This is email error section -->
+ 
+                  <div *ngIf="email.invalid && (email.dirty || email.touched)"
+                      class="alert alert-danger">
+                      <div *ngIf = "email.errors?.required">
+                          Email field can't be blank
+                      </div>
+                      <div *ngIf = "email.errors?.pattern && email.touched">
+                          The email id doesn't seem right
+                      </div>
+                  </div>
 
-            <div class="form-group">
-                <label class="col-md-4">inputEmail</label>
-                <input type="text" class="form-control" formControlName="inputEmail" #inputEmail/>
-            </div>
-            <div *ngIf="angForm.controls['inputEmail'].invalid && (angForm.controls['inputEmail'].dirty || angForm.controls['inputEmail'].touched)" class="alert alert-danger">
-                <div *ngIf="angForm.controls['inputEmail'].errors.required">
-                    inputEmail is required.
-                </div>
-            </div>
+                  <!-- Password Block -->
+                  <div ngModelGroup="password" #userPassword="ngModelGroup" required >
+                      <div class="form-group">
+                        <label for="inputPassword">Password</label>
+                        <input type="password"
+                        [(ngModel)]= "password"
+                          name="pwd"
+                          id="inputPassword" placeholder="Password"
+                          class="form-control"
+                          minlength ="8" required>
+                      </div>
+                   
+                      <div class="form-group">
+                        <label for="confirmPassword" >Confirm Password</label>
+                        <input type="password"
+                        [(ngModel)]="password_confirm"
+                          name="confirmPwd"
+                          class="form-control"
+                          id="confirmPassword" placeholder="Confirm Password">
+                      </div>
+                       
+                      <div *ngIf="(userPassword.invalid|| userPassword.value?.pwd != userPassword.value?.confirmPwd) && (userPassword.touched)"
+                      class="alert alert-danger">
+                       
+                      <div *ngIf = "userPassword.invalid; else nomatch">
+                          Password needs to be more than 8 characters
+                      </div>
+                          <ng-template #nomatch >
+                              Passwords don't match
+                          </ng-template>
+                      </div>
+                  </div>
+                   
 
-        <div class="form-group">
-            <label class="col-md-4">inputPassword</label>
-            <input type="text" class="form-control" formControlName="inputPassword" #inputPassword/>
+                   
+                  <!-- Terms and conditions Block -->
+                   <div class="form-group checkbox">
+                    <label>
+                      <input type="checkbox" required> Confirm that you've read the Terms and 
+                      Conditions
+                    </label>
+                  </div>
+                  
+                 <!-- Buttons Block -->
+                  <div class="form-group">
+                      <button type="reset" class="btn btn-outline-default btn-lg" routerLink="" routerLinkActive="active">Cancel</button>
+                      <button (click)="addUser(first_name, last_name,email,password,password_confirm)" type="submit" class="btn btn-outline-success btn-lg" routerLink="userSettings" routerLinkActive="active" [disabled]="!signupForm.form.valid">Next</button>
+                  </div>
+          </form>
         </div>
-        <div *ngIf="angForm.controls['inputPassword'].invalid && (angForm.controls['inputPassword'].dirty || angForm.controls['inputPassword'].touched)" class="alert alert-danger">
-            <div *ngIf="angForm.controls['inputPassword'].errors.required">
-                inputPassword is required.
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-4">confirmPassword</label>
-            <input type="text" class="form-control" formControlName="confirmPassword" #confirmPassword/>
-        </div>
-        <div *ngIf="angForm.controls['confirmPassword'].invalid && (angForm.controls['confirmPassword'].dirty || angForm.controls['confirmPassword'].touched)" class="alert alert-danger">
-            <div *ngIf="angForm.controls['confirmPassword'].errors.required">
-                confirmPassword is required.
-            </div>
-        </div>
-          <div class="form-group">
-            <button (click)="addUser(inputfirstname.value, inputlastname.value,inputEmail.value,inputPassword.value,confirmPassword.value)" [disabled]="angForm.pristine || angForm.invalid" class="btn btn-primary">Add</button>
-          </div>
-      </form>
     </div>
   </div>
