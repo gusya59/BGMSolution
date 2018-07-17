@@ -35,14 +35,15 @@ router.route('/').get(function (req, res) {
 });
 
 //registration
-router.route('/registration').post (async function (req, res) {
+router.route('/registration').post (function (req, res) {
   
   //to add validation?
 
   //create new user
   var newUser = new registrationSchema(req.body);
-  console.log(req.body);
-  var isCreated = await registrationSchema.inputData(newUser).then(result =>{
+  //console.log(newUser);
+  var isCreated = registrationSchema.inputData(newUser).then(result =>{
+    
     if (result)
     {
       console.log(isCreated);
