@@ -1,7 +1,7 @@
 
 <!-- Internal registration page component -->
 <!-- 21/05/2018 David 16:32 -->
-
+<!-- 
 <div class="container blue lighten-5">
     <div class="row justify-content-center">
         <div class= "col-md-12">
@@ -12,34 +12,36 @@
     <div class="row justify-content-center">
         <div class= "col-md-8">
           <form #signupForm = "ngForm">
-    
+     -->
                   <!-- First Name Block -->
-                  <div class="form-group">
-                    <label for="inputfirstname">First Name</label>
-                    <input type="text"
+                  <!-- <div class="form-group">
+                    <input mdbInputDirective
+                    type="text"
                     [(ngModel)]="inputfirstname"
                       name="inputfirstname"
                       id="inputfirstname"
                       placeholder="Name"
                       class="form-control"
                       required>
-                  </div>
+                      <label for="inputfirstname">First Name</label>
+                  </div> -->
 
                   <!-- last Name Block -->
-                  <div class="form-group">
+                  <!-- <div class="form-group">
                       <label for="inputlastname">Last Name</label>
-                      <input type="text"
+                      <input mdbInputDirective
+                       type="text"
                       [(ngModel)]="inputlastname"
                         name="inputlastname"
                         id="inputlastname"
                         placeholder="Last Name"
                         class="form-control"
                         required>
-                  </div>
+                  </div> -->
 
                   <!-- Email Block -->
                   <!-- inputEmail - > ngmodel  inputEmailset ->for check local variable-->
-                  <div class="form-group">
+                  <!-- <div class="form-group">
                     <label for="inputEmail">Email</label>
                     <input type="text"
                     [(ngModel)]="inputEmail"
@@ -51,10 +53,10 @@
                       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
                       required>
                       
-                  </div>
+                  </div> -->
                   <!-- This is email error section -->
  
-                   <div *ngIf="inputEmailset.invalid && (inputEmailset.dirty || inputEmailset.touched)"
+                   <!-- <div *ngIf="inputEmailset.invalid && (inputEmailset.dirty || inputEmailset.touched)"
                       class="alert alert-danger">
                       <div *ngIf = "inputEmailset.errors?.required">
                           Email field can't be blank
@@ -62,12 +64,12 @@
                       <div *ngIf = "inputEmailset.errors?.pattern && inputEmailset.touched">
                           The email id doesn't seem right
                       </div>
-                  </div>
+                  </div> -->
 
                   <!-- Password Block  -->
                   <!-- inputPassword - > ngmodel  inputPasswordset ->for check localvariable-->
                   <!-- confirmPassword - > ngmodel  confirmPasswordset ->for check localvariable-->
-                  <div ngModelGroup="inputPassword" #userPassword="ngModelGroup" required >
+                  <!-- <div ngModelGroup="inputPassword" #userPassword="ngModelGroup" required >
                       <div class="form-group">
                         <label for="inputPassword">Password</label>
                         <input type="password"
@@ -87,9 +89,9 @@
                           name="confirmPwd"
                           class="form-control"
                           id="confirmPassword" placeholder="Confirm Password">
-                      </div>
+                      </div> -->
                        
-                      <div *ngIf="(inputPasswordset.invalid|| inputPasswordset.value?.pwd != inputPasswordset.value?.confirmPasswordset) && (inputPasswordset.touched)"
+                      <!-- <div *ngIf="(inputPasswordset.invalid|| inputPasswordset.value?.pwd != inputPasswordset.value?.confirmPasswordset) && (inputPasswordset.touched)"
                       class="alert alert-danger">
                        
                       <div *ngIf = "inputPasswordset.invalid; else nomatch">
@@ -99,11 +101,144 @@
                               Passwords don't match
                           </ng-template>
                       </div>
-                  </div>
+                  </div> -->
                    
 
                    
                   <!-- Terms and conditions Block -->
+                   <!-- <div class="form-group checkbox">
+                    <label>
+                      <input type="checkbox" required> Confirm that you've read the Terms and 
+                      Conditions
+                    </label>
+                  </div> -->
+                  
+                 <!-- Buttons Block -->
+                  <!-- <div class="form-group">
+                      <button type="reset" class="btn btn-outline-default btn-lg" routerLink="" routerLinkActive="active">Cancel</button>
+                      <button (click)="addUser(inputfirstname,inputlastname,inputEmail,inputPassword,confirmPassword)" type="submit" class="btn btn-outline-success btn-lg" routerLink="userSettings" routerLinkActive="active"  [disabled]="!signupForm.form.valid">Next</button>
+                  </div>
+                  
+          </form> -->
+          <!-- Check data -->
+          <!-- {{signupForm.value | json }} -->
+        <!-- </div>
+      </div>
+</div> -->
+
+
+<div class="container ">
+    <div class="card">
+        <!--Header-->
+        <h3 class="card-header primary-color white-text">First steps to become a user</h3>
+        <!-- Body -->
+        <div class="card-body">
+            <div class="row justify-content-center">
+              <div class="col-md-6 ">
+                <!-- Material form Register -->
+                <form action="#">
+                  <!-- Material input  -->
+                <div class="col-md-12">
+                    
+                    <!-- Input User Name -->
+                    <div class="md-form">
+                        <i class="fa fa-user prefix grey-text"></i>
+                        <input mdbInputDirective 
+                        type="text"
+                        [(ngModel)]="inputfirstname"
+                        name="inputfirstname"
+                        id="inputfirstname"
+                        class="form-control"
+                         required >
+
+                        <label for="inputfirstname" class="">First Name:</label>
+                    </div>
+
+                    <!-- Input User Lastname -->
+                    <div class="md-form">
+                        <i class="fa fa-user prefix grey-text"></i>
+                        <input mdbInputDirective 
+                        type="text"
+                        [(ngModel)]="inputlastname"
+                        name="inputlastname"
+                        id="inputlastname"
+                        class="form-control"
+                        required>
+
+                        <label for="inputlastname" class="">Last Name:</label>
+                    </div>
+
+                    <!-- Input email -->
+                    <div class="md-form">
+                        <i class="fa fa-user prefix grey-text"></i>
+                        <input mdbInputDirective 
+                        type="text"
+                        [(ngModel)]="inputEmail"
+                        #inputEmailset="ngModel"
+                        name="inputEmail"
+                        id="inputEmail"
+                        class="form-control"
+                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                        required>
+
+                        <label for="inputEmail" class="">eMail address:</label>
+                    </div>
+                    
+                    <!-- Check email for frontend validety -->
+                    <div *ngIf="inputEmailset.invalid && (inputEmailset.dirty || inputEmailset.touched)"
+                        class="alert alert-danger">
+                        <div *ngIf = "inputEmailset.errors?.required">
+                            Email field can't be blank
+                        </div>
+                        <div *ngIf = "inputEmailset.errors?.pattern && inputEmailset.touched">
+                            The email id doesn't seem right
+                        </div>
+                    </div>
+
+                    <!-- Input User Password -->
+                    <div ngModelGroup="inputPassword" #userPassword="ngModelGroup" required >
+                        <div class="md-form">
+                            <i class="fa fa-user prefix grey-text"></i>
+                            <input mdbInputDirective 
+                            type="password"
+                            [(ngModel)]="inputPassword"
+                            #inputPasswordset="ngModel" 
+                            name="inputPassword"
+                            id="inputPassword" 
+                            class="form-control"
+                            minlength ="8" 
+                            required>
+
+                            <label for="inputPassword" class="">Password:</label>
+                        </div>
+
+                        <div class="md-form">
+                            <i class="fa fa-user prefix grey-text"></i>
+                            <input mdbInputDirective 
+                            type="password"
+                            [(ngModel)]="confirmPassword"
+                            #confirmPasswordset="ngModel" 
+                            name="confirmPwd"
+                            class="form-control"
+                            id="confirmPassword">
+
+                            <label for="confirmPassword" class="">Confirm Password:</label>
+                        </div>
+                        <!-- check password for validety frontend -->
+                        <div *ngIf="(inputPasswordset.invalid|| inputPasswordset.value?.pwd != inputPasswordset.value?.confirmPasswordset) && (inputPasswordset.touched)"
+                            class="alert alert-danger">
+                        
+                            <div *ngIf = "inputPasswordset.invalid; else nomatch">
+                                    Password needs to be more than 8 characters
+                            </div>
+                            <ng-template #nomatch >
+                                Passwords don't match
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Terms and conditions Block -->
                    <div class="form-group checkbox">
                     <label>
                       <input type="checkbox" required> Confirm that you've read the Terms and 
@@ -111,15 +246,16 @@
                     </label>
                   </div>
                   
-                 <!-- Buttons Block -->
-                  <div class="form-group">
-                      <button type="reset" class="btn btn-outline-default btn-lg" routerLink="" routerLinkActive="active">Cancel</button>
-                      <button (click)="addUser(inputfirstname,inputlastname,inputEmail,inputPassword,confirmPassword)" type="submit" class="btn btn-outline-success btn-lg"  [disabled]="!signupForm.form.valid">Next</button>
+
+      
+
+                <div class="text-center mt-8">
+                  <br>
+                <button type="reset" class="btn btn-outline-default btn-lg" routerLink="" routerLinkActive="active">Cancel</button>
+                <button (click)="addUser(inputfirstname,inputlastname,inputEmail,inputPassword,confirmPassword)" type="submit" class="btn btn-outline-success btn-lg" routerLink="userSettings" routerLinkActive="active"  [disabled]="!signupForm.form.valid">Next</button>
                   </div>
-                  
-          </form>
-          <!-- Check data -->
-          <!-- {{signupForm.value | json }} -->
+              </form>
+            </div>
+          </div>
         </div>
-      </div>
-</div>
+        </div>
