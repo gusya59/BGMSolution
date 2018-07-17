@@ -35,22 +35,25 @@ router.route('/').get(function (req, res) {
 });
 
 //registration
-router.route('/registration').post (function (req, res) {
+router.post('/registration', function (req, res) {
   
-  //to add validation?
-
-  //create new user
-  var newUser = new registrationSchema(req.body);
-  //console.log(newUser);
-  var isCreated = registrationSchema.inputData(newUser).then(result =>{  
-    if (result)
-    {
-      console.log(isCreated);
-      res.status(200).send({success:true,message:"User Created!"})
-    }
-    else
-      console.log(err);
-  }) 
+  console.log(req.body)
+  res.status(200).send('bla bla bla bla bla bla')
+  //to add validation? yes!
+//  console.log(req);
+//  console.log(req.body);
+//   //create new user
+//   var newUser = new registrationSchema(req.body);
+//   //console.log(newUser);
+//   var isCreated = registrationSchema.inputData(newUser).then(result =>{  
+//     if (result)
+//     {
+//       console.log(isCreated);
+//       res.status(200).send({success:true,message:"User Created!"})
+//     }
+//     else
+//       console.log(err);
+//   }) 
 })
 
 //login

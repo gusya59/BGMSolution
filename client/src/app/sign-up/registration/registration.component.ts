@@ -12,9 +12,13 @@ import {UserService} from './../../user.service'
 
 export class RegistrationComponent implements OnInit {
     angForm: FormGroup;
-
+    first_name: string;
+    last_name: string;
+    email: string;
+    password: string;
+    password_confirm: string;
   constructor(private userservice: UserService, private fb: FormBuilder) { }
-
+////all this stuff/// we are weren't shure what it does and if it necessary 
   //user form
   createForm() {
     this.angForm = this.fb.group({

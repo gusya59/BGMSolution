@@ -8,7 +8,7 @@ export class CoinService {
   constructor(private http: HttpClient) { }
 
   addCoin(firstName, lastName, email, password) {
-    const uri = 'http://localhost:4000/signup/add';
+    const uri = 'http://localhost:4200/signup/registration';
     const obj = {
       firstName: firstName,
       lastName: lastName,

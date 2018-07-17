@@ -17,7 +17,7 @@
                   <div class="form-group">
                     <label for="inputfirstname">First Name</label>
                     <input type="text"
-                    ngModel
+                    [(ngModel)]="first_name"
                       name="inputfirstname"
                       id="inputfirstname"
                       placeholder="Name"
@@ -29,8 +29,7 @@
                   <div class="form-group">
                       <label for="inputlastname">Last Name</label>
                       <input type="text"
-                      ngModel
-                      
+                      [(ngModel)]="last_name"
                         name="inputlastname"
                         id="inputlastname"
                         placeholder="Last Name"
@@ -42,7 +41,7 @@
                   <div class="form-group">
                     <label for="inputEmail">Email</label>
                     <input type="text"
-                    ngModel
+                    [(ngModel)]="email"
                       name="email"
                       #email = "ngModel"
                       id="inputEmail"
@@ -69,7 +68,7 @@
                       <div class="form-group">
                         <label for="inputPassword">Password</label>
                         <input type="password"
-                          ngModel 
+                        [(ngModel)]= "password"
                           name="pwd"
                           id="inputPassword" placeholder="Password"
                           class="form-control"
@@ -79,7 +78,7 @@
                       <div class="form-group">
                         <label for="confirmPassword" >Confirm Password</label>
                         <input type="password"
-                          ngModel 
+                        [(ngModel)]="password_confirm"
                           name="confirmPwd"
                           class="form-control"
                           id="confirmPassword" placeholder="Confirm Password">
@@ -110,7 +109,7 @@
                  <!-- Buttons Block -->
                   <div class="form-group">
                       <button type="reset" class="btn btn-outline-default btn-lg" routerLink="" routerLinkActive="active">Cancel</button>
-                      <button (click)="addUser(inputfirstname, inputlastname,inputEmail,inputPassword,confirmPassword)" type="submit" class="btn btn-outline-success btn-lg" routerLink="userSettings" routerLinkActive="active" [disabled]="!signupForm.form.valid">Next</button>
+                      <button (click)="addUser(first_name, last_name,email,password,password_confirm)" type="submit" class="btn btn-outline-success btn-lg" routerLink="userSettings" routerLinkActive="active" [disabled]="!signupForm.form.valid">Next</button>
                   </div>
                   
           </form>
