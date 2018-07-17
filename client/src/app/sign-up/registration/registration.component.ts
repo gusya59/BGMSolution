@@ -11,14 +11,14 @@ import {UserService} from './../../user.service'
 
 export class RegistrationComponent implements OnInit {
     angForm: FormGroup;
-    first_name: string;
-    last_name: string;
-    email: string;
-    password: string;
-    password_confirm: string;
+    inputfirstname: string;
+    inputlastname: string;
+    inputEmail: string;
+    inputPassword: string;
+    confirmPassword: string;
   constructor(private userservice: UserService, private fb: FormBuilder) { }
 ////all this stuff/// we are weren't shure what it does and if it necessary 
-  //user form
+  // user form
   // createForm() {
   //   this.angForm = this.fb.group({
   //     inputfirstname: ['', Validators.required ],
@@ -30,7 +30,7 @@ export class RegistrationComponent implements OnInit {
   // }
 
   addUser(inputfirstname, inputlastname, inputEmail, inputPassword, confirmPassword ) {
-    this.userservice.addUser(inputfirstname, inputlastname, inputEmail, inputPassword, confirmPassword);
+    this.userservice.addUser(inputfirstname, inputlastname, inputEmail, inputPassword, confirmPassword),console.log("done");
   }
   ngOnInit() {
         // //Create a new user object
