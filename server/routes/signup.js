@@ -42,8 +42,7 @@ router.route('/registration').post (function (req, res) {
   //create new user
   var newUser = new registrationSchema(req.body);
   //console.log(newUser);
-  var isCreated = registrationSchema.inputData(newUser).then(result =>{
-    
+  var isCreated = registrationSchema.inputData(newUser).then(result =>{  
     if (result)
     {
       console.log(isCreated);
