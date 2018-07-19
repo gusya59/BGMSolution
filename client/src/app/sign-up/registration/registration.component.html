@@ -157,7 +157,7 @@
 
                     <!-- Input User Lastname -->
                     <div class="md-form">
-                        <i class="fa fa-user prefix grey-text"></i>
+                        <i class="fa fa-user prefix grey-text "></i>
                         <input mdbInputDirective 
                         type="text"
                         [(ngModel)]="inputlastname"
@@ -172,7 +172,7 @@
 
                     <!-- Input email -->
                     <div class="md-form">
-                        <i class="fa fa-user prefix grey-text"></i>
+                        <i class="fa fa-envelope prefix grey-text"></i>
                         <input mdbInputDirective 
                         type="text"
                         [(ngModel)]="inputEmail"
@@ -201,7 +201,7 @@
                     <!-- Input User Password -->
                     <div [formGroup]="passwordFormGroup" >
                         <div class="md-form">
-                            <i class="fa fa-user prefix grey-text"></i>
+                            <i class="fa fa-key prefix grey-text"></i>
                             <input mdbInputDirective 
                             type="password"
                             [(ngModel)]="inputPassword"
@@ -216,7 +216,7 @@
                         <p class="bg-danger" *ngIf="passwordFormGroup.controls.inputPassword.errors?.required && passwordFormGroup.controls.inputPassword.touched">Password is required.</p>
 
                         <div class="md-form">
-                            <i class="fa fa-user prefix grey-text"></i>
+                            <i class="fa fa-key prefix grey-text"></i>
                             <input mdbInputDirective 
                             type="password"
                             [(ngModel)]="confirmPassword"
