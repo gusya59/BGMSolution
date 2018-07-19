@@ -1,0 +1,118 @@
+<!-- Internal registration page component -->
+<!-- 21/05/2018 David 16:32 -->
+
+<div class="container blue lighten-5">
+    <div class="row justify-content-center">
+        <div class= "col-md-12">
+            <h2 class="text-center">first steps to become a user</h2>
+            <br>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class= "col-md-8">
+            <form #signupForm = "ngForm">
+    
+                    <!-- First Name Block -->
+                    <div class="form-group">
+                        <label for="first_name">First Name</label>
+                        <input type="text"
+                        [(ngModel)]="first_name"
+                            name="first_name"
+                            id="first_name"
+                            placeholder="Name"
+                            class="form-control"
+                            required/>
+                    </div>
+
+                    <!-- last Name Block -->
+                    <div class="form-group">
+                        <label for="last_name">Last Name</label>
+                        <input type="text"
+                        [(ngModel)]="model.last_name"
+                        name="last_name"
+                        id="last_name"
+                        #last_name="ngModel"
+                        placeholder="Last Name"
+                        class="form-control"
+                        required>
+                    </div>
+
+                    <!-- email Block -->
+                    <div class="form-group">
+                        <label for="email">First Name</label>
+                        <input type="text"
+                            [(ngModel)]="model.email"
+                            name="email"
+                            id="email"
+                            #email="ngModel"
+                            placeholder="Name"
+                            class="form-control"
+                            required>
+                    </div>
+                    <!-- This is email error section -->
+    
+                    <div *ngIf="email.invalid && (email.dirty || email.touched)"
+                        class="alert alert-danger">
+                        <div *ngIf = "email.errors?.required">
+                            Email field can't be blank
+                        </div>
+                        <div *ngIf = "email.errors?.pattern && email.touched">
+                            The email id doesn't seem right
+                        </div>
+                    </div>
+
+                    <!-- Password Block -->
+                    <div ngModelGroup="password" #userPassword="ngModelGroup" required >
+                        <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password"
+                        [(ngModel)]= "model.password"
+                            name="password"
+                            id="password" placeholder="Password"
+                            class="form-control"
+                            minlength ="8" required/>
+                        </div>
+                    
+                        <div class="form-group">
+                        <label for="password_confirm" >Confirm Password</label>
+                        <input type="password"
+                        [(ngModel)]="model.password_confirm"
+                            name="password_confirm"
+                            class="form-control"
+                            id="password_confirm" placeholder="Confirm Password">
+                        </div>
+                        
+                        <div *ngIf="(password.invalid|| password.value?.pwd != password.value?.password_confirm) && (password.touched)"
+                        class="alert alert-danger">
+                        
+                        <div *ngIf = "password.invalid; else nomatch">
+                            Password needs to be more than 8 characters
+                        </div>
+                            <ng-template #nomatch >
+                                Passwords don't match
+                            </ng-template>
+                        </div>
+                    </div>
+                    
+
+                    
+                    <!-- Terms and conditions Block -->
+                    <div class="form-group checkbox">
+                    <label>
+                        <input type="checkbox" required> Confirm that you've read the Terms and 
+                        Conditions
+                    </label>
+                    </div>
+                    
+                    <!-- Buttons Block -->
+                    <div class="form-group">
+                        <button type="reset" class="btn btn-outline-default btn-lg" routerLink="" routerLinkActive="active">Cancel</button>
+                        <button (click)="addUser(first_name,last_name,email,password,password_confirm)" type="submit" class="btn btn-outline-success btn-lg" routerLink="userSettings" routerLinkActive="active" [disabled]="!signupForm.form.valid">Next</button>
+                    </div>
+                    
+            </form>
+            <!-- Check data -->
+            <!-- {{signupForm.value | json }} -->
+        </div>
+    </div>
+</div>

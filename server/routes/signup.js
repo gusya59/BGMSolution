@@ -21,9 +21,9 @@ var registrationSchema = require('../models/Registration.js');
 //registration
 router.post('/registration', function (req, res) {
   
-  //console.log("the body that i get: "+req.body)
-  //res.status(200).send('bla bla bla bla bla bla')
-  res.status(200);
+  console.log(req.body)
+  // res.status(200).send('bla bla bla bla bla bla')
+  res.status(200)
   //to add validation? yes!
 //  console.log(req.body);
 //   //create new user

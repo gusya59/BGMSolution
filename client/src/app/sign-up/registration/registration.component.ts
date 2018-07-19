@@ -1,8 +1,8 @@
 import { Component, OnInit, NgModule } from '@angular/core';
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
 //import users class
-import { user } from './../../user';
 import {UserService} from './../../user.service'
+
 
 @Component({
   selector: 'app-registration',
@@ -12,33 +12,51 @@ import {UserService} from './../../user.service'
 
 export class RegistrationComponent implements OnInit {
     angForm: FormGroup;
-    first_name: string;
-    last_name: string;
-    email: string;
-    password: string;
-    password_confirm: string;
-  constructor(private userservice: UserService, private fb: FormBuilder) { }
-////all this stuff/// we are weren't shure what it does and if it necessary 
-  //user form
-  createForm() {
-    this.angForm = this.fb.group({
-      inputfirstname: ['', Validators.required ],
-      inputlastname: ['', Validators.required ],
-      inputEmail: ['', Validators.required ],
-      inputPassword: ['', Validators.required ],
-      confirmPassword: ['', Validators.required ]
-   });
+    inputfirstname: string;
+    inputlastname: string;
+    inputEmail: string;
+    inputPassword: string;
+    confirmPassword: string;
+ 
+    registrationFormGroup: FormGroup;
+    passwordFormGroup: FormGroup;
+    
+  constructor(private userservice: UserService, private fb: FormBuilder) { 
+    this.passwordFormGroup = this.fb.group({
+      inputPassword: ['', Validators.required],
+      confirmPassword: ['', Validators.required]
+    }, {
+      validator: RegistrationValidator.validate.bind(this)
+    });
+    this.registrationFormGroup = this.fb.group({
+      passwordFormGroup: this.passwordFormGroup
+    });
   }
 
   addUser(inputfirstname, inputlastname, inputEmail, inputPassword, confirmPassword ) {
-    this.userservice.addUser(inputfirstname, inputlastname, inputEmail, inputPassword, confirmPassword);
-  }
-  ngOnInit() {
-        // //Create a new user object
-        // this.user = new user({
-        //   firstname:"",lastname:"",email:"", password: { pwd: "" , confirm_pwd: ""}, terms:false})
-        
-      
+    this.userservice.addUser(inputfirstname, inputlastname, inputEmail, inputPassword, confirmPassword),console.log("done");
   }
 
+  ngOnInit() {
+         
+  }
+  
+
+}
+
+class RegistrationValidator {
+  static validate(registrationFormGroup: FormGroup) {
+      let inputPassword = registrationFormGroup.controls.inputPassword.value;
+      let confirmPassword = registrationFormGroup.controls.confirmPassword.value;
+
+
+      if (confirmPassword !== inputPassword) {
+          return {
+              doesMatchPassword: true
+          };
+      }
+
+      return null;
+
+  }
 }
