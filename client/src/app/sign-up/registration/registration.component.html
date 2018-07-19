@@ -136,7 +136,7 @@
             <div class="row justify-content-center">
               <div class="col-md-6 ">
                 <!-- Material form Register -->
-                <form action="#">
+                <form #signupForm = "ngForm" [formGroup]="registrationFormGroup" novalidate (ngSubmit)="addUser(inputfirstname,inputlastname,inputEmail,inputPassword,confirmPassword)" >
                   <!-- Material input  -->
                 <div class="col-md-12">
                     
@@ -146,6 +146,7 @@
                         <input mdbInputDirective 
                         type="text"
                         [(ngModel)]="inputfirstname"
+                        [ngModelOptions]="{standalone: true}"
                         name="inputfirstname"
                         id="inputfirstname"
                         class="form-control"
@@ -160,6 +161,7 @@
                         <input mdbInputDirective 
                         type="text"
                         [(ngModel)]="inputlastname"
+                        [ngModelOptions]="{standalone: true}"
                         name="inputlastname"
                         id="inputlastname"
                         class="form-control"
@@ -174,6 +176,7 @@
                         <input mdbInputDirective 
                         type="text"
                         [(ngModel)]="inputEmail"
+                        [ngModelOptions]="{standalone: true}"
                         #inputEmailset="ngModel"
                         name="inputEmail"
                         id="inputEmail"
@@ -196,45 +199,40 @@
                     </div>
 
                     <!-- Input User Password -->
-                    <div ngModelGroup="inputPassword" #userPassword="ngModelGroup" required >
+                    <div [formGroup]="passwordFormGroup" >
                         <div class="md-form">
                             <i class="fa fa-user prefix grey-text"></i>
                             <input mdbInputDirective 
                             type="password"
                             [(ngModel)]="inputPassword"
-                            #inputPasswordset="ngModel" 
-                            name="inputPassword"
+                            formControlName="inputPassword"
                             id="inputPassword" 
                             class="form-control"
                             minlength ="8" 
                             required>
-
                             <label for="inputPassword" class="">Password:</label>
                         </div>
+
+                        <p class="bg-danger" *ngIf="passwordFormGroup.controls.inputPassword.errors?.required && passwordFormGroup.controls.inputPassword.touched">Password is required.</p>
 
                         <div class="md-form">
                             <i class="fa fa-user prefix grey-text"></i>
                             <input mdbInputDirective 
                             type="password"
                             [(ngModel)]="confirmPassword"
-                            #confirmPasswordset="ngModel" 
-                            name="confirmPwd"
+                            formControlName="confirmPassword"
                             class="form-control"
-                            id="confirmPassword">
+                            id="confirmPassword"
+                            minlength ="8" 
+                            required>
 
                             <label for="confirmPassword" class="">Confirm Password:</label>
                         </div>
-                        <!-- check password for validety frontend -->
-                        <div *ngIf="(inputPasswordset.invalid|| inputPasswordset.value?.pwd != inputPasswordset.value?.confirmPasswordset) && (inputPasswordset.touched)"
-                            class="alert alert-danger">
                         
-                            <div *ngIf = "inputPasswordset.invalid; else nomatch">
-                                    Password needs to be more than 8 characters
-                            </div>
-                            <ng-template #nomatch >
-                                Passwords don't match
-                            </ng-template>
-                        </div>
+                        <!-- check password for validety frontend -->
+                        <p class="bg-danger" *ngIf="passwordFormGroup.controls.confirmPassword.errors?.required && passwordFormGroup.controls.confirmPassword.touched">Repeat password is required</p>
+                        <p class="bg-danger" *ngIf="passwordFormGroup.errors?.doesMatchPassword">Password does not match</p>
+
                     </div>
                 </div>
 
@@ -246,13 +244,10 @@
                     </label>
                   </div>
                   
-
-      
-
                 <div class="text-center mt-8">
                   <br>
                 <button type="reset" class="btn btn-outline-default btn-lg" routerLink="" routerLinkActive="active">Cancel</button>
-                <button (click)="addUser(inputfirstname,inputlastname,inputEmail,inputPassword,confirmPassword)" type="submit" class="btn btn-outline-success btn-lg" routerLink="userSettings" routerLinkActive="active"  [disabled]="!signupForm.form.valid">Next</button>
+                <button type="submit" class="btn btn-outline-success btn-lg"  [disabled]="!registrationFormGroup.valid">Next</button>
                   </div>
               </form>
             </div>

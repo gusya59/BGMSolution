@@ -38,7 +38,8 @@ router.route('/').get(function (req, res) {
 router.post('/registration', function (req, res) {
   
   console.log(req.body)
-  res.status(200).send('bla bla bla bla bla bla')
+  // res.status(200).send('bla bla bla bla bla bla')
+  res.status(200)
   //to add validation? yes!
 //  console.log(req);
 //  console.log(req.body);
