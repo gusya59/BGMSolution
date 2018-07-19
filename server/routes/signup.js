@@ -5,55 +5,39 @@ var router =express();
 var registrationSchema = require('../models/Registration.js');
 
 
-/* GET users listing. */
-// router.get('/', function(req, res, next) {
-//   console.log(registrat);
+// Defined get data(index or listing) route
+// router.route('/').get(function (req, res) {
+//   console.log(req.body);
+//   registrationSchema.find(function (err, data){
+//    if(err){
+//      console.log(err);
+//    }
+//    else {
+//      res.json(data);
+//      }
+//    });
 // });
-
-// Defined store route
-router.route('/next').post (function(req,res){
-  var registerData = new registrationSchema(req.body);
-  registerData.save().then(item=>{
-    res.status(200).json({'registerData': 'data added successfully'});
-  })
-  .catch(err => {
-    res.status(400).send("unable to save to database");
-    });
-  })
-
-  // Defined get data(index or listing) route
-router.route('/').get(function (req, res) {
-  console.log(req.body);
-  registrationSchema.find(function (err, data){
-   if(err){
-     console.log(err);
-   }
-   else {
-     res.json(data);
-     }
-   });
-});
 
 //registration
 router.post('/registration', function (req, res) {
   
-  console.log(req.body)
-  res.status(200).send('bla bla bla bla bla bla')
+  //console.log("the body that i get: "+req.body)
+  //res.status(200).send('bla bla bla bla bla bla')
+  res.status(200);
   //to add validation? yes!
-//  console.log(req);
 //  console.log(req.body);
 //   //create new user
-//   var newUser = new registrationSchema(req.body);
-//   //console.log(newUser);
-//   var isCreated = registrationSchema.inputData(newUser).then(result =>{  
-//     if (result)
-//     {
-//       console.log(isCreated);
-//       res.status(200).send({success:true,message:"User Created!"})
-//     }
-//     else
-//       console.log(err);
-//   }) 
+  var newUser = new registrationSchema(req.body);
+  //console.log(newUser);
+  var isCreated = registrationSchema.inputData(newUser).then(result =>{  
+    if (result)
+    {
+      console.log(isCreated);
+      res.status(200).send({success:true,message:"User Created!"})
+    }
+    else
+      console.log(err);
+  }) 
 })
 
 //login
