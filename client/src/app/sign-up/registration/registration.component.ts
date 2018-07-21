@@ -22,19 +22,26 @@ export class RegistrationComponent implements OnInit {
     passwordFormGroup: FormGroup;
     
   constructor(private userservice: UserService, private fb: FormBuilder) { 
+
+    //password validator stat function
     this.passwordFormGroup = this.fb.group({
       inputPassword: ['', Validators.required],
       confirmPassword: ['', Validators.required]
     }, {
       validator: RegistrationValidator.validate.bind(this)
     });
+    //other validators
     this.registrationFormGroup = this.fb.group({
+      inputfirstname: ['', Validators.required],
+      inputlastname: ['', Validators.required],
+      inputEmail: ['',[ Validators.required,Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
+      checkBox: ['', Validators.required],
       passwordFormGroup: this.passwordFormGroup
     });
   }
 
-  addUser(inputfirstname, inputlastname, inputEmail, inputPassword, confirmPassword ) {
-    this.userservice.addUser(inputfirstname, inputlastname, inputEmail, inputPassword, confirmPassword),console.log("done");
+  addUser(inputfirstname, inputlastname, inputEmail, inputPassword, confirmPassword,checkBox) {
+    this.userservice.addUser(inputfirstname, inputlastname, inputEmail, inputPassword, confirmPassword,checkBox);
   }
 
   ngOnInit() {
@@ -44,6 +51,7 @@ export class RegistrationComponent implements OnInit {
 
 }
 
+// password validator for registration front end form
 class RegistrationValidator {
   static validate(registrationFormGroup: FormGroup) {
       let inputPassword = registrationFormGroup.controls.inputPassword.value;

@@ -136,7 +136,7 @@
             <div class="row justify-content-center">
               <div class="col-md-6 ">
                 <!-- Material form Register -->
-                <form #signupForm = "ngForm" [formGroup]="registrationFormGroup" novalidate (ngSubmit)="addUser(inputfirstname,inputlastname,inputEmail,inputPassword,confirmPassword)" >
+                <form #signupForm = "ngForm" [formGroup]="registrationFormGroup" novalidate (ngSubmit)="addUser(inputfirstname,inputlastname,inputEmail,inputPassword,confirmPassword,checkBox)" >
                   <!-- Material input  -->
                 <div class="col-md-12">
                     
@@ -146,7 +146,7 @@
                         <input mdbInputDirective 
                         type="text"
                         [(ngModel)]="inputfirstname"
-                        [ngModelOptions]="{standalone: true}"
+                        formControlName="inputfirstname"
                         name="inputfirstname"
                         id="inputfirstname"
                         class="form-control"
@@ -161,7 +161,7 @@
                         <input mdbInputDirective 
                         type="text"
                         [(ngModel)]="inputlastname"
-                        [ngModelOptions]="{standalone: true}"
+                        formControlName="inputlastname"
                         name="inputlastname"
                         id="inputlastname"
                         class="form-control"
@@ -176,19 +176,21 @@
                         <input mdbInputDirective 
                         type="text"
                         [(ngModel)]="inputEmail"
-                        [ngModelOptions]="{standalone: true}"
-                        #inputEmailset="ngModel"
+                        formControlName="inputEmail"
                         name="inputEmail"
                         id="inputEmail"
                         class="form-control"
-                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+
                         required>
 
                         <label for="inputEmail" class="">eMail address:</label>
                     </div>
+
+                    <p class="bg-danger" *ngIf="registrationFormGroup.controls.inputEmail.errors?.required && registrationFormGroup.controls.inputEmail.touched">please retype email.</p>
+
                     
                     <!-- Check email for frontend validety -->
-                    <div *ngIf="inputEmailset.invalid && (inputEmailset.dirty || inputEmailset.touched)"
+                    <!-- <div *ngIf="inputEmailset.invalid && (inputEmailset.dirty || inputEmailset.touched)"
                         class="alert alert-danger">
                         <div *ngIf = "inputEmailset.errors?.required">
                             Email field can't be blank
@@ -196,7 +198,7 @@
                         <div *ngIf = "inputEmailset.errors?.pattern && inputEmailset.touched">
                             The email id doesn't seem right
                         </div>
-                    </div>
+                    </div> -->
 
                     <!-- Input User Password -->
                     <div [formGroup]="passwordFormGroup" >
@@ -237,13 +239,20 @@
                 </div>
 
                 <!-- Terms and conditions Block -->
-                   <div class="form-group checkbox">
-                    <label>
-                      <input type="checkbox" required> Confirm that you've read the Terms and 
-                      Conditions
-                    </label>
+                   <div class="md-form checkbox">
+                    
+                      <input  
+                      type="checkbox" 
+                      [(ngModel)]="checkBox"
+                      formControlName="checkBox"
+                      name="checkBox"
+                      id="checkBox"
+                      required>
+                      Confirm that you've read the Terms and 
+                    Conditions
                   </div>
                   
+                  <br>
                 <div class="text-center mt-8">
                   <br>
                 <button type="reset" class="btn btn-outline-default btn-lg" routerLink="" routerLinkActive="active">Cancel</button>

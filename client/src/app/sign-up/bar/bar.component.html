@@ -1,15 +1,19 @@
-
-<ul class="nav nav-pills">
-    <li>
-        <a class="btn btn-info btn-lg active" mdbWavesEffect routerLink="/signup" routerLinkActive="active" disabled [routerLinkActiveOptions]="{ exact: false }"><span class="glyphicon glyphicon-user"> Registration</span></a>
-    </li>
-    <li>
-        <a class="btn btn-info btn-lg" mdbWavesEffect routerLink="/signup/userSettings" routerLinkActive="active"><span class="glyphicon glyphicon-pencil"></span> User - settings</a>
-    </li>
-    <li>
-        <a class="btn btn-info btn-lg" mdbWavesEffect routerLink="/userSettings" routerLinkActive="active"><span class="glyphicon glyphicon-list-alt"></span> Questions</a>
-    </li>
-    <li>
-        <a class="btn btn-info btn-lg" mdbWavesEffect routerLink="/finish" routerLinkActive="active"><span class="glyphicon glyphicon-ok"> Finish</span></a>
-    </li>
-  </ul>
+<div class="bc-icons-2">
+    <ol class="breadcrumb primary-color justify-content-center">
+        <li class="breadcrumb-item">
+            <a class="btn btn-info btn-lg active" mdbWavesEffect routerLink="/signup" routerLinkActive="active" disabled [routerLinkActiveOptions]="{ exact: true }"><span class="glyphicon glyphicon-user"> Registration</span></a>
+            <i class="fa fa-caret-right mx-2" aria-hidden="true"></i>
+        </li>
+        <li class="breadcrumb-item">
+            <a class="btn btn-info btn-lg" mdbWavesEffect routerLink="/signup/userSettings" routerLinkActive="active"><span class="glyphicon glyphicon-pencil"></span> User - settings</a>
+            <i class="fa fa-caret-right mx-2" aria-hidden="true"></i>
+        </li>
+        <li class="breadcrumb-item active">
+            <a class="btn btn-info btn-lg" mdbWavesEffect routerLink="/signup/questions" routerLinkActive="active"><span class="glyphicon glyphicon-list-alt"></span> Questions</a>
+            <i class="fa fa-caret-right mx-2" aria-hidden="true"></i>
+        </li>
+        <li class="breadcrumb-item">
+                <a class="btn btn-info btn-lg" mdbWavesEffect routerLink="/signup/finish" routerLinkActive="active"><span class="glyphicon glyphicon-check"></span> Finish</a>
+        </li>
+    </ol>
+</div>
