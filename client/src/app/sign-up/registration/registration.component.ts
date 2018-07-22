@@ -2,6 +2,8 @@ import { Component, OnInit, NgModule } from '@angular/core';
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
 //import users class
 import {UserService} from './../../user.service'
+//router
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -17,11 +19,12 @@ export class RegistrationComponent implements OnInit {
     inputEmail: string;
     inputPassword: string;
     confirmPassword: string;
+    error;
  
     registrationFormGroup: FormGroup;
     passwordFormGroup: FormGroup;
     
-  constructor(private userservice: UserService, private fb: FormBuilder) { 
+  constructor(private userservice: UserService, private fb: FormBuilder, private router: Router) { 
 
     //password validator stat function
     this.passwordFormGroup = this.fb.group({
@@ -41,12 +44,19 @@ export class RegistrationComponent implements OnInit {
   }
 
   addUser(inputfirstname, inputlastname, inputEmail, inputPassword, confirmPassword,checkBox) {
-    this.userservice.addUser(inputfirstname, inputlastname, inputEmail, inputPassword, confirmPassword,checkBox);
+    if(this.registrationFormGroup.valid){
+      this.error = this.userservice.addUser(inputfirstname, inputlastname, inputEmail, inputPassword, confirmPassword,checkBox);
+          
+        this.router.navigate(['/signup/userSettings']);
+    }
+
   }
 
   ngOnInit() {
          
   }
+
+
   
 
 }
