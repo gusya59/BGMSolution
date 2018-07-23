@@ -1,7 +1,8 @@
+
 import { Component, OnInit, NgModule } from '@angular/core';
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
-//import users class
-import {UserService} from './../../user.service'
+//import auth class
+import { AuthService } from './../../service/auth.service';
 //router
 import { Router } from '@angular/router';
 
@@ -25,7 +26,7 @@ export class RegistrationComponent implements OnInit {
     // group of password and confiramtion
     passwordFormGroup: FormGroup;
     
-  constructor(private userservice: UserService, private fb: FormBuilder, private router: Router) { 
+  constructor(private auth: AuthService, private fb: FormBuilder, private router: Router) { 
 
     //password validator stat function
     this.passwordFormGroup = this.fb.group({
@@ -48,11 +49,25 @@ export class RegistrationComponent implements OnInit {
   //RegisterUser funciton 
   RegisterUser(inputfirstname, inputlastname, inputEmail, inputPassword, confirmPassword,checkBox) {
     if(this.registrationFormGroup.valid){
+      //prevent browser default actions
       event.preventDefault()
-      console.log(event)
-      this.userservice.addUser(inputfirstname, inputlastname, inputEmail, inputPassword, confirmPassword,checkBox);
-        this.router.navigate(['/signup/userSettings']);
 
+      console.log(event)
+      console.log(inputfirstname, inputlastname, inputEmail, inputPassword, confirmPassword,checkBox)
+      //run the registration function
+      this.auth.addUser(inputfirstname, inputlastname, inputEmail, inputPassword, confirmPassword,checkBox).subscribe(data =>  {
+          if(data.succsess){
+            this.router.navigate(['userSettings'])
+            this.auth.setLoggedIn(true)
+          }
+          else
+          this.router.navigate(['userSettings'])  //test only! remove!
+          this.auth.setLoggedIn(true) 
+        }
+
+        
+      )
+        
     }
 
   }

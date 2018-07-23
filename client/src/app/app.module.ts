@@ -39,8 +39,10 @@ import { BarComponent } from './sign-up/bar/bar.component';
 
 //for the server side connection
 import { ReactiveFormsModule } from '@angular/forms';
-//user service
-import { UserService } from './user.service';
+//auth service + guard
+import { AuthService } from './service/auth.service';
+import { AuthGuard } from './service/auth.guard';
+
 
 //configuration objects
 const appRoutes: Routes = [
@@ -62,7 +64,9 @@ const appRoutes: Routes = [
   {
     path: 'user',
     component: UserComponent,
+    canActivate: [AuthGuard],
     data: { title: 'user' }
+    
   },
   {
     path: 'signup',
@@ -70,8 +74,10 @@ const appRoutes: Routes = [
     data: { title: 'signup' },
     children: [ 
       {path: '', component: RegistrationComponent},
-      {path: 'userSettings', component: UserSettingsComponent}, 
-      {path: 'userSettings/finish', component: FinishComponent},
+      {path: 'userSettings', component: UserSettingsComponent,
+      canActivate: [AuthGuard]}, 
+      {path: 'userSettings/finish', component: FinishComponent,
+      canActivate: [AuthGuard]},
     ]
   },
   {
@@ -125,7 +131,7 @@ const appRoutes: Routes = [
       { enableTracing: false } // <-- debugging purposes only
     )
   ],
-  providers: [countryService,RegistrationComponent,UserService],
+  providers: [countryService,RegistrationComponent,AuthService,AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,89 @@
+<div class="container ">
+    <div class="card">
+        <!--Header-->
+        <h3 class="card-header primary-color white-text">First steps to become a user</h3>
+        <!-- Body -->
+        <div class="card-body">
+            <div class="row justify-content-center">
+                <div class="col-md-6 ">
+                <!-- Material form Register -->
+                    <form (submit)="registerUser($event)">
+                        <div class="col-md-12">
+                            <!-- Input User Name -->
+                            <div class="md-form">
+                                <i class="fa fa-user prefix grey-text"></i>
+                                <input mdbInputDirective 
+                                type="text"
+                                name="inputfirstname"
+                                id="inputfirstname"
+                                class="form-control"
+                                    required >
+                                <label for="inputfirstname" class="">First Name:</label>
+                            </div>
+
+                            <!-- Input User Lastname -->
+                            <div class="md-form">
+                                <i class="far fa-user prefix grey-text "></i>
+                                <input mdbInputDirective 
+                                type="text"
+                                name="inputlastname"
+                                id="inputlastname"
+                                class="form-control"
+                                required>
+        
+                                <label for="inputlastname" class="">Last Name:</label>
+                            </div>
+        
+                            <!-- Input email -->
+                            <div class="md-form">
+                                <i class="fa fa-envelope prefix grey-text"></i>
+                                <input mdbInputDirective 
+                                type="text"
+                                name="inputEmail"
+                                id="inputEmail"
+                                class="form-control"
+                                required>
+        
+                                <label for="inputEmail" class="">eMail address:</label>
+                            </div>
+
+                            <!-- Password -->
+                            
+                                <div class="md-form">
+                                    <i class="fa fa-key prefix grey-text"></i>
+                                    <input mdbInputDirective 
+                                    type="password"
+                                    id="inputPassword" 
+                                    class="form-control"
+                                    minlength ="8" 
+                                    required>
+                                    <label for="inputPassword" class="">Password:</label>
+                                </div>
+        
+                                <p class="bg-danger" *ngIf="passwordFormGroup.controls.inputPassword.errors?.required && passwordFormGroup.controls.inputPassword.touched">Password is required.</p>
+        
+                                <!-- Confirm password -->
+                                <div class="md-form">
+                                    <i class="fas fa-lock prefix grey-text"></i>
+                                    <input mdbInputDirective 
+                                    type="password"
+                                    class="form-control"
+                                    id="confirmPassword"
+                                    minlength ="8" 
+                                    required>
+        
+                                    <label for="confirmPassword" class="">Confirm Password:</label>
+                                </div>
+                                
+                                <!-- check password for validety frontend -->
+                                <p class="bg-danger" *ngIf="passwordFormGroup.controls.confirmPassword.errors?.required && passwordFormGroup.controls.confirmPassword.touched">Repeat password is required</p>
+                                <p class="bg-danger" *ngIf="passwordFormGroup.errors?.doesMatchPassword">Password does not match</p>
+        
+                            
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
