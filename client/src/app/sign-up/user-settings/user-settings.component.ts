@@ -28,7 +28,7 @@ export class UserSettingsComponent implements OnInit {
       // property for pre_phone
       private pre_phone: string[];
       //Buisness type
-      private Buisness: string[];
+      private BuisnessType: string[];
 
       selectedCountry: country = new country(0,'Israel');
       countries: country[];
@@ -47,7 +47,7 @@ export class UserSettingsComponent implements OnInit {
     //pre-phone settings
     this.pre_phone =  ['02', '03', '04','05','06','07','08','077'];
      //Buisness type settings
-     this.Buisness = ['store','Webstore','manufacture','retailer','mobile','electronics'];
+     this.BuisnessType = ['store','Webstore','manufacture','retailer','mobile','electronics'];
     
   
 

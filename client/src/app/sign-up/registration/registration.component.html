@@ -14,7 +14,7 @@
                 <div class="col-md-12">
                     
                     <!-- Input User Name -->
-                    <div class="md-form">
+                    <div class="md-form form-lg">
                         <i class="fa fa-user prefix grey-text"></i>
                         <input mdbInputDirective 
                         type="text"
@@ -29,7 +29,7 @@
                     </div>
 
                     <!-- Input User Lastname -->
-                    <div class="md-form">
+                    <div class="md-form form-lg">
                         <i class="far fa-user prefix grey-text "></i>
                         <input mdbInputDirective 
                         type="text"
@@ -44,7 +44,7 @@
                     </div>
 
                     <!-- Input email -->
-                    <div class="md-form">
+                    <div class="md-form form-lg">
                         <i class="fa fa-envelope prefix grey-text"></i>
                         <input mdbInputDirective 
                         type="text"
@@ -75,7 +75,7 @@
 
                     <!-- Input User Password -->
                     <div [formGroup]="passwordFormGroup" >
-                        <div class="md-form">
+                        <div class="md-form form-lg">
                             <i class="fa fa-key prefix grey-text"></i>
                             <input mdbInputDirective 
                             type="password"
@@ -90,7 +90,7 @@
 
                         <p class="bg-danger" *ngIf="passwordFormGroup.controls.inputPassword.errors?.required && passwordFormGroup.controls.inputPassword.touched">Password is required.</p>
 
-                        <div class="md-form">
+                        <div class="md-form form-lg">
                             <i class="fas fa-lock prefix grey-text"></i>
                             <input mdbInputDirective 
                             type="password"
@@ -112,7 +112,7 @@
                 </div>
 
                 <!-- Terms and conditions Block -->
-                   <div class="md-form checkbox">
+                   <div class="md-form checkbox form-lg">
                     
                       <input  
                       type="checkbox" 
