@@ -55,18 +55,19 @@ export class RegistrationComponent implements OnInit {
       console.log(event)
       console.log(inputfirstname, inputlastname, inputEmail, inputPassword, confirmPassword,checkBox)
       //run the registration function
-      this.auth.addUser(inputfirstname, inputlastname, inputEmail, inputPassword, confirmPassword,checkBox).subscribe(data =>  {
-          if(data.succsess){
-            this.router.navigate(['userSettings'])
+      this.auth.addUser(inputfirstname, inputlastname, inputEmail, inputPassword, confirmPassword,checkBox)
+      .subscribe(resp => 
+        { 
+          if(resp.success){
+            this.auth.UserLogin(inputEmail, inputPassword);     
+            console.log(resp);
             this.auth.setLoggedIn(true)
+            this.router.navigate(['/signup/userSettings']);
           }
-          else
-          this.router.navigate(['userSettings'])  //test only! remove!
-          this.auth.setLoggedIn(true) 
-        }
-
-        
-      )
+          else {
+            window.alert(resp.message)
+          }    
+          });;
         
     }
 

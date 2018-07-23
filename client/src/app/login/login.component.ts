@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
 
 
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -29,17 +30,19 @@ export class LoginComponent implements OnInit {
     const InputPassword = target.querySelector('#InputPassword').value
 
 
-    this.auth.getUserInfo(InputEmail, InputPassword)
-    .subscribe(
-      data => {
-        if(data){
-          //redirect to User-Home
-          this.router.navigate(['/user']);
-        }
-        else
-          window.alert(data)
+    this.auth.UserLogin(InputEmail, InputPassword)
+    .subscribe(resp => 
+      { 
+        if(resp.success){
+        console.log(resp);
+        this.auth.setLoggedIn(true)
+        this.router.navigate(['user']);
       }
-    )
-    console.log(InputEmail,InputPassword)
+      else {
+        window.alert(resp.message)
+      }
+
+
+      });
   }
 }

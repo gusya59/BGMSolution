@@ -1,11 +1,12 @@
+import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 // Import of http service
 import { HttpClient } from '@angular/common/http';
 
 //interface for returning router resp
 interface respData {
-  succsess: boolean,
-  msg: string
+  success: boolean,
+  message: string
 }
 
 @Injectable({
@@ -17,7 +18,7 @@ export class AuthService {
   private loggedInStatus = false;
 
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   //get logged in replace property name with action
   get isLoggedIn(){
@@ -30,9 +31,9 @@ export class AuthService {
   }
 
   //get user info from backend HTTP
-  getUserInfo(InputEmail,InputPassword){
+  UserLogin(InputEmail,InputPassword){
     //will get user info if correct
-    const uri = 'http://localhost:1234/signup/login';
+    const uri = 'http://www.mocky.io/v2/5b5616993200004546828145';
     // our object holding the login data
     const obj = {
       InputEmail: InputEmail,
@@ -41,10 +42,11 @@ export class AuthService {
 
     //post to data to server
     return this.http.post<respData>(uri,obj)
+    console.log(InputEmail,InputPassword)
   }
 
   addUser(inputfirstname, inputlastname, inputEmail, inputPassword, confirmPassword,checkBox) {
-    const uri = 'http://localhost:1234/signup/registration';
+    const uri = 'http://www.mocky.io/v2/5b561bd1320000934b828150';
     const obj = {
     
     inputfirstname: inputfirstname,
