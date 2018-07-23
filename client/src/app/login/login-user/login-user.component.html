@@ -20,29 +20,28 @@
       <div class="row justify-content-center">
         <div class="col-md-6 ">
           <!-- Material form login -->
-          <form action="#">
+          <form (submit)="UserLogin($event)">
             <!-- Material input password -->
           <div class="col-md-12">
               <div class="md-form">
                   <i class="fa fa-lock prefix grey-text"></i>
                   <input mdbInputDirective 
-                  type="password"
-                   
-                  id="pwd" 
+                  type="InputPassword"
+                  id="InputPassword" 
                   class="form-control">
-                  <label for="pwd" class="">Your password</label>
+                  <label for="InputPassword" class="">Your password</label>
               </div>
 
             <!-- Check if not restart connection token -->
             <div class="form-check">
               <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" name="remember"> Remember me
+                <input class="form-check-input" type="checkbox" name="checkBox"> Remember me
               </label>
             </div>
           </div>
           <div class="text-center mt-8">
             <br>
-            <button (click)="login()" class="btn btn-outline-primary btn-lg">Login</button>
+            <button type="submit" value="submit" class="btn btn-outline-primary btn-lg">Login</button>
             <button (click)="notYou()" class="btn btn-outline-danger btn-lg">Not you?</button>
           </div>
         </form>

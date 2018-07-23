@@ -17,25 +17,42 @@
         <div class="row justify-content-center">
           <div class="col-md-6 ">
             <!-- Material form login -->
-            <form action="#">
+            <form (submit)="LoginUser($event)">
               <!-- Material input password -->
-            <div class="col-md-12">
-                <div class="md-form">
-                    <i class="fa fa-user prefix grey-text"></i>
-                    <input mdbInputDirective 
-                    type="email" 
-                    class="form-control" 
-                    id="email" 
-                    name="email" >
-                    <label for="email" class="">Email:</label>
+              <div class="col-md-12">
+                  <div class="md-form">
+                      <i class="fa fa-user prefix grey-text"></i>
+                      <input mdbInputDirective 
+                      type="email" 
+                      class="form-control" 
+                      id="InputEmail" 
+                      name="InputEmail"
+                      required>
+                      <label for="InputEmail" class="">Email:</label>
                   </div>
-  
+              </div>
+
+              <!-- Material input password -->
+              <div class="col-md-12">
+                <div class="md-form">
+                    <i class="fa fa-key prefix grey-text"></i>
+                    <input mdbInputDirective 
+                    type="password" 
+                    class="form-control" 
+                    id="InputPassword" 
+                    name="InputPassword"
+                    required>
+                    <label for="InputPassword" class="">Password:</label>
+                </div>
             </div>
-            <div class="text-center mt-8">
-              <br>
-              <button routerLink="/loginUser" routerLinkActive="active" class="btn btn-outline-primary btn-lg">Continue</button>
-              <button routerLink="/signup" routerLinkActive="active" class="btn btn-outline-warning btn-lg">New User</button>
-            </div>
+
+              <div class="text-center mt-8">
+                <br>
+
+                <button routerLink="/signup" routerLinkActive="active" class="btn btn-outline-warning btn-lg">New User</button>
+                <button type="submit" value="submit" class="btn btn-outline-primary btn-lg">Login</button>
+                
+              </div>
           </form>
         </div>
       </div>
