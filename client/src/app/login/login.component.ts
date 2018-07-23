@@ -32,12 +32,12 @@ export class LoginComponent implements OnInit {
     this.auth.getUserInfo(InputEmail, InputPassword)
     .subscribe(
       data => {
-        if(data.success){
+        if(data){
           //redirect to User-Home
           this.router.navigate(['/user']);
         }
         else
-          window.alert(data.message)
+          window.alert(data)
       }
     )
     console.log(InputEmail,InputPassword)
