@@ -15,7 +15,7 @@
 
     <div class="row justify-content-center">
         <div class= "col-md-8">
-          <form #signupForm = "ngForm">
+          <form #signupForm = "ngForm" (ngSubmit)="userSettings(inputBuisnessName,Buisness,pm,mobile,pp,phone,selectCountry,selectCity)" >
                   <!-- Buisness Name Block -->
                   <div class="md-form">
                     
@@ -45,25 +45,10 @@
                               <option value="0">
                                 --Select Type-- 
                               </option>
-                              <option *ngFor="let Buisness of Buisness" >{{Buisness}}
+                              <option *ngFor="let Buisness of BuisnessType" [value] = "Buisness">{{Buisness}}
                       </select>
 
                       
-                  </div>
-
-                  <!-- Buisness Name Block -->
-                  <div class="md-form">
-                    
-                    <input mdbInputDirective
-                     type="text"
-                    ngModel
-                      name="mobile"
-                      id="mobile"
-                      
-                      class="form-control"
-                      required>
-
-                      <label for="mobile">mobile Phone</label>
                   </div>
 
                   <!-- Mobile Phone  -->

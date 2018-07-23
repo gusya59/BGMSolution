@@ -52,7 +52,7 @@ export class RegistrationComponent implements OnInit {
       //prevent browser default actions
       event.preventDefault()
 
-      console.log(event)
+
       console.log(inputfirstname, inputlastname, inputEmail, inputPassword, confirmPassword,checkBox)
       //run the registration function
       this.auth.addUser(inputfirstname, inputlastname, inputEmail, inputPassword, confirmPassword,checkBox)

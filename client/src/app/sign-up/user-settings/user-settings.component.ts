@@ -59,6 +59,12 @@ export class UserSettingsComponent implements OnInit {
     })
   }
 
+    //user settings event
+
+    userSettings(inputBuisnessName,Buisness,pm,mobile,pp,phone,selectCountry,selectCity){
+      
+    }
+    
     //router back button
     back() {
       this.location.back();
