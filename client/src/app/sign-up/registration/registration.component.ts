@@ -19,9 +19,10 @@ export class RegistrationComponent implements OnInit {
     inputEmail: string;
     inputPassword: string;
     confirmPassword: string;
-    error;
- 
+
+    // our regisration form data collection
     registrationFormGroup: FormGroup;
+    // group of password and confiramtion
     passwordFormGroup: FormGroup;
     
   constructor(private userservice: UserService, private fb: FormBuilder, private router: Router) { 
@@ -31,8 +32,10 @@ export class RegistrationComponent implements OnInit {
       inputPassword: ['', Validators.required],
       confirmPassword: ['', Validators.required]
     }, {
+      //request for password validation
       validator: RegistrationValidator.validate.bind(this)
     });
+
     //other validators
     this.registrationFormGroup = this.fb.group({
       inputfirstname: ['', Validators.required],
@@ -42,12 +45,14 @@ export class RegistrationComponent implements OnInit {
       passwordFormGroup: this.passwordFormGroup
     });
   }
-
-  addUser(inputfirstname, inputlastname, inputEmail, inputPassword, confirmPassword,checkBox) {
+  //RegisterUser funciton 
+  RegisterUser(inputfirstname, inputlastname, inputEmail, inputPassword, confirmPassword,checkBox) {
     if(this.registrationFormGroup.valid){
-      this.error = this.userservice.addUser(inputfirstname, inputlastname, inputEmail, inputPassword, confirmPassword,checkBox);
-          
+      event.preventDefault()
+      console.log(event)
+      this.userservice.addUser(inputfirstname, inputlastname, inputEmail, inputPassword, confirmPassword,checkBox);
         this.router.navigate(['/signup/userSettings']);
+
     }
 
   }
