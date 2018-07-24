@@ -15,16 +15,15 @@
 
     <div class="row justify-content-center">
         <div class= "col-md-8">
-          <form #signupForm = "ngForm" (ngSubmit)="userSettings(inputBuisnessName,Buisness,pm,mobile,pp,phone,selectCountry,selectCity)" >
+          <form #signupForm = "ngForm" (ngSubmit)="userSettings()" >
                   <!-- Buisness Name Block -->
                   <div class="md-form">
                     
                     <input mdbInputDirective
                      type="text"
-                    ngModel
                       name="inputBuisnessName"
                       id="inputBuisnessName"
-                      
+                      [(ngModel)]="inputBuisnessName"
                       class="form-control"
                       required>
 
@@ -38,7 +37,7 @@
                       <select mdbInputDirective
                               class="form-control"
                               id="Buisnesstype"
-                              ngModel
+                              [(ngModel)]="selectedBuisnesstype"
                               name = "Buisnesstype"
                               >
                                
@@ -59,7 +58,7 @@
                               <select mdbInputDirective
                               class="form-control"
                               id="selectPre-Mobile"
-                              ngModel 
+                              [(ngModel)]="selectedPre_mobile" 
                               name = "pre_mobile">
                               <option *ngFor = "let pm of pre_mobile"
                                 [value] = "pm"> {{pm}} 
@@ -70,7 +69,7 @@
                           <label> - </label>
                           <div class="col-md-7">
                             <input type="text"
-                            ngModel 
+                            [(ngModel)]="mobile" 
                             name="mobile"
                             autocomplete="off"
                             class="form-control"
@@ -87,7 +86,7 @@
                               <select mdbInputDirective
                               class="form-control"
                               id="selectPre-Phone"
-                              ngModel
+                              [(ngModel)]="SelectedPre_phone"
                               name="pre_phone">
                                
                               <option *ngFor = "let pp of pre_phone"
@@ -100,7 +99,7 @@
                           <div class="col-md-7">
                               <input mdbInputDirective
                               type="text"
-                            ngModel 
+                              [(ngModel)]="phone" 
                             name="phone"
                             autocomplete="off"
                             class="form-control"
@@ -117,7 +116,7 @@
                               <select mdbInputDirective
                               class="form-control"
                               id="selectCountry"
-                              [(ngModel)] ="selectedCountry.id" 
+                              [(ngModel)] ="selectCountry" 
                               (change)= "onSelect($event.target.value)"
                               name = "country">
                                
@@ -136,7 +135,10 @@
                           
                               <select mdbInputDirective
                               class="form-control"
-                              id="selectCity">
+                              id="selectCity"
+                              [(ngModel)]="selectCity"
+                              name="selectCity"
+                              >
                                
                               <option *ngIf='selectedCountry.id == 0' value="0">
                                 --Select City-- 
@@ -151,7 +153,7 @@
                     <label for="inputAddress">Buisness Address</label>
                     <input mdbInputDirective
                     type="text"
-                    ngModel
+                    [(ngModel)]="inputAddress"
                       name="inputAddress"
                       id="inputAddress"
 

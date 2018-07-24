@@ -75,8 +75,9 @@ const appRoutes: Routes = [
     children: [ 
       {path: '', component: RegistrationComponent},
       {path: 'userSettings', component: UserSettingsComponent,
-      // canActivate: [AuthGuard]
-    }, 
+      canActivate: [AuthGuard]}, 
+      // {path: 'userSettings/questions', component: QuestionsComponent,
+      // canActivate: [AuthGuard]},
       {path: 'userSettings/finish', component: FinishComponent,
       canActivate: [AuthGuard]},
     ]

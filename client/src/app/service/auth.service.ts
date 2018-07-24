@@ -33,7 +33,7 @@ export class AuthService {
   //get user info from backend HTTP
   UserLogin(InputEmail,InputPassword){
     //will get user info if correct
-    const uri = 'http://www.mocky.io/v2/5b5616993200004546828145';
+    const uri = 'http://www.mocky.io/v2/5b576302310000823b4d2252';
     // our object holding the login data
     const obj = {
       InputEmail: InputEmail,
@@ -42,11 +42,11 @@ export class AuthService {
 
     //post to data to server
     return this.http.post<respData>(uri,obj)
-    console.log(InputEmail,InputPassword)
+    
   }
 
   addUser(inputfirstname, inputlastname, inputEmail, inputPassword, confirmPassword,checkBox) {
-    const uri = 'http://www.mocky.io/v2/5b561bd1320000934b828150';
+    const uri = 'http://www.mocky.io/v2/5b576302310000823b4d2252';
     const obj = {
     
     inputfirstname: inputfirstname,
