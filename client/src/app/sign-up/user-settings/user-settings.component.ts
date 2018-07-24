@@ -91,7 +91,7 @@ export class UserSettingsComponent implements OnInit {
         { 
           if(resp.success){     
             console.log(resp);
-            this.router.navigate(['/signup/questions']);
+            this.router.navigate(['/signup/userSettings/questions']);
           }
           else {
             window.alert(resp.message)

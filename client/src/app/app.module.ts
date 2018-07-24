@@ -42,6 +42,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 //auth service + guard
 import { AuthService } from './service/auth.service';
 import { AuthGuard } from './service/auth.guard';
+import { QuestionsComponent } from './sign-up/questions/questions.component';
 
 
 //configuration objects
@@ -75,11 +76,14 @@ const appRoutes: Routes = [
     children: [ 
       {path: '', component: RegistrationComponent},
       {path: 'userSettings', component: UserSettingsComponent,
-      canActivate: [AuthGuard]}, 
-      // {path: 'userSettings/questions', component: QuestionsComponent,
-      // canActivate: [AuthGuard]},
+      // canActivate: [AuthGuard]
+    }, 
+      {path: 'userSettings/questions', component: QuestionsComponent,
+      // canActivate: [AuthGuard]
+    },
       {path: 'userSettings/finish', component: FinishComponent,
-      canActivate: [AuthGuard]},
+      // canActivate: [AuthGuard]
+    },
     ]
   },
   {
@@ -119,7 +123,8 @@ const appRoutes: Routes = [
     UserComponent,
     PreviewComponent,
     OurServiceComponent,
-    BarComponent
+    BarComponent,
+    QuestionsComponent
   ],
   imports: [
     BrowserModule,
