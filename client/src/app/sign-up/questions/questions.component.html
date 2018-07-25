@@ -1,3 +1,39 @@
-<p>
-  questions works!
-</p>
+<!-- Questions form  -->
+<!-- content will be updated from servere with request getQuestion and recreated up until flag for finish -->
+
+<div class="container ">
+    <div class="card">
+        <!--Header-->
+        <h3 class="card-header primary-color white-text">Take a few questions to know you better</h3>
+        <!-- Body -->
+        <div class="card-body">
+            <div class="row justify-content-center">
+              <div class="col-md-6 ">
+                <!-- Material form Questions -->
+                <form >
+                  
+                  <!-- Question body Delivered here -->
+                  <h2 >{{question.body}}</h2>
+                  <!-- Answers delivered here -->
+                  <!-- Group of radios - option -->
+
+                  <div class="custom-control custom-radio" *ngFor="let question of question.answers">
+                      <input  type="radio" class="custom-control-input" id="answers" name="groupOfRadios">
+                      <label  class="custom-control-label" for="answers">{{question.body}}</label>
+                  </div>
+                    
+
+
+
+
+                  <br>
+                <div class="text-center mt-8">
+                  <br>
+                  <button type="reset" class="btn btn-outline-default btn-lg" routerLink="" routerLinkActive="active">Skip</button>
+                  <button type="submit" class="btn btn-outline-success btn-lg">Next</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        </div>

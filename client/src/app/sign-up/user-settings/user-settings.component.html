@@ -15,7 +15,7 @@
 
     <div class="row justify-content-center">
         <div class= "col-md-8">
-          <form #signupForm = "ngForm"  (ngSubmit)="userSettings()" >
+          <form #SettingsForm = "ngForm"  (ngSubmit)="userSettings()" >
             
                   <!-- Buisness Name Block -->
                   <div class="md-form">  
@@ -164,7 +164,7 @@
                  <!-- Buttons Block -->
                   <div class="md-form">
                       <button type="reset" class="btn btn-outline-default btn-lg" (click)="back();">Back</button>
-                      <button type="submit" class="btn btn-outline-success btn-lg" [disabled]="!signupForm.form.valid">Next</button>
+                      <button type="submit" class="btn btn-outline-success btn-lg" [disabled]="!SettingsForm.form.valid">Next</button>
                   </div>
                   
           </form>

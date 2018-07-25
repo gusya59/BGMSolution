@@ -45,6 +45,7 @@ import { AuthGuard } from './service/auth.guard';
 import { QuestionsComponent } from './sign-up/questions/questions.component';
 
 
+
 //configuration objects
 const appRoutes: Routes = [
   {  
@@ -125,6 +126,7 @@ const appRoutes: Routes = [
     OurServiceComponent,
     BarComponent,
     QuestionsComponent
+
   ],
   imports: [
     BrowserModule,
