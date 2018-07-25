@@ -5,7 +5,7 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 var passport = require('passport');
-var flash    = require('connect-flash');
+var flash = require('connect-flash');
 
 //routes
 var indexRouter = require('./routes/index');
@@ -19,22 +19,22 @@ app.set('view engine', 'pug');
 //connect to the DB
 var mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
-mongoose.connect('mongodb+srv://BGM:'+process.env.MONGO_ATLAS_PSW +'@bgmsoultion-znmku.mongodb.net/test1',{ useNewUrlParser: true })
-  .then(() =>  console.log('connection succesful'))
+mongoose.connect('mongodb+srv://BGM:' + process.env.MONGO_ATLAS_PSW + '@bgmsoultion-znmku.mongodb.net/test1', { useNewUrlParser: true })
+  .then(() => console.log('connection succesful'))
   .catch((err) => console.error(err));
 
 require('./config/passport')(passport); // pass passport for configuration
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({'extended':'true'}));
+app.use(bodyParser.urlencoded({ 'extended': 'true' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 //app.use('/books', express.static(path.join(__dirname, 'dist')));
 
 //create the connection between a backend and a frontend servers - C-O-R-S
 // use it before all route definitions
-app.use(cors({origin: 'http://localhost:4200'}));
+app.use(cors({ origin: 'http://localhost:4200' }));
 // Adding headers
 app.use(function (req, res, next) {
   // Website you wish to allow to connect
@@ -51,7 +51,7 @@ app.use(function (req, res, next) {
 });
 
 app.use('/', indexRouter);
-app.use('/signup', signupRouter);  ///!!!!!!! need to be localhost/user/another stuff
+app.use('/signup', signupRouter);  
 
 //app.use('./api', apiRouter);
 
@@ -64,15 +64,15 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 //require('./routes/users.js')(passport);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
 // error handler
-app.use(function(err, req, res, next) {
-  
+app.use(function (err, req, res, next) {
+
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
