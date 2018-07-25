@@ -1,9 +1,11 @@
+import { FormsModule } from '@angular/forms';
 import { QuestionService } from './../../service/question.service';
 // http service
 import { HttpClient } from '@angular/common/http';
 // router service
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+
 
 
 
@@ -14,25 +16,28 @@ import { Component, OnInit } from '@angular/core';
 })
 export class QuestionsComponent implements OnInit {
 
+  //variables of questions. contains the selected option from our radioButton form
+  selectedEntry;
   //define variables to use
-    private question : {
-      id: number;
-      body: string;
-      answers: {
+  private question: {
+    id: number;
+    body: string;
+    answers: {
         id: number;
         body: string;
-      }[]
-    }
+    }[]
+} = {
+   id: 0,       //define ID empty
+   body: null,  //define body as null
+   answers : []  //define empty string
+}
+    
 
-  constructor(private router: Router, private http: HttpClient, private quest: QuestionService) { }
+  constructor(private router: Router, private http: HttpClient, private quest: QuestionService, private form: FormsModule) { }
 
   ngOnInit() {
-    // this.question = {
-    //   id:1,
-    //   body:"Test body",
-    //   answeres: [{id:1,body:"test1"},{id:2,body:"test2"},{id:3,body:"test3"},{id:4,body:"test4"}]
-    // }
-    
+
+    //Init the question form 
     this.quest.getQuestion().subscribe(
       data=> {
         this.question = {
@@ -43,18 +48,33 @@ export class QuestionsComponent implements OnInit {
           }
     )
     }
+
+  // catch selected entry from our radiobutton form
+  onSelectionChange(question) {
+    this.selectedEntry = question;
   }
 
-  // QuestionAns(){
-  //   console.log(this.question)
-  //   this.quest.getQuestion().subscribe(
-  //     data=> {
-  //       if(data.status == "ok"){
-
-  //       }
-  //     }
+  // run server request for new  question or route finish.
+  QuestionAns(){
+    console.log(this.selectedEntry)
+    this.quest.getNextQuestion(this.question.id,this.selectedEntry).subscribe(
+      data=> {
+        //if we have next question
+        if(data.status == "ok"){
+          this.question = {
+            id: data.question.id,
+            body: data.question.body,
+            answers: data.question.answers
+            }
+        }
+        //no more quesiton remain
+        else if(data.status == "done"){
+          this.router.navigate(['/signup/userSettings/questions/finish']);
+        }
+        //on error
+        else console.log(data.message)
+      }
       
-  //   )
-  // }
-
-
+    )
+  }
+}

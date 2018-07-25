@@ -82,7 +82,7 @@ const appRoutes: Routes = [
       {path: 'userSettings/questions', component: QuestionsComponent,
       // canActivate: [AuthGuard]
     },
-      {path: 'userSettings/finish', component: FinishComponent,
+      {path: 'userSettings/questions/finish', component: FinishComponent,
       // canActivate: [AuthGuard]
     },
     ]
