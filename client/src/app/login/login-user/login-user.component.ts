@@ -14,4 +14,14 @@ export class LoginUserComponent implements OnInit {
 
   }
 
+  UserLogin(event){
+    event.preventDefault();
+
+    // constant holding the form valuse
+    const target= event.target
+    const InputPassword = target.querySelector('#InputPassword').value
+    const checkBox = target.querySelector('#checkBox').value
+    console.log(InputPassword,checkBox)
+  }
+
 }

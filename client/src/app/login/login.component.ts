@@ -1,9 +1,10 @@
+import { Router } from '@angular/router';
+import { AuthService } from './../service/auth.service';
 import { Component, OnInit } from '@angular/core';
-import { ReactiveFormsModule }          from '@angular/forms';
-import { NgModule }                     from '@angular/core';
-import { BrowserModule }                from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+
+
+
+
 
 
 @Component({
@@ -13,8 +14,35 @@ import { HttpClient } from '@angular/common/http';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) { }
+  constructor(private auth: AuthService, private router: Router) {
+
+   }
 
   ngOnInit() {
+  }
+
+  //get email and password from component and send it to auth
+  LoginUser(event){
+    event.preventDefault(); 
+    // constant holding the form valuse
+    const target = event.target
+    const InputEmail = target.querySelector('#InputEmail').value
+    const InputPassword = target.querySelector('#InputPassword').value
+
+
+    this.auth.UserLogin(InputEmail, InputPassword)
+    .subscribe(resp => 
+      { 
+        if(resp.success){
+        console.log(resp);
+        this.auth.setLoggedIn(true)
+        this.router.navigate(['user']);
+      }
+      else {
+        window.alert(resp.message)
+      }
+
+
+      });
   }
 }

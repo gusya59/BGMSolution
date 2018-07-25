@@ -7,7 +7,10 @@ import {country} from './../../country';
 import {city} from './../../city';
 //routing from location
 import { Location } from '@angular/common'; 
-
+//import settings file
+import {SettingsService} from './../../service/settings.service'
+//import router
+import { Router } from '@angular/router'; 
 
 
 
@@ -20,6 +23,16 @@ import { Location } from '@angular/common';
 })
 
 export class UserSettingsComponent implements OnInit {
+  //define object from the form
+  inputBuisnessName: string;
+  selectedBuisnesstype: string;
+  selectedPre_mobile: string = "";
+  mobile: string = "";
+  SelectedPre_phone: string = "";
+  phone: string = "";
+  selectCountry: string;
+  selectCity: string;
+  inputAddress: string;
 
       //Property for the user
       private company: company;
@@ -28,15 +41,17 @@ export class UserSettingsComponent implements OnInit {
       // property for pre_phone
       private pre_phone: string[];
       //Buisness type
-      private Buisness: string[];
+      private BuisnessType: string[];
 
       selectedCountry: country = new country(0,'Israel');
       countries: country[];
       cities: city[];
 
-  constructor(private _countryService: countryService, private location: Location) {
+  constructor(private _countryService: countryService, private location: Location, private settings: SettingsService, private router: Router) {
+    //define list of countries to use from service
     this.countries = this._countryService.getCountries();
     }
+    //define list of citis to use from service acording to country
     onSelect(countryid) {
       this.cities = this._countryService.getCities().filter((item) => item.countryid == countryid)
     }
@@ -46,19 +61,44 @@ export class UserSettingsComponent implements OnInit {
     this.pre_mobile =  ['050', '052', '053','054','055','058'];
     //pre-phone settings
     this.pre_phone =  ['02', '03', '04','05','06','07','08','077'];
-     //Buisness type settings
-     this.Buisness = ['store','Webstore','manufacture','retailer','mobile','electronics'];
+    //Buisness type settings
+    this.BuisnessType = ['store','Webstore','manufacture','retailer','mobile','electronics'];
     
   
 
     //Create a new company object
     this.company = new company({
-      b_name:"", b_type:"", mobile:"", phone: "", address:"",
-      pre_mobile: this.pre_mobile[0],
-      pre_phone: this.pre_phone[0]
+      b_name:"", b_type:"", mobile:"", phone: "", city:"",country:"", address:"",
     })
   }
 
+    //user settings event
+
+    userSettings(){
+        //set company settings
+      this.company.b_name = this.inputBuisnessName;
+      this.company.b_type = this.selectedBuisnesstype;
+      this.company.mobile = this.selectedPre_mobile.concat(this.mobile);
+      this.company.phone = this.SelectedPre_phone.concat(this.phone);
+      this.company.city = this.cities[+this.selectCity-1].name;  //unload city from list
+      this.company.country = this.countries[+this.selectCountry-1].name;  //unload country from list
+      this.company.address = this.inputAddress;
+      
+       
+
+      this.settings.userSettings(this.company)
+      .subscribe(resp => 
+        { 
+          if(resp.success){     
+            console.log(resp);
+            this.router.navigate(['/signup/userSettings/questions']);
+          }
+          else {
+            window.alert(resp.message)
+          }    
+          });;
+    }
+    
     //router back button
     back() {
       this.location.back();
