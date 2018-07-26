@@ -7,7 +7,7 @@ var registrationSchema = require('../models/Registration.js');
 
 //registration
 router.post('/registration', async function (req, res) {
-
+console.log("the input is: "+req,body);
   var user = req.body;
   var errors = []; //will contain all the errors
   await RegistrationValidation(errors, user);

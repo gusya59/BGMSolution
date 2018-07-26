@@ -88,7 +88,6 @@ class RegistrationValidator {
       let inputPassword = registrationFormGroup.controls.inputPassword.value;
       let confirmPassword = registrationFormGroup.controls.confirmPassword.value;
 
-
       if (confirmPassword !== inputPassword) {
           return {
               doesMatchPassword: true
