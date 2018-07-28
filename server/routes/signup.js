@@ -10,7 +10,7 @@ var registrationSchema = require('../models/Registration.js');
 
 //registration
 router.post('/registration', async function (req, res) {
-console.log("the input is: "+req.body);
+  console.log("the input is: " + req.body);
   var user = req.body;
   var errors = []; //will contain all the errors
   await RegistrationValidation(errors, user);
@@ -50,30 +50,33 @@ router.post('/usersettings', async function (req, res) {
 });
 
 //log in function
-router.post('/login', async function(req, res){
+router.post('/login', async function (req, res) {
   //console.log("the login input is: "+req.body);
   var body = req.body;
   var errors = [];
   // check the validation of email and password input
-  await validateEmail(errors, body.email).then(validatePassword(errors,body.password));
-  if(!errors.length){ //validate email and password input
-     //if email and password are valid
+  await validateEmail(errors, body.email).then(validatePassword(errors, body.password));
+  if (!errors.length) { //validate email and password input
+    //if email and password are valid
     var emailFound = await registrationSchema.findByEmail(body.email); //returns user object with all the data
-    var passGood = await registrationSchema.verifyPassword(body.password, emailFound.password)
-    //check if there is such user and if the password is matching
-    if (!emailFound || !passGood){
-      res.status(200).send({success:false,message: "email or password doesn't match"});
-    }
-    else{ 
-    //create token
-    var token = jwt.sign({userID: body.email}, 'todo-app-super-shared-secret', {expiresIn: '4h'});
-    //console.log("the token is "+ token);
-    res.status(200).send({success:true, token:token});
+    if (emailFound) {
+      var passGood = await registrationSchema.verifyPassword(body.password, emailFound.password)
+
+      //check if there is such user and if the password is matching
+      if (!passGood) {
+        res.status(200).send({ success: false, message: "email or password doesn't match" });
+      }
+      else {
+        //create token
+        var token = jwt.sign({ userID: body.email }, 'todo-app-super-shared-secret', { expiresIn: '4h' });
+        //console.log("the token is "+ token);
+        res.status(200).send({ success: true, token: token });
+      }
     }
   }
-  else{
-    res.status(200).send({success:false,errors: errors});
-  } 
+  else {
+    res.status(200).send({ success: false, errors: errors });
+  }
 })
 
 //functions
