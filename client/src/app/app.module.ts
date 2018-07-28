@@ -43,6 +43,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './service/auth.service';
 import { AuthGuard } from './service/auth.guard';
 import { QuestionsComponent } from './sign-up/questions/questions.component';
+import { Err404Component } from './misc/err404/err404.component';
 
 
 
@@ -66,7 +67,7 @@ const appRoutes: Routes = [
   {
     path: 'user',
     component: UserComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     data: { title: 'user' }
     
   },
@@ -95,6 +96,11 @@ const appRoutes: Routes = [
   { path: '',
     redirectTo: '/Guest',
     pathMatch: 'full'
+  },
+  { 
+    path: '**',
+      component: Err404Component, 
+      data: { title: '404'}
   }
 
 ];
@@ -125,7 +131,8 @@ const appRoutes: Routes = [
     PreviewComponent,
     OurServiceComponent,
     BarComponent,
-    QuestionsComponent
+    QuestionsComponent,
+    Err404Component
 
   ],
   imports: [

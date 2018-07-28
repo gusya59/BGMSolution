@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-finish',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FinishComponent implements OnInit {
 
-  constructor() { }
+    //define time variable
+    timer: number = 30000;
+
+  constructor(private router: Router ) { }
 
   ngOnInit() {
+    setTimeout((router) => {
+      this.router.navigate(['/user']);
+  }, this.timer);  //30s
   }
 
 }
