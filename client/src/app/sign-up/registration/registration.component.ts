@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 
 
 
+
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
@@ -23,6 +24,7 @@ export class RegistrationComponent implements OnInit {
     inputPassword: string;
     confirmPassword: string;
     checkBox: boolean;
+
 
     // our regisration form data collection
     registrationFormGroup: FormGroup;
