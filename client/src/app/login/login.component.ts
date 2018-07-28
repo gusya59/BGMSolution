@@ -35,7 +35,8 @@ export class LoginComponent implements OnInit {
       { 
         if(resp.success){
         console.log(resp);
-        this.auth.setLoggedIn(true)
+        this.auth.setLoggedIn(true);
+        localStorage.setItem('token', resp.token);
         this.router.navigate(['user']);
       }
       else {

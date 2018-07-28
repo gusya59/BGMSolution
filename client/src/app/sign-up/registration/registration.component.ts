@@ -72,7 +72,8 @@ export class RegistrationComponent implements OnInit {
           if(resp.success){
             this.auth.UserLogin(this.inputEmail, this.inputPassword);     
             console.log(resp);
-            this.auth.setLoggedIn(true)
+            this.auth.setLoggedIn(true);
+            localStorage.setItem('token', resp.token);
             this.router.navigate(['/signup/userSettings']);
           }
           else{

@@ -8,7 +8,8 @@ interface respData {
   success: boolean,
   message: string,
   status: number,
-  errors: string[]
+  errors: string[],
+  token: string
 }
 
 @Injectable({
