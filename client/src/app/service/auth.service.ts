@@ -6,7 +6,9 @@ import { HttpClient } from '@angular/common/http';
 //interface for returning router resp
 interface respData {
   success: boolean,
-  message: string
+  message: string,
+  status: number,
+  errors: string[]
 }
 
 @Injectable({
@@ -33,7 +35,7 @@ export class AuthService {
   //get user info from backend HTTP
   UserLogin(InputEmail,InputPassword){
     //will get user info if correct
-    const uri = 'http://www.mocky.io/v2/5b576302310000823b4d2252';
+    const uri = 'http://localhost:1234/signup/login';
     // our object holding the login data
     const obj = {
       InputEmail: InputEmail,
@@ -46,7 +48,7 @@ export class AuthService {
   }
 
   addUser(inputfirstname, inputlastname, inputEmail, inputPassword, confirmPassword,checkBox) {
-    const uri = 'http://www.mocky.io/v2/5b576302310000823b4d2252';
+    const uri = 'http://localhost:1234/signup/registration';
     const obj = {
     
     inputfirstname: inputfirstname,

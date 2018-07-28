@@ -93,6 +93,11 @@ const appRoutes: Routes = [
     component: AboutUsComponent,
     data: { title: 'aboutUs' }
   },
+  {
+    path: 'Inputerror',
+    component: InputErrorComponent,
+    data: { title: 'Inputerror' }
+  },
   { path: '',
     redirectTo: '/Guest',
     pathMatch: 'full'

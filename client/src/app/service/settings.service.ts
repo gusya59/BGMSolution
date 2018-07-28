@@ -21,7 +21,7 @@ export class SettingsService {
 
   userSettings(company){
     console.log(company);
-    const uri = 'http://www.mocky.io/v2/5b576302310000823b4d2252';
+    const uri = 'http://localhost:1234/signup/Usersettings';
     const obj = {
     
       b_name: company.b_name,

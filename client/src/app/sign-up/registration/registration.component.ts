@@ -7,6 +7,7 @@ import { AuthService } from './../../service/auth.service';
 import { Router } from '@angular/router';
 
 
+
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
@@ -15,11 +16,13 @@ import { Router } from '@angular/router';
 
 export class RegistrationComponent implements OnInit {
     angForm: FormGroup;
+    errorMSG: string[];
     inputfirstname: string;
     inputlastname: string;
     inputEmail: string;
     inputPassword: string;
     confirmPassword: string;
+    checkBox: boolean;
 
     // our regisration form data collection
     registrationFormGroup: FormGroup;
@@ -47,25 +50,32 @@ export class RegistrationComponent implements OnInit {
     });
   }
   //RegisterUser funciton 
-  RegisterUser(inputfirstname, inputlastname, inputEmail, inputPassword, confirmPassword,checkBox) {
+  RegisterUser() {
+    //set values
+    this.inputfirstname = this.registrationFormGroup.value.inputfirstname;
+    this.inputlastname = this.registrationFormGroup.value.inputlastname;
+    this.inputEmail = this.registrationFormGroup.value.inputEmail;
+    this.inputPassword = this.passwordFormGroup.value.inputPassword; 
+    this.confirmPassword = this.passwordFormGroup.value.confirmPassword;
+    this.checkBox = this.registrationFormGroup.value.checkBox;
+    console.log(this.inputfirstname, this.inputlastname, this.inputEmail, this.inputPassword, this.confirmPassword, this.checkBox)
+
     if(this.registrationFormGroup.valid){
       //prevent browser default actions
       event.preventDefault()
-
-
-      console.log(inputfirstname, inputlastname, inputEmail, inputPassword, confirmPassword,checkBox)
       //run the registration function
-      this.auth.addUser(inputfirstname, inputlastname, inputEmail, inputPassword, confirmPassword,checkBox)
+      this.auth.addUser(this.inputfirstname, this.inputlastname, this.inputEmail, this.inputPassword, this.confirmPassword, this.checkBox)
       .subscribe(resp => 
         { 
           if(resp.success){
-            this.auth.UserLogin(inputEmail, inputPassword);     
+            this.auth.UserLogin(this.inputEmail, this.inputPassword);     
             console.log(resp);
             this.auth.setLoggedIn(true)
             this.router.navigate(['/signup/userSettings']);
           }
-          else {
-            window.alert(resp.message)
+          else{
+            this.errorMSG = resp.errors;
+            this.router.navigate(['/Inputerror']);
           }    
           });;
         
@@ -74,7 +84,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   ngOnInit() {
-         
+
   }
 
 

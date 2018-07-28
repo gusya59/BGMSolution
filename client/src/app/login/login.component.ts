@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
     const InputEmail = target.querySelector('#InputEmail').value
     const InputPassword = target.querySelector('#InputPassword').value
 
-
+    console.log(InputEmail,InputPassword)
     this.auth.UserLogin(InputEmail, InputPassword)
     .subscribe(resp => 
       { 
@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['user']);
       }
       else {
-        window.alert(resp.message)
+        window.alert(resp.errors)
       }
 
 
