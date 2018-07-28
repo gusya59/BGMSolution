@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
-const validate = require('mongoose-validator');
-const bcrypt = require('bcrypt');
+var validate = require('mongoose-validator');
+var bcrypt = require('bcrypt');
+
 
 
 // Registration DB Schema --------->to add unique: true to the email later
@@ -96,7 +97,7 @@ module.exports.findByLastName = async function (name) {
   return userData;
 }
 //verify the password
-module.exports.verifyPassword = async function (pass, hash) {
+module.exports.verifyPassword = async function (pass, hash) {  //(pass to verify, pass)
   var res = await bcrypt.compare(pass, hash)
   return res;
 }
