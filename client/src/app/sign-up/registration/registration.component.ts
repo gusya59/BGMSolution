@@ -18,11 +18,11 @@ import { Router } from '@angular/router';
 export class RegistrationComponent implements OnInit {
     angForm: FormGroup;
     errorMSG: string[];
-    inputfirstname: string;
-    inputlastname: string;
-    inputEmail: string;
-    inputPassword: string;
-    confirmPassword: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    passwordConfirmation: string;
     checkBox: boolean;
 
 
@@ -54,23 +54,23 @@ export class RegistrationComponent implements OnInit {
   //RegisterUser funciton 
   RegisterUser() {
     //set values
-    this.inputfirstname = this.registrationFormGroup.value.inputfirstname;
-    this.inputlastname = this.registrationFormGroup.value.inputlastname;
-    this.inputEmail = this.registrationFormGroup.value.inputEmail;
-    this.inputPassword = this.passwordFormGroup.value.inputPassword; 
-    this.confirmPassword = this.passwordFormGroup.value.confirmPassword;
+    this.firstName = this.registrationFormGroup.value.inputfirstname;
+    this.lastName = this.registrationFormGroup.value.inputlastname;
+    this.email = this.registrationFormGroup.value.inputEmail;
+    this.password = this.passwordFormGroup.value.inputPassword; 
+    this.passwordConfirmation = this.passwordFormGroup.value.confirmPassword;
     this.checkBox = this.registrationFormGroup.value.checkBox;
-    console.log(this.inputfirstname, this.inputlastname, this.inputEmail, this.inputPassword, this.confirmPassword, this.checkBox)
+    console.log(this.firstName, this.lastName, this.email, this.password, this.passwordConfirmation, this.checkBox)
 
     if(this.registrationFormGroup.valid){
       //prevent browser default actions
       event.preventDefault()
       //run the registration function
-      this.auth.addUser(this.inputfirstname, this.inputlastname, this.inputEmail, this.inputPassword, this.confirmPassword, this.checkBox)
+      this.auth.addUser(this.firstName, this.lastName, this.email, this.password, this.passwordConfirmation, this.checkBox)
       .subscribe(resp => 
         { 
           if(resp.success){
-            this.auth.UserLogin(this.inputEmail, this.inputPassword);     
+            this.auth.UserLogin(this.email, this.password);     
             console.log(resp);
             this.auth.setLoggedIn(true);
             localStorage.setItem('token', resp.token);

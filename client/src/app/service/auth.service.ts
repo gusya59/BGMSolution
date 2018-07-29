@@ -52,14 +52,15 @@ export class AuthService {
     const uri = 'http://localhost:1234/signup/registration';
     const obj = {
     
-    inputfirstname: inputfirstname,
-    inputlastname: inputlastname,
-    inputEmail: inputEmail, 
-    inputPassword: inputPassword,
-    confirmPassword: confirmPassword,
+    firstName: inputfirstname,
+    lastName: inputlastname,
+    email: inputEmail, 
+    password: inputPassword,
+    passwordConfirmation: confirmPassword,
     checkBox: checkBox
     };
     //post registration to server
+    console.log(obj)
     return this.http.post<respData>(uri, obj)
 
   }
