@@ -44,71 +44,8 @@ import { AuthService } from './service/auth.service';
 import { AuthGuard } from './service/auth.guard';
 import { QuestionsComponent } from './sign-up/questions/questions.component';
 import { Err404Component } from './misc/err404/err404.component';
-
-
-
-//configuration objects
-const appRoutes: Routes = [
-  {  
-    path: '',
-    component: GuestComponent,
-    data: { title: 'Guest' }
-  },
-  {
-  path: 'login',
-  component: LoginComponent,
-  data: { title: 'login' }
-  },
-  {
-    path: 'loginUser',
-    component: LoginUserComponent,
-    data: { title: 'loginUser' }
-  },
-  {
-    path: 'user',
-    component: UserComponent,
-    // canActivate: [AuthGuard],
-    data: { title: 'user' }
-    
-  },
-  {
-    path: 'signup',
-    component: SignUpComponent,
-    data: { title: 'signup' },
-    children: [ 
-      {path: '', component: RegistrationComponent},
-      {path: 'userSettings', component: UserSettingsComponent,
-      // canActivate: [AuthGuard]
-    }, 
-      {path: 'userSettings/questions', component: QuestionsComponent,
-      // canActivate: [AuthGuard]
-    },
-      {path: 'userSettings/questions/finish', component: FinishComponent,
-      // canActivate: [AuthGuard]
-    },
-    ]
-  },
-  {
-    path: 'aboutUs',
-    component: AboutUsComponent,
-    data: { title: 'aboutUs' }
-  },
-  {
-    path: 'Inputerror',
-    component: InputErrorComponent,
-    data: { title: 'Inputerror' }
-  },
-  { path: '',
-    redirectTo: '/Guest',
-    pathMatch: 'full'
-  },
-  { 
-    path: '**',
-      component: Err404Component, 
-      data: { title: '404'}
-  }
-
-];
+//import router module
+import {appRoutes} from './service/routes';
 
 @NgModule({
   declarations: [
