@@ -1,6 +1,8 @@
 import { Router } from '@angular/router';
 import { AuthService } from './../service/auth.service';
-import { Component, OnInit } from '@angular/core';
+import { Component,ViewChild, OnInit } from '@angular/core';
+import { ModalDirective } from 'angular-bootstrap-md';
+
 
 
 
@@ -16,7 +18,11 @@ export class LoginComponent implements OnInit {
 
   // propertys
   isLoginError: boolean = false;
+  //allow to see basicModal for error modal use
+  @ViewChild('basicModal') basicModal: ModalDirective;
 
+  //vars
+  ErroMsg: string[];
   constructor(private auth: AuthService, private router: Router) {
 
    }
@@ -43,8 +49,9 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['user']);
       }
       else {
-        console.log("Error!")
+        this.ErroMsg =  resp.errors 
         this.isLoginError = true;
+        this.basicModal.show();
       }
 
 
