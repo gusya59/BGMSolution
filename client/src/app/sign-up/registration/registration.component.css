@@ -6,3 +6,13 @@
 .md-form{
     padding-bottom: 5px;
 }
+
+/* X button font size */
+.close{
+    font-size: 30px;
+}
+
+/* fix text footer position */
+.modal-footer {
+    display: block;
+}

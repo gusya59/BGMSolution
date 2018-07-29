@@ -62,10 +62,12 @@ export class AuthService {
     checkBox: checkBox
     };
     //post registration to server
-    console.log(obj)
-    var reqHeader = new HttpHeaders({'content-Type': 'application/x-www-urlencoded'});
-    return this.http.post<respData>(uri, obj, {headers: reqHeader})
+    
+    //header manage
+    // var reqHeader = new HttpHeaders({'content-Type': 'application/x-www-urlencoded'});
+    // return this.http.post<respData>(uri, obj, {headers: reqHeader})
 
+    return this.http.post<respData>(uri, obj)
   }
 
 }

@@ -1,5 +1,7 @@
+//Bootstrap
+import { ModalDirective } from 'angular-bootstrap-md';
 
-import { Component, OnInit, NgModule } from '@angular/core';
+import { Component, OnInit, NgModule, ViewChild } from '@angular/core';
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
 //import auth class
 import { AuthService } from './../../service/auth.service';
@@ -25,6 +27,13 @@ export class RegistrationComponent implements OnInit {
     passwordConfirmation: string;
     checkBox: boolean;
 
+  // propertys
+  isLoginError: boolean = false;
+  //allow to see basicModal for error modal use
+  @ViewChild('basicModal') basicModal: ModalDirective;
+
+  //vars
+  ErroMsg: string[];
 
     // our regisration form data collection
     registrationFormGroup: FormGroup;
@@ -69,16 +78,16 @@ export class RegistrationComponent implements OnInit {
       this.auth.addUser(this.firstName, this.lastName, this.email, this.password, this.passwordConfirmation, this.checkBox)
       .subscribe(resp => 
         { 
-          if(resp.success){
-            this.auth.UserLogin(this.email, this.password);     
+          if(resp.success){     
             console.log(resp);
             this.auth.setLoggedIn(true);
             localStorage.setItem('token', resp.token);
             this.router.navigate(['/signup/userSettings']);
           }
           else{
-            this.errorMSG = resp.errors;
-            this.router.navigate(['/Inputerror']);
+            this.ErroMsg =  resp.errors 
+            this.isLoginError = true;
+            this.basicModal.show();
           }    
           });;
         

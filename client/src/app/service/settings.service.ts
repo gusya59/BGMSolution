@@ -21,7 +21,7 @@ export class SettingsService {
 
   userSettings(company){
     console.log(company);
-    const uri = 'http://localhost:1234/signup/Usersettings';
+    const uri = 'http://localhost:1234/signup/usersettings';
     const obj = {
     
       b_name: company.b_name,

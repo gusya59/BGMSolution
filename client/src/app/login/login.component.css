@@ -2,3 +2,13 @@
     margin-top: 30px;
     padding-bottom: 30px; 
 }
+
+/* X button font size */
+.close{
+    font-size: 30px;
+}
+
+/* fix text footer position */
+.modal-footer {
+    display: block;
+}

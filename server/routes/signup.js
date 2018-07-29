@@ -11,8 +11,10 @@ var registrationSchema = require('../models/Registration.js');
 //registration
 router.post('/registration', async function (req, res) {
   console.log("the input is: " + req.body);
+  console.log(req.body.firstName ,req.body.email ,req.body.password ,req.body.passwordConfirmation)
   var user = req.body;
   var errors = []; //will contain all the errors
+  
   await RegistrationValidation(errors, user);
   if (errors.length) {
     res.status(200).send({ success: false, errors: errors }) //the 200 here ia in order to deliever error messages to front
