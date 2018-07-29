@@ -78,7 +78,6 @@ export class RegistrationComponent implements OnInit {
           }
           else{
             this.errorMSG = resp.errors;
-            localStorage.setItem('token',"TETSTESTSETSETESTEST");
             this.router.navigate(['/Inputerror']);
           }    
           });;

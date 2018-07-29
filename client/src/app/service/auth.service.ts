@@ -1,7 +1,7 @@
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 // Import of http service
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 //interface for returning router resp
 interface respData {
@@ -9,7 +9,8 @@ interface respData {
   message: string,
   status: number,
   errors: string[],
-  token: string
+  token: string,
+  Headers: any
 }
 
 @Injectable({
@@ -21,7 +22,7 @@ export class AuthService {
   private loggedInStatus = false;
 
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient) { }
 
   //get logged in replace property name with action
   get isLoggedIn(){
@@ -44,7 +45,8 @@ export class AuthService {
     };
 
     //post to data to server
-    return this.http.post<respData>(uri,obj)
+    var reqHeader = new HttpHeaders({'content-Type': 'application/x-www-urlencoded'});
+    return this.http.post<respData>(uri+'/token',obj, );
     
   }
 
@@ -61,7 +63,8 @@ export class AuthService {
     };
     //post registration to server
     console.log(obj)
-    return this.http.post<respData>(uri, obj)
+    var reqHeader = new HttpHeaders({'content-Type': 'application/x-www-urlencoded'});
+    return this.http.post<respData>(uri+'/token', obj, {headers: reqHeader})
 
   }
 
