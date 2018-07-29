@@ -39,8 +39,8 @@ export class AuthService {
     const uri = 'http://localhost:1234/signup/login';
     // our object holding the login data
     const obj = {
-      InputEmail: InputEmail,
-      InputPassword: InputPassword
+      email: InputEmail,
+      password: InputPassword
     };
 
     //post to data to server
