@@ -46,7 +46,7 @@ export class AuthService {
 
     //post to data to server
     var reqHeader = new HttpHeaders({'content-Type': 'application/x-www-urlencoded'});
-    return this.http.post<respData>(uri+'/token',obj, );
+    return this.http.post<respData>(uri,obj,  {headers: reqHeader});
     
   }
 
@@ -64,7 +64,7 @@ export class AuthService {
     //post registration to server
     console.log(obj)
     var reqHeader = new HttpHeaders({'content-Type': 'application/x-www-urlencoded'});
-    return this.http.post<respData>(uri+'/token', obj, {headers: reqHeader})
+    return this.http.post<respData>(uri, obj, {headers: reqHeader})
 
   }
 

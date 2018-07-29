@@ -14,6 +14,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
+  // propertys
+  isLoginError: boolean = false;
+
   constructor(private auth: AuthService, private router: Router) {
 
    }
@@ -40,7 +43,8 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['user']);
       }
       else {
-        window.alert(resp.errors)
+        console.log("Error!")
+        this.isLoginError = true;
       }
 
 
