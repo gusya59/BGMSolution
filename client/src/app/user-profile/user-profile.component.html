@@ -1,3 +1,89 @@
-<p>
-  user-profile works!
-</p>
+<!-- User Navigation bar -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12">
+        <app-navigation-user></app-navigation-user>
+    </div>
+  </div>
+</div>
+
+<!-- body  -->
+<!-- forms for registraion -->
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-lg-12">
+      <!--Panel-->
+      <div class="card">
+        <!-- Buissnes name -->
+          <div class="card-header primary-color white-text">
+              <div class="row justify-content-center"> 
+                <h1 class="h1-responsive "><i class="far fa-building"></i> {{b_name}}</h1>
+              </div>
+          </div>
+          
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-5">
+                <h2 class="h2-responsive ">Your Details</h2>
+              </div>
+            </div>
+            <hr>
+            
+            <div class="row justify-content-center">
+              <!-- company details -->
+                <div class= "col-md-5">
+                    <div class="md-form">
+                        <input mdbInputDirective type="text" name="text" disabled [(ngModel)]="b_name" id="form1" class="form-control">
+                        <label for="form1" class="">Company Name</label>
+                    </div>
+                    <div class="md-form">
+                        <input mdbInputDirective type="text" name="text" disabled [(ngModel)]="b_type" id="form1" class="form-control">
+                        <label for="form1" class="">Buissnes Type</label>
+                    </div>
+                    <div class="md-form">
+                        <input mdbInputDirective type="text" name="text" disabled [(ngModel)]="mobile" id="form1" class="form-control">
+                        <label for="form1" class="">Mobile</label>
+                    </div>
+                    <div class="md-form">
+                        <input mdbInputDirective type="text" name="text" disabled [(ngModel)]="phone" id="form1" class="form-control">
+                        <label for="form1" class="">Phone</label>
+                    </div>
+                    <div class="md-form">
+                        <input mdbInputDirective type="text" name="text" disabled [(ngModel)]="city" id="form1" class="form-control">
+                        <label for="form1" class="">City</label>
+                    </div>
+                    <div class="md-form">
+                        <input mdbInputDirective type="text" name="text" disabled [(ngModel)]="country" id="form1" class="form-control">
+                        <label for="form1" class="">country</label>
+                    </div>
+                    <div class="md-form">
+                        <input mdbInputDirective type="text" name="text" disabled [(ngModel)]="address" id="form1" class="form-control">
+                        <label for="form1" class="">address</label>
+                    </div>
+                </div>
+                <!-- user details -->
+                <div class= "col-md-5">
+                    <div class="md-form">
+                        <input mdbInputDirective type="text" name="text" disabled [(ngModel)]="email" id="form1" class="form-control">
+                        <label for="form1" class="">eMail</label>
+                    </div>
+                    <div class="md-form">
+                        <input mdbInputDirective type="text" name="text" disabled [(ngModel)]="firstName" id="form1" class="form-control">
+                        <label for="form1" class="">First Name</label>
+                    </div>
+                    <div class="md-form">
+                        <input mdbInputDirective type="text" name="text" disabled [(ngModel)]="lastName" id="form1" class="form-control">
+                        <label for="form1" class="">Last Name</label>
+                    </div>
+                    <div class="md-form">
+                        <button type="submit" class="btn btn-danger btn-lg" block="true">Change Password</button>
+                        <button type="submit" class="btn btn-success btn-lg" block="true">Save Changes</button>
+                      </div>
+                  </div>
+            </div>
+          </div>
+      </div>
+      <!--/.Panel-->
+    </div>
+  </div>
+</div>

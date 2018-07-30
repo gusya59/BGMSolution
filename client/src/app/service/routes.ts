@@ -1,3 +1,4 @@
+
 import { Err404Component } from './../misc/err404/err404.component';
 import { InputErrorComponent } from './../misc/input-error/input-error.component';
 import { AboutUsComponent } from './../misc/about-us/about-us.component';
@@ -13,6 +14,7 @@ import { GuestComponent } from './../guest/guest.component';
 import { Routes } from '@angular/router';
 import { UserProfileComponent } from '../user-profile/user-profile.component';
 import { UserReportsComponent } from './../user-profile/user-reports/user-reports.component';
+
 
 // Routes file - Holds the routing system for our web app
 //
@@ -39,6 +41,13 @@ export const appRoutes: Routes = [
       component: UserProfileComponent,
       data: { title: 'userProfile' }
     },
+    //User Profile routing
+    {
+      path: 'userReports',
+      component: UserReportsComponent,
+      data: { title: 'userReports' }
+    },
+
     //Login for our user routing
     {
       path: 'loginUser',
