@@ -46,6 +46,8 @@ import { QuestionsComponent } from './sign-up/questions/questions.component';
 import { Err404Component } from './misc/err404/err404.component';
 //import router module
 import {appRoutes} from './service/routes';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { ReportsComponent } from './user-profile/reports/reports.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +76,9 @@ import {appRoutes} from './service/routes';
     OurServiceComponent,
     BarComponent,
     QuestionsComponent,
-    Err404Component
+    Err404Component,
+    UserProfileComponent,
+    ReportsComponent
 
   ],
   imports: [

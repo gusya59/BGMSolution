@@ -30,6 +30,20 @@ export const appRoutes: Routes = [
     component: LoginComponent,
     data: { title: 'login' }
     },
+    
+    //User Profile routing
+    // {
+    //   path: 'userProfile',
+    //   component: userProfileComponent,
+    //   data: { title: 'userProfile' }
+    // },
+        //reports routing
+    // {
+    //   path: 'reports',
+    //   component: reportsComponent,
+    //   data: { title: 'reports' }
+    // },
+
 
     //Login for our user routing
     {
