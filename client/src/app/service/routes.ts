@@ -11,6 +11,8 @@ import { LoginUserComponent } from './../login/login-user/login-user.component';
 import { LoginComponent } from './../login/login.component';
 import { GuestComponent } from './../guest/guest.component';
 import { Routes } from '@angular/router';
+import { UserProfileComponent } from '../user-profile/user-profile.component';
+import { UserReportsComponent } from './../user-profile/user-reports/user-reports.component';
 
 // Routes file - Holds the routing system for our web app
 //
@@ -22,7 +24,7 @@ export const appRoutes: Routes = [
         path: '',
         component: GuestComponent,
         data: { title: 'Guest' }
-      },
+    },
 
     //Login routing
     {
@@ -30,21 +32,13 @@ export const appRoutes: Routes = [
     component: LoginComponent,
     data: { title: 'login' }
     },
-    
+
     //User Profile routing
-    // {
-    //   path: 'userProfile',
-    //   component: userProfileComponent,
-    //   data: { title: 'userProfile' }
-    // },
-        //reports routing
-    // {
-    //   path: 'reports',
-    //   component: reportsComponent,
-    //   data: { title: 'reports' }
-    // },
-
-
+    {
+      path: 'userProfile',
+      component: UserProfileComponent,
+      data: { title: 'userProfile' }
+    },
     //Login for our user routing
     {
       path: 'loginUser',
@@ -96,10 +90,10 @@ export const appRoutes: Routes = [
 
 
     //404 - error page not found rounting
-    // { 
-    //   path: '**',
-    //     component: Err404Component, 
-    //     data: { title: '404'}
-    // }
+    { 
+      path: '**',
+        component: Err404Component, 
+        data: { title: '404'}
+    }
   
   ];
