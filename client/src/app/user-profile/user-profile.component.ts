@@ -19,7 +19,30 @@ export class UserProfileComponent implements OnInit {
   firstName: string ="David"
   lastName: string = "Berdichevsky"
   email: string = "DavidMD@bgm.com"
+  
+  
+  // apply MDB Chart preference type doughnut
+  public chartType:string = 'doughnut';
+    // chart data inserted array: here we place the budgets
+    public chartData:Array<any> = [300, 50, 100, 40, 120 , 400 , 80];
 
+    // chart data inserted array: here we place the names
+    public chartLabels:Array<any> = ['Facebook', 'Instagram', 'GoogleP', 'GoogleAdWords', 'Google', 'GoogleMybuissness', 'Twiiter'];
+
+    // chart data inserted array: on hover change color and set chart color
+    public chartColors:Array<any> = [{
+        hoverBorderColor: ['rgba(0, 0, 0, 0.1)', 'rgba(0, 0, 0, 0.1)', 'rgba(0, 0, 0, 0.1)', 'rgba(0, 0, 0, 0.1)', 'rgba(0, 0, 0, 0.1)'],
+        hoverBorderWidth: 0,
+        backgroundColor: ["#4250f4", "#e21dd5", "#e5110d", "#06aa0f", "#fffa00", "#8c8c8c", "#00bdf7" ], //same as set on lable
+        hoverBackgroundColor: ["#5c67ed", "#db64d3", "#e28583", "#73ce78","#d3d043", "#d8d8d8", "#3392af" ]
+    }];
+
+    public chartOptions:any = {
+        responsive: true
+    };
+    // chart hover and chart click: empty will put label and action nothing
+    public chartClicked(e: any): void { }
+    public chartHovered(e: any): void { }
 
   constructor() { }
 

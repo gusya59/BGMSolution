@@ -8,7 +8,7 @@
 </div>
 
 <!-- body  -->
-<!-- forms for registraion -->
+<!-- Data -->
 <div class="container-fluid">
   <div class="row justify-content-center">
     <div class="col-lg-12">
@@ -75,11 +75,45 @@
                         <input mdbInputDirective type="text" name="text" disabled [(ngModel)]="lastName" id="form1" class="form-control">
                         <label for="form1" class="">Last Name</label>
                     </div>
-                    <div class="md-form">
-                        <button type="submit" class="btn btn-danger btn-lg" block="true">Change Password</button>
-                        <button type="submit" class="btn btn-success btn-lg" block="true">Save Changes</button>
-                      </div>
+                    <div class="row-fluid align-self-end">
+                        <div class="md-form">
+                            <button mdbBtn type="button" class="btn btn-lg" color="danger" block="true" mdbWavesEffect>Change Password</button>
+                            <button mdbBtn type="button" class="btn btn-lg" color="success" block="true" mdbWavesEffect>Save Changes</button>
+                        </div>
+                    </div>
+
                   </div>
+            </div>
+          </div>
+          <!-- Charts and Reports -->
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-5">
+                <h2 class="h2-responsive ">Charts and Reports</h2>
+              </div>
+            </div>
+            <hr>
+            
+            <div class="row justify-content-center">
+              <!-- Charts and Reports -->
+                <div class="col-md-5">
+                  test
+                </div>
+                <div class="col-md-5">
+                    <div style="display: block">
+                      <!-- chart generated -->
+                        <canvas mdbChart
+                            [chartType]="chartType"
+                            [data]="chartData"
+                            [labels]="chartLabels"
+                            [colors]="chartColors"
+                            [options]="chartOptions"
+                            [legend]="true"
+                            (chartHover)="chartHovered($event)"
+                            (chartClick)="chartClicked($event)">
+                        </canvas>
+                    </div>
+                </div>          
             </div>
           </div>
       </div>
@@ -87,3 +121,5 @@
     </div>
   </div>
 </div>
+
+
