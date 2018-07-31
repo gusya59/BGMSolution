@@ -27,14 +27,14 @@ export class UserProfileComponent implements OnInit {
     public chartData:Array<any> = [300, 50, 100, 40, 120 , 400 , 80];
 
     // chart data inserted array: here we place the names
-    public chartLabels:Array<any> = ['Facebook', 'Instagram', 'GoogleP', 'GoogleAdWords', 'Google', 'GoogleMybuissness', 'Twiiter'];
+    public chartLabels:Array<any> = ['GoogleP', 'Instagram', 'Facebook', 'Twiiter',  'GoogleAdWords', 'Google', 'GoogleMybuissness'];
 
     // chart data inserted array: on hover change color and set chart color
     public chartColors:Array<any> = [{
         hoverBorderColor: ['rgba(0, 0, 0, 0.1)', 'rgba(0, 0, 0, 0.1)', 'rgba(0, 0, 0, 0.1)', 'rgba(0, 0, 0, 0.1)', 'rgba(0, 0, 0, 0.1)'],
         hoverBorderWidth: 0,
-        backgroundColor: ["#4250f4", "#e21dd5", "#e5110d", "#06aa0f", "#fffa00", "#8c8c8c", "#00bdf7" ], //same as set on lable
-        hoverBackgroundColor: ["#5c67ed", "#db64d3", "#e28583", "#73ce78","#d3d043", "#d8d8d8", "#3392af" ]
+        backgroundColor: ["#e5110d", "#e21dd5", "#4250f4","#00bdf7", "#06aa0f", "#fffa00", "#8c8c8c" ], //same as set on lable
+        hoverBackgroundColor: ["#e28583", "#db64d3", "#5c67ed", "#3392af", "#73ce78","#d3d043", "#d8d8d8" ]
     }];
 
     public chartOptions:any = {
