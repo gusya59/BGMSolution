@@ -33,46 +33,46 @@
               <!-- company details -->
                 <div class= "col-md-5">
                     <div class="md-form">
-                        <input mdbInputDirective type="text" name="text" disabled [(ngModel)]="b_name" id="form1" class="form-control">
+                        <input mdbInputDirective type="text" name="b_name" disabled [(ngModel)]="b_name" id="b_name" class="form-control">
                         <label for="form1" class="">Company Name</label>
                     </div>
                     <div class="md-form">
-                        <input mdbInputDirective type="text" name="text" disabled [(ngModel)]="b_type" id="form1" class="form-control">
+                        <input mdbInputDirective type="text" name="b_type" disabled [(ngModel)]="b_type" id="b_type" class="form-control">
                         <label for="form1" class="">Buissnes Type</label>
                     </div>
                     <div class="md-form">
-                        <input mdbInputDirective type="text" name="text" disabled [(ngModel)]="mobile" id="form1" class="form-control">
+                        <input mdbInputDirective type="text" name="mobile" disabled [(ngModel)]="mobile" id="mobile" class="form-control">
                         <label for="form1" class="">Mobile</label>
                     </div>
                     <div class="md-form">
-                        <input mdbInputDirective type="text" name="text" disabled [(ngModel)]="phone" id="form1" class="form-control">
+                        <input mdbInputDirective type="text" name="phone" disabled [(ngModel)]="phone" id="phone" class="form-control">
                         <label for="form1" class="">Phone</label>
                     </div>
                     <div class="md-form">
-                        <input mdbInputDirective type="text" name="text" disabled [(ngModel)]="city" id="form1" class="form-control">
+                        <input mdbInputDirective type="text" name="city" disabled [(ngModel)]="city" id="city" class="form-control">
                         <label for="form1" class="">City</label>
                     </div>
                     <div class="md-form">
-                        <input mdbInputDirective type="text" name="text" disabled [(ngModel)]="country" id="form1" class="form-control">
+                        <input mdbInputDirective type="text" name="country" disabled [(ngModel)]="country" id="country" class="form-control">
                         <label for="form1" class="">country</label>
                     </div>
                     <div class="md-form">
-                        <input mdbInputDirective type="text" name="text" disabled [(ngModel)]="address" id="form1" class="form-control">
+                        <input mdbInputDirective type="text" name="address" disabled [(ngModel)]="address" id="address" class="form-control">
                         <label for="form1" class="">address</label>
                     </div>
                 </div>
                 <!-- user details -->
                 <div class= "col-md-5">
                     <div class="md-form">
-                        <input mdbInputDirective type="text" name="text" disabled [(ngModel)]="email" id="form1" class="form-control">
+                        <input mdbInputDirective type="text" name="email" disabled [(ngModel)]="email" id="email" class="form-control">
                         <label for="form1" class="">eMail</label>
                     </div>
                     <div class="md-form">
-                        <input mdbInputDirective type="text" name="text" disabled [(ngModel)]="firstName" id="form1" class="form-control">
+                        <input mdbInputDirective type="text" name="firstName" disabled [(ngModel)]="firstName" id="firstName" class="form-control">
                         <label for="form1" class="">First Name</label>
                     </div>
                     <div class="md-form">
-                        <input mdbInputDirective type="text" name="text" disabled [(ngModel)]="lastName" id="form1" class="form-control">
+                        <input mdbInputDirective type="text" name="lastName" disabled [(ngModel)]="lastName" id="lastName" class="form-control">
                         <label for="form1" class="">Last Name</label>
                     </div>
                     <div class="row-fluid align-self-end">
@@ -119,16 +119,16 @@
                 <div class="col-md-5">
                     <div style="display: block">
                       <!-- chart generated -->
-                        <canvas mdbChart
-                            [chartType]="chartType"
-                            [data]="chartData"
-                            [labels]="chartLabels"
-                            [colors]="chartColors"
-                            [options]="chartOptions"
-                            [legend]="true"
-                            (chartHover)="chartHovered($event)"
-                            (chartClick)="chartClicked($event)">
-                        </canvas>
+                      <canvas mdbChart
+                        [chartType]="chartType"
+                        [data]="chartData"
+                        [labels]="chartLabels"
+                        [colors]="chartColors"
+                        [options]="chartOptions"
+                        [legend]="true"
+                        (chartHover)="chartHovered($event)"
+                        (chartClick)="chartClicked($event)">
+                      </canvas>
                     </div>
                 </div>          
             </div>
@@ -155,28 +155,36 @@
         <h4 class="modal-title w-100" id="myModalLabel">Change Password</h4>
       </div>
       <div class="modal-body">
+        <form [formGroup]="passwordFormGroup" novalidate (ngSubmit)="passChange()" >
+          <div class="md-form mb-4">
+            <i class="fa fa-lock prefix grey-text"></i>
+            <input type="password" id="oldPassword" class="form-control validate" minlength ="8" formControlName="oldPassword" required mdbInputDirective>
+            <label data-error="wrong" data-success="right" for="oldPassword">Old password</label>
+          </div>
+          
+          <div class="md-form mb-4">
+            <i class="fa fa-lock prefix grey-text"></i>
+            <input type="password" id="password" class="form-control validate" minlength ="8" formControlName="password" required mdbInputDirective>
+            <label data-error="wrong" data-success="right" for="password">new password</label>
+          </div>
+          
+          <div class="md-form mb-4">
+            <i class="fa fa-lock prefix grey-text"></i>
+            <input type="password" id="confirmPassword" class="form-control validate" minlength ="8" formControlName="confirmPassword" required mdbInputDirective>
+            <label data-error="wrong" data-success="right" for="confirmPassword">Confirm password</label>
+          </div>
+          
+          <!-- check password for validety frontend -->
+          <p class="bg-danger" *ngIf="passwordFormGroup.controls.confirmPassword.errors?.required && passwordFormGroup.controls.confirmPassword.touched">Repeat password is required</p>
+          <p class="bg-danger" *ngIf="passwordFormGroup.errors?.doesMatchPassword && passwordFormGroup.controls.confirmPassword.touched">Password does not match</p>
         
-        <div class="md-form mb-4">
-          <i class="fa fa-lock prefix grey-text"></i>
-          <input type="password" id="orangeForm-pass" class="form-control validate" [formControl]="OldPassword" mdbInputDirective>
-          <label data-error="wrong" data-success="right" for="orangeForm-pass">Old password</label>
-        </div>
+          <button type="button" mdbBtn color="danger" class="waves-light btn-lg" aria-label="Close" (click)="passChangeModal.hide()" mdbWavesEffect>Close</button>
+          <button type="submit" mdbBtn color="success" class="relative waves-light btn-lg" [disabled]="!passwordFormGroup.valid"mdbWavesEffect>Save changes</button>
+  
         
-        <div class="md-form mb-4">
-          <i class="fa fa-lock prefix grey-text"></i>
-          <input type="password" id="orangeForm-pass" class="form-control validate" [formControl]="Password" mdbInputDirective>
-          <label data-error="wrong" data-success="right" for="orangeForm-pass">new password</label>
-        </div>
-        
-        <div class="md-form mb-4">
-          <i class="fa fa-lock prefix grey-text"></i>
-          <input type="password" id="orangeForm-pass" class="form-control validate" [formControl]="ConfirmPassword" mdbInputDirective>
-          <label data-error="wrong" data-success="right" for="orangeForm-pass">Retype password</label>
-        </div>
+        </form>  
       </div>
       <div class="modal-footer">
-        <button type="button" mdbBtn color="danger" class="waves-light btn-lg" aria-label="Close" (click)="passChangeModal.hide()" mdbWavesEffect>Close</button>
-        <button type="button" mdbBtn color="success" class="relative waves-light btn-lg" mdbWavesEffect>Save changes</button>
       </div>
     </div>
   </div>

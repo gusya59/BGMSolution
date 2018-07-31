@@ -1,6 +1,8 @@
 import { UserDataService } from './../service/user-data.service';
 import { Component, OnInit } from '@angular/core';
 import { UserPreviewService } from '../service/user-preview.service';
+import { FormControl } from '@angular/forms';
+import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-user-profile',
@@ -22,6 +24,8 @@ export class UserProfileComponent implements OnInit {
   lastName: string = "Berdichevsky"
   email: string = "DavidMD@bgm.com"
 
+
+  
   // Define the original budget per line
   
   budgetFacebook: number;
@@ -32,14 +36,59 @@ export class UserProfileComponent implements OnInit {
   budgetGoogleMybuissness: number;
   budgetTwiiter: number;
 
-  // chart deceleration
-  public chartType:string;
-  public chartData:Array<any>;
-  public chartLabels:Array<any>;
-  public chartColors:Array<any>;
-  public chartOptions:any;
+  // group of password and confiramtion
+  passwordFormGroup: FormGroup;
 
-  constructor(private userdata: UserDataService, private userPreview: UserPreviewService) { }
+
+  constructor(private userdata: UserDataService, private userPreview: UserPreviewService, private fb: FormBuilder) {
+    
+    //password validator stat function
+    this.passwordFormGroup = this.fb.group({
+      password: ['', Validators.required],
+      oldPassword: ['', Validators.required],
+      confirmPassword: ['', Validators.required]
+    }, {
+      
+      //request for password validation
+      validator: passwordFormValidator.validate.bind(this)
+    });
+
+  }
+
+  // chart deceleration //
+
+  // apply MDB Chart preference type doughnut
+  public chartType:string = 'doughnut';
+  // chart data inserted array: here we place the budgets
+  public chartData:Array<any>  = [50,50,50,50,50,50,50];
+
+  // chart data inserted array: here we place the names
+  public chartLabels:Array<any> = ['GoogleP', 'Instagram', 'Facebook', 'Twiiter',  'GoogleAdWords', 'Google', 'GoogleMybuissness'];
+
+// chart data inserted array: on hover change color and set chart color
+public chartColors:Array<any> = [{
+  hoverBorderColor: ['rgba(0, 0, 0, 0.1)', 'rgba(0, 0, 0, 0.1)', 'rgba(0, 0, 0, 0.1)', 'rgba(0, 0, 0, 0.1)', 'rgba(0, 0, 0, 0.1)', 'rgba(0, 0, 0, 0.1)', 'rgba(0, 0, 0, 0.1)'],
+  hoverBorderWidth: 0,
+  backgroundColor: ["#e5110d", "#e21dd5", "#4250f4","#00bdf7", "#06aa0f", "#fffa00", "#8c8c8c" ], //same as set on lable
+  hoverBackgroundColor: ["#e28583", "#db64d3", "#5c67ed", "#3392af", "#73ce78","#d3d043", "#d8d8d8" ]
+}];
+
+public chartOptions:any = {
+  responsive: true
+};
+  // chart hover and chart click: empty will put label and action nothing
+  public chartClicked(e: any): void { }
+  public chartHovered(e: any): void { }
+
+  //password change
+  passChange(){
+    console.log(this.passwordFormGroup.value.oldPassword)
+    console.log(this.passwordFormGroup.value.password)
+    console.log(this.passwordFormGroup.value.confirmPassword)
+  }
+  
+  
+  
 
   ngOnInit() {
     // Request data from server
@@ -79,30 +128,28 @@ export class UserProfileComponent implements OnInit {
   }
 
     createChart(Data){
-            // apply MDB Chart preference type doughnut
-            this.chartType = 'doughnut';
-            // chart data inserted array: here we place the budgets
-            this.chartData = [Data.budgethGoogleP, Data.budgetInstagram, Data.budgetFacebook, Data.budgetTwiiter, Data.budgetGoogleAdWords, Data.budgetGoogle, Data.budgetGoogleMybuissness];
-
-            // chart data inserted array: here we place the names
-            this.chartLabels = ['GoogleP', 'Instagram', 'Facebook', 'Twiiter',  'GoogleAdWords', 'Google', 'GoogleMybuissness'];
-      
-        // chart data inserted array: on hover change color and set chart color
-        this.chartColors = [{
-            hoverBorderColor: ['rgba(0, 0, 0, 0.1)', 'rgba(0, 0, 0, 0.1)', 'rgba(0, 0, 0, 0.1)', 'rgba(0, 0, 0, 0.1)', 'rgba(0, 0, 0, 0.1)'],
-            hoverBorderWidth: 0,
-            backgroundColor: ["#e5110d", "#e21dd5", "#4250f4","#00bdf7", "#06aa0f", "#fffa00", "#8c8c8c" ], //same as set on lable
-            hoverBackgroundColor: ["#e28583", "#db64d3", "#5c67ed", "#3392af", "#73ce78","#d3d043", "#d8d8d8" ]
-        }];
-      
-        this.chartOptions = {
-            responsive: true
-        };
-
+      // chart data inserted array: here we place the budgets
+      this.chartData = [Data.budgethGoogleP, Data.budgetInstagram, Data.budgetFacebook, Data.budgetTwiiter, Data.budgetGoogleAdWords, Data.budgetGoogle, Data.budgetGoogleMybuissness];
         
     }
-  // chart hover and chart click: empty will put label and action nothing
-  public chartClicked(e: any): void { }
-  public chartHovered(e: any): void { }
+
 
 }
+
+// password validator front end form
+class passwordFormValidator {
+  static validate(passwordFormGroup: FormGroup) {
+      let password = passwordFormGroup.controls.password.value;
+      let confirmPassword = passwordFormGroup.controls.confirmPassword.value;
+      if (confirmPassword != password) {
+          return {
+              doesMatchPassword: true  
+          };
+      }
+
+      return null;
+
+  }
+}
+
+
