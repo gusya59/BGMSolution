@@ -33,7 +33,7 @@ export class QuestionsComponent implements OnInit {
 }
     
 
-  constructor(private router: Router, private http: HttpClient, private quest: QuestionService, private form: FormsModule) { }
+  constructor(private router: Router, private quest: QuestionService, private form: FormsModule) { }
 
   ngOnInit() {
 
