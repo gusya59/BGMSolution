@@ -35,7 +35,7 @@
                 <div class= "col-md-5">
                     <div class="md-form">
                         <input mdbInputDirective type="text" name="b_name" disabled [(ngModel)]="b_name" id="b_name" class="form-control">
-                        <label for="b_name" id="labels" class="labels">Company Name</label>
+                        <label for="b_name"  class="labels">Company Name</label>
                     </div>
                     <div class="md-form">
                         <input mdbInputDirective type="text" name="b_type" disabled [(ngModel)]="b_type" id="b_type" class="form-control">
@@ -43,47 +43,64 @@
                     </div>
                     <div class="md-form">
                         <input mdbInputDirective type="text" name="mobile" disabled [(ngModel)]="mobile" id="mobile" class="form-control">
-                        <label for="mobile" id="labels" class="labels">Mobile</label>
+                        <label for="mobile"  class="labels">Mobile</label>
                     </div>
                     <div class="md-form">
                         <input mdbInputDirective type="text" name="phone" disabled [(ngModel)]="phone" id="phone" class="form-control">
-                        <label for="phone" id="labels" class="labels">Phone</label>
+                        <label for="phone"  class="labels">Phone</label>
                     </div>
                     <div class="md-form">
                         <input mdbInputDirective type="text" name="city" disabled [(ngModel)]="city" id="city" class="form-control">
-                        <label for="city" id="labels" class="labels">City</label>
+                        <label for="city"  class="labels">City</label>
                     </div>
                     <div class="md-form">
                         <input mdbInputDirective type="text" name="country" disabled [(ngModel)]="country" id="country" class="form-control">
-                        <label for="country" id="labels" class="labels">country</label>
+                        <label for="country"  class="labels">Country</label>
                     </div>
                     <div class="md-form">
                         <input mdbInputDirective type="text" name="address" disabled [(ngModel)]="address" id="address" class="form-control">
-                        <label for="address" id="labels" class="labels">address</label>
+                        <label for="address"  class="labels">Address</label>
                     </div>
                 </div>
                 <!-- user details -->
                 <div class= "col-md-5">
                     <div class="md-form">
                         <input mdbInputDirective type="text" name="email" disabled [(ngModel)]="email" id="email" class="form-control">
-                        <label for="email" id="labels" class="labels">eMail</label>
+                        <label for="email"  class="labels">eMail</label>
                     </div>
                     <div class="md-form">
                         <input mdbInputDirective type="text" name="firstName" disabled [(ngModel)]="firstName" id="firstName" class="form-control">
-                        <label for="firstName" id="labels" class="labels">First Name</label>
+                        <label for="firstName"  class="labels">First Name</label>
                     </div>
                     <div class="md-form">
                         <input mdbInputDirective type="text" name="lastName" disabled [(ngModel)]="lastName" id="lastName" class="form-control">
-                        <label for="lastName" id="labels" class="labels">Last Name</label>
+                        <label for="lastName"  class="labels">Last Name</label>
                     </div>
+
+                    <!-- BGs Certification hiden by default -->
+                    <mdb-card id="BGscerti" class="text-center">
+                        <mdb-card-header class="warning-color white-text">
+                          <h3>BreakingGap's</h3>
+                        </mdb-card-header>
+                        <mdb-card-body>
+                          <mdb-card-title>
+                          </mdb-card-title>
+                          <img src="assets/img/Logo_Final.png">
+                        </mdb-card-body>
+
+                        <mdb-card-footer class="text-muted info-color white-text">
+                          <h4>Certified <i class="fas fa-certificate"></i></h4>
+                        </mdb-card-footer>
+                    </mdb-card>
+
                     <div class="row-fluid align-self-end">
                         <div class="md-form">
-                            <button mdbBtn type="button" class="btn btn-lg" color="warning" block="true" (click)="passChangeModal.show()" mdbWavesEffect>Change Password</button>
-                            <button mdbBtn type="button" class="btn btn-lg" color="success" block="true" mdbWavesEffect>Save Changes</button>
-                            <button mdbBtn type="button" class="btn btn-lg" color="danger" block="true" mdbWavesEffect>Terminate account</button>
+                            <button mdbBtn type="button" class="btn btn-lg hides" color="warning" block="true" (click)="passChangeModal.show()" mdbWavesEffect>Change Password</button>
+                            <button mdbBtn type="button" class="btn btn-lg hides" color="success" block="true" mdbWavesEffect>Save Changes</button>
+                            <button mdbBtn type="button" class="btn btn-lg hides" color="danger" block="true" mdbWavesEffect>Terminate account</button>
                         </div>
                     </div>
-                    
+
                   </div>
             </div>
           </div>
@@ -96,11 +113,90 @@
             </div>
             <hr>
             
+
+
+
+            
             <div class="row justify-content-center">
               <!-- Charts and Reports -->
                 <div class="col-md-5">
+
+                  <!-- hidden Table -->
+                  <mdb-card id="BGsTable" class="text-center">
+                      <mdb-card-header class="success-color white-text">
+                        <h3>Table of your budget per class</h3>
+                      </mdb-card-header>
+                      <mdb-card-body>
+
+                          <!--Table-->
+                          <table class="table">
+
+                              <!--Table head-->
+                              <thead class="mdb-color darken-3">
+                                  <tr class="text-white">
+                                      <th>#</th>
+                                      <th>Platform</th>
+                                      <th>Budget</th>
+                                      
+                                  </tr>
+                              </thead>
+                              <!--Table head-->
+
+                              <!--Table body-->
+                              <tbody>
+                                  <tr>
+                                      <th scope="row" bgcolor="#e5110d"></th>
+                                      <td>GoogleP</td>
+                                      <td>{{budgethGoogleP}}</td>
+                                      
+                                  </tr>
+                                  <tr>
+                                      <th scope="row" bgcolor="#e21dd5"></th>
+                                      <td>Instagram</td>
+                                      <td>{{budgetInstagram}}</td>
+                                      
+                                  </tr>
+                                  <tr>
+                                      <th scope="row" bgcolor="#4250f4"></th>
+                                      <td>Facebook</td>
+                                      <td>{{budgetFacebook}}</td>
+                                      
+                                  </tr>
+                                  <tr>
+                                      <th scope="row" bgcolor="#00bdf7"></th>
+                                      <td>Twiiter</td>
+                                      <td>{{budgetTwiiter}}</td>
+                                      
+                                  </tr>
+                                  <tr>
+                                      <th scope="row" bgcolor="#06aa0f"></th>
+                                      <td>GoogleAdWords</td>
+                                      <td>{{budgetGoogleAdWords}}</td>
+                                      
+                                  </tr>
+                                  <tr>
+                                      <th scope="row" bgcolor="#fffa00"></th>
+                                      <td>Google</td>
+                                      <td>{{budgetGoogle}}</td>
+                                      
+                                  </tr>
+                                  <tr>
+                                      <th scope="row" bgcolor="#8c8c8c"></th>
+                                      <td>GoogleMybuissness</td>
+                                      <td>{{budgetGoogleMybuissness}}</td>
+                                      
+                                  </tr>
+                              </tbody>
+                              <!--Table body-->
+                          </table>
+                          <!--Table-->
+
+                      </mdb-card-body>
+
+                  </mdb-card>
+
                   <!-- export card -->
-                    <mdb-card class="text-center">
+                    <mdb-card class="text-center hides">
                         <mdb-card-header class="success-color white-text">
                           <h3>Reports</h3>
                         </mdb-card-header>
@@ -115,6 +211,8 @@
                           <p class="mb-0">Exports to file</p>
                         </mdb-card-footer>
                     </mdb-card>
+
+
 
                 </div>
                 <div class="col-md-5">
