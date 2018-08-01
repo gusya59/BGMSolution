@@ -165,7 +165,7 @@
           <div class="md-form mb-4">
             <i class="fa fa-lock prefix grey-text"></i>
             <input type="password" id="password" class="form-control validate" minlength ="8" formControlName="password" required mdbInputDirective>
-            <label data-error="wrong" data-success="right" for="password">new password</label>
+            <label data-error="wrong" data-success="right" for="password">New password</label>
           </div>
           
           <div class="md-form mb-4">
@@ -177,7 +177,10 @@
           <!-- check password for validety frontend -->
           <p class="bg-danger" *ngIf="passwordFormGroup.controls.confirmPassword.errors?.required && passwordFormGroup.controls.confirmPassword.touched">Repeat password is required</p>
           <p class="bg-danger" *ngIf="passwordFormGroup.errors?.doesMatchPassword && passwordFormGroup.controls.confirmPassword.touched">Password does not match</p>
-        
+          <p class="bg-danger" >{{ErroMsg}}</p>
+
+
+          
           <button type="button" mdbBtn color="danger" class="waves-light btn-lg" aria-label="Close" (click)="passChangeModal.hide()" mdbWavesEffect>Close</button>
           <button type="submit" mdbBtn color="success" class="relative waves-light btn-lg" [disabled]="!passwordFormGroup.valid"mdbWavesEffect>Save changes</button>
   

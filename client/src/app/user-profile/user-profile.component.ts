@@ -1,5 +1,6 @@
+import { ModalDirective } from 'angular-bootstrap-md';
 import { UserDataService } from './../service/user-data.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserPreviewService } from '../service/user-preview.service';
 import { FormControl } from '@angular/forms';
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
@@ -24,7 +25,11 @@ export class UserProfileComponent implements OnInit {
   lastName: string = "Berdichevsky"
   email: string = "DavidMD@bgm.com"
 
-
+  // error msg recived string
+  ErroMsg: string;
+  
+  //allow to see passChangeModal for error modal use
+  @ViewChild('passChangeModal') passChangeModal: ModalDirective;
   
   // Define the original budget per line
   
@@ -38,7 +43,9 @@ export class UserProfileComponent implements OnInit {
 
   // group of password and confiramtion
   passwordFormGroup: FormGroup;
-
+  password: string;
+  oldPassword: string;
+  confirmPassword: string;
 
   constructor(private userdata: UserDataService, private userPreview: UserPreviewService, private fb: FormBuilder) {
     
@@ -80,11 +87,23 @@ public chartOptions:any = {
   public chartClicked(e: any): void { }
   public chartHovered(e: any): void { }
 
-  //password change
+  //password change function
   passChange(){
-    console.log(this.passwordFormGroup.value.oldPassword)
-    console.log(this.passwordFormGroup.value.password)
-    console.log(this.passwordFormGroup.value.confirmPassword)
+    if(this.passwordFormGroup.valid){
+      this.password = this.passwordFormGroup.value.password;
+      this.oldPassword = this.passwordFormGroup.value.oldPassword;
+      this.confirmPassword = this.passwordFormGroup.value.confirmPassword;
+      this.userdata.passChange(this.password,this.oldPassword,this.confirmPassword).subscribe(
+        Data => {
+          if(Data.success){
+            this.passChangeModal.hide();
+          }
+          else{
+            this.ErroMsg =  Data.message;
+          }
+        }
+      )
+    }
   }
   
   

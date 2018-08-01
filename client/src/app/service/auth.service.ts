@@ -1,4 +1,3 @@
-import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 // Import of http service
 import { HttpClient, HttpHeaders } from '@angular/common/http';

@@ -15,7 +15,9 @@ interface respData {
   address: string,
   old_password: string,
   password: string,
-  passwordConfirmation: string
+  passwordConfirmation: string,
+  success: boolean,
+  message: string
 }
 
 @Injectable({
@@ -35,4 +37,20 @@ export class UserDataService {
     return this.http.get<respData>(uri)
   }
 
+  //password change function assembly. 
+  passChange(password, oldPassword, confirmPassword){
+    //will get user info if correct
+    const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
+
+    //object with old password, new password and confirmation
+    const obj = {
+      password: password,
+      oldPassword: oldPassword,
+      confirmPassword: confirmPassword
+    };
+
+    //post data to server
+    return this.http.post<respData>(uri,obj); //wil subscribe success, message.
+  }
+  
 }
