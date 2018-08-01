@@ -9,11 +9,11 @@
 
 <!-- body  -->
 <!-- Data -->
-<div class="container-fluid">
+<div  class="container-fluid">
   <div class="row justify-content-center">
     <div class="col-lg-12">
       <!--Panel-->
-      <div class="card">
+      <div id="contentToPDF" class="card">
         <!-- Buissnes name -->
           <div class="card-header primary-color white-text">
               <div class="row justify-content-center"> 
@@ -25,55 +25,56 @@
             <div class="row">
               <div class="col-md-5">
                 <h2 class="h2-responsive ">Your Details</h2>
+                
               </div>
             </div>
             <hr>
-            
+
             <div class="row justify-content-center">
               <!-- company details -->
                 <div class= "col-md-5">
                     <div class="md-form">
                         <input mdbInputDirective type="text" name="b_name" disabled [(ngModel)]="b_name" id="b_name" class="form-control">
-                        <label for="form1" class="">Company Name</label>
+                        <label for="b_name" id="labels" class="labels">Company Name</label>
                     </div>
                     <div class="md-form">
                         <input mdbInputDirective type="text" name="b_type" disabled [(ngModel)]="b_type" id="b_type" class="form-control">
-                        <label for="form1" class="">Buissnes Type</label>
+                        <label for="b_type" class="labels">Buissnes Type</label>
                     </div>
                     <div class="md-form">
                         <input mdbInputDirective type="text" name="mobile" disabled [(ngModel)]="mobile" id="mobile" class="form-control">
-                        <label for="form1" class="">Mobile</label>
+                        <label for="mobile" id="labels" class="labels">Mobile</label>
                     </div>
                     <div class="md-form">
                         <input mdbInputDirective type="text" name="phone" disabled [(ngModel)]="phone" id="phone" class="form-control">
-                        <label for="form1" class="">Phone</label>
+                        <label for="phone" id="labels" class="labels">Phone</label>
                     </div>
                     <div class="md-form">
                         <input mdbInputDirective type="text" name="city" disabled [(ngModel)]="city" id="city" class="form-control">
-                        <label for="form1" class="">City</label>
+                        <label for="city" id="labels" class="labels">City</label>
                     </div>
                     <div class="md-form">
                         <input mdbInputDirective type="text" name="country" disabled [(ngModel)]="country" id="country" class="form-control">
-                        <label for="form1" class="">country</label>
+                        <label for="country" id="labels" class="labels">country</label>
                     </div>
                     <div class="md-form">
                         <input mdbInputDirective type="text" name="address" disabled [(ngModel)]="address" id="address" class="form-control">
-                        <label for="form1" class="">address</label>
+                        <label for="address" id="labels" class="labels">address</label>
                     </div>
                 </div>
                 <!-- user details -->
                 <div class= "col-md-5">
                     <div class="md-form">
                         <input mdbInputDirective type="text" name="email" disabled [(ngModel)]="email" id="email" class="form-control">
-                        <label for="form1" class="">eMail</label>
+                        <label for="email" id="labels" class="labels">eMail</label>
                     </div>
                     <div class="md-form">
                         <input mdbInputDirective type="text" name="firstName" disabled [(ngModel)]="firstName" id="firstName" class="form-control">
-                        <label for="form1" class="">First Name</label>
+                        <label for="firstName" id="labels" class="labels">First Name</label>
                     </div>
                     <div class="md-form">
                         <input mdbInputDirective type="text" name="lastName" disabled [(ngModel)]="lastName" id="lastName" class="form-control">
-                        <label for="form1" class="">Last Name</label>
+                        <label for="lastName" id="labels" class="labels">Last Name</label>
                     </div>
                     <div class="row-fluid align-self-end">
                         <div class="md-form">
@@ -108,7 +109,7 @@
                             <h4>Export to PDF</h4>
                           </mdb-card-title>
                           <mdb-card-text > <span style="font-size:1.5rem">Arrange your data in easy to use pretty PDF page from BG's.</span></mdb-card-text>
-                          <a mdbBtn color="danger" size="lg" class="waves-light" outline="true" mdbWavesEffect>Export  <i class="fas fa-file-pdf fa-4x"></i></a>
+                          <a mdbBtn color="danger" size="lg" class="waves-light" outline="true" (click)="exportToPdf()"  mdbWavesEffect>Export  <i class="fas fa-file-pdf fa-4x"></i></a>
                         </mdb-card-body>
                         <mdb-card-footer class="text-muted success-color white-text">
                           <p class="mb-0">Exports to file</p>

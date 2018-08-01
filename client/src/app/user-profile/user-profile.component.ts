@@ -1,9 +1,12 @@
+
 import { ModalDirective } from 'angular-bootstrap-md';
-import { UserDataService } from './../service/user-data.service';
+import { UserDataService } from '../service/user-data.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserPreviewService } from '../service/user-preview.service';
-import { FormControl } from '@angular/forms';
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
+import * as jspdf from 'jspdf';  
+import html2canvas from 'html2canvas';  
+
 
 @Component({
   selector: 'app-user-profile',
@@ -27,7 +30,7 @@ export class UserProfileComponent implements OnInit {
 
   // error msg recived string
   ErroMsg: string;
-  
+
   //allow to see passChangeModal for error modal use
   @ViewChild('passChangeModal') passChangeModal: ModalDirective;
   
@@ -151,6 +154,45 @@ public chartOptions:any = {
       this.chartData = [Data.budgethGoogleP, Data.budgetInstagram, Data.budgetFacebook, Data.budgetTwiiter, Data.budgetGoogleAdWords, Data.budgetGoogle, Data.budgetGoogleMybuissness];
         
     }
+
+    //print page 2 PDF https://rawgit.com/MrRio/jsPDF/master/docs/index.html <= more info imported and tested alpha
+    exportToPdf(){
+
+      //change top style to prevent brake lines
+      var labels = document.getElementsByClassName('labels');
+      for(var i = 0; i < labels.length; i++){
+        (labels[i]as HTMLElement).style.top = '4.5rem'; //var labels is not defined as HTML elelment so we will cast it.
+      }
+     
+        var data = document.getElementById('contentToPDF');  
+        html2canvas(data).then(canvas => {  
+          // Few necessary setting options  
+          var imgWidth = 208;   
+          var pageHeight = 400;    
+          var imgHeight = canvas.height * imgWidth / canvas.width;  
+          var heightLeft = imgHeight;  
+      
+          const contentDataURL = canvas.toDataURL('image/png')  
+          let pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF  
+          var position = 2;  
+          pdf.addImage(contentDataURL, 'PNG', 1, position, imgWidth, imgHeight)  
+          pdf.save('BGM_Review.pdf'); // Generated PDF   
+        });
+      
+        // delay to print finish 2 secounds
+        setTimeout(()=>{  
+
+      //change top style back to normal
+      var labels = document.getElementsByClassName('labels');
+      for(var i = 0; i < labels.length; i++){
+        (labels[i]as HTMLElement).style.top = '0.65rem'; //var labels is not defined as HTML elelment so we will cast it.
+      }  
+    }, 2000);
+        
+    }
+
+
+
 
 
 }
