@@ -1,8 +1,7 @@
+//Registartion (User DB) scheme and relevant functions
 var mongoose = require('mongoose');
-var validate = require('mongoose-validator');
+//var validate = require('mongoose-validator');
 var bcrypt = require('bcrypt');
-
-
 
 // Registration DB Schema --------->to add unique: true to the email later
 var UsersSchema = mongoose.Schema({
