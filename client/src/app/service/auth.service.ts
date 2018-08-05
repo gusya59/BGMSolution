@@ -1,12 +1,15 @@
-import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 // Import of http service
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 //interface for returning router resp
 interface respData {
   success: boolean,
-  message: string
+  message: string,
+  status: number,
+  errors: string[],
+  token: string,
+  Headers: any
 }
 
 @Injectable({
@@ -18,7 +21,7 @@ export class AuthService {
   private loggedInStatus = false;
 
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient) { }
 
   //get logged in replace property name with action
   get isLoggedIn(){
@@ -33,32 +36,37 @@ export class AuthService {
   //get user info from backend HTTP
   UserLogin(InputEmail,InputPassword){
     //will get user info if correct
-    const uri = 'http://www.mocky.io/v2/5b576302310000823b4d2252';
+    const uri = 'http://localhost:1234/signup/login';
     // our object holding the login data
     const obj = {
-      InputEmail: InputEmail,
-      InputPassword: InputPassword
+      email: InputEmail,
+      password: InputPassword
     };
 
     //post to data to server
-    return this.http.post<respData>(uri,obj)
+    var reqHeader = new HttpHeaders({'content-Type': 'application/x-www-urlencoded'});
+    return this.http.post<respData>(uri,obj,  {headers: reqHeader});
     
   }
 
   addUser(inputfirstname, inputlastname, inputEmail, inputPassword, confirmPassword,checkBox) {
-    const uri = 'http://www.mocky.io/v2/5b576302310000823b4d2252';
+    const uri = 'http://localhost:1234/signup/registration';
     const obj = {
     
-    inputfirstname: inputfirstname,
-    inputlastname: inputlastname,
-    inputEmail: inputEmail, 
-    inputPassword: inputPassword,
-    confirmPassword: confirmPassword,
+    firstName: inputfirstname,
+    lastName: inputlastname,
+    email: inputEmail, 
+    password: inputPassword,
+    passwordConfirmation: confirmPassword,
     checkBox: checkBox
     };
     //post registration to server
-    return this.http.post<respData>(uri, obj)
+    
+    //header manage
+    // var reqHeader = new HttpHeaders({'content-Type': 'application/x-www-urlencoded'});
+    // return this.http.post<respData>(uri, obj, {headers: reqHeader})
 
+    return this.http.post<respData>(uri, obj)
   }
 
 }

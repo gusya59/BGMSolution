@@ -1,0 +1,197 @@
+<!-- User Navigation bar -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12">
+        <app-navigation-user></app-navigation-user>
+    </div>
+  </div>
+</div>
+
+<!-- body  -->
+<!-- Data -->
+<div  class="container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-lg-12">
+      <!--Panel-->
+      <div id="contentToPDF" class="card">
+        <!-- Buissnes name -->
+          <div class="card-header primary-color white-text">
+              <div class="row justify-content-center"> 
+                <h1 class="h1-responsive "><i class="far fa-building"></i> {{b_name}}</h1>
+              </div>
+          </div>
+          
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-5">
+                <h2 class="h2-responsive ">Your Details</h2>
+                
+              </div>
+            </div>
+            <hr>
+
+            <div class="row justify-content-center">
+              <!-- company details -->
+                <div class= "col-md-5">
+                    <div class="md-form">
+                        <input mdbInputDirective type="text" name="b_name" disabled [(ngModel)]="b_name" id="b_name" class="form-control">
+                        <label for="b_name" id="labels" class="labels">Company Name</label>
+                    </div>
+                    <div class="md-form">
+                        <input mdbInputDirective type="text" name="b_type" disabled [(ngModel)]="b_type" id="b_type" class="form-control">
+                        <label for="b_type" class="labels">Buissnes Type</label>
+                    </div>
+                    <div class="md-form">
+                        <input mdbInputDirective type="text" name="mobile" disabled [(ngModel)]="mobile" id="mobile" class="form-control">
+                        <label for="mobile" id="labels" class="labels">Mobile</label>
+                    </div>
+                    <div class="md-form">
+                        <input mdbInputDirective type="text" name="phone" disabled [(ngModel)]="phone" id="phone" class="form-control">
+                        <label for="phone" id="labels" class="labels">Phone</label>
+                    </div>
+                    <div class="md-form">
+                        <input mdbInputDirective type="text" name="city" disabled [(ngModel)]="city" id="city" class="form-control">
+                        <label for="city" id="labels" class="labels">City</label>
+                    </div>
+                    <div class="md-form">
+                        <input mdbInputDirective type="text" name="country" disabled [(ngModel)]="country" id="country" class="form-control">
+                        <label for="country" id="labels" class="labels">country</label>
+                    </div>
+                    <div class="md-form">
+                        <input mdbInputDirective type="text" name="address" disabled [(ngModel)]="address" id="address" class="form-control">
+                        <label for="address" id="labels" class="labels">address</label>
+                    </div>
+                </div>
+                <!-- user details -->
+                <div class= "col-md-5">
+                    <div class="md-form">
+                        <input mdbInputDirective type="text" name="email" disabled [(ngModel)]="email" id="email" class="form-control">
+                        <label for="email" id="labels" class="labels">eMail</label>
+                    </div>
+                    <div class="md-form">
+                        <input mdbInputDirective type="text" name="firstName" disabled [(ngModel)]="firstName" id="firstName" class="form-control">
+                        <label for="firstName" id="labels" class="labels">First Name</label>
+                    </div>
+                    <div class="md-form">
+                        <input mdbInputDirective type="text" name="lastName" disabled [(ngModel)]="lastName" id="lastName" class="form-control">
+                        <label for="lastName" id="labels" class="labels">Last Name</label>
+                    </div>
+                    <div class="row-fluid align-self-end">
+                        <div class="md-form">
+                            <button mdbBtn type="button" class="btn btn-lg" color="warning" block="true" (click)="passChangeModal.show()" mdbWavesEffect>Change Password</button>
+                            <button mdbBtn type="button" class="btn btn-lg" color="success" block="true" mdbWavesEffect>Save Changes</button>
+                            <button mdbBtn type="button" class="btn btn-lg" color="danger" block="true" mdbWavesEffect>Terminate account</button>
+                        </div>
+                    </div>
+                    
+                  </div>
+            </div>
+          </div>
+          <!-- Charts and Reports -->
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-5">
+                <h2 class="h2-responsive ">Charts and Reports</h2>
+              </div>
+            </div>
+            <hr>
+            
+            <div class="row justify-content-center">
+              <!-- Charts and Reports -->
+                <div class="col-md-5">
+                  <!-- export card -->
+                    <mdb-card class="text-center">
+                        <mdb-card-header class="success-color white-text">
+                          <h3>Reports</h3>
+                        </mdb-card-header>
+                        <mdb-card-body>
+                          <mdb-card-title>
+                            <h4>Export to PDF</h4>
+                          </mdb-card-title>
+                          <mdb-card-text > <span style="font-size:1.5rem">Arrange your data in easy to use pretty PDF page from BG's.</span></mdb-card-text>
+                          <a mdbBtn color="danger" size="lg" class="waves-light" outline="true" (click)="exportToPdf()"  mdbWavesEffect>Export  <i class="fas fa-file-pdf fa-4x"></i></a>
+                        </mdb-card-body>
+                        <mdb-card-footer class="text-muted success-color white-text">
+                          <p class="mb-0">Exports to file</p>
+                        </mdb-card-footer>
+                    </mdb-card>
+
+                </div>
+                <div class="col-md-5">
+                    <div style="display: block">
+                      <!-- chart generated -->
+                      <canvas mdbChart
+                        [chartType]="chartType"
+                        [data]="chartData"
+                        [labels]="chartLabels"
+                        [colors]="chartColors"
+                        [options]="chartOptions"
+                        [legend]="true"
+                        (chartHover)="chartHovered($event)"
+                        (chartClick)="chartClicked($event)">
+                      </canvas>
+                    </div>
+                </div>          
+            </div>
+          </div>
+      </div>
+      <!--/.Panel-->
+    </div>
+  </div>
+</div>
+
+<!-- Password Change Modal -->
+
+
+<div mdbModal #passChangeModal="mdbModal" class="modal fade " tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-notify modal-warning" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!-- closing X -->
+        <button type="button" class="close pull-right btn-lg" aria-label="Close" (click)="passChangeModal.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+        <!-- headere title -->
+        <h4 class="modal-title w-100" id="myModalLabel">Change Password</h4>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="passwordFormGroup" novalidate (ngSubmit)="passChange()" >
+          <div class="md-form mb-4">
+            <i class="fa fa-lock prefix grey-text"></i>
+            <input type="password" id="oldPassword" class="form-control validate" minlength ="8" formControlName="oldPassword" required mdbInputDirective>
+            <label data-error="wrong" data-success="right" for="oldPassword">Old password</label>
+          </div>
+          
+          <div class="md-form mb-4">
+            <i class="fa fa-lock prefix grey-text"></i>
+            <input type="password" id="password" class="form-control validate" minlength ="8" formControlName="password" required mdbInputDirective>
+            <label data-error="wrong" data-success="right" for="password">New password</label>
+          </div>
+          
+          <div class="md-form mb-4">
+            <i class="fa fa-lock prefix grey-text"></i>
+            <input type="password" id="confirmPassword" class="form-control validate" minlength ="8" formControlName="confirmPassword" required mdbInputDirective>
+            <label data-error="wrong" data-success="right" for="confirmPassword">Confirm password</label>
+          </div>
+          
+          <!-- check password for validety frontend -->
+          <p class="bg-danger" *ngIf="passwordFormGroup.controls.confirmPassword.errors?.required && passwordFormGroup.controls.confirmPassword.touched">Repeat password is required</p>
+          <p class="bg-danger" *ngIf="passwordFormGroup.errors?.doesMatchPassword && passwordFormGroup.controls.confirmPassword.touched">Password does not match</p>
+          <p class="bg-danger" >{{ErroMsg}}</p>
+
+
+          
+          <button type="button" mdbBtn color="danger" class="waves-light btn-lg" aria-label="Close" (click)="passChangeModal.hide()" mdbWavesEffect>Close</button>
+          <button type="submit" mdbBtn color="success" class="relative waves-light btn-lg" [disabled]="!passwordFormGroup.valid"mdbWavesEffect>Save changes</button>
+  
+        
+        </form>  
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
+

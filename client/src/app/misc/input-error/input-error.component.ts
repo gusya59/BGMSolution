@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
+//registration managing
+import { RegistrationComponent } from './../../sign-up/registration/registration.component';
 @Component({
   selector: 'app-input-error',
   templateUrl: './input-error.component.html',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InputErrorComponent implements OnInit {
 
-  constructor() { }
 
-  ngOnInit() {
-  }
+//define vars
+msg: string[];
+constructor(private registercomp: RegistrationComponent) { }
+
+ngOnInit() {
+  this.msg = this.registercomp.errorMSG;
+  console.log(this.registercomp.errorMSG);
+}
 
 }

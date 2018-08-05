@@ -1,13 +1,22 @@
-.container{
+/* .container{
     margin-top: 30px;
     padding-bottom: 30px; 
-}
+} */
 
-.row{
+/* .row{
     text-align: center;
-}
+} */
 
 img{
     width: 350px;
     height: auto;
 }
+
+@media (max-width: 1199px) { 
+    
+    img{
+        width: 200px;
+        height: auto;
+    }
+
+ }

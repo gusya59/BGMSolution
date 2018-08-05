@@ -9,7 +9,7 @@
             <div class="row justify-content-center">
               <div class="col-md-6 ">
                 <!-- Material form Register -->
-                <form [formGroup]="registrationFormGroup" novalidate (ngSubmit)="RegisterUser(inputfirstname,inputlastname,inputEmail,inputPassword,confirmPassword,checkBox)" >
+                <form [formGroup]="registrationFormGroup" novalidate (ngSubmit)="RegisterUser()" >
                   <!-- Material input  -->
                 <div class="col-md-12">
                     
@@ -106,7 +106,7 @@
                         
                         <!-- check password for validety frontend -->
                         <p class="bg-danger" *ngIf="passwordFormGroup.controls.confirmPassword.errors?.required && passwordFormGroup.controls.confirmPassword.touched">Repeat password is required</p>
-                        <p class="bg-danger" *ngIf="passwordFormGroup.errors?.doesMatchPassword">Password does not match</p>
+                        <p class="bg-danger" *ngIf="passwordFormGroup.errors?.doesMatchPassword && passwordFormGroup.controls.confirmPassword.touched">Password does not match</p>
 
                     </div>
                 </div>
@@ -125,6 +125,30 @@
                     Conditions
                   </div>
                   
+                <!-- Error Modal -->
+                <div mdbModal #basicModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
+                aria-hidden="true">
+                    <div class="modal-dialog modal-notify modal-warning"  role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <h4 class="modal-title w-100" id="myModalLabel">Data recived is incorrect</h4>
+                            </div>
+                            <div class="modal-body">
+
+                                <app-wrong-data></app-wrong-data>
+                            
+                            </div>
+                            <div class="modal-footer">
+                                <h6>*{{ErroMsg}}</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
                   <br>
                 <div class="text-center mt-8">
                   <br>

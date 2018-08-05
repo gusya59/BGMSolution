@@ -3,7 +3,7 @@
     <div class="col-lg-12">
         <app-navigation-guest></app-navigation-guest>
     </div>
-  </div>
+</div>
   
 <!-- unknown tokken login -->
 
@@ -46,16 +46,42 @@
                 </div>
             </div>
 
+            <!-- Error Modal -->
+            <div mdbModal #basicModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog modal-notify modal-warning"  role="document">
+                <div class="modal-content">
+                  <!-- Modal Header -->
+                  <div class="modal-header">
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
+                      <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title w-100" id="myModalLabel">Email or Password are incorrect</h4>
+                  </div>
+
+                  <!-- Modal body contant -->
+                  <div class="modal-body">
+
+                    <app-wrong-e-p></app-wrong-e-p>
+
+                  </div>
+                  <!-- Modal footer contant -->
+                  <div class="modal-footer">
+                      <h6>*{{ErroMsg}}</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
               <div class="text-center mt-8">
                 <br>
-
+                <button type="submit" value="submit" class="btn btn-outline-primary btn-lg">Login</button>   
                 <button routerLink="/signup" routerLinkActive="active" class="btn btn-outline-warning btn-lg">New User</button>
-                <button type="submit" value="submit" class="btn btn-outline-primary btn-lg">Login</button>
-                
               </div>
           </form>
         </div>
       </div>
     </div>
-    </div>
-  
+  </div>
+</div>
+    

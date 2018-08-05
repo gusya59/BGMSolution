@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 // Nav bars
@@ -43,60 +43,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './service/auth.service';
 import { AuthGuard } from './service/auth.guard';
 import { QuestionsComponent } from './sign-up/questions/questions.component';
+import { Err404Component } from './misc/err404/err404.component';
+//import router module
+import {appRoutes} from './service/routes';
+//import Reports and userProfile
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { UserReportsComponent } from './user-profile/user-reports/user-reports.component';
 
 
-//configuration objects
-const appRoutes: Routes = [
-  {  
-    path: '',
-    component: GuestComponent,
-    data: { title: 'Guest' }
-  },
-  {
-  path: 'login',
-  component: LoginComponent,
-  data: { title: 'login' }
-  },
-  {
-    path: 'loginUser',
-    component: LoginUserComponent,
-    data: { title: 'loginUser' }
-  },
-  {
-    path: 'user',
-    component: UserComponent,
-    canActivate: [AuthGuard],
-    data: { title: 'user' }
-    
-  },
-  {
-    path: 'signup',
-    component: SignUpComponent,
-    data: { title: 'signup' },
-    children: [ 
-      {path: '', component: RegistrationComponent},
-      {path: 'userSettings', component: UserSettingsComponent,
-      // canActivate: [AuthGuard]
-    }, 
-      {path: 'userSettings/questions', component: QuestionsComponent,
-      // canActivate: [AuthGuard]
-    },
-      {path: 'userSettings/finish', component: FinishComponent,
-      // canActivate: [AuthGuard]
-    },
-    ]
-  },
-  {
-    path: 'aboutUs',
-    component: AboutUsComponent,
-    data: { title: 'aboutUs' }
-  },
-  { path: '',
-    redirectTo: '/Guest',
-    pathMatch: 'full'
-  }
-
-];
 
 @NgModule({
   declarations: [
@@ -124,14 +78,18 @@ const appRoutes: Routes = [
     PreviewComponent,
     OurServiceComponent,
     BarComponent,
-    QuestionsComponent
+    QuestionsComponent,
+    Err404Component,
+    UserProfileComponent,
+    UserReportsComponent
+
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
     HttpModule,
-    MDBBootstrapModule,
+    MDBBootstrapModule.forRoot(),
     ReactiveFormsModule,
     RouterModule.forRoot(
       appRoutes,
@@ -139,6 +97,7 @@ const appRoutes: Routes = [
     )
   ],
   providers: [countryService,RegistrationComponent,AuthService,AuthGuard],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [NO_ERRORS_SCHEMA]
 })
 export class AppModule { }
