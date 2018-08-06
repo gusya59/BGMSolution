@@ -1,7 +1,7 @@
 /* Making Img Overflow effect */
 .container-fluid{
     background-color: rgba(190, 190, 190, 0.123);
-    padding: 0px 40px 40px;
+    padding: 0px 100px 40px;
     /* padding-bottom: 120px; */
 }
 .container {
@@ -63,4 +63,13 @@ hr{
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   text-align: center;
+}
+/* img body */
+p{
+  background-color: #4285F4;
+}
+/*img title */
+h3{
+  background-color: #0d47a1;
+  width: 253px;
 }

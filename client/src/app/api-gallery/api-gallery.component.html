@@ -1,10 +1,10 @@
 <!-- Api Bank gallery -->
-<div class="container-fluid indigo lighten-5">
-    <h1 class="text-center">Our Services</h1>
-    <hr>
-  <div class="row">
+<div class="container-fluid mdb-color lighten-4">
+    <!-- <h1 class="text-center">Our Services</h1>
+    <hr> -->
+  <div class="row justify-content-center">
     <!-- FaceBook API -->
-    <div class="col">
+    <!-- <div class="col">
       <div class="container ">
         <img src="assets/img/facebook.png" alt="Avatar" class="image">
         <div class="overlay indigo lighten-5">
@@ -12,10 +12,10 @@
           <button class="btn btn-primary btn-lg btn-redirect">More Info</button>
         </div>
       </div>
-    </div>
+    </div> -->
    
        <!-- Linkedin API -->
-      <div class="col">
+      <!-- <div class="col">
         <div class="container">
           <img src="assets/img/linkedin.png" alt="Avatar" class="image">
           <div class="overlay indigo lighten-5">
@@ -23,10 +23,10 @@
             <button class="btn btn-primary btn-lg btn-redirect">More Info</button>
           </div>
         </div>
-    </div>
+    </div> -->
    
           <!-- twitter API -->
-    <div class="col">
+    <!-- <div class="col">
         <div class="container">
           <img src="assets/img/twitter.png" alt="Avatar" class="image">
           <div class="overlay indigo lighten-5">
@@ -34,10 +34,10 @@
             <button class="btn btn-primary btn-lg btn-redirect">More Info</button>
           </div>
         </div>
-    </div>
+    </div> -->
 
   <!-- Instagram API -->
-  <div class="col">
+  <!-- <div class="col">
       <div class="container">
         <img src="assets/img/instagram.png" alt="Avatar" class="image">
         <div class="overlay indigo lighten-5">
@@ -45,10 +45,10 @@
           <button class="btn btn-primary btn-lg btn-redirect">More Info</button>
         </div>
       </div>
-    </div>
+    </div> -->
   
     <!-- google+ API -->
-    <div class="col">
+    <!-- <div class="col">
       <div class="container">
         <img src="assets/img/google-plus.png" alt="Avatar" class="image">
         <div class="overlay indigo lighten-5">
@@ -56,10 +56,10 @@
           <button class="btn btn-primary btn-lg btn-redirect">More Info</button>
         </div>
       </div>
-    </div>
+    </div> -->
     
     <!-- youtube API -->
-    <div class="col">
+    <!-- <div class="col">
       <div class="container">
         <img src="assets/img/youtube.png" alt="Avatar" class="image">
         <div class="overlay indigo lighten-5">
@@ -67,11 +67,11 @@
           <button class="btn btn-primary btn-lg btn-redirect">More Info</button>
         </div>
       </div>
-    </div>   
+    </div>    -->
     
 
   <!-- google API API -->
-    <div class="col">
+    <!-- <div class="col">
         <div class="container">
           <img src="assets/img/google.png" alt="Avatar" class="image">
           <div class="overlay indigo lighten-5">
@@ -80,9 +80,110 @@
           </div>
         </div>
     </div>
+  </div> -->
 
 
-  </div>
+
+
+<!--Carousel Wrapper - slight black mask no pause-->
+<mdb-carousel [isControls]="true" [noPause]="true" class="carousel slide carousel-fade" [animation]="'fade'">
+    <!--facebook slide-->
+    <mdb-carousel-item>
+        <div class="view">
+            <img class="d-block w-100" src="assets/img/facebook_Large.png" alt="First slide">
+            <div class="mask rgba-black-slight waves-light" mdbWavesEffect></div>
+        </div>
+        <div class="carousel-caption">
+            <h3 class="h3-responsive">Facebook</h3>
+            <p>Popular free social networking website.</p>
+        </div>
+    </mdb-carousel-item>
+    <!--/facebook slide-->
+    <!--LinkedIn slide-->
+    <mdb-carousel-item>
+        <div class="view">
+            <img class="d-block w-100" src="assets/img/linkedin_Large.png" alt="Second slide">
+            <div class="mask rgba-black-slight waves-light" mdbWavesEffect></div>
+        </div>
+        <div class="carousel-caption">
+            <h3 class="h3-responsive">LinkedIn</h3>
+            <p>Business- and employment-oriented service.</p>
+        </div>
+    </mdb-carousel-item>
+    <!--/LinkedIn slide-->
+    <!--twitter slide-->
+    <mdb-carousel-item>
+        <div class="view">
+            <img class="d-block w-100" src="assets/img/twitter_Large.png" alt="Third slide">
+            <div class="mask rgba-black-slight waves-light" mdbWavesEffect></div>
+        </div>
+        <div class="carousel-caption">
+            <h3 class="h3-responsive">twitter</h3>
+            <p>Online news and social networking service.</p>
+        </div>
+    </mdb-carousel-item>
+    <!--/twitter slide-->
+    <!--Instagram slide-->
+    <mdb-carousel-item>
+        <div class="view">
+            <img class="d-block w-100" src="assets/img/instagram_Large.png" alt="Third slide">
+            <div class="mask rgba-black-slight waves-light" mdbWavesEffect></div>
+        </div>
+        <div class="carousel-caption">
+            <h3 class="h3-responsive">Instagram</h3>
+            <p>Photo and video-sharing social networking.</p>
+        </div>
+    </mdb-carousel-item>
+    <!--/Instagram slide-->
+    <!--Google+ slide-->
+    <mdb-carousel-item>
+        <div class="view">
+            <img class="d-block w-100" src="assets/img/google-plus_Large.png" alt="Third slide">
+            <div class="mask rgba-black-slight waves-light" mdbWavesEffect></div>
+        </div>
+        <div class="carousel-caption">
+            <h3 class="h3-responsive">Google+</h3>
+            <p>Internet-based social network.</p>
+        </div>
+    </mdb-carousel-item>
+    <!--/Google+ slide-->
+    <!--GoogleAdWords slide-->
+    <mdb-carousel-item>
+        <div class="view">
+            <img class="d-block w-100" src="assets/img/GoogleAdWords.png" alt="Third slide">
+            <div class="mask rgba-black-slight waves-light" mdbWavesEffect></div>
+        </div>
+        <div class="carousel-caption">
+            <h3 class="h3-responsive">GoogleAdWords</h3>
+            <p>is an online advertising service developed by Google.</p>
+        </div>
+    </mdb-carousel-item>
+    <!--/GoogleAdWords slide-->
+    <!--Google slide-->
+    <mdb-carousel-item>
+        <div class="view">
+            <img class="d-block w-100" src="assets/img/google_Large.png" alt="Third slide">
+            <div class="mask rgba-black-slight waves-light" mdbWavesEffect></div>
+        </div>
+        <div class="carousel-caption">
+            <h3 class="h3-responsive">Google</h3>
+            <p>American multinational technology company that specializes in Internet-related services and products.</p>
+        </div>
+    </mdb-carousel-item>
+    <!--/Google slide-->
+    <!--GoogleMybuissness slide-->
+    <mdb-carousel-item>
+        <div class="view">
+            <img class="d-block w-100" src="assets/img/GoogleMybuissness.png" alt="Third slide">
+            <div class="mask rgba-black-slight waves-light" mdbWavesEffect></div>
+        </div>
+        <div class="carousel-caption">
+            <h3 class="h3-responsive">GoogleMybuissness</h3>
+            <p>collection of services offered by Google specifically directed at webmasters and businesses.</p>
+        </div>
+    </mdb-carousel-item>
+    <!--/GoogleMybuissness slide-->
+</mdb-carousel>
+<!--/.Carousel Wrapper-->
 </div>
 <hr>
-
