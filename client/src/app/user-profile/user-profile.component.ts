@@ -177,6 +177,7 @@ public chartOptions:any = {
         (labels[i]as HTMLElement).style.top = '4.5rem'; //var labels is not defined as HTML elelment so we will cast it.
       }
      
+      // print to PDF file
         var data = document.getElementById('contentToPDF');  
         html2canvas(data).then(canvas => {  
           // Few necessary setting options  
