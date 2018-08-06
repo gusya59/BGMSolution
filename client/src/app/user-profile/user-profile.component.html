@@ -85,7 +85,7 @@
                         <mdb-card-body>
                           <mdb-card-title>
                           </mdb-card-title>
-                          <img src="assets/img/Logo_Final.png">
+                          <img id="logoF" src="assets/img/Logo_Final.png">
                         </mdb-card-body>
 
                         <mdb-card-footer class="text-muted info-color white-text">
@@ -112,11 +112,8 @@
               </div>
             </div>
             <hr>
-            
 
-
-
-            
+                   
             <div class="row justify-content-center">
               <!-- Charts and Reports -->
                 <div class="col-md-5">
@@ -292,4 +289,26 @@
   </div>
 </div>
 
+
+
+<div mdbModal #printModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="printModal"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="printModal.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title w-100" id="myModalLabel">Exporting to PDF</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row justify-content-center">
+          <img id="exportPDF" src="assets/img/toPDF.png">
+        </div>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
 

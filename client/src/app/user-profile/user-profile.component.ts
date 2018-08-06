@@ -34,6 +34,8 @@ export class UserProfileComponent implements OnInit {
 
   //allow to see passChangeModal for error modal use
   @ViewChild('passChangeModal') passChangeModal: ModalDirective;
+  // Print splash screen modal
+  @ViewChild('printModal') printModal: ModalDirective;
   
   // Define the original budget per line
   
@@ -161,7 +163,8 @@ public chartOptions:any = {
 
     //print page 2 PDF https://rawgit.com/MrRio/jsPDF/master/docs/index.html <= more info imported and tested alpha
     exportToPdf(){
-
+      // Show splash screen
+      this.printModal.show();
       //change top style to prevent brake lines
       var labels = document.getElementsByClassName('labels');
       //hide buttons and reports panel
@@ -209,6 +212,8 @@ public chartOptions:any = {
       
       document.getElementById('BGsTable').style.display = 'none';
       document.getElementById('BGscerti').style.display = 'none';
+      // Hide splash screen
+      this.printModal.hide();
     }, 2000);
         
     }

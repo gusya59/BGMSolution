@@ -14,11 +14,18 @@
 }
 
 /* img size */
-img{
+#logoF{
     width: 153px;
 }
 
 /* Table text */
 table td,th {
     font-size: 1rem !important;
+}
+
+#exportPDF{
+    width: auto;
+    height: 745px;
+    position: absolute;
+    top: -50px;
 }
