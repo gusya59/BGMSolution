@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 export class FinishComponent implements OnInit {
 
     //define time variable
-    timer: number = 30000;
+    timer: number = 15000;
 
   constructor(private router: Router ) { }
 

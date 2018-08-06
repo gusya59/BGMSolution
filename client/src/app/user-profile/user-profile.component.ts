@@ -15,6 +15,7 @@ import html2canvas from 'html2canvas';
 })
 export class UserProfileComponent implements OnInit {
 
+
   // inpage values
   b_name: string = "Davids Co";
   b_type: string = "Web Shop";
@@ -33,6 +34,8 @@ export class UserProfileComponent implements OnInit {
 
   //allow to see passChangeModal for error modal use
   @ViewChild('passChangeModal') passChangeModal: ModalDirective;
+  // Print splash screen modal
+  @ViewChild('printModal') printModal: ModalDirective;
   
   // Define the original budget per line
   
@@ -113,6 +116,9 @@ public chartOptions:any = {
   
 
   ngOnInit() {
+    document.getElementById('BGsTable').style.display = 'none';
+    document.getElementById('BGscerti').style.display = 'none';
+    
     // Request data from server
     this.userdata.getUserData().subscribe(
       data=>{
@@ -157,17 +163,28 @@ public chartOptions:any = {
 
     //print page 2 PDF https://rawgit.com/MrRio/jsPDF/master/docs/index.html <= more info imported and tested alpha
     exportToPdf(){
-
+      // Show splash screen
+      this.printModal.show();
       //change top style to prevent brake lines
       var labels = document.getElementsByClassName('labels');
+      //hide buttons and reports panel
+      var hiden = document.getElementsByClassName('hides');
+      document.getElementById('BGsTable').style.display = 'inline';
+      document.getElementById('BGscerti').style.display = 'inline';
+      
+      for(var i = 0; i < hiden.length; i++){
+        (hiden[i]as HTMLElement).style.visibility = 'hidden'; //var hiden is not defined as HTML elelment so we will cast it.
+      }
+
       for(var i = 0; i < labels.length; i++){
         (labels[i]as HTMLElement).style.top = '4.5rem'; //var labels is not defined as HTML elelment so we will cast it.
       }
      
+      // print to PDF file
         var data = document.getElementById('contentToPDF');  
         html2canvas(data).then(canvas => {  
           // Few necessary setting options  
-          var imgWidth = 208;   
+          var imgWidth = 180;   
           var pageHeight = 400;    
           var imgHeight = canvas.height * imgWidth / canvas.width;  
           var heightLeft = imgHeight;  
@@ -175,7 +192,7 @@ public chartOptions:any = {
           const contentDataURL = canvas.toDataURL('image/png')  
           let pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF  
           var position = 2;  
-          pdf.addImage(contentDataURL, 'PNG', 1, position, imgWidth, imgHeight)  
+          pdf.addImage(contentDataURL, 'PNG', 15, position, imgWidth, imgHeight)  
           pdf.save('BGM_Review.pdf'); // Generated PDF   
         });
       
@@ -187,6 +204,16 @@ public chartOptions:any = {
       for(var i = 0; i < labels.length; i++){
         (labels[i]as HTMLElement).style.top = '0.65rem'; //var labels is not defined as HTML elelment so we will cast it.
       }  
+
+      var hiden = document.getElementsByClassName('hides');
+      for(var i = 0; i < hiden.length; i++){
+        (hiden[i]as HTMLElement).style.visibility = 'visible'; //var hiden is not defined as HTML elelment so we will cast it.
+      }
+      
+      document.getElementById('BGsTable').style.display = 'none';
+      document.getElementById('BGscerti').style.display = 'none';
+      // Hide splash screen
+      this.printModal.hide();
     }, 2000);
         
     }

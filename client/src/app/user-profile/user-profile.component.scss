@@ -12,3 +12,20 @@
 .card{
     font-size: 2rem !important; 
 }
+
+/* img size */
+#logoF{
+    width: 153px;
+}
+
+/* Table text */
+table td,th {
+    font-size: 1rem !important;
+}
+
+#exportPDF{
+    width: auto;
+    height: 745px;
+    position: absolute;
+    top: -50px;
+}
