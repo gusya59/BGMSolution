@@ -1,3 +1,5 @@
+import { UserQuestionsComponent } from './../user-profile/user-questions/user-questions.component';
+import { Component } from '@angular/core';
 
 import { Err404Component } from './../misc/err404/err404.component';
 import { InputErrorComponent } from './../misc/input-error/input-error.component';
@@ -37,15 +39,20 @@ export const appRoutes: Routes = [
 
     //User Profile routing
     {
-      path: 'userProfile',
+      path: 'user/profile',
       component: UserProfileComponent,
-      data: { title: 'userProfile' }
+      data: { title: 'user/profile' }
     },
     //User Profile routing
     {
-      path: 'userReports',
+      path: 'user/reports',
       component: UserReportsComponent,
-      data: { title: 'userReports' }
+      data: { title: 'user/reports' }
+    },
+    {
+      path: 'user/questions',
+      component: UserQuestionsComponent,
+      data: {title: 'user/questions'}
     },
 
     //Login for our user routing

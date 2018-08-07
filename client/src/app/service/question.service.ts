@@ -55,7 +55,7 @@ export class QuestionService {
 
   getQuestion(){
     //will get user info if correct
-    const uri = 'http://localhost:1234/questions';
+    const uri = 'http://www.mocky.io/v2/5b69df38320000ed11af5e7e';
 
 
     //get data from server
@@ -65,7 +65,7 @@ export class QuestionService {
   //get next question from server
   getNextQuestion(question_Num,answere_Num){
     //will get user info if correct
-    const uri = 'http://localhost:1234/questions';
+    const uri = 'http://www.mocky.io/v2/5b69df38320000ed11af5e7e';
     const obj ={
       question_Num: question_Num,
       answere_Num: answere_Num
