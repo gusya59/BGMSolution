@@ -44,8 +44,8 @@ export class RegistrationComponent implements OnInit {
 
     //password validator stat function
     this.passwordFormGroup = this.fb.group({
-      inputPassword: ['', Validators.required],
-      confirmPassword: ['', Validators.required]
+      inputPassword: ['', [ Validators.required,Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z]).{7,}([0-9])$')]], //at least 8 characters, one upper and one lower case, numbers - ,{7,}->more than 8. it's counting from 0
+      confirmPassword: ['',[ Validators.required,Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z]).{7,}([0-9])$')]]
     }, {
       //request for password validation
       validator: RegistrationValidator.validate.bind(this)
@@ -53,9 +53,9 @@ export class RegistrationComponent implements OnInit {
 
     //other validators
     this.registrationFormGroup = this.fb.group({
-      inputfirstname: ['', Validators.required],
-      inputlastname: ['', Validators.required],
-      inputEmail: ['',[ Validators.required,Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
+      inputfirstname: ['',[ Validators.required,Validators.pattern('^[A-Za-z]+$')]],//only alphabet 
+      inputlastname: ['',[ Validators.required,Validators.pattern('^[A-Za-z]+$')]],//only alphabet 
+      inputEmail: ['',[ Validators.required,Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],//check if email correct
       checkBox: ['', Validators.required],
       passwordFormGroup: this.passwordFormGroup
     });
