@@ -61,14 +61,27 @@
                         <input mdbInputDirective type="text" name="phone"  [(ngModel)]="phone" id="phone" class="form-control">
                         <label for="phone"  class="labels">Phone</label>
                     </div>
+
+
                     <div class="md-form">
-                        <input mdbInputDirective type="text" name="city"  [(ngModel)]="city" id="city" class="form-control">
-                        <label for="city"  class="labels">City</label>
-                    </div>
-                    <div class="md-form">
-                        <input mdbInputDirective type="text" name="country"  [(ngModel)]="country" id="country" class="form-control">
                         <label for="country"  class="labels">Country</label>
+                        <select mdbInputDirective mdbTooltip="city will be lost" placement="left" type="text" name="country" (change)= "onSelect($event.target.value)" [(ngModel)]="country.name" id="country" class="form-control">
+                            <option [value]="country.name" selected="selected">{{country}}
+                            </option>
+                          <option *ngFor="let country of countries" value= {{country.id}}>{{country.name}}
+                        </select>
                     </div>
+
+                    <div class="md-form">
+                        <label for="city"  class="labels">City</label>
+                        <select mdbInputDirective mdbTooltip="Please reselect country" placement="left" type="text" name="city"  [(ngModel)]="city.name" id="city" class="form-control">
+                            <option [value]="city.name" selected="selected">{{city}}
+                            </option>
+                            <option *ngFor="let city of cities" value = {{city.id}}>{{city.name}}
+                         </select> 
+                    </div>
+
+
                     <div class="md-form">
                         <input mdbInputDirective type="text" name="address"  [(ngModel)]="address" id="address" class="form-control">
                         <label for="address"  class="labels">Address</label>

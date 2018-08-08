@@ -22,6 +22,10 @@ export class UserProfileComponent implements OnInit {
   //Buisness type
    private BuisnessType: string[];
 
+  //country and city
+   countries: country[];
+   cities: city[];
+
   // inpage values
   b_name: string = "Davids Co";
   b_type: string = "Web Shop";
@@ -61,8 +65,11 @@ export class UserProfileComponent implements OnInit {
   oldPassword: string;
   confirmPassword: string;
 
-  constructor(private userdata: UserDataService, private userPreview: UserPreviewService, private fb: FormBuilder) {
+  constructor(private _countryService: countryService, private userdata: UserDataService, private userPreview: UserPreviewService, private fb: FormBuilder) {
     
+    //define list of countries to use from service
+    this.countries = this._countryService.getCountries();
+
     //password validator stat function
     this.passwordFormGroup = this.fb.group({
       password: ['', Validators.required],
@@ -248,7 +255,10 @@ public chartOptions:any = {
     }
 
 
-
+    //define list of citis to use from service acording to country
+    onSelect(countryid) {
+      this.cities = this._countryService.getCities().filter((item) => item.countryid == countryid)
+    }
 
 }
 
