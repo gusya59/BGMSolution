@@ -33,6 +33,7 @@ export class UserSettingsComponent implements OnInit {
   selectCountry: string;
   selectCity: string;
   inputAddress: string;
+  budgetTotal: number;
 
       //Property for the user
       private company: company;
@@ -66,9 +67,9 @@ export class UserSettingsComponent implements OnInit {
     
   
 
-    //Create a new company object
+    // //Create a new company object
     this.company = new company({
-      b_name:"", b_type:"", mobile:"", phone: "", city:"",country:"", address:"",
+      b_name:"", b_type:"", mobile:"", phone: "", city:"",country:"", address:"", budgetTotal:""
     })
   }
 
@@ -83,6 +84,7 @@ export class UserSettingsComponent implements OnInit {
       this.company.city = this.cities[+this.selectCity-1].name;  //unload city from list
       this.company.country = this.countries[+this.selectCountry-1].name;  //unload country from list
       this.company.address = this.inputAddress;
+      this.company.budgetTotal = this.budgetTotal; //total company budget
       
        
 

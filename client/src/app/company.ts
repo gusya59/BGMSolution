@@ -9,6 +9,7 @@ export class company {
     country: string;
     city: string;
     address: string;
+    budgetTotal: number;
  
     constructor(values: Object = {}) {
       //Constructor initialization
