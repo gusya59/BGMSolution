@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { AuthService } from './../service/auth.service';
 //countries and citys
 import {countryService} from './../countryService';
 import {country} from './../country';
@@ -39,6 +41,9 @@ export class UserProfileComponent implements OnInit {
   lastName: string = "Berdichevsky"
   email: string = "DavidMD@bgm.com"
 
+  TotalBudget :number = 15550
+  
+
   // error msg recived string
   ErroMsg: string;
 
@@ -61,18 +66,23 @@ export class UserProfileComponent implements OnInit {
 
   //data change group
   dataformgroup: FormGroup;
+
+  //delete user from group
+  passwordTestFormGroup: FormGroup;
+
   // group of password and confiramtion
   passwordFormGroup: FormGroup;
+
   password: string;
   oldPassword: string;
   confirmPassword: string;
 
-  constructor(private _countryService: countryService, private userdata: UserDataService, private userPreview: UserPreviewService, private fb: FormBuilder) {
+  constructor(private router: Router ,  private auth: AuthService ,private _countryService: countryService, private userdata: UserDataService, private userPreview: UserPreviewService, private fb: FormBuilder) {
     
     //define list of countries to use from service
     this.countries = this._countryService.getCountries();
 
-    //password validator stat function
+    //password validator start function
     this.passwordFormGroup = this.fb.group({
       password: ['', Validators.required],
       oldPassword: ['', Validators.required],
@@ -81,6 +91,11 @@ export class UserProfileComponent implements OnInit {
       
       //request for password validation
       validator: passwordFormValidator.validate.bind(this)
+    });
+
+    //password delete user validator
+    this.passwordTestFormGroup = this.fb.group({
+      password: ['', Validators.required]
     });
 
     this.dataformgroup = this.fb.group({
@@ -93,6 +108,7 @@ export class UserProfileComponent implements OnInit {
       address: ['',Validators.required],
       firstName: ['',[ Validators.required,Validators.pattern('^[A-Za-z]+$')]], //only alphabet
       lastName: ['',[ Validators.required,Validators.pattern('^[A-Za-z]+$')]], //only alphabet
+      TotalBudget: ['',[ Validators.required,Validators.pattern('^([0-9]*)$')]] ///numbers
     })
 
   }
@@ -165,7 +181,8 @@ public chartOptions:any = {
         this.address = data.address, 
         this.firstName = data.firstName, 
         this.lastName = data.lastName, 
-        this.email = data.email
+        this.email = data.email,
+        this.TotalBudget = data.totalBudget
 
 
         //build angular form (nG removed in 7 version)
@@ -178,6 +195,7 @@ public chartOptions:any = {
         this.dataformgroup.get('address').setValue(this.address);
         this.dataformgroup.get('firstName').setValue(this.firstName);
         this.dataformgroup.get('lastName').setValue(this.lastName);
+        this.dataformgroup.get('TotalBudget').setValue(this.TotalBudget);
       }
       
     );
@@ -275,7 +293,8 @@ public chartOptions:any = {
           country: this.dataformgroup.value.country,
           address:  this.dataformgroup.value.address,
           firstName:  this.dataformgroup.value.firstName,
-          lastName: this.dataformgroup.value.lastName
+          lastName: this.dataformgroup.value.lastName,
+          TotalBudget: this.dataformgroup.value.TotalBudget
         }
         this.userdata.userDataChanged(obj).subscribe(
           data =>{
@@ -296,6 +315,28 @@ public chartOptions:any = {
     //define list of citis to use from service acording to country
     onSelect(countryid) {
       this.cities = this._countryService.getCities().filter((item) => item.countryid == countryid)
+    }
+
+    //delete account function
+    deleteAccount(){
+
+     if(this.passwordTestFormGroup.valid){
+      console.log(this.passwordTestFormGroup.value)
+      this.auth.deleteUser(this.passwordTestFormGroup.value).subscribe(
+        resp => {
+        if(resp.success){
+          console.log("Deleted user");
+          this.router.navigate(['']);
+          //here we will add token removal
+        }
+        else{
+          this.ErroMsg = resp.message;
+        }
+      
+      })
+     }
+     else console.log("error")
+      
     }
 
 }

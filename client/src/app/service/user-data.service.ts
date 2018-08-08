@@ -17,7 +17,8 @@ interface respData {
   password: string,
   passwordConfirmation: string,
   success: boolean,
-  message: string
+  message: string,
+  totalBudget: number
 }
 
 @Injectable({
@@ -30,7 +31,7 @@ export class UserDataService {
 
   getUserData(){
     //will get user info if correct
-    const uri = 'http://www.mocky.io/v2/5b60a5d92f00001939461a4c';
+    const uri = 'http://www.mocky.io/v2/5b6b223932000065073732f4';
 
 
     //get data from server

@@ -101,6 +101,11 @@
                         <input mdbInputDirective type="text" name="lastName"  formControlName="lastName" id="lastName" class="form-control">
                         <label for="lastName"  class="labels">Last Name</label>
                     </div>
+                    <div class="md-form">
+                        <i class="fas fa-dollar-sign prefix"></i>
+                        <input mdbInputDirective type="number" min="0"  oninput="validity.valid||(value='');" name="TotalBudget"  formControlName="TotalBudget" id="TotalBudget" class="form-control">
+                        <label for="TotalBudget" id="budgetLable"  class="labels">Total Budget</label>
+                    </div>
 
                     <!-- BGs Certification hiden by default -->
                     <mdb-card id="BGscerti" class="text-center">
@@ -123,7 +128,7 @@
                             <button mdbBtn type="button" class="btn btn-lg hides" color="warning" block="true" (click)="passChangeModal.show()" mdbWavesEffect>Change Password</button>
                             <!-- diable button if not touched and not valid -->
                             <button mdbBtn type="submit" class="btn btn-lg hides" color="success" block="true" (click)="userDataChanged()" [disabled]="!dataformgroup.valid || !dataformgroup.touched" mdbWavesEffect>Save Data</button>
-                            <button mdbBtn type="button" class="btn btn-lg hides" color="danger" block="true" mdbWavesEffect>Delete account</button>
+                            <button mdbBtn type="button" class="btn btn-lg hides" color="danger" block="true" (click)="deleteAccountModal.show()" mdbWavesEffect>Delete account</button>
                         </div>
                     </div>
                   </div> 
@@ -317,7 +322,7 @@
 </div>
 
 
-
+<!-- printer splash screen modal -->
 <div mdbModal #printModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="printModal"
   aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
@@ -374,3 +379,59 @@
   </div>
 </div>
 
+
+
+<!-- Delete account Modal -->
+
+<div mdbModal #deleteAccountModal="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  
+  <div class="modal-dialog modal-notify modal-danger" role="document">
+      
+    <!--Content-->
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header">
+        <p class="heading lead">Modal Danger</p>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="deleteAccountModal.hide()">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+        <div class="text-center">
+          <i class="fas fa-times  fa-4x mb-3 animated rotateIn"></i>
+          <p>this action will permanently delete your account. enter your password to confirm</p>
+          <form [formGroup]="passwordTestFormGroup" novalidate (ngSubmit)="deleteAccount()" >
+
+              
+              <div class="md-form mb-4">
+                
+                <input type="password" class="form-control validate" minlength ="8" formControlName="password" required mdbInputDirective>
+                <label data-error="wrong" data-success="right" for="password">Type your password</label>
+              </div>
+              
+
+              
+              <!-- check password for validety frontend -->
+              <p class="bg-danger" >{{ErroMsg}}</p>
+    
+    
+              
+              <button type="button" mdbBtn color="success" class="waves-light btn-lg" aria-label="Close" (click)="deleteAccountModal.hide()" mdbWavesEffect>NO! Thank you</button>
+              <button type="submit" mdbBtn color="danger" class="relative waves-light btn-lg" [disabled]="!passwordTestFormGroup.valid"mdbWavesEffect>Delete account</button>
+      
+            
+            </form>  
+    
+        </div>
+      </div>
+
+
+      </div>
+      <!--/.Content-->
+
+    </div>
+  </div>
