@@ -1,3 +1,7 @@
+//countries and citys
+import {countryService} from './../countryService';
+import {country} from './../country';
+import {city} from './../city';
 
 import { ModalDirective } from 'angular-bootstrap-md';
 import { UserDataService } from '../service/user-data.service';
@@ -15,6 +19,8 @@ import html2canvas from 'html2canvas';
 })
 export class UserProfileComponent implements OnInit {
 
+  //Buisness type
+   private BuisnessType: string[];
 
   // inpage values
   b_name: string = "Davids Co";
@@ -47,6 +53,8 @@ export class UserProfileComponent implements OnInit {
   budgetGoogleMybuissness: number;
   budgetTwiiter: number;
 
+  //data change group
+  dataformgroup: FormGroup;
   // group of password and confiramtion
   passwordFormGroup: FormGroup;
   password: string;
@@ -118,6 +126,9 @@ public chartOptions:any = {
   ngOnInit() {
     document.getElementById('BGsTable').style.display = 'none';
     document.getElementById('BGscerti').style.display = 'none';
+
+    //Buisness type settings
+    this.BuisnessType = ['store','Webstore','manufacture','retailer','mobile','electronics'];
     
     // Request data from server
     this.userdata.getUserData().subscribe(
@@ -133,7 +144,6 @@ public chartOptions:any = {
         this.firstName = data.firstName, 
         this.lastName = data.lastName, 
         this.email = data.email
-        
       }
     );
  
@@ -150,7 +160,6 @@ public chartOptions:any = {
     });
     
     
-
 
 
   }
@@ -214,10 +223,29 @@ public chartOptions:any = {
       document.getElementById('BGscerti').style.display = 'none';
       // Hide splash screen
       this.printModal.hide();
-    }, 2000);
+      }, 2000);
         
     }
 
+
+    //change user data if changed
+    userDataChanged(){
+      if(this.dataformgroup){
+        const obj={
+          b_name: this.dataformgroup.value.b_name,
+          b_type: this.dataformgroup.value.b_type,
+          mobile:  this.dataformgroup.value.mobile,
+          phone: this.dataformgroup.value.phone,
+          city:  this.dataformgroup.value.city,
+          country: this.dataformgroup.value.country,
+          address:  this.dataformgroup.value.address,
+          firstName:  this.dataformgroup.value.firstName,
+          lastName: this.dataformgroup.value.lastName
+        }
+        console.log(obj);
+        // this.userdata.userDataChanged(obj).subscribe();
+      } else{console.log("Idiota!@")}
+    }
 
 
 

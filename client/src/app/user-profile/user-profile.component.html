@@ -30,35 +30,47 @@
             </div>
             <hr>
 
-            <div class="row justify-content-center">
-              <!-- company details -->
+            <!-- Form starts here -->
+            <form #dataformgroup="ngForm" novalidate (ngSubmit)="userDataChanged()" >
+            <div class="row justify-content-center" >
+
+                <!-- company details -->
                 <div class= "col-md-5">
                     <div class="md-form">
-                        <input mdbInputDirective type="text" name="b_name" disabled [(ngModel)]="b_name" id="b_name" class="form-control">
+                        <input mdbInputDirective type="text" name="b_name"  [(ngModel)]="b_name" id="b_name" class="form-control">
                         <label for="b_name"  class="labels">Company Name</label>
                     </div>
-                    <div class="md-form">
-                        <input mdbInputDirective type="text" name="b_type" disabled [(ngModel)]="b_type" id="b_type" class="form-control">
-                        <label for="b_type" class="labels">Buissnes Type</label>
+
+                    <div class="md-form">    
+                        <label for="b_type" class="labels">Business Type</label>
+
+                        <select mdbInputDirective type="text" name="b_type" [(ngModel)]="b_type" id="b_type" class="form-control">
+                        <option [value]="b_type" selected="selected">{{b_type}}
+                        </option>
+                        <option *ngFor="let b_type of BuisnessType" [value] = "b_type">{{b_type}}
+                        </select>
                     </div>
+
+                  
+
                     <div class="md-form">
-                        <input mdbInputDirective type="text" name="mobile" disabled [(ngModel)]="mobile" id="mobile" class="form-control">
+                        <input mdbInputDirective type="text" name="mobile"  [(ngModel)]="mobile" id="mobile" class="form-control">
                         <label for="mobile"  class="labels">Mobile</label>
                     </div>
                     <div class="md-form">
-                        <input mdbInputDirective type="text" name="phone" disabled [(ngModel)]="phone" id="phone" class="form-control">
+                        <input mdbInputDirective type="text" name="phone"  [(ngModel)]="phone" id="phone" class="form-control">
                         <label for="phone"  class="labels">Phone</label>
                     </div>
                     <div class="md-form">
-                        <input mdbInputDirective type="text" name="city" disabled [(ngModel)]="city" id="city" class="form-control">
+                        <input mdbInputDirective type="text" name="city"  [(ngModel)]="city" id="city" class="form-control">
                         <label for="city"  class="labels">City</label>
                     </div>
                     <div class="md-form">
-                        <input mdbInputDirective type="text" name="country" disabled [(ngModel)]="country" id="country" class="form-control">
+                        <input mdbInputDirective type="text" name="country"  [(ngModel)]="country" id="country" class="form-control">
                         <label for="country"  class="labels">Country</label>
                     </div>
                     <div class="md-form">
-                        <input mdbInputDirective type="text" name="address" disabled [(ngModel)]="address" id="address" class="form-control">
+                        <input mdbInputDirective type="text" name="address"  [(ngModel)]="address" id="address" class="form-control">
                         <label for="address"  class="labels">Address</label>
                     </div>
                 </div>
@@ -69,11 +81,11 @@
                         <label for="email"  class="labels">eMail</label>
                     </div>
                     <div class="md-form">
-                        <input mdbInputDirective type="text" name="firstName" disabled [(ngModel)]="firstName" id="firstName" class="form-control">
+                        <input mdbInputDirective type="text" name="firstName"  [(ngModel)]="firstName" id="firstName" class="form-control">
                         <label for="firstName"  class="labels">First Name</label>
                     </div>
                     <div class="md-form">
-                        <input mdbInputDirective type="text" name="lastName" disabled [(ngModel)]="lastName" id="lastName" class="form-control">
+                        <input mdbInputDirective type="text" name="lastName"  [(ngModel)]="lastName" id="lastName" class="form-control">
                         <label for="lastName"  class="labels">Last Name</label>
                     </div>
 
@@ -96,13 +108,15 @@
                     <div class="row-fluid align-self-end">
                         <div class="md-form">
                             <button mdbBtn type="button" class="btn btn-lg hides" color="warning" block="true" (click)="passChangeModal.show()" mdbWavesEffect>Change Password</button>
-                            <button mdbBtn type="button" class="btn btn-lg hides" color="success" block="true" mdbWavesEffect>Save Changes</button>
+                            <button mdbBtn type="submit" class="btn btn-lg hides" color="success" block="true" [disabled]="!dataformgroup.dirty"  mdbWavesEffect>Save Changes</button>
                             <button mdbBtn type="button" class="btn btn-lg hides" color="danger" block="true" mdbWavesEffect>Terminate account</button>
                         </div>
                     </div>
+                  </div> 
+              </div>
+            </form>
+            <!-- end data form -->
 
-                  </div>
-            </div>
           </div>
           <!-- Charts and Reports -->
           <div class="card-body">

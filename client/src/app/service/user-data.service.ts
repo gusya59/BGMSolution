@@ -52,5 +52,10 @@ export class UserDataService {
     //post data to server
     return this.http.post<respData>(uri,obj); //wil subscribe success, message.
   }
+
+  //change user data acordingly
+  userDataChanged(b_name,b_type,mobile,phone,city,country,address,firstName,lastName){
+
+  }
   
 }
