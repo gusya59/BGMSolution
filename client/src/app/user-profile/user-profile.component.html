@@ -31,20 +31,20 @@
             <hr>
 
             <!-- Form starts here -->
-            <form #dataformgroup="ngForm" novalidate (ngSubmit)="userDataChanged()" >
+            <form [formGroup]="dataformgroup" novalidate (ngSubmit)="userDataChanged()" >
             <div class="row justify-content-center" >
 
                 <!-- company details -->
                 <div class= "col-md-5">
                     <div class="md-form">
-                        <input mdbInputDirective type="text" name="b_name"  [(ngModel)]="b_name" id="b_name" class="form-control">
+                        <input mdbInputDirective type="text" name="b_name" id="b_name" formControlName="b_name" class="form-control">
                         <label for="b_name"  class="labels">Company Name</label>
                     </div>
 
                     <div class="md-form">    
                         <label for="b_type" class="labels">Business Type</label>
 
-                        <select mdbInputDirective type="text" name="b_type" [(ngModel)]="b_type" id="b_type" class="form-control">
+                        <select mdbInputDirective type="text" name="b_type" formControlName="b_type" class="form-control" required>
                         <option [value]="b_type" selected="selected">{{b_type}}
                         </option>
                         <option *ngFor="let b_type of BuisnessType" [value] = "b_type">{{b_type}}
@@ -54,19 +54,19 @@
                   
 
                     <div class="md-form">
-                        <input mdbInputDirective type="text" name="mobile"  [(ngModel)]="mobile" id="mobile" class="form-control">
+                        <input mdbInputDirective type="text" name="mobile"  formControlName="mobile"  class="form-control">
                         <label for="mobile"  class="labels">Mobile</label>
                     </div>
                     <div class="md-form">
-                        <input mdbInputDirective type="text" name="phone"  [(ngModel)]="phone" id="phone" class="form-control">
+                        <input mdbInputDirective type="text" name="phone"  formControlName="phone" class="form-control">
                         <label for="phone"  class="labels">Phone</label>
                     </div>
 
 
                     <div class="md-form">
                         <label for="country"  class="labels">Country</label>
-                        <select mdbInputDirective mdbTooltip="city will be lost" placement="left" type="text" name="country" (change)= "onSelect($event.target.value)" [(ngModel)]="country.name" id="country" class="form-control">
-                            <option [value]="country.name" selected="selected">{{country}}
+                        <select mdbInputDirective mdbTooltip="city will be lost" placement="left" type="text" name="country" (change)="onSelect($event.target.value)" formControlName="country" id="country" class="form-control" required>
+                            <option [selected]="country.name" selected="selected">{{country}}
                             </option>
                           <option *ngFor="let country of countries" value= {{country.id}}>{{country.name}}
                         </select>
@@ -74,8 +74,8 @@
 
                     <div class="md-form">
                         <label for="city"  class="labels">City</label>
-                        <select mdbInputDirective mdbTooltip="Please reselect country" placement="left" type="text" name="city"  [(ngModel)]="city.name" id="city" class="form-control">
-                            <option [value]="city.name" selected="selected">{{city}}
+                        <select mdbInputDirective mdbTooltip="Please reselect country" placement="left" type="text" name="city"  formControlName="city" id="city" class="form-control" required>
+                            <option [selected]="city.name" selected="selected">{{city}}
                             </option>
                             <option *ngFor="let city of cities" value = {{city.id}}>{{city.name}}
                          </select> 
@@ -83,22 +83,22 @@
 
 
                     <div class="md-form">
-                        <input mdbInputDirective type="text" name="address"  [(ngModel)]="address" id="address" class="form-control">
+                        <input mdbInputDirective type="text" name="address"  formControlName="address" id="address" class="form-control">
                         <label for="address"  class="labels">Address</label>
                     </div>
                 </div>
                 <!-- user details -->
                 <div class= "col-md-5">
                     <div class="md-form">
-                        <input mdbInputDirective type="text" name="email" disabled [(ngModel)]="email" id="email" class="form-control">
+                        <input mdbInputDirective type="text" name="email" disabled [(ngModel)]="email" [ngModelOptions]="{standalone: true}" id="email" class="form-control">
                         <label for="email"  class="labels">eMail</label>
                     </div>
                     <div class="md-form">
-                        <input mdbInputDirective type="text" name="firstName"  [(ngModel)]="firstName" id="firstName" class="form-control">
+                        <input mdbInputDirective type="text" name="firstName"  formControlName="firstName" id="firstName" class="form-control">
                         <label for="firstName"  class="labels">First Name</label>
                     </div>
                     <div class="md-form">
-                        <input mdbInputDirective type="text" name="lastName"  [(ngModel)]="lastName" id="lastName" class="form-control">
+                        <input mdbInputDirective type="text" name="lastName"  formControlName="lastName" id="lastName" class="form-control">
                         <label for="lastName"  class="labels">Last Name</label>
                     </div>
 
@@ -121,8 +121,8 @@
                     <div class="row-fluid align-self-end">
                         <div class="md-form">
                             <button mdbBtn type="button" class="btn btn-lg hides" color="warning" block="true" (click)="passChangeModal.show()" mdbWavesEffect>Change Password</button>
-                            <button mdbBtn type="submit" class="btn btn-lg hides" color="success" block="true" [disabled]="!dataformgroup.dirty"  mdbWavesEffect>Save Changes</button>
-                            <button mdbBtn type="button" class="btn btn-lg hides" color="danger" block="true" mdbWavesEffect>Terminate account</button>
+                            <button mdbBtn type="submit" class="btn btn-lg hides" color="success" block="true" (click)="userDataChanged()"  mdbWavesEffect>Save Data</button>
+                            <button mdbBtn type="button" class="btn btn-lg hides" color="danger" block="true" mdbWavesEffect>Delete account</button>
                         </div>
                     </div>
                   </div> 
@@ -264,7 +264,6 @@
 
 <!-- Password Change Modal -->
 
-
 <div mdbModal #passChangeModal="mdbModal" class="modal fade " tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-notify modal-warning" role="document">
@@ -332,6 +331,28 @@
         <div class="row justify-content-center">
           <img id="exportPDF" src="assets/img/toPDF.png">
         </div>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- user Data update modal -->
+<div mdbModal #dataChangeModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="printModal"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="dataChangeModal.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+        
+      </div>
+      <div class="modal-body">
+        
+          <app-user-settings></app-user-settings>
+        
       </div>
       <div class="modal-footer">
       </div>

@@ -81,6 +81,18 @@ export class UserProfileComponent implements OnInit {
       validator: passwordFormValidator.validate.bind(this)
     });
 
+    this.dataformgroup = this.fb.group({
+      b_name: ['',Validators.required],
+      b_type: ['',Validators.required],
+      mobile: ['',[ Validators.required,Validators.pattern('^([0-9]*)$')]],//check mobile
+      phone: ['',[ Validators.required,Validators.pattern('^([0-9]*)$')]],//check phone
+      city: ['',Validators.required],
+      country: ['',Validators.required],
+      address: ['',Validators.required],
+      firstName: ['',[ Validators.required,Validators.pattern('^[A-Za-z]+$')]], //only alphabet
+      lastName: ['',[ Validators.required,Validators.pattern('^[A-Za-z]+$')]], //only alphabet
+    })
+
   }
 
   // chart deceleration //
@@ -151,6 +163,18 @@ public chartOptions:any = {
         this.firstName = data.firstName, 
         this.lastName = data.lastName, 
         this.email = data.email
+
+
+        //build angular form (nG removed in 7 version)
+        this.dataformgroup.get('b_name').setValue(this.b_name);
+        this.dataformgroup.get('b_type').setValue(this.b_type);
+        this.dataformgroup.get('mobile').setValue(this.mobile);
+        this.dataformgroup.get('phone').setValue(this.phone);
+        this.dataformgroup.get('country').setValue(this.country);
+        this.dataformgroup.get('city').setValue(this.city);    
+        this.dataformgroup.get('address').setValue(this.address);
+        this.dataformgroup.get('firstName').setValue(this.firstName);
+        this.dataformgroup.get('lastName').setValue(this.lastName);
       }
     );
  
@@ -237,7 +261,8 @@ public chartOptions:any = {
 
     //change user data if changed
     userDataChanged(){
-      if(this.dataformgroup){
+      console.log(this.dataformgroup.value)
+      if(this.dataformgroup.valid){
         const obj={
           b_name: this.dataformgroup.value.b_name,
           b_type: this.dataformgroup.value.b_type,
@@ -249,7 +274,7 @@ public chartOptions:any = {
           firstName:  this.dataformgroup.value.firstName,
           lastName: this.dataformgroup.value.lastName
         }
-        console.log(obj);
+        
         // this.userdata.userDataChanged(obj).subscribe();
       } else{console.log("Idiota!@")}
     }
