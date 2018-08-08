@@ -53,9 +53,12 @@ export class UserDataService {
     return this.http.post<respData>(uri,obj); //wil subscribe success, message.
   }
 
-  //change user data acordingly
-  userDataChanged(b_name,b_type,mobile,phone,city,country,address,firstName,lastName){
-
+  //change user data acordingly reciveds user obj
+  //name,lastname and user settings
+  userDataChanged(user){
+    //posting new user data 
+    const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
+    return this.http.post<respData>(uri,user); //will subscripe succsess or faill
   }
   
 }

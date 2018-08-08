@@ -46,6 +46,8 @@ export class UserProfileComponent implements OnInit {
   @ViewChild('passChangeModal') passChangeModal: ModalDirective;
   // Print splash screen modal
   @ViewChild('printModal') printModal: ModalDirective;
+  //user updated modal
+  @ViewChild('dataChangeModal') dataChangeModal: ModalDirective;
   
   // Define the original budget per line
   
@@ -153,6 +155,7 @@ public chartOptions:any = {
     this.userdata.getUserData().subscribe(
       data=>{
         
+        //fatch data from server
         this.b_name = data.b_name,
         this.b_type = data.b_type, 
         this.mobile = data.mobile, 
@@ -176,6 +179,7 @@ public chartOptions:any = {
         this.dataformgroup.get('firstName').setValue(this.firstName);
         this.dataformgroup.get('lastName').setValue(this.lastName);
       }
+      
     );
  
     //server up get request for data
@@ -259,9 +263,8 @@ public chartOptions:any = {
     }
 
 
-    //change user data if changed
+    //change user data if changed obj will hold user changeable data
     userDataChanged(){
-      console.log(this.dataformgroup.value)
       if(this.dataformgroup.valid){
         const obj={
           b_name: this.dataformgroup.value.b_name,
@@ -274,9 +277,19 @@ public chartOptions:any = {
           firstName:  this.dataformgroup.value.firstName,
           lastName: this.dataformgroup.value.lastName
         }
+        this.userdata.userDataChanged(obj).subscribe(
+          data =>{
+            if(data.success){                //if information was fatched successfuly show modal
+              this.dataChangeModal.show();
+            }
+            else console.log("error server"); // log error
+          }
+        )
         
         // this.userdata.userDataChanged(obj).subscribe();
-      } else{console.log("Idiota!@")}
+      } else{console.log("Error on input")};
+
+      
     }
 
 
