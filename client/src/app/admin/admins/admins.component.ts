@@ -7,6 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminsComponent implements OnInit {
 
+    //general values
+    numUsers: number = 0;
+    numAdmins: number =0;
+    serverTime: Date;
+
   //table data inserted
   searchText: string;
   tableData = [
@@ -17,9 +22,17 @@ export class AdminsComponent implements OnInit {
     { id: '5', firstName: 'Zigi', lastName: 'Kiwi', username: '@zk' },
     { id: '6', firstName: 'Beatrice', lastName: 'Selphie', username: '@bsl' },
   ];
-  constructor() { }
+  constructor() { 
+    //get system time acording to zolo
+    setInterval(() => {
+      this.serverTime = new Date();
+    }, 1);
+  }
 
   ngOnInit() {
+    // on page build load server Data
+    this.numUsers = 1500;
+    this.numAdmins = 3;
   }
 
   filterIt(arr, searchKey) {

@@ -20,31 +20,7 @@
                   </div>
                   <!-- admin body  -->
                 <div id="main_body" class="container-fluid">
-                  <form #adminInfo="ngForm">
-                    
-                    <div class="row justify-content-center">
-                      <div class="col-lg-4">
-                        <div class="md-form">
-                            <input mdbInputDirective type="text" disabled name="numUsers" id="numUsers" [(ngModel)]="numUsers" class="form-control">
-                            <label for="numUsers"  class="labels">Number of Users</label>
-                        </div>
-                      </div>
-                      
-                      <div class="col-lg-4">
-                        <div class="md-form">
-                            <input mdbInputDirective type="text" disabled name="numAdmins" id="numAdmins" [(ngModel)]="numAdmins" class="form-control">
-                            <label for="numAdmins"  class="labels">Number of Admins</label>
-                        </div>
-                      </div>
-                        
-                      <div class="col-lg-4">
-                        <div class="md-form">
-                            <input mdbInputDirective type="text" disabled name="serverTime" id="serverTime" [(ngModel)]="serverTime" class="form-control">
-                            <label for="serverTime"  class="labels">Local Time and Date</label>
-                        </div>
-                      </div>
-                    </div>
-                  </form>
+                    <app-info></app-info>
                 </div>
             </div>
         </div>

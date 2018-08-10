@@ -57,7 +57,8 @@ import { UsersComponent } from './admin/users/users.component';
 import { WeightsComponent } from './admin/weights/weights.component';
 import { ReportsComponent } from './admin/reports/reports.component';
 import { SysinfoComponent } from './admin/sysinfo/sysinfo.component';
-import {AdminQuestionsComponent} from './admin/questions/questions.component'
+import {AdminQuestionsComponent} from './admin/questions/questions.component';
+import { InfoComponent } from './admin/info/info.component'
 
 
 
@@ -98,7 +99,8 @@ import {AdminQuestionsComponent} from './admin/questions/questions.component'
     WeightsComponent,
     ReportsComponent,
     SysinfoComponent,
-    AdminQuestionsComponent
+    AdminQuestionsComponent,
+    InfoComponent
 
   ],
   imports: [
