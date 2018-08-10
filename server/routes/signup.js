@@ -99,7 +99,7 @@ async function userDataRegistrationValidation(errors, data) {
   //validateCountry(errors, data.country);
   //validateString(errors, data.city);
   //validateAddress(errors, data.address);
-  validateBudget(errors, data)
+  validateBudget(errors, data.budget)
 }
 
 //first name validation -> checks if there any numbers or characters in the name
