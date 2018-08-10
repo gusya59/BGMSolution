@@ -17,7 +17,8 @@ interface respData {
   password: string,
   passwordConfirmation: string,
   success: boolean,
-  message: string
+  message: string,
+  totalBudget: number
 }
 
 @Injectable({
@@ -30,7 +31,7 @@ export class UserDataService {
 
   getUserData(){
     //will get user info if correct
-    const uri = 'http://www.mocky.io/v2/5b60a5d92f00001939461a4c';
+    const uri = 'http://www.mocky.io/v2/5b6b223932000065073732f4';
 
 
     //get data from server
@@ -51,6 +52,14 @@ export class UserDataService {
 
     //post data to server
     return this.http.post<respData>(uri,obj); //wil subscribe success, message.
+  }
+
+  //change user data acordingly reciveds user obj
+  //name,lastname and user settings
+  userDataChanged(user){
+    //posting new user data 
+    const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
+    return this.http.post<respData>(uri,user); //will subscripe succsess or faill
   }
   
 }

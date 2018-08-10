@@ -1,3 +1,9 @@
+import { Router } from '@angular/router';
+import { AuthService } from './../service/auth.service';
+//countries and citys
+import {countryService} from './../countryService';
+import {country} from './../country';
+import {city} from './../city';
 
 import { ModalDirective } from 'angular-bootstrap-md';
 import { UserDataService } from '../service/user-data.service';
@@ -15,6 +21,12 @@ import html2canvas from 'html2canvas';
 })
 export class UserProfileComponent implements OnInit {
 
+  //Buisness type
+   private BuisnessType: string[];
+
+  //country and city
+   countries: country[];
+   cities: city[];
 
   // inpage values
   b_name: string = "Davids Co";
@@ -29,6 +41,9 @@ export class UserProfileComponent implements OnInit {
   lastName: string = "Berdichevsky"
   email: string = "DavidMD@bgm.com"
 
+  TotalBudget :number = 15550
+  
+
   // error msg recived string
   ErroMsg: string;
 
@@ -36,6 +51,8 @@ export class UserProfileComponent implements OnInit {
   @ViewChild('passChangeModal') passChangeModal: ModalDirective;
   // Print splash screen modal
   @ViewChild('printModal') printModal: ModalDirective;
+  //user updated modal
+  @ViewChild('dataChangeModal') dataChangeModal: ModalDirective;
   
   // Define the original budget per line
   
@@ -47,15 +64,25 @@ export class UserProfileComponent implements OnInit {
   budgetGoogleMybuissness: number;
   budgetTwiiter: number;
 
+  //data change group
+  dataformgroup: FormGroup;
+
+  //delete user from group
+  passwordTestFormGroup: FormGroup;
+
   // group of password and confiramtion
   passwordFormGroup: FormGroup;
+
   password: string;
   oldPassword: string;
   confirmPassword: string;
 
-  constructor(private userdata: UserDataService, private userPreview: UserPreviewService, private fb: FormBuilder) {
+  constructor(private router: Router ,  private auth: AuthService ,private _countryService: countryService, private userdata: UserDataService, private userPreview: UserPreviewService, private fb: FormBuilder) {
     
-    //password validator stat function
+    //define list of countries to use from service
+    this.countries = this._countryService.getCountries();
+
+    //password validator start function
     this.passwordFormGroup = this.fb.group({
       password: ['', Validators.required],
       oldPassword: ['', Validators.required],
@@ -65,6 +92,24 @@ export class UserProfileComponent implements OnInit {
       //request for password validation
       validator: passwordFormValidator.validate.bind(this)
     });
+
+    //password delete user validator
+    this.passwordTestFormGroup = this.fb.group({
+      password: ['', Validators.required]
+    });
+
+    this.dataformgroup = this.fb.group({
+      b_name: ['',Validators.required],
+      b_type: ['',Validators.required],
+      mobile: ['',[ Validators.required,Validators.pattern('^([0-9]*)$')]],//check mobile
+      phone: ['',[ Validators.required,Validators.pattern('^([0-9]*)$')]],//check phone
+      city: ['',Validators.required],
+      country: ['',Validators.required],
+      address: ['',Validators.required],
+      firstName: ['',[ Validators.required,Validators.pattern('^[A-Za-z]+$')]], //only alphabet
+      lastName: ['',[ Validators.required,Validators.pattern('^[A-Za-z]+$')]], //only alphabet
+      TotalBudget: ['',[ Validators.required,Validators.pattern('^([0-9]*)$')]] ///numbers
+    })
 
   }
 
@@ -118,11 +163,15 @@ public chartOptions:any = {
   ngOnInit() {
     document.getElementById('BGsTable').style.display = 'none';
     document.getElementById('BGscerti').style.display = 'none';
+
+    //Buisness type settings
+    this.BuisnessType = ['store','Webstore','manufacture','retailer','mobile','electronics'];
     
     // Request data from server
     this.userdata.getUserData().subscribe(
       data=>{
         
+        //fatch data from server
         this.b_name = data.b_name,
         this.b_type = data.b_type, 
         this.mobile = data.mobile, 
@@ -132,9 +181,23 @@ public chartOptions:any = {
         this.address = data.address, 
         this.firstName = data.firstName, 
         this.lastName = data.lastName, 
-        this.email = data.email
-        
+        this.email = data.email,
+        this.TotalBudget = data.totalBudget
+
+
+        //build angular form (nG removed in 7 version)
+        this.dataformgroup.get('b_name').setValue(this.b_name);
+        this.dataformgroup.get('b_type').setValue(this.b_type);
+        this.dataformgroup.get('mobile').setValue(this.mobile);
+        this.dataformgroup.get('phone').setValue(this.phone);
+        this.dataformgroup.get('country').setValue(this.country);
+        this.dataformgroup.get('city').setValue(this.city);    
+        this.dataformgroup.get('address').setValue(this.address);
+        this.dataformgroup.get('firstName').setValue(this.firstName);
+        this.dataformgroup.get('lastName').setValue(this.lastName);
+        this.dataformgroup.get('TotalBudget').setValue(this.TotalBudget);
       }
+      
     );
  
     //server up get request for data
@@ -150,7 +213,6 @@ public chartOptions:any = {
     });
     
     
-
 
 
   }
@@ -214,13 +276,68 @@ public chartOptions:any = {
       document.getElementById('BGscerti').style.display = 'none';
       // Hide splash screen
       this.printModal.hide();
-    }, 2000);
+      }, 2000);
         
     }
 
 
+    //change user data if changed obj will hold user changeable data
+    userDataChanged(){
+      if(this.dataformgroup.valid){
+        const obj={
+          b_name: this.dataformgroup.value.b_name,
+          b_type: this.dataformgroup.value.b_type,
+          mobile:  this.dataformgroup.value.mobile,
+          phone: this.dataformgroup.value.phone,
+          city:  this.dataformgroup.value.city,
+          country: this.dataformgroup.value.country,
+          address:  this.dataformgroup.value.address,
+          firstName:  this.dataformgroup.value.firstName,
+          lastName: this.dataformgroup.value.lastName,
+          TotalBudget: this.dataformgroup.value.TotalBudget
+        }
+        this.userdata.userDataChanged(obj).subscribe(
+          data =>{
+            if(data.success){                //if information was fatched successfuly show modal
+              this.dataChangeModal.show();
+            }
+            else console.log("error server"); // log error
+          }
+        )
+        
+        // this.userdata.userDataChanged(obj).subscribe();
+      } else{console.log("Error on input")};
+
+      
+    }
 
 
+    //define list of citis to use from service acording to country
+    onSelect(countryid) {
+      this.cities = this._countryService.getCities().filter((item) => item.countryid == countryid)
+    }
+
+    //delete account function
+    deleteAccount(){
+
+     if(this.passwordTestFormGroup.valid){
+      console.log(this.passwordTestFormGroup.value)
+      this.auth.deleteUser(this.passwordTestFormGroup.value).subscribe(
+        resp => {
+        if(resp.success){
+          console.log("Deleted user");
+          this.router.navigate(['']);
+          //here we will add token removal
+        }
+        else{
+          this.ErroMsg = resp.message;
+        }
+      
+      })
+     }
+     else console.log("error")
+      
+    }
 
 }
 

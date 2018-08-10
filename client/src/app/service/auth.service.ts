@@ -69,4 +69,11 @@ export class AuthService {
     return this.http.post<respData>(uri, obj)
   }
 
+  //delete user function
+
+  deleteUser(password){
+    const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
+    return this.http.post<respData>(uri,password);
+  }
+
 }

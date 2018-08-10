@@ -16,9 +16,10 @@
     <div class="row justify-content-center">
         <div class= "col-md-8">
           <form #SettingsForm = "ngForm"  (ngSubmit)="userSettings()" >
-            
+
                   <!-- Buisness Name Block -->
                   <div class="md-form">  
+                    <i class="fas fa-briefcase prefix grey-text"></i>
                     <input mdbInputDirective
                      type="text"
                       name="inputBuisnessName"
@@ -32,6 +33,7 @@
 
                   <!-- Buisness Type Block -->
                   <div class="md-form">
+                    
                     <label for="Buisnesstype">Buisness Type</label>
 
                       <select mdbInputDirective
@@ -150,6 +152,7 @@
 
                   <!-- Buisness Address -->
                   <div class="md-form">
+                      <i class="fas fa-map-marked-alt prefix grey-text"></i>
                     <label for="inputAddress">Buisness Address</label>
                     <input mdbInputDirective
                     type="text"
@@ -160,6 +163,22 @@
                       class="form-control"
                       required>
                   </div>
+
+                  <!-- Buisness budget oninput prevent "-"-->
+                  <div class="md-form">
+                      <i class="fas fa-dollar-sign prefix grey-text"></i>
+                      <label for="budgetTotal">Buisness budget</label>
+                      <input mdbInputDirective
+                      type="number"
+                      [(ngModel)]="budgetTotal"
+                        name="budgetTotal"
+                        min="0" 
+                        oninput="validity.valid||(value='');"   
+                        id="budgetTotal"
+                        class="form-control"
+                        required>
+                    </div>
+
                   
                  <!-- Buttons Block -->
                   <div class="md-form">

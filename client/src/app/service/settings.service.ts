@@ -30,7 +30,8 @@ export class SettingsService {
       phone: company.phone,
       city: company.city,
       country: company.country,
-      address: company.address
+      address: company.address,
+      budgetTotal: company.budgetTotal
     };
     //post registration to server
     return this.http.post<respData>(uri, obj)

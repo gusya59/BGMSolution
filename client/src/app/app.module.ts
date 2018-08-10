@@ -49,6 +49,7 @@ import {appRoutes} from './service/routes';
 //import Reports and userProfile
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserReportsComponent } from './user-profile/user-reports/user-reports.component';
+import { UserQuestionsComponent } from './user-profile/user-questions/user-questions.component';
 
 
 
@@ -81,7 +82,8 @@ import { UserReportsComponent } from './user-profile/user-reports/user-reports.c
     QuestionsComponent,
     Err404Component,
     UserProfileComponent,
-    UserReportsComponent
+    UserReportsComponent,
+    UserQuestionsComponent
 
   ],
   imports: [

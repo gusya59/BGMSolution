@@ -30,51 +30,81 @@
             </div>
             <hr>
 
-            <div class="row justify-content-center">
-              <!-- company details -->
+            <!-- Form starts here -->
+            <form [formGroup]="dataformgroup" novalidate (ngSubmit)="userDataChanged()" >
+            <div class="row justify-content-center" >
+
+                <!-- company details -->
                 <div class= "col-md-5">
                     <div class="md-form">
-                        <input mdbInputDirective type="text" name="b_name" disabled [(ngModel)]="b_name" id="b_name" class="form-control">
+                        <input mdbInputDirective type="text" name="b_name" id="b_name" formControlName="b_name" class="form-control">
                         <label for="b_name"  class="labels">Company Name</label>
                     </div>
-                    <div class="md-form">
-                        <input mdbInputDirective type="text" name="b_type" disabled [(ngModel)]="b_type" id="b_type" class="form-control">
-                        <label for="b_type" class="labels">Buissnes Type</label>
+
+                    <div class="md-form">    
+                        <label for="b_type" class="labels">Business Type</label>
+
+                        <select mdbInputDirective type="text" name="b_type" formControlName="b_type" class="form-control" required>
+                        <option [value]="b_type" selected="selected">{{b_type}}
+                        </option>
+                        <option *ngFor="let b_type of BuisnessType" [value] = "b_type">{{b_type}}
+                        </select>
                     </div>
+
+                  
+
                     <div class="md-form">
-                        <input mdbInputDirective type="text" name="mobile" disabled [(ngModel)]="mobile" id="mobile" class="form-control">
+                        <input mdbInputDirective type="text" name="mobile"  formControlName="mobile"  class="form-control">
                         <label for="mobile"  class="labels">Mobile</label>
                     </div>
                     <div class="md-form">
-                        <input mdbInputDirective type="text" name="phone" disabled [(ngModel)]="phone" id="phone" class="form-control">
+                        <input mdbInputDirective type="text" name="phone"  formControlName="phone" class="form-control">
                         <label for="phone"  class="labels">Phone</label>
                     </div>
+
+
                     <div class="md-form">
-                        <input mdbInputDirective type="text" name="city" disabled [(ngModel)]="city" id="city" class="form-control">
-                        <label for="city"  class="labels">City</label>
-                    </div>
-                    <div class="md-form">
-                        <input mdbInputDirective type="text" name="country" disabled [(ngModel)]="country" id="country" class="form-control">
                         <label for="country"  class="labels">Country</label>
+                        <select mdbInputDirective mdbTooltip="city will be lost" placement="left" type="text" name="country" (change)="onSelect($event.target.value)" formControlName="country" id="country" class="form-control" required>
+                            <option [selected]="country.name" selected="selected">{{country}}
+                            </option>
+                          <option *ngFor="let country of countries" value= {{country.id}}>{{country.name}}
+                        </select>
                     </div>
+
                     <div class="md-form">
-                        <input mdbInputDirective type="text" name="address" disabled [(ngModel)]="address" id="address" class="form-control">
+                        <label for="city"  class="labels">City</label>
+                        <select mdbInputDirective mdbTooltip="Please reselect country" placement="left" type="text" name="city"  formControlName="city" id="city" class="form-control" required>
+                            <option [selected]="city.name" selected="selected">{{city}}
+                            </option>
+                            <option *ngFor="let city of cities" value = {{city.id}}>{{city.name}}
+                         </select> 
+                    </div>
+
+
+                    <div class="md-form">
+                        <input mdbInputDirective type="text" name="address"  formControlName="address" id="address" class="form-control">
                         <label for="address"  class="labels">Address</label>
                     </div>
                 </div>
                 <!-- user details -->
                 <div class= "col-md-5">
                     <div class="md-form">
-                        <input mdbInputDirective type="text" name="email" disabled [(ngModel)]="email" id="email" class="form-control">
+                        <input mdbInputDirective type="text" name="email" disabled [(ngModel)]="email" [ngModelOptions]="{standalone: true}" id="email" class="form-control">
                         <label for="email"  class="labels">eMail</label>
                     </div>
                     <div class="md-form">
-                        <input mdbInputDirective type="text" name="firstName" disabled [(ngModel)]="firstName" id="firstName" class="form-control">
+                        <input mdbInputDirective type="text" name="firstName"  formControlName="firstName" id="firstName" class="form-control">
                         <label for="firstName"  class="labels">First Name</label>
                     </div>
                     <div class="md-form">
-                        <input mdbInputDirective type="text" name="lastName" disabled [(ngModel)]="lastName" id="lastName" class="form-control">
+                        <input mdbInputDirective type="text" name="lastName"  formControlName="lastName" id="lastName" class="form-control">
                         <label for="lastName"  class="labels">Last Name</label>
+                    </div>
+                    <div class="md-form">
+                        <i class="fas fa-dollar-sign prefix"></i>
+                        <input mdbInputDirective type="number" min="0"  oninput="validity.valid||(value='');" name="TotalBudget"  formControlName="TotalBudget" id="TotalBudget" class="form-control">
+                        <label for="TotalBudget" id="budgetLable"  class="labels">Total Budget</label>
                     </div>
 
                     <!-- BGs Certification hiden by default -->
@@ -96,13 +126,16 @@
                     <div class="row-fluid align-self-end">
                         <div class="md-form">
                             <button mdbBtn type="button" class="btn btn-lg hides" color="warning" block="true" (click)="passChangeModal.show()" mdbWavesEffect>Change Password</button>
-                            <button mdbBtn type="button" class="btn btn-lg hides" color="success" block="true" mdbWavesEffect>Save Changes</button>
-                            <button mdbBtn type="button" class="btn btn-lg hides" color="danger" block="true" mdbWavesEffect>Terminate account</button>
+                            <!-- diable button if not touched and not valid -->
+                            <button mdbBtn type="submit" class="btn btn-lg hides" color="success" block="true" (click)="userDataChanged()" [disabled]="!dataformgroup.valid || !dataformgroup.touched" mdbWavesEffect>Save Data</button>
+                            <button mdbBtn type="button" class="btn btn-lg hides" color="danger" block="true" (click)="deleteAccountModal.show()" mdbWavesEffect>Delete account</button>
                         </div>
                     </div>
+                  </div> 
+              </div>
+            </form>
+            <!-- end data form -->
 
-                  </div>
-            </div>
           </div>
           <!-- Charts and Reports -->
           <div class="card-body">
@@ -237,7 +270,6 @@
 
 <!-- Password Change Modal -->
 
-
 <div mdbModal #passChangeModal="mdbModal" class="modal fade " tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-notify modal-warning" role="document">
@@ -290,7 +322,7 @@
 </div>
 
 
-
+<!-- printer splash screen modal -->
 <div mdbModal #printModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="printModal"
   aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
@@ -312,3 +344,94 @@
   </div>
 </div>
 
+<!-- user Data update modal -->
+<div mdbModal #dataChangeModal="mdbModal" class="modal fade" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-notify modal-success" role="document">
+    <!--Content-->
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header">
+        <p class="heading lead">User Information Updated Succesfuly</p>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="dataChangeModal.hide()">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+        <div class="text-center">
+          <i class="fa fa-check fa-4x mb-3 animated rotateIn"></i>
+          <div class="container">
+              <img id="keepCalm" src="/assets/img/keepCalm.png">
+          </div>
+          
+        </div>
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer justify-content-center">
+        <a type="button" mdbBtn color="primary" outline="true" class="waves-effect" mdbWavesEffect (click)="dataChangeModal.hide()" data-dismiss="modal">Close</a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+
+
+
+<!-- Delete account Modal -->
+
+<div mdbModal #deleteAccountModal="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  
+  <div class="modal-dialog modal-notify modal-danger" role="document">
+      
+    <!--Content-->
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header">
+        <p class="heading lead">Modal Danger</p>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="deleteAccountModal.hide()">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+        <div class="text-center">
+          <i class="fas fa-times  fa-4x mb-3 animated rotateIn"></i>
+          <p>this action will permanently delete your account. enter your password to confirm</p>
+          <form [formGroup]="passwordTestFormGroup" novalidate (ngSubmit)="deleteAccount()" >
+
+              
+              <div class="md-form mb-4">
+                
+                <input type="password" class="form-control validate" minlength ="8" formControlName="password" required mdbInputDirective>
+                <label data-error="wrong" data-success="right" for="password">Type your password</label>
+              </div>
+              
+
+              
+              <!-- check password for validety frontend -->
+              <p class="bg-danger" >{{ErroMsg}}</p>
+    
+    
+              
+              <button type="button" mdbBtn color="success" class="waves-light btn-lg" aria-label="Close" (click)="deleteAccountModal.hide()" mdbWavesEffect>NO! Thank you</button>
+              <button type="submit" mdbBtn color="danger" class="relative waves-light btn-lg" [disabled]="!passwordTestFormGroup.valid"mdbWavesEffect>Delete account</button>
+      
+            
+            </form>  
+    
+        </div>
+      </div>
+
+
+      </div>
+      <!--/.Content-->
+
+    </div>
+  </div>

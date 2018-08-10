@@ -21,15 +21,10 @@
                       <input (change)="onSelectionChange(question)"  type="radio" class="custom-control-input" id="{{question.id}}" name="groupOfRadios">
                       <label  class="custom-control-label" for="{{question.id}}">{{question.body}}</label>
                   </div>
-                    
-
-
-
-
                   <br>
                 <div class="text-center mt-8">
                   <br>
-                  <button type="reset" class="btn btn-outline-default btn-lg" routerLink="" routerLinkActive="active">Skip</button>
+                  <button type="reset" class="btn btn-outline-default btn-lg" routerLink="/user/profile" routerLinkActive="active">Skip</button>
                   <button type="submit" class="btn btn-outline-success btn-lg">Next</button>
                 </div>
               </form>
