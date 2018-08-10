@@ -1,25 +1,30 @@
-<!-- Lower Navigation bar will provide interchangeable content -->
-<ul class="nav nav-tabs nav-justified">
-    <li class="nav-item">
-      <a class="nav-link" routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Admins</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Users</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#">Questions</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Weights</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Reports</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">System Info</a>
-    </li>
-  </ul>
-
+<mdb-navbar SideClass="navbar nav-tabs fixed-top navbar-expand-lg navbar-dark indigo accent-3 scrolling-navbar intro-fixed-nav" [containerInside]="false">
+    <!-- Lower Navigation bar will provide interchangeable content -->
+    <links>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link waves-light" mdbWavesEffect routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link  waves-light" mdbWavesEffect routerLink="/admin/admins" routerLinkActive="active">Admins</a>
+          </li>  
+        <li class="nav-item">
+          <a class="nav-link  waves-light" mdbWavesEffect routerLink="/admin/users" routerLinkActive="active">Users</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link  waves-light" mdbWavesEffect routerLink="/admin/questions" routerLinkActive="active">Questions</a>
+        </li> 
+        <li class="nav-item">
+            <a class="nav-link  waves-light" mdbWavesEffect routerLink="/admin/weights" routerLinkActive="active">Weights</a>
+        </li> 
+        <li class="nav-item">
+            <a class="nav-link  waves-light" mdbWavesEffect routerLink="/admin/reports" routerLinkActive="active">Reports</a>
+        </li> 
+        <li class="nav-item">
+            <a class="nav-link  waves-light" mdbWavesEffect routerLink="/admin/sysinfo" routerLinkActive="active">System Info</a>
+        </li> 
+      </ul>
+      <button class="btn btn-warning btn-lg login-btn"  routerLink="/LogOut" routerLinkActive="active"><span class="glyphicon glyphicon-user"></span> | <b>LogOut </b> </button>
+    </links>
+  </mdb-navbar>
+    

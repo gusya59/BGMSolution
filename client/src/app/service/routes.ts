@@ -1,3 +1,9 @@
+import { SysinfoComponent } from './../admin/sysinfo/sysinfo.component';
+import { WeightsComponent } from './../admin/weights/weights.component';
+import { ReportsComponent } from './../admin/reports/reports.component';
+import { AdminQuestionsComponent } from './../admin/questions/questions.component';
+import { AdminsComponent } from './../admin/admins/admins.component';
+
 import { UserQuestionsComponent } from './../user-profile/user-questions/user-questions.component';
 import { Component } from '@angular/core';
 
@@ -16,6 +22,8 @@ import { GuestComponent } from './../guest/guest.component';
 import { Routes } from '@angular/router';
 import { UserProfileComponent } from '../user-profile/user-profile.component';
 import { UserReportsComponent } from './../user-profile/user-reports/user-reports.component';
+import { AdminComponent } from '../admin/admin.component';
+import { UsersComponent } from '../admin/users/users.component';
 
 
 // Routes file - Holds the routing system for our web app
@@ -37,6 +45,15 @@ export const appRoutes: Routes = [
     data: { title: 'login' }
     },
 
+    //user routing
+    {
+    path: 'user',
+    component: UserComponent,
+    // canActivate: [AuthGuard],
+    data: { title: 'user' }
+    
+    },
+
     //User Profile routing
     {
       path: 'user/profile',
@@ -49,27 +66,34 @@ export const appRoutes: Routes = [
       component: UserReportsComponent,
       data: { title: 'user/reports' }
     },
+    //user questions comonent
     {
       path: 'user/questions',
       component: UserQuestionsComponent,
       data: {title: 'user/questions'}
     },
 
-    //Login for our user routing
+    //admin home page
     {
-      path: 'loginUser',
-      component: LoginUserComponent,
-      data: { title: 'loginUser' }
+      path: 'admin',
+      component: AdminComponent,
+      data: {title: 'admin'},
+      children: [
+        {path: 'admins', component: AdminsComponent}, //admins list
+        {path: 'users', component: UsersComponent},  // users list
+          {path: 'questions', component: AdminQuestionsComponent},  //questions edit
+          {path: 'reports', component: ReportsComponent},   //reports generator
+        {path: 'weights', component: WeightsComponent},    //weights edit
+        {path: 'sysinfo', component: SysinfoComponent},    //system info
+      ]
     },
 
-    //user routing
-    {
-      path: 'user',
-      component: UserComponent,
-      // canActivate: [AuthGuard],
-      data: { title: 'user' }
-      
-    },
+    //Login for our user routing removed from this version (read component instruction)
+    // {
+    //   path: 'loginUser',
+    //   component: LoginUserComponent,
+    //   data: { title: 'loginUser' }
+    // },
 
      //Signup and user info routing
     {

@@ -1,3 +1,4 @@
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { AppComponent } from './app.component';
@@ -50,6 +51,13 @@ import {appRoutes} from './service/routes';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserReportsComponent } from './user-profile/user-reports/user-reports.component';
 import { UserQuestionsComponent } from './user-profile/user-questions/user-questions.component';
+import { AdminComponent } from './admin/admin.component';
+import { AdminsComponent } from './admin/admins/admins.component';
+import { UsersComponent } from './admin/users/users.component';
+import { WeightsComponent } from './admin/weights/weights.component';
+import { ReportsComponent } from './admin/reports/reports.component';
+import { SysinfoComponent } from './admin/sysinfo/sysinfo.component';
+import {AdminQuestionsComponent} from './admin/questions/questions.component'
 
 
 
@@ -83,7 +91,14 @@ import { UserQuestionsComponent } from './user-profile/user-questions/user-quest
     Err404Component,
     UserProfileComponent,
     UserReportsComponent,
-    UserQuestionsComponent
+    UserQuestionsComponent,
+    AdminComponent,
+    AdminsComponent,
+    UsersComponent,
+    WeightsComponent,
+    ReportsComponent,
+    SysinfoComponent,
+    AdminQuestionsComponent
 
   ],
   imports: [
