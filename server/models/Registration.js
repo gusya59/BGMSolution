@@ -11,6 +11,7 @@ var UsersSchema = mongoose.Schema({
   email: { type: String, required: true, trim: true, index: true, sparse: true },
   password: { type: String, required: true },
   passwordConfirmation: { type: String, required: true },
+  termsConfirmCheck: { type: Boolean, required: true },
   ////
   business_name: { type: String, required: true },
   business_type: { type: String, required: true },
@@ -18,6 +19,7 @@ var UsersSchema = mongoose.Schema({
   phone: { type: String, required: true },
   country: { type: String, required: true },
   address: { type: String, required: true },
+  budget: { type: Number, required: true },
   created: { type: Date, default: Date.now() }
 });
 
@@ -44,6 +46,7 @@ module.exports.inputData = async function (newUser) {
     newUser.country = "true";
     newUser.city = "true";
     newUser.address = "true";
+    newUser.budget = "0";
     var promise = newUser.save().then(result => {
       // console.log("the result is: " + result);
       return result;
@@ -64,6 +67,7 @@ module.exports.userDataRegistration = async function (data) {
   this.findByEmailAndUpdate(data.email, { country: data.country });
   this.findByEmailAndUpdate(data.email, { city: data.city });
   this.findByEmailAndUpdate(data.email, { address: data.address });
+  this.findByEmailAndUpdate(data.email, { budget: data.budget });
   if (!update) {
     console.log("db wasn't updated");
     return false;

@@ -11,7 +11,7 @@ var registrationSchema = require('../models/Registration.js');
 //registration
 router.post('/registration', async function (req, res) {
   console.log("the input is: " + req.body);
-  console.log(req.body.firstName ,req.body.email ,req.body.password ,req.body.passwordConfirmation)
+  console.log(req.body.firstName ,req.body.email ,req.body.password ,req.body.passwordConfirmation, req.body.termsConfirmCheck)
   var user = req.body;
   var errors = []; //will contain all the errors
   
@@ -99,6 +99,7 @@ async function userDataRegistrationValidation(errors, data) {
   //validateCountry(errors, data.country);
   //validateString(errors, data.city);
   //validateAddress(errors, data.address);
+  validateBudget(errors, data)
 }
 
 //first name validation -> checks if there any numbers or characters in the name
@@ -214,6 +215,18 @@ async function validateAddress(errors, data) {
     var reg = RegExp('^([A-Z]*)(/.*)(/,*)(/s*)$')  //alphabet, '.', ',' ,whitespaces
     if (!reg.test(data)) {
       errors.push("the address is not right")
+    }
+  }
+}
+//budget validation
+async function validateBudget(errors, data) {
+  if (!isEmptyOrInvalid(data)) {
+    errors.push("budget is empty");
+  }
+  else {
+    var reg = RegExp('(?=.*?\d)^\$?(([1-9]\d{0,2}(,\d{3})*)|\d+)?(\.\d{1,2})?$')  //numbers. $. Decimal and commas are optional
+    if (!reg.test(data)) {
+      errors.push("the budget is not right")
     }
   }
 }
