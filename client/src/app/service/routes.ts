@@ -5,7 +5,7 @@ import { AdminQuestionsComponent } from './../admin/questions/questions.componen
 import { AdminsComponent } from './../admin/admins/admins.component';
 
 import { UserQuestionsComponent } from './../user-profile/user-questions/user-questions.component';
-import { Component } from '@angular/core';
+
 
 import { Err404Component } from './../misc/err404/err404.component';
 import { InputErrorComponent } from './../misc/input-error/input-error.component';
@@ -78,16 +78,43 @@ export const appRoutes: Routes = [
       path: 'admin',
       component: AdminComponent,
       data: {title: 'admin'},
-      children: [
-        {path: 'admins', component: AdminsComponent}, //admins list
-        {path: 'users', component: UsersComponent},  // users list
-          {path: 'questions', component: AdminQuestionsComponent},  //questions edit
-          {path: 'reports', component: ReportsComponent},   //reports generator
-        {path: 'weights', component: WeightsComponent},    //weights edit
-        {path: 'sysinfo', component: SysinfoComponent},    //system info
-      ]
     },
-
+    //admin admins list comonent
+    {
+      path: 'admin/admins',
+      component: AdminsComponent,
+      data: {title: 'admin/admins'} 
+    },
+    //admin Users list comonent
+    {
+      path: 'admin/users',
+      component: UsersComponent,
+      data: {title: 'admin/users'} 
+    },
+    //admin questions list comonent
+    {
+      path: 'admin/questions',
+      component: AdminQuestionsComponent,
+      data: {title: 'admin/questions'} 
+    },
+    //admin questions list comonent
+    {
+      path: 'admin/reports',
+      component: ReportsComponent,
+      data: {title: 'admin/reports'} 
+    },
+    //admin questions list comonent
+    {
+      path: 'admin/weights',
+      component: WeightsComponent,
+      data: {title: 'admin/weights'} 
+    },  
+    //admin questions list comonent
+    {
+      path: 'admin/sysinfo',
+      component: SysinfoComponent,
+      data: {title: 'admin/sysinfo'} 
+    },            
     //Login for our user routing removed from this version (read component instruction)
     // {
     //   path: 'loginUser',
