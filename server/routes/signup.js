@@ -42,7 +42,7 @@ router.post('/usersettings',verFuncs.getTokenFromHeaders, async function (req, r
   if (!tokenVerification){
     res.status(403).send({ success: false, message: "session is expired" })
   }
- 
+
   var data = req.body;
   var errors = []; //will contain all the errors
   //find specific DB
@@ -231,7 +231,7 @@ async function validateBudget(errors, data) {
     errors.push("budget is empty");
   }
   else {
-    var reg = RegExp('(?=.*?\d)^\$?(([1-9]\d{0,2}(,\d{3})*)|\d+)?(\.\d{1,2})?$')  //numbers. $. Decimal and commas are optional
+    var reg = RegExp('^([0-9]*)$')  //numbers
     if (!reg.test(data)) {
       errors.push("the budget is not right")
     }
