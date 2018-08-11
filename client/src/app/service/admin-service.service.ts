@@ -21,6 +21,15 @@ interface respData {
     lastName: string;
     email: string;
   }[];
+  //user info
+  b_name: string;
+  b_type: string;
+  mobile: string; 
+  phone: string; 
+  city: string; 
+  country: string; 
+  address: string; 
+  totalBudget: number;
 
   
 }
@@ -81,5 +90,13 @@ export class AdminServiceService {
 
       return this.http.post<respData>(uri,id);
 
+    }
+
+    //request user info
+    userInfo(id){
+      //will post info if correct
+      const uri = 'http://www.mocky.io/v2/5b6b223932000065073732f4';
+
+      return this.http.post<respData>(uri,id);
     }
 }

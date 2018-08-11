@@ -52,7 +52,7 @@
                               <th>#</th>
                               <th>First Name</th>
                               <th>Last Name</th>
-                              <th>email</th>
+                              <th>Email</th>
                               <th ></th>
                             </tr>
                           </thead>
@@ -66,7 +66,7 @@
                               <td>{{data.lastName}}</td>
                               <td>{{data.email}}</td>
                               <td align="right">
-                                <button class="btn btn-lg info-color">info</button>
+                                <button class="btn btn-lg info-color" (click)="userInfo(data)">info</button>
                                 <button class="btn btn-lg danger-color" (click)="removeUserModal(data)">Remove</button>
                                 <button class="btn btn-lg success-color" (click)="promoteUserModal(data)">Promote Admin</button>
                               </td>
@@ -93,7 +93,7 @@ aria-hidden="true">
         <span aria-hidden="true">×</span>
       </button>
       <!-- title -->
-      <h4 class="modal-title w-100" id="myModalLabel">Remove User</h4>
+      <h4 class="modal-title w-100" id="removeModalLabel">Remove User</h4>
     </div>
     <div class="modal-body">
       <!-- body -->
@@ -123,7 +123,7 @@ aria-hidden="true">
         <span aria-hidden="true">×</span>
       </button>
       <!-- title -->
-      <h4 class="modal-title w-100" id="myModalLabel">Promote User</h4>
+      <h4 class="modal-title w-100" id="promoteModalLabel">Promote User</h4>
     </div>
     <!-- body -->
     <div class="modal-body">
@@ -136,6 +136,42 @@ aria-hidden="true">
       <!-- contorol buttons -->
       <button type="button" mdbBtn color="success" class="waves-light" aria-label="Close" (click)="promoteModal.hide()" mdbWavesEffect>Close</button>
       <button type="button" mdbBtn color="danger" class="relative waves-light" (click)="changeUserStatus()" mdbWavesEffect>Promote</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- Info modal -->
+
+<div mdbModal #infoModal="mdbModal" class="modal fade right" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
+aria-hidden="true">
+<div class="modal-dialog modal-side modal-bottom-right" role="document">
+  <div class="modal-content">
+    <div class="modal-header info-color text-white">
+      <!-- closing X button -->
+      <button type="button" class="close pull-right" aria-label="Close" (click)="infoModal.hide()">
+        <span aria-hidden="true">×</span>
+      </button>
+      <!-- title -->
+      <h4 class="modal-title w-100" id="infoModalLabel">User info</h4>
+    </div>
+    <!-- body data recived from server side-->
+    <!-- for test only data will be shown is incorect -->
+    <div class="modal-body">
+      <h2>{{firstName}} {{lastName}}</h2>
+      <p><span class="badge info-color">Business Name:</span> {{b_name}}</p>
+      <p><span class="badge info-color">Business Type:</span> {{b_type}}</p>
+      <p><span class="badge info-color">Mobile:</span> {{mobile}}</p>
+      <p><span class="badge info-color">Phone:</span> {{phone}}</p>
+      <p><span class="badge info-color">City:</span> {{city}}</p>
+      <p><span class="badge info-color">Country:</span> {{country}}</p>
+      <p><span class="badge info-color">Address:</span> {{address}}</p>
+      <p><span class="badge info-color">Total Budget: </span>  &nbsp; <i class="fas fa-dollar-sign"></i>{{totalBudget}} </p>
+
+    </div>
+    <div class="modal-footer">
+      <!-- contorol buttons -->
+      <button type="button" mdbBtn color="success" class="waves-light" aria-label="Close" (click)="infoModal.hide()" mdbWavesEffect>Close</button>
     </div>
   </div>
 </div>

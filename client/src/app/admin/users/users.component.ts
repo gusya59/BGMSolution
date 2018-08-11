@@ -21,6 +21,17 @@ export class UsersComponent implements OnInit {
   lastName: string;
   email: string;
 
+  //user data to show
+  b_name: string;
+  b_type: string;
+  mobile: string; 
+  phone: string; 
+  city: string; 
+  country: string; 
+  address: string; 
+  totalBudget: number;
+
+
 
   //table data inserted
   searchText: string;
@@ -31,6 +42,9 @@ export class UsersComponent implements OnInit {
   
 //allow to see promoteModal for promoteModal modal use
 @ViewChild('promoteModal') promoteModal: ModalDirective;
+
+//allow to see promoteModal for promoteModal modal use
+@ViewChild('infoModal') infoModal: ModalDirective;
 
   constructor(private adminservice: AdminServiceService) {  
 
@@ -103,6 +117,41 @@ export class UsersComponent implements OnInit {
           if(Data.success){
             console.log("promoted " + this.id);
             this.promoteModal.hide();
+          }
+          else console.log(Data.message);
+        }
+      )
+    }
+
+    //promote User modal
+    userInfoModal(user){
+
+    }
+
+    //Change user Status function
+    userInfo(user){
+      console.log(user);
+      this.id = user.id;
+      this.firstName = user.firstName;
+      this.lastName = user.lastName;
+      this.email = user.email;
+      
+
+      //post to server request
+      this.adminservice.userInfo(this.id).subscribe(
+        Data => {
+
+          if(Data){
+            this.b_name = Data.b_name;
+            this.b_type = Data.b_type;
+            this.mobile  = Data.mobile;
+            this.phone = Data.phone;
+            this.city  = Data.city;
+            this.country = Data.country;
+            this.address = Data.address;
+            this.totalBudget = Data.totalBudget;
+            this.infoModal.show();
+            
           }
           else console.log(Data.message);
         }
