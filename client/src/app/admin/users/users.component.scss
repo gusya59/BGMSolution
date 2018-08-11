@@ -1,0 +1,31 @@
+/* change sizing on active lables */
+.md-form label.active{
+    font-size: 2rem;
+    padding-bottom: 2px;
+}
+/* apply spacing  */
+.md-form{
+    padding-bottom: 15px;
+}
+//main body admin page design */
+#main_body{
+    padding-top: 30px;
+}
+/* input font size */
+input{
+    font-size: 1.4rem;
+}
+
+/* table fonts */
+
+th{
+    font-size: 1.6rem;
+}
+td{
+    font-size: 1.3rem;
+}
+//search font
+
+.md-form label{
+    font-size: 1.4rem;
+}
