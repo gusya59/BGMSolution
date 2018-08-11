@@ -83,4 +83,30 @@ export class UsersComponent implements OnInit {
       this.promoteModal.show();
     }
 
+    //remove user function
+    removeUser(){
+      this.adminservice.removeUser(this.id).subscribe(
+        Data => {
+          if(Data.success){
+            console.log("remove" + this.id);
+            this.removeModal.hide();
+          }
+          else console.log(Data.message);
+        }
+      )
+    }
+
+    //Change user Status function
+    changeUserStatus(){
+      this.adminservice.changeUserStatus(this.id).subscribe(
+        Data => {
+          if(Data.success){
+            console.log("promoted " + this.id);
+            this.promoteModal.hide();
+          }
+          else console.log(Data.message);
+        }
+      )
+    }
+
 }

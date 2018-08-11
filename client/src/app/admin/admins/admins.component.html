@@ -107,7 +107,7 @@
       <div class="modal-footer">
         <!-- contorol buttons -->
         <button type="button" mdbBtn color="success" class="waves-light" aria-label="Close" (click)="removeModal.hide()" mdbWavesEffect>Close</button>
-        <button type="button" mdbBtn color="danger" class="relative waves-light" mdbWavesEffect>Remove</button>
+        <button type="button" mdbBtn color="danger" class="relative waves-light" (click) = "removeUser()" mdbWavesEffect>Remove</button>
       </div>
     </div>
   </div>
@@ -137,7 +137,7 @@ aria-hidden="true">
     <div class="modal-footer">
        <!-- contorol buttons -->
       <button type="button" mdbBtn color="success" class="waves-light" aria-label="Close" (click)="demoteModal.hide()" mdbWavesEffect>Close</button>
-      <button type="button" mdbBtn color="danger" class="relative waves-light" mdbWavesEffect>Demote</button>
+      <button type="button" mdbBtn color="danger" class="relative waves-light" (click)="changeUserStatus()" mdbWavesEffect>Demote</button>
     </div>
   </div>
 </div>

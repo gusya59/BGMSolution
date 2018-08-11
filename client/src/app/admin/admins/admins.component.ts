@@ -85,4 +85,31 @@ export class AdminsComponent implements OnInit {
     this.email = admin.email;
     this.demoteModal.show();
   }
+
+  //remove user function
+  removeUser(){
+    this.adminservice.removeUser(this.id).subscribe(
+      Data => {
+        if(Data.success){
+          console.log("removed " + this.id);
+          this.removeModal.hide();
+        }
+        else console.log(Data.message);
+      }
+    )
+  }
+
+    //Change user Status function
+    changeUserStatus(){
+      this.adminservice.changeUserStatus(this.id).subscribe(
+        Data => {
+          if(Data.success){
+            console.log("demoted " + this.id);
+            this.demoteModal.hide();
+          }
+          else console.log(Data.message);
+        }
+      )
+    }
+
 }

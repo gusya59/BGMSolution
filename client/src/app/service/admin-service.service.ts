@@ -64,4 +64,22 @@ export class AdminServiceService {
       return this.http.get<respData>(uri)
   
     }
+
+    // remove user service
+    removeUser(id){
+      //will post info if correct
+      const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
+
+      return this.http.post<respData>(uri,id);
+
+    }
+
+    // Change user status service (admin/user)
+    changeUserStatus(id){
+      //will post info if correct
+      const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
+
+      return this.http.post<respData>(uri,id);
+
+    }
 }
