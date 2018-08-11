@@ -1,5 +1,6 @@
+import { ModalDirective } from 'angular-bootstrap-md';
 import { AdminServiceService } from './../../service/admin-service.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-users',
@@ -14,10 +15,19 @@ export class UsersComponent implements OnInit {
     lastName: string;
     email: string;
   }[];
+  // user data
+  id: string;
+  firstName: string;  
+  lastName: string;
+  email: string;
 
 
   //table data inserted
   searchText: string;
+
+  
+//allow to see removeModal for removeModal modal use
+@ViewChild('removeModal') removeModal: ModalDirective;
 
   constructor(private adminservice: AdminServiceService) {  
 
@@ -49,5 +59,15 @@ export class UsersComponent implements OnInit {
       return this.filterIt(this.users, this.searchText);
     }
   }
+
+    //remove User modal
+    removeUserModal(user){
+      console.log(user);
+      this.id = user.id;
+      this.firstName = user.firstName;
+      this.lastName = user.lastName;
+      this.email = user.email;
+      this.removeModal.show();
+    }
 
 }
