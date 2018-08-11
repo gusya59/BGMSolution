@@ -1,3 +1,4 @@
+import { AdminServiceService } from './../../service/admin-service.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,34 +8,34 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminsComponent implements OnInit {
 
-    //general values
-    numUsers: number = 0;
-    numAdmins: number =0;
-    serverTime: Date;
+    admins: {
+      id: string;
+      firstName: string;  
+      lastName: string;
+      email: string;
+    }[];
+
+
+    
 
   //table data inserted
   searchText: string;
-  tableData = [
-    { id: '1', firstName: 'Mark', lastName: 'Otto', username: '@mdo' },
-    { id: '2', firstName: 'Jacob', lastName: 'Thornton', username: '@jcox' },
-    { id: '3', firstName: 'Larry', lastName: 'Last', username: '@larry' },
-    { id: '4', firstName: 'John', lastName: 'Doe', username: '@johny' },
-    { id: '5', firstName: 'Zigi', lastName: 'Kiwi', username: '@zk' },
-    { id: '6', firstName: 'Beatrice', lastName: 'Selphie', username: '@bsl' },
-  ];
-  constructor() { 
-    //get system time acording to zolo
-    setInterval(() => {
-      this.serverTime = new Date();
-    }, 1);
+  constructor(private adminservice: AdminServiceService) { 
+
   }
 
   ngOnInit() {
-    // on page build load server Data
-    this.numUsers = 1500;
-    this.numAdmins = 3;
+
+
+  //call admin service to get admins table
+    this.adminservice.fetchAdminTable().subscribe(
+      Data=>{
+          this.admins = Data.admins;
+             console.log(Data)
+      })
   }
 
+  //search key in arr
   filterIt(arr, searchKey) {
     return arr.filter((obj) => {
       return Object.keys(obj).some((key) => {
@@ -43,12 +44,13 @@ export class AdminsComponent implements OnInit {
     });
   }
 
+  //search function
   search() {
-    if (!this.searchText) {
-      return this.tableData;
+    if (!this.searchText) {   //if we didnt search show table
+      return this.admins;
     }
-    if (this.searchText) {
-      return this.filterIt(this.tableData, this.searchText);
+    if (this.searchText) {    //if we searched call filter
+      return this.filterIt(this.admins, this.searchText);
     }
   }
 

@@ -1,3 +1,4 @@
+import { AdminServiceService } from './../../service/admin-service.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,26 +8,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UsersComponent implements OnInit {
 
-
+  users: {
+    id: string;
+    firstName: string;  
+    lastName: string;
+    email: string;
+  }[];
 
 
   //table data inserted
   searchText: string;
-  tableData = [
-    { id: '1', firstName: 'Mark', lastName: 'Otto', username: '@mdo' },
-    { id: '2', firstName: 'Jacob', lastName: 'Thornton', username: '@jcox' },
-    { id: '3', firstName: 'Larry', lastName: 'Last', username: '@larry' },
-    { id: '4', firstName: 'John', lastName: 'Doe', username: '@johny' },
-    { id: '5', firstName: 'Zigi', lastName: 'Kiwi', username: '@zk' },
-    { id: '6', firstName: 'Beatrice', lastName: 'Selphie', username: '@bsl' },
-  ];
-  constructor() {  
+
+  constructor(private adminservice: AdminServiceService) {  
 
   }
 
   ngOnInit() {
-
-  }
+  //call admin service to get admins table
+  this.adminservice.fetchUsersTable().subscribe(
+    Data=>{
+        this.users = Data.users;
+           console.log(Data)
+    })
+}
+  
 
   filterIt(arr, searchKey) {
     return arr.filter((obj) => {
@@ -38,10 +43,10 @@ export class UsersComponent implements OnInit {
 
   search() {
     if (!this.searchText) {
-      return this.tableData;
+      return this.users;
     }
     if (this.searchText) {
-      return this.filterIt(this.tableData, this.searchText);
+      return this.filterIt(this.users, this.searchText);
     }
   }
 

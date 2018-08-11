@@ -1,3 +1,4 @@
+import { AdminServiceService } from './../../service/admin-service.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -12,7 +13,7 @@ export class InfoComponent implements OnInit {
   numAdmins: number =0;
   serverTime: Date;
 
-  constructor() { 
+  constructor(private adminService: AdminServiceService) { 
     //get system time acording to zolo
     setInterval(() => {
     this.serverTime = new Date();
@@ -20,9 +21,18 @@ export class InfoComponent implements OnInit {
   }
 
   ngOnInit() {
-    // on page build load server Data
-    this.numUsers = 1500;
-    this.numAdmins = 3;
+
+    //get general data from service
+    this.adminService.generalInformation().subscribe(
+      data =>{
+      if(data.success){
+        this.numUsers = data.numUsers;
+        this.numAdmins = data.numAdmins;
+      }
+      else console.log(data.message);
+
+  })
+
   }
 
 }
