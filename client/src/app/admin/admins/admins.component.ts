@@ -26,6 +26,8 @@ export class AdminsComponent implements OnInit {
 
 //allow to see removeModal for removeModal modal use
 @ViewChild('removeModal') removeModal: ModalDirective;
+//allow to see demoteModal for demoteModal modal use
+@ViewChild('demoteModal') demoteModal: ModalDirective;
     
 
   //table data inserted
@@ -74,4 +76,13 @@ export class AdminsComponent implements OnInit {
     this.removeModal.show();
   }
 
+  //demote admin
+  demoteAdminModal(admin){
+    console.log(admin);
+    this.id = admin.id;
+    this.firstName = admin.firstName;
+    this.lastName = admin.lastName;
+    this.email = admin.email;
+    this.demoteModal.show();
+  }
 }

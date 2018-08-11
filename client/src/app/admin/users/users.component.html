@@ -68,7 +68,7 @@
                               <td align="right">
                                 <button class="btn btn-lg info-color">info</button>
                                 <button class="btn btn-lg danger-color" (click)="removeUserModal(data)">Remove</button>
-                                <button class="btn btn-lg success-color">Promote Admin</button>
+                                <button class="btn btn-lg success-color" (click)="promoteUserModal(data)">Promote Admin</button>
                               </td>
                             </tr>
                           </tbody>
@@ -88,20 +88,54 @@ aria-hidden="true">
 <div class="modal-dialog modal-side modal-bottom-right" role="document">
   <div class="modal-content">
     <div class="modal-header danger-color text-white">
+      <!-- closing X button -->
       <button type="button" class="close pull-right" aria-label="Close" (click)="removeModal.hide()">
         <span aria-hidden="true">×</span>
       </button>
+      <!-- title -->
       <h4 class="modal-title w-100" id="myModalLabel">Remove User</h4>
     </div>
     <div class="modal-body">
+      <!-- body -->
       <p><span class="badge danger-color">id:</span> {{id}}</p>
       <p><span class="badge danger-color">name:</span> {{firstName}} {{lastName}}</p>
       <p><span class="badge danger-color">email:</span> {{email}}</p>
       <p>* will permanently remove this user</p>
     </div>
     <div class="modal-footer">
+      <!-- contorol buttons -->
       <button type="button" mdbBtn color="success" class="waves-light" aria-label="Close" (click)="removeModal.hide()" mdbWavesEffect>Close</button>
-      <button type="button" mdbBtn color="danger" class="relative waves-light" mdbWavesEffect>Save changes</button>
+      <button type="button" mdbBtn color="danger" class="relative waves-light" mdbWavesEffect>Remove</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- Promote modal -->
+
+<div mdbModal #promoteModal="mdbModal" class="modal fade right" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
+aria-hidden="true">
+<div class="modal-dialog modal-side modal-bottom-right" role="document">
+  <div class="modal-content">
+    <div class="modal-header success-color text-white">
+      <!-- closing X button -->
+      <button type="button" class="close pull-right" aria-label="Close" (click)="promoteModal.hide()">
+        <span aria-hidden="true">×</span>
+      </button>
+      <!-- title -->
+      <h4 class="modal-title w-100" id="myModalLabel">Promote User</h4>
+    </div>
+    <!-- body -->
+    <div class="modal-body">
+      <p><span class="badge success-color">id:</span> {{id}}</p>
+      <p><span class="badge success-color">name:</span> {{firstName}} {{lastName}}</p>
+      <p><span class="badge success-color">email:</span> {{email}}</p>
+      <p>* will promte this user to admin position</p>
+    </div>
+    <div class="modal-footer">
+      <!-- contorol buttons -->
+      <button type="button" mdbBtn color="success" class="waves-light" aria-label="Close" (click)="promoteModal.hide()" mdbWavesEffect>Close</button>
+      <button type="button" mdbBtn color="danger" class="relative waves-light" mdbWavesEffect>Promote</button>
     </div>
   </div>
 </div>

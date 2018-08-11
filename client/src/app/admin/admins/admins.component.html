@@ -67,7 +67,7 @@
                               <td>{{data.email}}</td>
                               <td align="right">
                                 <button class="btn btn-lg danger-color" (click)="removeAdminModal(data)">Remove</button>
-                                <button class="btn btn-lg info-color">Demote Admin</button>
+                                <button class="btn btn-lg info-color" (click)="demoteAdminModal(data)">Demote Admin</button>
                               </td>
                             </tr>
                           </tbody>
@@ -90,11 +90,14 @@
   <div class="modal-dialog modal-side modal-bottom-right" role="document">
     <div class="modal-content">
       <div class="modal-header danger-color text-white">
+         <!-- closing X button -->
         <button type="button" class="close pull-right" aria-label="Close" (click)="removeModal.hide()">
           <span aria-hidden="true">×</span>
         </button>
+        <!-- title -->
         <h4 class="modal-title w-100" id="myModalLabel">Remove Admin</h4>
       </div>
+      <!-- body -->
       <div class="modal-body">
         <p><span class="badge danger-color">id:</span> {{id}}</p>
         <p><span class="badge danger-color">name:</span> {{firstName}} {{lastName}}</p>
@@ -102,9 +105,40 @@
         <p>* will permanently remove this user</p>
       </div>
       <div class="modal-footer">
+        <!-- contorol buttons -->
         <button type="button" mdbBtn color="success" class="waves-light" aria-label="Close" (click)="removeModal.hide()" mdbWavesEffect>Close</button>
-        <button type="button" mdbBtn color="danger" class="relative waves-light" mdbWavesEffect>Save changes</button>
+        <button type="button" mdbBtn color="danger" class="relative waves-light" mdbWavesEffect>Remove</button>
       </div>
     </div>
   </div>
+</div>
+
+<!-- Demote modal -->
+
+<div mdbModal #demoteModal="mdbModal" class="modal fade right" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
+aria-hidden="true">
+<div class="modal-dialog modal-side modal-bottom-right" role="document">
+  <div class="modal-content">
+    <div class="modal-header info-color text-white">
+      <!-- closing X button -->
+      <button type="button" class="close pull-right" aria-label="Close" (click)="demoteModal.hide()">
+        <span aria-hidden="true">×</span>
+      </button>
+      <!-- title -->
+      <h4 class="modal-title w-100" id="myModalLabel">Demote User</h4>
+    </div>
+    <!-- body -->
+    <div class="modal-body">
+      <p><span class="badge info-color">id:</span> {{id}}</p>
+      <p><span class="badge info-color">name:</span> {{firstName}} {{lastName}}</p>
+      <p><span class="badge info-color">email:</span> {{email}}</p>
+      <p>* will remove this Admin to user position</p>
+    </div>
+    <div class="modal-footer">
+       <!-- contorol buttons -->
+      <button type="button" mdbBtn color="success" class="waves-light" aria-label="Close" (click)="demoteModal.hide()" mdbWavesEffect>Close</button>
+      <button type="button" mdbBtn color="danger" class="relative waves-light" mdbWavesEffect>Demote</button>
+    </div>
+  </div>
+</div>
 </div>

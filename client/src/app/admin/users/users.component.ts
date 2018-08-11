@@ -28,6 +28,9 @@ export class UsersComponent implements OnInit {
   
 //allow to see removeModal for removeModal modal use
 @ViewChild('removeModal') removeModal: ModalDirective;
+  
+//allow to see promoteModal for promoteModal modal use
+@ViewChild('promoteModal') promoteModal: ModalDirective;
 
   constructor(private adminservice: AdminServiceService) {  
 
@@ -68,6 +71,16 @@ export class UsersComponent implements OnInit {
       this.lastName = user.lastName;
       this.email = user.email;
       this.removeModal.show();
+    }
+
+    //promote User modal
+    promoteUserModal(user){
+      console.log(user);
+      this.id = user.id;
+      this.firstName = user.firstName;
+      this.lastName = user.lastName;
+      this.email = user.email;
+      this.promoteModal.show();
     }
 
 }
