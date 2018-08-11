@@ -6,20 +6,20 @@ var bcrypt = require('bcrypt');
 // Registration DB Schema --------->to add unique: true to the email later
 var UsersSchema = mongoose.Schema({
 
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
+  firstName: { type: String, required: true, trim:true },
+  lastName: { type: String, required: true, trim:true },
   email: { type: String, required: true, trim: true, index: true, sparse: true },
-  password: { type: String, required: true },
-  passwordConfirmation: { type: String, required: true },
+  password: { type: String, required: true, trim:true },
+  passwordConfirmation: { type: String, required: true, trim:true },
   termsConfirmCheck: { type: Boolean, required: true },
   ////
   business_name: { type: String, required: true },
   business_type: { type: String, required: true },
-  mobile: { type: String, required: true },
-  phone: { type: String, required: true },
-  country: { type: String, required: true },
+  mobile: { type: String, required: true, trim:true },
+  phone: { type: String, required: true, trim:true },
+  country: { type: String, required: true},
   address: { type: String, required: true },
-  budget: { type: Number, required: true },
+  budget: { type: Number, required: true, trim:true },
   created: { type: Date, default: Date.now() }
 });
 
