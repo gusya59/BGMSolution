@@ -3,10 +3,10 @@ var router = express();
 var bodyParser = require('body-parser');
 //token generator
 var jwt = require('jsonwebtoken');
-var expressJwt = require('express-jwt');
+
 
 var registrationSchema = require('../models/Registration.js');
-
+var verFuncs = require('../utils/verificationFunctions.js')
 
 //registration
 router.post('/registration', async function (req, res) {
@@ -35,7 +35,14 @@ router.post('/registration', async function (req, res) {
 
 
 //user settings
-router.post('/usersettings', async function (req, res) {
+router.post('/usersettings',verFuncs.getTokenFromHeaders, async function (req, res) {
+  console.log(verFuncs.getTokenFromHeaders);
+  //token verification
+  var tokenVerification =verFuncs.verifyToken(req.token, jwt);
+  if (!tokenVerification){
+    res.status(403).send({ success: false, message: "session is expired" })
+  }
+ 
   var data = req.body;
   var errors = []; //will contain all the errors
   //find specific DB
