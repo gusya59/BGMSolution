@@ -4,6 +4,7 @@ import { AuthService } from './../service/auth.service';
 import { Component,ViewChild, OnInit } from '@angular/core';
 import { ModalDirective } from 'angular-bootstrap-md';
 import { first } from '../../../node_modules/rxjs/operators';
+import  decode  from 'jwt-decode';
 
 
 
@@ -81,7 +82,7 @@ export class LoginComponent implements OnInit {
 //get email and password from component and send it to auth
   login() {
     this.submitted = true;
-
+    
     // stop here if form is invalid
     if (this.loginForm.invalid) {
         return;
@@ -98,6 +99,7 @@ export class LoginComponent implements OnInit {
               if(resp.success){
                 // console.log(resp);
                 this.auth.setLoggedIn(true);
+                console.log(decode(resp.token))
                 // localStorage.setItem('token', resp.token);
                 this.router.navigate([this.returnUrl]);
               }

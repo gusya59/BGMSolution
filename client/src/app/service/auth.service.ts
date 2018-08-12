@@ -50,7 +50,7 @@ export class AuthService {
         if (Data && Data.token) {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('token', JSON.stringify(Data.token));
-            console.log(Data)
+            // console.log(Data)
         }
         return Data;
     }));
@@ -84,7 +84,7 @@ export class AuthService {
       if (Data && Data.token) {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('token', JSON.stringify(Data.token));
-          console.log(Data)
+          // console.log(Data)
       }
       return Data;
   }));
