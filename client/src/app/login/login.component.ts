@@ -122,7 +122,7 @@ export class LoginComponent implements OnInit {
   isAdmin(){
     const token = localStorage.getItem('token');
     const tokenPayLoad = decode(token);
-    console.log("isAdmin: " + tokenPayLoad.isAdmin)
+    // console.log("isAdmin: " + tokenPayLoad.isAdmin)
     if(tokenPayLoad.isAdmin){
       // set admin to redirect
       this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/admin';
