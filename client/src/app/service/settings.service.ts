@@ -24,17 +24,17 @@ export class SettingsService {
     const uri = 'http://localhost:1234/signup/usersettings';
     const obj = {
     
-      b_name: company.b_name,
-      b_type: company.b_type,
+      business_name: company.b_name,
+      business_type: company.b_type,
       mobile: company.mobile,
       phone: company.phone,
       city: company.city,
       country: company.country,
       address: company.address,
-      budgetTotal: company.budgetTotal,
-      token: localStorage.getItem('token')
+      budget: company.budgetTotal,
+      // token: localStorage.getItem('token')
     };
-    console.log(localStorage.getItem('token'))
+
     console.log(obj)
     //post registration to server
     return this.http.post<respData>(uri, obj)
