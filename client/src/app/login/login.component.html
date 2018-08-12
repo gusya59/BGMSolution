@@ -17,14 +17,15 @@
         <div class="row justify-content-center">
           <div class="col-md-6 ">
             <!-- Material form login -->
-            <form (submit)="LoginUser($event)">
+            <form [formGroup]="loginForm" (ngSubmit)="login()">
               <!-- Material input password -->
               <div class="col-md-12">
                   <div class="md-form">
                       <i class="fa fa-user prefix grey-text"></i>
                       <input mdbInputDirective 
                       type="email" 
-                      class="form-control" 
+                      class="form-control"
+                      formControlName="InputEmail" 
                       id="InputEmail" 
                       name="InputEmail"
                       required>
@@ -38,7 +39,8 @@
                     <i class="fa fa-key prefix grey-text"></i>
                     <input mdbInputDirective 
                     type="password" 
-                    class="form-control" 
+                    class="form-control"
+                    formControlName="InputPassword" 
                     id="InputPassword" 
                     name="InputPassword"
                     required>

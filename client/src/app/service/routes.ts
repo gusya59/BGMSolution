@@ -1,3 +1,4 @@
+import { AuthGuard } from './auth.guard';
 import { SysinfoComponent } from './../admin/sysinfo/sysinfo.component';
 import { WeightsComponent } from './../admin/weights/weights.component';
 import { ReportsComponent } from './../admin/reports/reports.component';
@@ -49,7 +50,7 @@ export const appRoutes: Routes = [
     {
     path: 'user',
     component: UserComponent,
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     data: { title: 'user' }
     
     },
@@ -58,18 +59,21 @@ export const appRoutes: Routes = [
     {
       path: 'user/profile',
       component: UserProfileComponent,
+      canActivate: [AuthGuard],
       data: { title: 'user/profile' }
     },
     //User Profile routing
     {
       path: 'user/reports',
       component: UserReportsComponent,
+      canActivate: [AuthGuard],
       data: { title: 'user/reports' }
     },
     //user questions comonent
     {
       path: 'user/questions',
       component: UserQuestionsComponent,
+      canActivate: [AuthGuard],
       data: {title: 'user/questions'}
     },
 
@@ -130,13 +134,13 @@ export const appRoutes: Routes = [
       children: [ 
         {path: '', component: RegistrationComponent},
         {path: 'userSettings', component: UserSettingsComponent,
-        // canActivate: [AuthGuard]
+        canActivate: [AuthGuard]
       }, 
         {path: 'userSettings/questions', component: QuestionsComponent,
-        // canActivate: [AuthGuard]
+        canActivate: [AuthGuard]
       },
         {path: 'userSettings/questions/finish', component: FinishComponent,
-        // canActivate: [AuthGuard]
+        canActivate: [AuthGuard]
       },
       ]
     },

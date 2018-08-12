@@ -1,3 +1,5 @@
+import { ErrorInterceptor } from './service/error.interceptor';
+import { JwtInterceptor } from './service/jwt.interceptor';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
@@ -26,8 +28,8 @@ import { InputErrorComponent } from './misc/input-error/input-error.component';
 import { FinishComponent } from './sign-up/finish/finish.component';
 import { GuestComponent } from './guest/guest.component';
 //router
-import { RouterModule, Routes } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 //MDB bootstrap
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
@@ -115,7 +117,11 @@ import { InfoComponent } from './admin/info/info.component'
       { enableTracing: false } // <-- debugging purposes only
     )
   ],
-  providers: [countryService,RegistrationComponent,AuthService,AuthGuard],
+  providers: [countryService,RegistrationComponent,AuthService,AuthGuard,
+    // JWT handling 
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA]
 })

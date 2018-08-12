@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 // Import of http service
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { map } from '../../../node_modules/rxjs/operators';
 
 //interface for returning router resp
 interface respData {
@@ -34,7 +35,7 @@ export class AuthService {
   }
 
   //get user info from backend HTTP
-  UserLogin(InputEmail,InputPassword){
+  UserLogin(InputEmail: string, InputPassword: string){
     //will get user info if correct
     const uri = 'http://localhost:1234/signup/login';
     // our object holding the login data
@@ -43,11 +44,23 @@ export class AuthService {
       password: InputPassword
     };
 
-    //post to data to server
-    var reqHeader = new HttpHeaders({'content-Type': 'application/x-www-urlencoded'});
-    return this.http.post<respData>(uri,obj,  {headers: reqHeader});
+    return this.http.post<any>(uri,obj)
+    .pipe(map(Data => {
+        // login successful if there's a jwt token in the response
+        if (Data && Data.token) {
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            localStorage.setItem('currentUser', JSON.stringify(Data));
+            console.log(Data)
+        }
+        return Data;
+    }));
     
   }
+
+  logout() {
+    // remove user from local storage to log user out
+    localStorage.removeItem('currentUser');
+  } 
 
   addUser(inputfirstname, inputlastname, inputEmail, inputPassword, confirmPassword,checkBox) {
     const uri = 'http://localhost:1234/signup/registration';
