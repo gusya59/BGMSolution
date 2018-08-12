@@ -11,7 +11,7 @@ var flash = require('connect-flash');
 //routes configuration
 var indexRouter = require('./routes/index');
 var signupRouter = require('./routes/signup');
-//var apiRouter = require ('./routes/api')
+var adminRouter = require ('./routes/admin')
 var app = express();
 
 app.set('views', __dirname + '/views'); // general configuration
@@ -52,7 +52,8 @@ app.use(function (req, res, next) {
 
 //routing
 app.use('/', indexRouter);
-app.use('/signup', signupRouter);  
+app.use('/signup', signupRouter); 
+app.use('/admin',adminRouter); 
 
 //app.use('./api', apiRouter);
 

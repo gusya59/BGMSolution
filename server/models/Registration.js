@@ -125,9 +125,8 @@ module.exports.changePassword = async function (data) {
 }
 
 //count the amount of admins
-module.exports.countRegularUsers = async function (data) { 
+module.exports.countRegularUsers = async function () { 
   var userData = await UsersSchemaExport.count({isAdmin: 'false'}, function (err, count){
-    console.log("the amount of regular users is: "+userData);
   });
   return userData;
 }
@@ -135,7 +134,6 @@ module.exports.countRegularUsers = async function (data) {
 //count the amount of regular users
 module.exports.countAdminUsers = async function (data) { 
   var userData = await UsersSchemaExport.count({isAdmin: 'true'}, function (err, count){
-    console.log("the amount of admin users is: "+userData);
   });
   return userData;
 }
