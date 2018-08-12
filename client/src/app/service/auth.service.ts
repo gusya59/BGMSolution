@@ -3,7 +3,7 @@ import { Injectable, Output } from '@angular/core';
 // Import of http service
 import { HttpClient } from '@angular/common/http';
 import { map } from '../../../node_modules/rxjs/operators';
-
+import {JwtHelperService } from '@auth0/angular-jwt'
 
 //interface for returning router resp
 interface respData {
@@ -21,20 +21,28 @@ interface respData {
 export class AuthService {
 //debug Logged in manual seassion overide
 // false for logged out true for logged in.
-  private loggedInStatus = false;
+  // private loggedInStatus = false;
 
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, public jwtHelper: JwtHelperService) { }
+     //check seasion
+  public isAuthenticated(): boolean{
+    //get token
+    const token = localStorage.getItem('token');
 
-  //get logged in replace property name with action
-  get isLoggedIn(){
-    return this.loggedInStatus;
+    //check if the token still alive
+    return !this.jwtHelper.isTokenExpired(token);
   }
+  
+  //get logged in replace property name with action
+  // get isLoggedIn(){
+  //   return this.loggedInStatus;
+  // }
 
   //setting the logged in status after succsessful log or registration run
-  setLoggedIn(status: boolean){
-    this.loggedInStatus = status;
-  }
+  // setLoggedIn(status: boolean){
+  //   this.loggedInStatus = status;
+  // }
 
   //get user info from backend HTTP
   UserLogin(InputEmail: string, InputPassword: string){

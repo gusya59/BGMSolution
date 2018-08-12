@@ -100,7 +100,7 @@ export class LoginComponent implements OnInit {
               if(resp.success){
                 // const tokenRecived = decode(resp.token);
                 // console.log(resp);
-                this.auth.setLoggedIn(true);
+                // this.auth.setLoggedIn(true);
                 // console.log(decode(resp.token))
                 
                 // console.log(tokenRecived.isAdmin)
