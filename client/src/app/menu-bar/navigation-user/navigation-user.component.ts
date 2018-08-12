@@ -13,7 +13,7 @@ export class NavigationUserComponent implements OnInit {
 
   ngOnInit() {
   }
-
+//log out button function
   logout(){
     this.auth.logout();
     this.router.navigate(['/login']);

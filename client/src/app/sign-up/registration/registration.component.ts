@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 //Bootstrap
 import { ModalDirective } from 'angular-bootstrap-md';
 
@@ -7,6 +8,7 @@ import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
 import { AuthService } from './../../service/auth.service';
 //router
 import { Router } from '@angular/router';
+import { first } from '../../../../node_modules/rxjs/operators';
 
 
 
@@ -26,6 +28,7 @@ export class RegistrationComponent implements OnInit {
     password: string;
     passwordConfirmation: string;
     checkBox: boolean;
+    returnUrl: string;
 
   // propertys
   isLoginError: boolean = false;
@@ -40,7 +43,7 @@ export class RegistrationComponent implements OnInit {
     // group of password and confiramtion
     passwordFormGroup: FormGroup;
     
-  constructor(private auth: AuthService, private fb: FormBuilder, private router: Router) { 
+  constructor(private auth: AuthService, private fb: FormBuilder, private router: Router , private route: ActivatedRoute) { 
 
     //password validator stat function
     this.passwordFormGroup = this.fb.group({
@@ -69,24 +72,23 @@ export class RegistrationComponent implements OnInit {
     this.password = this.passwordFormGroup.value.inputPassword; 
     this.passwordConfirmation = this.passwordFormGroup.value.confirmPassword;
     this.checkBox = this.registrationFormGroup.value.checkBox;
-    console.log(this.firstName, this.lastName, this.email, this.password, this.passwordConfirmation, this.checkBox)
+    // console.log(this.firstName, this.lastName, this.email, this.password, this.passwordConfirmation, this.checkBox)
 
     if(this.registrationFormGroup.valid){
       //prevent browser default actions
       event.preventDefault()
       //run the registration function
       this.auth.addUser(this.firstName, this.lastName, this.email, this.password, this.passwordConfirmation, this.checkBox)
-      .subscribe(resp => 
+      .pipe(first()).subscribe(resp => 
         { 
           if(resp.success){     
             console.log(resp);
             this.auth.setLoggedIn(true);
-            localStorage.setItem('token', resp.token);
-            this.router.navigate(['/signup/userSettings']);
+            this.router.navigate([this.returnUrl]);
           }
           else{
             this.ErroMsg =  resp.errors 
-            this.isLoginError = true;
+            this.isLoginError = false;
             this.basicModal.show();
           }    
           });;
@@ -96,6 +98,11 @@ export class RegistrationComponent implements OnInit {
   }
 
   ngOnInit() {
+    // reset login status
+    this.auth.logout();
+
+    // get return url from route parameters or default to '/'
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/signup/userSettings';
 
   }
 

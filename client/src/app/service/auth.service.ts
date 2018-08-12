@@ -49,7 +49,7 @@ export class AuthService {
         // login successful if there's a jwt token in the response
         if (Data && Data.token) {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('currentUser', JSON.stringify(Data));
+            localStorage.setItem('token', JSON.stringify(Data.token));
             console.log(Data)
         }
         return Data;
@@ -59,7 +59,7 @@ export class AuthService {
 
   logout() {
     // remove user from local storage to log user out
-    localStorage.removeItem('currentUser');
+    localStorage.removeItem('token');
   } 
 
   addUser(inputfirstname, inputlastname, inputEmail, inputPassword, confirmPassword,checkBox) {
@@ -71,7 +71,7 @@ export class AuthService {
     email: inputEmail, 
     password: inputPassword,
     passwordConfirmation: confirmPassword,
-    checkBox: checkBox
+    termsConfirmCheck: checkBox
     };
     //post registration to server
     
@@ -79,14 +79,23 @@ export class AuthService {
     // var reqHeader = new HttpHeaders({'content-Type': 'application/x-www-urlencoded'});
     // return this.http.post<respData>(uri, obj, {headers: reqHeader})
 
-    return this.http.post<respData>(uri, obj)
+    return this.http.post<respData>(uri, obj).pipe(map(Data => {
+      // login successful if there's a jwt token in the response
+      if (Data && Data.token) {
+          // store user details and jwt token in local storage to keep user logged in between page refreshes
+          localStorage.setItem('token', JSON.stringify(Data.token));
+          console.log(Data)
+      }
+      return Data;
+  }));
   }
 
   //delete user function
 
   deleteUser(password){
     const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
-    return this.http.post<respData>(uri,password);
+    return this.http.post<respData>(uri,password)
+    
   }
 
 }

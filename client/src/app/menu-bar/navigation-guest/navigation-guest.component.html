@@ -12,7 +12,13 @@
       <a class="nav-link  waves-light" mdbWavesEffect routerLink="/signup" routerLinkActive="active">Registration</a>
     </li>
   </ul>
-  <button class="btn btn-warning btn-lg login-btn"  routerLink="/login" routerLinkActive="active"><span class="glyphicon glyphicon-user"></span> | <b>Login </b> </button>
+  <!-- variable logout / login button -->
+  <div *ngIf="tokenRecived; else elseBlock">
+      <button class="btn btn-warning btn-lg login-btn" (click)="logout()"><span class="glyphicon glyphicon-user"></span> | <b>LogOut </b> </button>
+  </div>
+  <ng-template #elseBlock>
+      <button class="btn btn-warning btn-lg login-btn"  routerLink="/login" routerLinkActive="active"><span class="glyphicon glyphicon-user"></span> | <b>Login </b> </button>
+  </ng-template>
 </links>
 
 

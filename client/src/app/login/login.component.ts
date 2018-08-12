@@ -94,7 +94,7 @@ export class LoginComponent implements OnInit {
         .pipe(first())
         .subscribe(
             resp => {
-              console.log(resp)
+              
               if(resp.success){
                 // console.log(resp);
                 this.auth.setLoggedIn(true);
@@ -107,7 +107,6 @@ export class LoginComponent implements OnInit {
                 this.basicModal.show();
                 this.error = resp;
                 this.loading = false;
-                
               }
                 
             })
