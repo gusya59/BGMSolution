@@ -32,8 +32,19 @@ check.getTokenFromHeaders=function(req,res,next){
   }
 
   //decode an email
+  //input: token data, jwt library data
+  //output: user's email.
   check.decodeUserEmail = function(token, jwt){
     var decoded =jwt.decode(token);
     var userEmail = decoded.userID;
     return userEmail;
   }
+
+    //decode an isAdmin
+    //input: token data, jwt library data
+    //output: isAdmin parametr data. true if admin, else false
+    check.decodeisAdmin = function(token, jwt){
+      var decoded =jwt.decode(token);
+      var isAdmin = decoded.isAdmin;
+      return isAdmin;
+    }
