@@ -79,14 +79,13 @@ router.post('/login', async function (req, res) {
     var emailFound = await registrationSchema.findByEmail(body.email); //returns user object with all the data
     if (emailFound) {
       var passGood = await registrationSchema.verifyPassword(body.password, emailFound.password)
-
       //check if there is no such user and if the password is matching
       if (!passGood) {
         res.status(200).send({ success: false, message: "email or password doesn't match" });
       }
       else {
         //create token
-        var token = jwt.sign({ userID: body.email }, 'todo-app-super-shared-secret', { expiresIn: '4h' });
+        var token = jwt.sign({ userID: emailFound.email, isAdmin: emailFound.isAdmin }, 'todo-app-super-shared-secret', { expiresIn: '4h' });
         //console.log("the token is "+ token);
         res.status(200).send({ success: true, token: token });
       }
