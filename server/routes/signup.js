@@ -10,7 +10,7 @@ var verFuncs = require('../utils/verificationFunctions.js')
 
 //registration
 router.post('/registration', async function (req, res) {
-  console.log("the input is: " + req.body);
+ // console.log("the input is: " + req.body);
   console.log(req.body.firstName ,req.body.email ,req.body.password ,req.body.passwordConfirmation, req.body.termsConfirmCheck)
   var user = req.body;
   var errors = []; //will contain all the errors
@@ -22,12 +22,10 @@ router.post('/registration', async function (req, res) {
   else {
     //create new user
     var newUser = new registrationSchema(req.body);
-    var isCreated = await registrationSchema.inputData(newUser)
-    console.log("is created? "+isCreated);
+    var isCreated = await registrationSchema.inputData(newUser);
     if (isCreated) {
       //create token
-      var token = jwt.sign({ userID: req.body.email }, 'todo-app-super-shared-secret', { expiresIn: '4h' });
-      //console.log("the token is "+ token);
+      var token = jwt.sign({ userID: isCreated.email, isAdmin: isCreated.isAdmin }, 'todo-app-super-shared-secret', { expiresIn: '4h' });
       res.status(200).send({ success: true, message: "User Created!", token: token  })
     }
     else {
