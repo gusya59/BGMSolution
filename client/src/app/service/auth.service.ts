@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 // Import of http service
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { map } from '../../../node_modules/rxjs/operators';
 
 //interface for returning router resp
