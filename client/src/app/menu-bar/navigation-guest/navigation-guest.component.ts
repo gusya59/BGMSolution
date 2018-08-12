@@ -12,7 +12,9 @@ export class NavigationGuestComponent implements OnInit {
   //define token holder
   tokenRecived = "";
 
-  constructor(private auth: AuthService,  private router: Router) { }
+  constructor(private auth: AuthService,  private router: Router) {
+    
+   }
 
   ngOnInit() {
     this.tokenRecived = localStorage.getItem('token');

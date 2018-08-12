@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
   submitted = false;
   returnUrl: string;
   error = '';
+  routerPage = '/';
 
   // propertys
   isLoginError: boolean = false;
@@ -46,8 +47,8 @@ export class LoginComponent implements OnInit {
     // reset login status
     this.auth.logout();
 
-    // get return url from route parameters or default to '/'
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/user';
+    
+
 
   }
 
@@ -97,10 +98,13 @@ export class LoginComponent implements OnInit {
             resp => {
               
               if(resp.success){
+                // const tokenRecived = decode(resp.token);
                 // console.log(resp);
                 this.auth.setLoggedIn(true);
-                console.log(decode(resp.token))
-                // localStorage.setItem('token', resp.token);
+                // console.log(decode(resp.token))
+                
+                // console.log(tokenRecived.isAdmin)
+                this.isAdmin();
                 this.router.navigate([this.returnUrl]);
               }
               else {
@@ -113,5 +117,22 @@ export class LoginComponent implements OnInit {
                 
             })
           }
+
+  //function to deal with admin login or user login
+  isAdmin(){
+    const token = localStorage.getItem('token');
+    const tokenPayLoad = decode(token);
+    console.log("isAdmin: " + tokenPayLoad.isAdmin)
+    if(tokenPayLoad.isAdmin){
+      // set admin to redirect
+      this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/admin';
+      this.routerPage = '/admin';
+    } else{
+      // set user to redirect
+      this.routerPage = '/user';
+      this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/user';
+    }
+  }
+
 
 }

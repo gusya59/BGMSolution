@@ -31,8 +31,8 @@ export class SettingsService {
       city: company.city,
       country: company.country,
       address: company.address,
-      budget: company.budgetTotal,
-      // token: localStorage.getItem('token')
+      budget: company.budgetTotal
+      // token: localStorage.getItem('token') // will be used if necesery
     };
 
     console.log(obj)

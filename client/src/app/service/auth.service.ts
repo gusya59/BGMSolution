@@ -1,7 +1,9 @@
-import { Injectable } from '@angular/core';
+
+import { Injectable, Output } from '@angular/core';
 // Import of http service
 import { HttpClient } from '@angular/common/http';
 import { map } from '../../../node_modules/rxjs/operators';
+
 
 //interface for returning router resp
 interface respData {
@@ -51,6 +53,7 @@ export class AuthService {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('token', JSON.stringify(Data.token));
             // console.log(Data)
+            
         }
         return Data;
     }));
@@ -83,6 +86,7 @@ export class AuthService {
       // login successful if there's a jwt token in the response
       if (Data && Data.token) {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
+          
           localStorage.setItem('token', JSON.stringify(Data.token));
           // console.log(Data)
       }
