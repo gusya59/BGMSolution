@@ -23,9 +23,12 @@ router.post('/registration', async function (req, res) {
     //create new user
     var newUser = new registrationSchema(req.body);
     var isCreated = await registrationSchema.inputData(newUser)
-    //console.log("is created? "+isCreated);
+    console.log("is created? "+isCreated);
     if (isCreated) {
-      res.status(200).send({ success: true, message: "User Created!" })
+      //create token
+      var token = jwt.sign({ userID: req.body.email }, 'todo-app-super-shared-secret', { expiresIn: '4h' });
+      //console.log("the token is "+ token);
+      res.status(200).send({ success: true, message: "User Created!", token: token  })
     }
     else {
       res.status(200).send({ success: false, message: "Password doesn't match!" })
@@ -35,32 +38,40 @@ router.post('/registration', async function (req, res) {
 
 
 //user settings
-router.post('/usersettings',verFuncs.getTokenFromHeaders, async function (req, res) {
-  console.log(verFuncs.getTokenFromHeaders);
-  //token verification
+router.post('/usersettings',verFuncs.getTokenFromHeaders,async function (req, res) {
+ // token verification
   var tokenVerification =verFuncs.verifyToken(req.token, jwt);
   if (!tokenVerification){
     res.status(403).send({ success: false, message: "session is expired" })
   }
-
+  //decode and extract an email
+  var userEmail = verFuncs.decodeUserEmail(req.token,jwt);
   var data = req.body;
   var errors = []; //will contain all the errors
-  //find specific DB
-  await userDataRegistrationValidation(errors, data); //data validation
-  if (errors.length) {
-    res.status(200).send({ success: false, errors: errors })
+  //find specific DB by the email from the token
+  var ans = await registrationSchema.isEmailExists(userEmail);
+  if(ans){
+    await userDataRegistrationValidation(errors,data); //data validation
+    
+      if (errors.length) {
+        res.status(200).send({ success: false, errors: errors })
+      }
+      else {
+        var input = await registrationSchema.userDataRegistration(data,userEmail); //insert data into the DB
+        if (input) {
+            res.status(200).send({ success: true, message: "User Settings data was inserted!"})
+        }
+      }
   }
-  else {
-    var input = await registrationSchema.userDataRegistration(data); //insert data into the DB
-    if (input) {
-      res.status(200).send({ success: true, message: "User Settings data was inserted!" })
-    }
+  else{
+    res.status(200).send({ success: true, message: "There is no such user"})
   }
+  
 });
 
 //log in function
 router.post('/login', async function (req, res) {
-  //console.log("the login input is: "+req.body);
+  console.log("the login input is: "+req.body);
   var body = req.body;
   var errors = [];
   // check the validation of email and password input
@@ -71,7 +82,7 @@ router.post('/login', async function (req, res) {
     if (emailFound) {
       var passGood = await registrationSchema.verifyPassword(body.password, emailFound.password)
 
-      //check if there is such user and if the password is matching
+      //check if there is no such user and if the password is matching
       if (!passGood) {
         res.status(200).send({ success: false, message: "email or password doesn't match" });
       }

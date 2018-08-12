@@ -12,6 +12,7 @@ var UsersSchema = mongoose.Schema({
   password: { type: String, required: true, trim:true },
   passwordConfirmation: { type: String, required: true, trim:true },
   termsConfirmCheck: { type: Boolean, required: true },
+  isAdmin: {type: Boolean, required:true},  //true for admin, false for regular user
   ////
   business_name: { type: String, required: true },
   business_type: { type: String, required: true },
@@ -20,6 +21,7 @@ var UsersSchema = mongoose.Schema({
   country: { type: String, required: true},
   address: { type: String, required: true },
   budget: { type: Number, required: true, trim:true },
+  ////
   created: { type: Date, default: Date.now() }
 });
 
@@ -37,6 +39,7 @@ module.exports.inputData = async function (newUser) {
   var isMatched = await this.verifyPassword(newUser.passwordConfirmation, newUser.password);
   //console.log("is matched? " +isMatched);
   if (isMatched) {
+    
     //
     newUser.passwordConfirmation = hashedPassword;
     newUser.business_name = "true";
@@ -47,6 +50,7 @@ module.exports.inputData = async function (newUser) {
     newUser.city = "true";
     newUser.address = "true";
     newUser.budget = "0";
+    newUser.isAdmin = "false";
     var promise = newUser.save().then(result => {
       // console.log("the result is: " + result);
       return result;
@@ -58,18 +62,19 @@ module.exports.inputData = async function (newUser) {
   }
 };
 
-module.exports.userDataRegistration = async function (data) {
-
-  var update = await this.findByEmailAndUpdate(data.email, { business_name: data.business_name });
-  this.findByEmailAndUpdate(data.email, { business_type: data.business_type });
-  this.findByEmailAndUpdate(data.email, { mobile: data.mobile });
-  this.findByEmailAndUpdate(data.email, { phone: data.phone });
-  this.findByEmailAndUpdate(data.email, { country: data.country });
-  this.findByEmailAndUpdate(data.email, { city: data.city });
-  this.findByEmailAndUpdate(data.email, { address: data.address });
-  this.findByEmailAndUpdate(data.email, { budget: data.budget });
+//input regestration data to the User database
+//input:user data, eser's email that was extracted from the token
+//output: true if succeded, else false
+module.exports.userDataRegistration = async function (data,userEmail) {
+  var update = await this.findByEmailAndUpdate(userEmail, { business_name: data.business_name });
+  this.findByEmailAndUpdate(userEmail, { business_type: data.business_type });
+  this.findByEmailAndUpdate(userEmail, { mobile: data.mobile });
+  this.findByEmailAndUpdate(userEmail, { phone: data.phone });
+  this.findByEmailAndUpdate(userEmail, { country: data.country });
+  this.findByEmailAndUpdate(userEmail, { city: data.city });
+  this.findByEmailAndUpdate(userEmail, { address: data.address });
+  this.findByEmailAndUpdate(userEmail, { budget: data.budget });
   if (!update) {
-    console.log("db wasn't updated");
     return false;
   }
   else {
@@ -87,6 +92,15 @@ module.exports.findByEmailAndUpdate = async function (email, updateData) {
 module.exports.findByEmail = async function (email) {
   var userData = await UsersSchemaExport.findOne({ email: email })
   return userData;
+}
+
+//find user by email
+module.exports.isEmailExists = async function (email) {
+  var userData = await UsersSchemaExport.findOne({ email: email })
+  if(userData){
+    return true;
+  }
+  return false;
 }
 
 //find user by first name
@@ -108,4 +122,20 @@ module.exports.verifyPassword = async function (pass, hash) {  //(pass to verify
 //change user password
 module.exports.changePassword = async function (data) {
   //do we need this one?
+}
+
+//count the amount of admins
+module.exports.countRegularUsers = async function (data) { 
+  var userData = await UsersSchemaExport.count({isAdmin: 'false'}, function (err, count){
+    console.log("the amount of regular users is: "+userData);
+  });
+  return userData;
+}
+
+//count the amount of regular users
+module.exports.countAdminUsers = async function (data) { 
+  var userData = await UsersSchemaExport.count({isAdmin: 'true'}, function (err, count){
+    console.log("the amount of admin users is: "+userData);
+  });
+  return userData;
 }
