@@ -15,10 +15,35 @@ router.post('/', async function (req, res) {
     //the amount of admin users
     var adminUserAmount = await registrationSchema.countAdminUsers();
     console.log("the admin user's amount is "+adminUserAmount);
-    res.status(200).send({ success: false, regUserAmount: regUserAmount, adminUserAmount: adminUserAmount })
-    
+    res.status(200).send({ success: false, regUserAmount: regUserAmount, adminUserAmount: adminUserAmount }) 
   });
   
+
+  router.post('/admins', async function (req, res) {
+    console.log("the input is: " + req.body);
+
+    //the amount of regular users
+    var regUserAmount = await registrationSchema.countRegularUsers();
+    //the amount of admin users
+    var adminUserAmount = await registrationSchema.countAdminUsers();
+    //find all users with admin permissions
+    var adminUsers = await registrationSchema.findAllByPermission(true);
+    console.log(adminUsers);
+    res.status(200).send({ success: true, regUserAmount: regUserAmount, adminUserAmount: adminUserAmount, adminUsers: adminUsers}) 
+  });
+
+  //delete user
+  router.post('/admins/remove', async function (req, res) {
+    console.log("the input is: " + req.body);
+    var deleteUser = await registrationSchema.deleteUser(req.user);
+    if(deleteUser){
+      res.status(200).send({ success: true, message: "user removed"});
+    }
+    else{
+      res.status(200).send({ success: false, message: "user wasn't removed"});
+    }
+    
+  });
 
 
 

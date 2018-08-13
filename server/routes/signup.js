@@ -39,6 +39,7 @@ router.post('/registration', async function (req, res) {
 router.post('/usersettings',verFuncs.getTokenFromHeaders,async function (req, res) {
  // token verification
   var tokenVerification =verFuncs.verifyToken(req.token, jwt);
+
   if (!tokenVerification){
     res.status(403).send({ success: false, message: "session is expired" })
   }
