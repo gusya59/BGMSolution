@@ -31,6 +31,11 @@ interface respData {
   country: string; 
   address: string; 
   totalBudget: number;
+  // question declaration
+  questions:{
+    questionNumber: number,
+    questionBody: string
+  }
 
   
 }
@@ -119,10 +124,22 @@ export class AdminServiceService {
     userInfo(email){
       //will post info if correct
       const uri = 'http://www.mocky.io/v2/5b6b223932000065073732f4';
-        // send email in obj
+       
         // send email in obj
         const obj = {
           email: email,
+          token: localStorage.getItem('token')
+      };
+      return this.http.post<respData>(uri,obj);
+    }
+
+    //request questions
+    fetchQuestions(){
+      //will post questions if correct
+      const uri = 'http://www.mocky.io/v2/5b7171fc3200006a00f36da6';
+
+        // send email in obj
+        const obj = {
           token: localStorage.getItem('token')
       };
       return this.http.post<respData>(uri,obj);
