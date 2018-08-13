@@ -11,6 +11,7 @@ check.getTokenFromHeaders=function(req,res,next){
     req.token=bearerToken;
     //return req.token;
     next();
+   // res.redirect();
   }else{
     res.status(403).send('problem with token');
     return false;
