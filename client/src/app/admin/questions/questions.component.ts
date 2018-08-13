@@ -13,14 +13,22 @@ export class AdminQuestionsComponent implements OnInit {
   searchText: string;
   questionNumber: number;
   questionBody: string;
+  answerNumber: number;
+  answerBody: string;
   // question declaration
   questions:{
     questionNumber: number,
     questionBody: string
+    answers:{
+      answerNumber: number;
+      answerBody: string;
+    }
   }
 
   // question form
   questionBodyForm: FormGroup;
+  // answer form
+  answerBodyForm: FormGroup;
 
 
   constructor(private adminservice: AdminServiceService, private fb:FormBuilder ) {
@@ -28,7 +36,12 @@ export class AdminQuestionsComponent implements OnInit {
     this.questionBodyForm= fb .group({
       questionNumber: this.questionNumber,
       questionBody: this.questionBody
-  })
+  });
+    //create answer form
+    this.answerBodyForm= fb.group({
+        answerNumber: this.answerNumber,
+        answerBody: this.answerBody
+    });
    }
 
   ngOnInit() {
@@ -39,7 +52,7 @@ export class AdminQuestionsComponent implements OnInit {
           //  console.log(Data)
     })
   }
-
+// fillter search
   filterIt(arr, searchKey) {
     return arr.filter((obj) => {
       return Object.keys(obj).some((key) => {
@@ -47,7 +60,7 @@ export class AdminQuestionsComponent implements OnInit {
       });
     });
   }
-
+//preper search
   search() {
     if (!this.searchText) {
       return this.questions;
@@ -57,9 +70,20 @@ export class AdminQuestionsComponent implements OnInit {
     }
   }
 
-  saveQuestion(body,id){
-    console.log(body.value,id)
+  
+// save question function new question body
+  saveQuestion(body,number){
+    console.log(body.value,number)
+  }
+  // save answer function new answer body
+  saveAnswer(answerBody,answerNumber, questionBody){
+    console.log(answerBody.value, answerNumber, questionBody)
   }
 
+  toArray(answers: object) {
+    return Object.keys(answers).map(key => answers[key])
+  }
 
 }
+  
+ 
