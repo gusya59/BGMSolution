@@ -5,21 +5,16 @@ var registrationSchema = require('../models/Registration.js');
 var verFuncs = require('../utils/verificationFunctions.js')
 
 //registration
-router.post('/',verFuncs.getTokenFromHeaders, async function (req, res) {
+router.post('/info', async function (req, res) {
     console.log("the input is: " + req.body);
-    var verifyToken = verFuncs.verifyToken(req.token, jwt);
-    if(verifyToken){
-      //the amount of regular users
-      var regUserAmount = await registrationSchema.countRegularUsers();
-        console.log("the regular user's amount is "+regUserAmount);
-      //the amount of admin users
-      var adminUserAmount = await registrationSchema.countAdminUsers();
-      console.log("the admin user's amount is "+adminUserAmount);
-      res.status(200).send({ success: false, regUserAmount: regUserAmount, adminUserAmount: adminUserAmount }) 
-    }
-    else{
-      res.status(403).send({ success: false, message: "session is expired" })
-    }
+
+    //the amount of regular users
+    var regUserAmount = await registrationSchema.countRegularUsers();
+      console.log("the regular user's amount is "+regUserAmount);
+    //the amount of admin users
+    var adminUserAmount = await registrationSchema.countAdminUsers();
+    console.log("the admin user's amount is "+adminUserAmount);
+    res.status(200).send({ success: true, regUserAmount: regUserAmount, adminUserAmount: adminUserAmount }) 
   });
   
 
