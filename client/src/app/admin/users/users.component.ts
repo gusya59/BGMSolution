@@ -55,7 +55,7 @@ export class UsersComponent implements OnInit {
   this.adminservice.fetchUsersTable().subscribe(
     Data=>{
         this.users = Data.users;
-           console.log(Data)
+          //  console.log(Data)
     })
 }
   
@@ -79,7 +79,7 @@ export class UsersComponent implements OnInit {
 
     //remove User modal
     removeUserModal(user){
-      console.log(user);
+      // console.log(user);
       this.created = user.created;
       this.firstName = user.firstName;
       this.lastName = user.lastName;
@@ -89,7 +89,7 @@ export class UsersComponent implements OnInit {
 
     //promote User modal
     promoteUserModal(user){
-      console.log(user);
+      // console.log(user);
       this.created = user.created;
       this.firstName = user.firstName;
       this.lastName = user.lastName;
@@ -102,7 +102,7 @@ export class UsersComponent implements OnInit {
       this.adminservice.removeUser(this.email).subscribe(
         Data => {
           if(Data.success){
-            console.log("remove" + this.email);
+            // console.log("remove" + this.email);
             this.removeModal.hide();
           }
           else console.log(Data.message);
@@ -115,7 +115,7 @@ export class UsersComponent implements OnInit {
       this.adminservice.changeUserStatus(this.email).subscribe(
         Data => {
           if(Data.success){
-            console.log("promoted " + this.email);
+            // console.log("promoted " + this.email);
             this.promoteModal.hide();
           }
           else console.log(Data.message);
@@ -123,14 +123,11 @@ export class UsersComponent implements OnInit {
       )
     }
 
-    //promote User modal
-    userInfoModal(user){
 
-    }
 
     //Change user Status function
     userInfo(user){
-      console.log(user);
+      // console.log(user);
       this.created = user.created;
       this.firstName = user.firstName;
       this.lastName = user.lastName;
@@ -140,8 +137,8 @@ export class UsersComponent implements OnInit {
       //post to server request
       this.adminservice.userInfo(this.email).subscribe(
         Data => {
-
           if(Data){
+            // console.log(Data)
             this.b_name = Data.b_name;
             this.b_type = Data.b_type;
             this.mobile  = Data.mobile;

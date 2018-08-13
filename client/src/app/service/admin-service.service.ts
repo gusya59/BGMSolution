@@ -53,7 +53,7 @@ export class AdminServiceService {
 
       // send empty obj
       const obj = {
-
+        token: localStorage.getItem('token')
       };
 
     //get data from server
@@ -68,7 +68,7 @@ export class AdminServiceService {
       
         // send empty obj
         const obj = {
-
+          token: localStorage.getItem('token')
         };
       //get data from server
       return this.http.post<respData>(uri,obj)
@@ -79,35 +79,52 @@ export class AdminServiceService {
     fetchUsersTable(){
       //will get info if correct
       const uri = 'http://www.mocky.io/v2/5b6e26d93100001000781957';
-  
+        // send empty obj
+        const obj = {
+          token: localStorage.getItem('token')
+        };
       //get data from server
-      return this.http.get<respData>(uri)
+      return this.http.post<respData>(uri,obj)
   
     }
 
     // remove user service
-    removeUser(id){
+    removeUser(email){
       //will post info if correct
       const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
-
-      return this.http.post<respData>(uri,id);
+        // send email in obj
+        const obj = {
+          email: email,
+          token: localStorage.getItem('token')
+      };
+      return this.http.post<respData>(uri,obj);
 
     }
 
     // Change user status service (admin/user)
-    changeUserStatus(id){
+    changeUserStatus(email){
       //will post info if correct
       const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
 
-      return this.http.post<respData>(uri,id);
+        // send email in obj
+        const obj = {
+          email: email,
+          token: localStorage.getItem('token')
+      };
+      return this.http.post<respData>(uri,obj);
 
     }
 
     //request user info
-    userInfo(id){
+    userInfo(email){
       //will post info if correct
       const uri = 'http://www.mocky.io/v2/5b6b223932000065073732f4';
-
-      return this.http.post<respData>(uri,id);
+        // send email in obj
+        // send email in obj
+        const obj = {
+          email: email,
+          token: localStorage.getItem('token')
+      };
+      return this.http.post<respData>(uri,obj);
     }
 }
