@@ -1,3 +1,5 @@
+import { AuthGuard } from './auth.guard';
+import {RoleGuardServiceService as RoleGuard} from './role-guard-service.service'
 import { SysinfoComponent } from './../admin/sysinfo/sysinfo.component';
 import { WeightsComponent } from './../admin/weights/weights.component';
 import { ReportsComponent } from './../admin/reports/reports.component';
@@ -49,7 +51,7 @@ export const appRoutes: Routes = [
     {
     path: 'user',
     component: UserComponent,
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     data: { title: 'user' }
     
     },
@@ -58,18 +60,21 @@ export const appRoutes: Routes = [
     {
       path: 'user/profile',
       component: UserProfileComponent,
+      canActivate: [AuthGuard],
       data: { title: 'user/profile' }
     },
     //User Profile routing
     {
       path: 'user/reports',
       component: UserReportsComponent,
+      canActivate: [AuthGuard],
       data: { title: 'user/reports' }
     },
     //user questions comonent
     {
       path: 'user/questions',
       component: UserQuestionsComponent,
+      canActivate: [AuthGuard],
       data: {title: 'user/questions'}
     },
 
@@ -77,42 +82,49 @@ export const appRoutes: Routes = [
     {
       path: 'admin',
       component: AdminComponent,
-      data: {title: 'admin'},
+      canActivate: [RoleGuard],
+      data: {title: 'admin'}
     },
     //admin admins list comonent
     {
       path: 'admin/admins',
       component: AdminsComponent,
+      canActivate: [RoleGuard],
       data: {title: 'admin/admins'} 
     },
     //admin Users list comonent
     {
       path: 'admin/users',
       component: UsersComponent,
+      canActivate: [RoleGuard],
       data: {title: 'admin/users'} 
     },
     //admin questions list comonent
     {
       path: 'admin/questions',
       component: AdminQuestionsComponent,
+      canActivate: [RoleGuard],
       data: {title: 'admin/questions'} 
     },
     //admin questions list comonent
     {
       path: 'admin/reports',
       component: ReportsComponent,
+      canActivate: [RoleGuard],
       data: {title: 'admin/reports'} 
     },
     //admin questions list comonent
     {
       path: 'admin/weights',
       component: WeightsComponent,
+      canActivate: [RoleGuard],
       data: {title: 'admin/weights'} 
     },  
     //admin questions list comonent
     {
       path: 'admin/sysinfo',
       component: SysinfoComponent,
+      canActivate: [RoleGuard],
       data: {title: 'admin/sysinfo'} 
     },            
     //Login for our user routing removed from this version (read component instruction)
@@ -130,13 +142,13 @@ export const appRoutes: Routes = [
       children: [ 
         {path: '', component: RegistrationComponent},
         {path: 'userSettings', component: UserSettingsComponent,
-        // canActivate: [AuthGuard]
+        canActivate: [AuthGuard]
       }, 
         {path: 'userSettings/questions', component: QuestionsComponent,
-        // canActivate: [AuthGuard]
+        canActivate: [AuthGuard]
       },
         {path: 'userSettings/questions/finish', component: FinishComponent,
-        // canActivate: [AuthGuard]
+        canActivate: [AuthGuard]
       },
       ]
     },

@@ -1,7 +1,8 @@
 import { AuthService } from './auth.service';
+
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
+
 
 @Injectable({
   providedIn: 'root'
@@ -10,13 +11,30 @@ import { Observable } from 'rxjs';
 
 export class AuthGuard implements CanActivate {
 
-  constructor(private auth: AuthService){
+  constructor(private router: Router, public auth: AuthService){
 
   }
 
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    return this.auth.isLoggedIn;
-  }
+//   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+//     if (localStorage.getItem('token')) {
+//         // logged in so return true
+//         return true;
+//     }
+
+//     // not logged in so redirect to login page with the return url
+//     this.router.navigate(['/login'], { queryParams: { returnUrl: state.url }});
+//     return false;
+// }
+
+canActivate(): boolean {
+  //if token exsist and not expired
+  if(!this.auth.isAuthenticated()){
+    this.router.navigate(['login']);
+    return false;
+    }
+  else {
+    return true; //if not token or expired remove it
+    }
+}
+
 }
