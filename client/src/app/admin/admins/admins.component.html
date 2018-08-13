@@ -49,7 +49,7 @@
                           <!--Table head-->
                           <thead>
                             <tr>
-                              <th>#</th>
+                              <th>Date</th>
                               <th>First Name</th>
                               <th>Last Name</th>
                               <th>Email</th>
@@ -61,7 +61,7 @@
                           <!--Table body-->
                           <tbody>
                             <tr *ngFor="let data of search()">
-                              <th scope="row">{{data.id}}</th>
+                              <th scope="row">{{data.created}}</th>
                               <td>{{data.firstName}}</td>
                               <td>{{data.lastName}}</td>
                               <td>{{data.email}}</td>
@@ -99,7 +99,7 @@
       </div>
       <!-- body -->
       <div class="modal-body">
-        <p><span class="badge danger-color">id:</span> {{id}}</p>
+        <p><span class="badge danger-color">created:</span> {{created}}</p>
         <p><span class="badge danger-color">name:</span> {{firstName}} {{lastName}}</p>
         <p><span class="badge danger-color">email:</span> {{email}}</p>
         <p>* will permanently remove this user</p>
@@ -129,7 +129,7 @@ aria-hidden="true">
     </div>
     <!-- body -->
     <div class="modal-body">
-      <p><span class="badge info-color">id:</span> {{id}}</p>
+      <p><span class="badge info-color">created:</span> {{created}}</p>
       <p><span class="badge info-color">name:</span> {{firstName}} {{lastName}}</p>
       <p><span class="badge info-color">email:</span> {{email}}</p>
       <p>* will remove this Admin to user position</p>

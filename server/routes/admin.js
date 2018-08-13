@@ -6,7 +6,7 @@ var registrationSchema = require('../models/Registration.js');
 
 
 //registration
-router.post('/', async function (req, res) {
+router.post('/info', async function (req, res) {
     console.log("the input is: " + req.body);
 
     //the amount of regular users
@@ -15,7 +15,7 @@ router.post('/', async function (req, res) {
     //the amount of admin users
     var adminUserAmount = await registrationSchema.countAdminUsers();
     console.log("the admin user's amount is "+adminUserAmount);
-    res.status(200).send({ success: false, regUserAmount: regUserAmount, adminUserAmount: adminUserAmount }) 
+    res.status(200).send({ success: true, regUserAmount: regUserAmount, adminUserAmount: adminUserAmount }) 
   });
   
 

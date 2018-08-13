@@ -1,5 +1,7 @@
 import { AdminServiceService } from './../../service/admin-service.service';
 import { Component, OnInit } from '@angular/core';
+import { first } from '../../../../node_modules/rxjs/operators';
+
 
 @Component({
   selector: 'app-info',
@@ -22,17 +24,25 @@ export class InfoComponent implements OnInit {
 
   ngOnInit() {
 
+    this.numUsers;
+    this.numAdmins;
+
+  this.updatePage();
+ }
+  updatePage(){
     //get general data from service
-    this.adminService.generalInformation().subscribe(
+    this.adminService.generalInformation().pipe(first()).subscribe(
+            
       data =>{
+        // console.log("recived " + data)
       if(data.success){
-        this.numUsers = data.numUsers;
-        this.numAdmins = data.numAdmins;
+        this.numUsers = data.regUserAmount;
+        this.numAdmins = data.adminUserAmount;
       }
       else console.log(data.message);
-
-  })
-
+      });
   }
 
+
 }
+

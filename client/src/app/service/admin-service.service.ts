@@ -1,14 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { map } from '../../../node_modules/rxjs/operators';
 
 //interface class for known resp data
 interface respData {
   success: string;
   message: string;
-  numUsers: number;
-  numAdmins: number;
+  regUserAmount: number;
+  adminUserAmount: number;
   //admin table decleration
-  admins: {
+  adminUsers: {
     id: string;
     firstName: string;  
     lastName: string;
@@ -47,20 +48,30 @@ export class AdminServiceService {
   // admin service info bar. get server data
   generalInformation(){
     //will get info if correct
-    const uri = 'http://www.mocky.io/v2/5b6e1499310000580078193d';
+    // console.log("requested qet!")
+    const uri = 'http://localhost:1234/admin/info';
+
+      // send empty obj
+      const obj = {
+
+      };
 
     //get data from server
-    return this.http.get<respData>(uri)
+    return this.http.post<respData>(uri,obj)
 
   }
 
     // admin service admins. get admin data table
     fetchAdminTable(){
       //will get info if correct
-      const uri = 'http://www.mocky.io/v2/5b6e1aab3100000e00781947';
-  
+      const uri = 'http://localhost:1234/admin/admins';
+      
+        // send empty obj
+        const obj = {
+
+        };
       //get data from server
-      return this.http.get<respData>(uri)
+      return this.http.post<respData>(uri,obj)
   
     }
 

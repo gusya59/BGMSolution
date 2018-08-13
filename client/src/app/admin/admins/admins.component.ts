@@ -9,15 +9,15 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 })
 export class AdminsComponent implements OnInit {
 
-  // admin table
-    admins: {
-      id: string;
-      firstName: string;  
-      lastName: string;
-      email: string;
-    }[];
+// admin table
+  admins: {
+    created: string;
+    firstName: string;  
+    lastName: string;
+    email: string;
+  }[];
   //admin data
-  id: string;
+  created: string;
   firstName: string;  
   lastName: string;
   email: string;
@@ -42,8 +42,9 @@ export class AdminsComponent implements OnInit {
   //call admin service to get admins table
     this.adminservice.fetchAdminTable().subscribe(
       Data=>{
-          this.admins = Data.admins;
-             console.log(Data)
+          this.admins = Data.adminUsers;
+          
+             console.log(this.admins)
       })
   }
 
@@ -69,7 +70,7 @@ export class AdminsComponent implements OnInit {
   //remove admin modal
   removeAdminModal(admin){
     console.log(admin);
-    this.id = admin.id;
+    this.created = admin.created;
     this.firstName = admin.firstName;
     this.lastName = admin.lastName;
     this.email = admin.email;
@@ -79,7 +80,7 @@ export class AdminsComponent implements OnInit {
   //demote admin
   demoteAdminModal(admin){
     console.log(admin);
-    this.id = admin.id;
+    this.created = admin.created;
     this.firstName = admin.firstName;
     this.lastName = admin.lastName;
     this.email = admin.email;
@@ -88,10 +89,10 @@ export class AdminsComponent implements OnInit {
 
   //remove user function
   removeUser(){
-    this.adminservice.removeUser(this.id).subscribe(
+    this.adminservice.removeUser(this.email).subscribe(
       Data => {
         if(Data.success){
-          console.log("removed " + this.id);
+          console.log("removed " + this.email);
           this.removeModal.hide();
         }
         else console.log(Data.message);
@@ -101,10 +102,10 @@ export class AdminsComponent implements OnInit {
 
     //Change user Status function
     changeUserStatus(){
-      this.adminservice.changeUserStatus(this.id).subscribe(
+      this.adminservice.changeUserStatus(this.email).subscribe(
         Data => {
           if(Data.success){
-            console.log("demoted " + this.id);
+            console.log("demoted " + this.email);
             this.demoteModal.hide();
           }
           else console.log(Data.message);

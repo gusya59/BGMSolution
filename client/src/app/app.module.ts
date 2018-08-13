@@ -1,3 +1,4 @@
+import { AdminServiceService } from './service/admin-service.service';
 import { ErrorInterceptor } from './service/error.interceptor';
 // JWT propertys
 import { JwtInterceptor } from './service/jwt.interceptor';
