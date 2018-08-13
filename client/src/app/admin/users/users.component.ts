@@ -10,13 +10,13 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 export class UsersComponent implements OnInit {
 
   users: {
-    id: string;
+    created: string;
     firstName: string;  
     lastName: string;
     email: string;
   }[];
   // user data
-  id: string;
+  created: string;
   firstName: string;  
   lastName: string;
   email: string;
@@ -80,7 +80,7 @@ export class UsersComponent implements OnInit {
     //remove User modal
     removeUserModal(user){
       console.log(user);
-      this.id = user.id;
+      this.created = user.created;
       this.firstName = user.firstName;
       this.lastName = user.lastName;
       this.email = user.email;
@@ -90,7 +90,7 @@ export class UsersComponent implements OnInit {
     //promote User modal
     promoteUserModal(user){
       console.log(user);
-      this.id = user.id;
+      this.created = user.created;
       this.firstName = user.firstName;
       this.lastName = user.lastName;
       this.email = user.email;
@@ -99,10 +99,10 @@ export class UsersComponent implements OnInit {
 
     //remove user function
     removeUser(){
-      this.adminservice.removeUser(this.id).subscribe(
+      this.adminservice.removeUser(this.email).subscribe(
         Data => {
           if(Data.success){
-            console.log("remove" + this.id);
+            console.log("remove" + this.email);
             this.removeModal.hide();
           }
           else console.log(Data.message);
@@ -112,10 +112,10 @@ export class UsersComponent implements OnInit {
 
     //Change user Status function
     changeUserStatus(){
-      this.adminservice.changeUserStatus(this.id).subscribe(
+      this.adminservice.changeUserStatus(this.email).subscribe(
         Data => {
           if(Data.success){
-            console.log("promoted " + this.id);
+            console.log("promoted " + this.email);
             this.promoteModal.hide();
           }
           else console.log(Data.message);
@@ -131,14 +131,14 @@ export class UsersComponent implements OnInit {
     //Change user Status function
     userInfo(user){
       console.log(user);
-      this.id = user.id;
+      this.created = user.created;
       this.firstName = user.firstName;
       this.lastName = user.lastName;
       this.email = user.email;
       
 
       //post to server request
-      this.adminservice.userInfo(this.id).subscribe(
+      this.adminservice.userInfo(this.email).subscribe(
         Data => {
 
           if(Data){
