@@ -42,8 +42,7 @@ export class AdminsComponent implements OnInit {
   //call admin service to get admins table
     this.adminservice.fetchAdminTable().subscribe(
       Data=>{
-          this.admins = Data.adminUsers;
-          
+          this.admins = Data.adminUsers; 
              console.log(this.admins)
       })
   }

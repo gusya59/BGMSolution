@@ -10,14 +10,14 @@ interface respData {
   adminUserAmount: number;
   //admin table decleration
   adminUsers: {
-    id: string;
+    created: string;
     firstName: string;  
     lastName: string;
     email: string;
   }[];
   //users table decleration
   users: {
-    id: string;
+    created: string;
     firstName: string;  
     lastName: string;
     email: string;
