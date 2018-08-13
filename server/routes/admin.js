@@ -20,7 +20,6 @@ router.post('/',verFuncs.getTokenFromHeaders, async function (req, res) {
     else{
       res.status(403).send({ success: false, message: "session is expired" })
     }
-   
   });
   
 
