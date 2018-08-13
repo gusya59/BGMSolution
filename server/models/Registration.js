@@ -132,8 +132,20 @@ module.exports.countRegularUsers = async function () {
 }
 
 //count the amount of regular users
-module.exports.countAdminUsers = async function (data) { 
+module.exports.countAdminUsers = async function () { 
   var userData = await UsersSchemaExport.count({isAdmin: 'true'}, function (err, count){
   });
   return userData;
+}
+//find all users with specific type of permission :regular or admin
+//input: permision: true for admin, false for regular
+//output: object with all relevant users
+module.exports.findAllByPermission =async function(data){
+  var userData = await UsersSchemaExport.find({ isAdmin: data })
+  return userData;
+}
+
+module.exports.deleteUser =async function(data){
+  var removed = await UsersSchemaExport.findOneAndDelete({_id: data })
+  return removed;
 }
