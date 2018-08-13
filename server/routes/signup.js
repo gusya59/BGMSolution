@@ -77,6 +77,7 @@ router.post('/login', async function (req, res) {
   await validateEmail(errors, body.email).then(validatePassword(errors, body.password));
   if (!errors.length) { //validate email and password input
     //if email and password are valid
+    
     var emailFound = await registrationSchema.findByEmail(body.email); //returns user object with all the data
     if (emailFound) {
       var passGood = await registrationSchema.verifyPassword(body.password, emailFound.password)
@@ -91,6 +92,7 @@ router.post('/login', async function (req, res) {
         res.status(200).send({ success: true, token: token });
       }
     }
+    res.status(200).send({ success: false, message: "email wasn't found" });
   }
   else {
     res.status(200).send({ success: false, errors: errors });
