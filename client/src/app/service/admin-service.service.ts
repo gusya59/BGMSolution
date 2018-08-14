@@ -176,7 +176,7 @@ export class AdminServiceService {
     // save question function new question body
     saveQuestion(questionNumber,questionBody){
       //recive data of questions
-      const uri = 'http://www.mocky.io/v2/5b61f14c300000da046a4437';
+      const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
       //obj of question data
       const obj ={
         questionNumber: questionNumber,
@@ -189,7 +189,7 @@ export class AdminServiceService {
     //save answer function new answer body
     saveAnswer(answerBody,answerNumber,questionNumber){
       //recive data of answer
-      const uri = 'http://www.mocky.io/v2/5b61f14c300000da046a4437';
+      const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
       //obj of answer data
       const obj ={
         answerBody: answerBody,
@@ -203,7 +203,7 @@ export class AdminServiceService {
     //save answer info function 
     updateAnswerData(facebook,twitter,instagram,googlePlus,myBusiness,adWords,nextQuestion){
       //recive data of answer
-      const uri = 'http://www.mocky.io/v2/5b61f14c300000da046a4437';
+      const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
       //obj of answer data
       const obj ={
         facebook: facebook,
@@ -216,6 +216,18 @@ export class AdminServiceService {
       }
       return this.http.post<respData>(uri,obj)
 
+    }
+
+    //delete question function
+    deleteQuestion(questionNumber, questionBody){
+      //recive data of answer
+      const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
+      //obj of answer data
+      const obj ={
+        questionNumber: questionNumber,
+        questionBody: questionBody
+      }
+      return this.http.post<respData>(uri,obj)
     }
 
 }

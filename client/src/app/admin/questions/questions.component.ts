@@ -46,10 +46,13 @@ export class AdminQuestionsComponent implements OnInit {
   answerBodyForm: FormGroup;
 
 
-  //allow to see removeModal for removeModal modal use
+  //allow to see editModal for answers modal use
   @ViewChild('editModal') editModal: ModalDirective;
   //allow to see errorModal for removeModal modal use
   @ViewChild('errorModal') errorModal: ModalDirective;
+  //allow to see deleteQuestionModal to delete question
+  @ViewChild('deleteQuestionModal') deleteQuestionModal: ModalDirective;
+  
 
 
   constructor(private adminservice: AdminServiceService, private fb:FormBuilder ) {
@@ -170,6 +173,29 @@ export class AdminQuestionsComponent implements OnInit {
       }
     )
     
+  }
+
+  // show delete modal 
+  deleteQuestionShow(data){
+    this.questionNumber = data.questionNumber;
+    this.questionBody = data.questionBody,
+    this.deleteQuestionModal.show();
+  }
+
+  // delete question
+  deleteQuestion(questionNumber, questionBody){
+    return this.adminservice.deleteQuestion(questionNumber, questionBody).subscribe(
+      resp => {
+        if(resp.success){
+          console.log("Deleted: "+ questionNumber);
+          this.deleteQuestionModal.hide();
+        }
+        else{
+          this.msgError = resp.message;
+          this.deleteQuestionModal.show();
+        } 
+      }
+    )
   }
 
 }
