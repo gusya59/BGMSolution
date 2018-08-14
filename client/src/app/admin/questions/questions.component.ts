@@ -1,5 +1,6 @@
+import { ModalDirective } from 'angular-bootstrap-md';
 import { AdminServiceService } from './../../service/admin-service.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '../../../../node_modules/@angular/forms';
 
 @Component({
@@ -24,11 +25,24 @@ export class AdminQuestionsComponent implements OnInit {
       answerBody: string;
     }
   }
+  //platform decleration
+    facebook: number;
+    twitter: number;
+    instagram: number;
+    googlePlus: number;
+    myBusiness: number;
+    adWords: number;
+  
 
   // question form
   questionBodyForm: FormGroup;
   // answer form
   answerBodyForm: FormGroup;
+  //answer Edit Form
+  editFormGroup: FormGroup;
+
+  //allow to see removeModal for removeModal modal use
+  @ViewChild('editModal') editModal: ModalDirective;
 
 
   constructor(private adminservice: AdminServiceService, private fb:FormBuilder ) {
@@ -36,11 +50,19 @@ export class AdminQuestionsComponent implements OnInit {
     this.questionBodyForm= fb .group({
       questionNumber: this.questionNumber,
       questionBody: this.questionBody
-  });
+    });
     //create answer form
     this.answerBodyForm= fb.group({
         answerNumber: this.answerNumber,
         answerBody: this.answerBody
+    });
+    this.editFormGroup= fb.group({
+      facebook : this.facebook,
+      twitter: this.twitter,
+      instagram: this.instagram,
+      googlePlus: this.googlePlus,
+      myBusiness: this.myBusiness,
+      adWords: this.adWords,
     });
    }
 
@@ -52,6 +74,7 @@ export class AdminQuestionsComponent implements OnInit {
           //  console.log(Data)
     })
   }
+
 // fillter search
   filterIt(arr, searchKey) {
     return arr.filter((obj) => {
@@ -76,12 +99,34 @@ export class AdminQuestionsComponent implements OnInit {
     console.log(body.value,number)
   }
   // save answer function new answer body
-  saveAnswer(answerBody,answerNumber, questionBody){
-    console.log(answerBody.value, answerNumber, questionBody)
+  saveAnswer(answerBody,answerNumber, questionNumber){
+    console.log(answerBody.value, answerNumber, questionNumber)
   }
 
   toArray(answers: object) {
     return Object.keys(answers).map(key => answers[key])
+  }
+
+  // edit question weights
+  editWeights(questionNumber, answerNumber){
+    console.log("ans: " +answerNumber,"quest: " + questionNumber);
+    this.answerNumber = answerNumber;
+    this.questionNumber = questionNumber;
+
+    //get weights data from server
+    this.adminservice.fetchPlatform(this.answerNumber,this.questionNumber).subscribe(
+      resp =>{
+        if(resp.success){
+          this.facebook = resp.facebook;
+          this.twitter = resp.twitter;
+          this.instagram = resp.instagram;
+          this.googlePlus = resp.googlePlus;
+          this.myBusiness = resp.myBusiness;
+          this.adWords = resp.adWords;
+        }
+      }
+    )
+    this.editModal.show();
   }
 
 }

@@ -42,7 +42,15 @@ interface respData {
     }
   }
 
-  
+
+  //platform decleration
+  facebook: number;
+  twitter: number;
+  instagram: number;
+  googlePlus: number;
+  myBusiness: number;
+  adWords: number;
+
 }
 
 @Injectable({
@@ -148,5 +156,18 @@ export class AdminServiceService {
           token: localStorage.getItem('token')
       };
       return this.http.post<respData>(uri,obj);
+    }
+
+    //request platform
+    fetchPlatform(answerNumber,questionNumber){
+      //will post fetchPlatform if correct
+      const uri = 'http://www.mocky.io/v2/5b72bc4b32000073193a7dc0';
+
+      //object of numbers
+      const obj = {
+        questionNumber: questionNumber,
+        answerNumber: answerNumber
+      };
+      return this.http.post<respData>(uri, obj)
     }
 }
