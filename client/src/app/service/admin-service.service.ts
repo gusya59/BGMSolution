@@ -65,7 +65,7 @@ export class AdminServiceService {
     fetchAdminTable(){
       //will get info if correct
       const uri = 'http://localhost:1234/admin/admins';
-      
+      console.log("dfbjsfuk");
         // send empty obj
         const obj = {
 

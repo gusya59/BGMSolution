@@ -53,7 +53,7 @@ app.use(function (req, res, next) {
 //routing
 app.use('/', indexRouter);
 app.use('/signup', signupRouter); 
-app.use('/`admin',adminRouter); 
+app.use('/admin',adminRouter); 
 
 //app.use('./api', apiRouter);
 

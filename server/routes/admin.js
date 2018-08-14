@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express();
+var jwt = require('jsonwebtoken');
 
 var registrationSchema = require('../models/Registration.js');
 var verFuncs = require('../utils/verificationFunctions.js')
@@ -25,7 +26,7 @@ router.post('/info', async function (req, res) {
       //find all users with admin permissions
       var adminUsers = await registrationSchema.findAllByPermission(true);
       console.log(adminUsers);
-      res.status(200).send({ success: true, adminUserAmount: adminUserAmount, adminUsers: adminUsers}) 
+      res.status(200).send({ success: true,adminUsers: adminUsers}) 
     }
     else{
       res.status(403).send({ success: false, message: "session is expired" })
@@ -35,16 +36,26 @@ router.post('/info', async function (req, res) {
 
   //delete user
   router.post('/admins/remove', async function (req, res) {
-    console.log("the input is: " + req.body);
-    var deleteUser = await registrationSchema.deleteUser(req.user);
+    console.log("the input is: " + req.body.email);
+    var deleteUser = await registrationSchema.deleteUser(req.body.email);
     if(deleteUser){
       res.status(200).send({ success: true, message: "user removed"});
     }
     else{
       res.status(200).send({ success: false, message: "user wasn't removed"});
-    }
-    
+    } 
   });
+    //change permissions
+    router.post('/admins/changePermissions', async function (req, res) {
+      console.log("the input is: " + req.body.email);
+      var deleteUser = await registrationSchema.deleteUser(req.body.email);
+      if(deleteUser){
+        res.status(200).send({ success: true, message: "user removed"});
+      }
+      else{
+        res.status(200).send({ success: false, message: "user wasn't removed"});
+      } 
+    });
 
 
 
