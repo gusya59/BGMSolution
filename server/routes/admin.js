@@ -34,7 +34,7 @@ router.post('/info', async function (req, res) {
 
     });
 
-  //delete user
+  //delete user. demote admin button
   router.post('/admins/remove', async function (req, res) {
     console.log("the input is: " + req.body.email);
     var deleteUser = await registrationSchema.deleteUser(req.body.email);
@@ -45,15 +45,15 @@ router.post('/info', async function (req, res) {
       res.status(200).send({ success: false, message: "user wasn't removed"});
     } 
   });
-    //change permissions
+
+    //change permissions. will be used for /admins and for /users routes
     router.post('/admins/changePermissions', async function (req, res) {
-      console.log("the input is: " + req.body.email);
-      var deleteUser = await registrationSchema.deleteUser(req.body.email);
-      if(deleteUser){
-        res.status(200).send({ success: true, message: "user removed"});
+      var updatedUser = await registrationSchema.findByEmailAndUpdate(req.body.email,{isAdmin:req.body.isAdminPer});
+      if(updatedUser){
+        res.status(200).send({ success: true, message: "user permission changed"});
       }
       else{
-        res.status(200).send({ success: false, message: "user wasn't removed"});
+        res.status(200).send({ success: false, message: "error "});
       } 
     });
 
