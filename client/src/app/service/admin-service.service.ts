@@ -50,6 +50,8 @@ interface respData {
   googlePlus: number;
   myBusiness: number;
   adWords: number;
+  nextQuestion: number;
+  nextQuestionBody: string;
 
 }
 
@@ -161,7 +163,7 @@ export class AdminServiceService {
     //request platform
     fetchPlatform(answerNumber,questionNumber){
       //will post fetchPlatform if correct
-      const uri = 'http://www.mocky.io/v2/5b72bc4b32000073193a7dc0';
+      const uri = 'http://www.mocky.io/v2/5b72bef33200000e0e3a7dd5';
 
       //object of numbers
       const obj = {
@@ -170,4 +172,62 @@ export class AdminServiceService {
       };
       return this.http.post<respData>(uri, obj)
     }
+
+    // save question function new question body
+    saveQuestion(questionNumber,questionBody){
+      //recive data of questions
+      const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
+      //obj of question data
+      const obj ={
+        questionNumber: questionNumber,
+        questionBody: questionBody
+      }
+      return this.http.post<respData>(uri,obj)
+
+    }
+
+    //save answer function new answer body
+    saveAnswer(answerBody,answerNumber,questionNumber){
+      //recive data of answer
+      const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
+      //obj of answer data
+      const obj ={
+        answerBody: answerBody,
+        answerNumber: answerNumber,
+        questionNumber: questionNumber
+      }
+      return this.http.post<respData>(uri,obj)
+
+    }
+
+    //save answer info function 
+    updateAnswerData(facebook,twitter,instagram,googlePlus,myBusiness,adWords,nextQuestion){
+      //recive data of answer
+      const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
+      //obj of answer data
+      const obj ={
+        facebook: facebook,
+        twitter: twitter,
+        instagram: instagram,
+        googlePlus: googlePlus,
+        myBusiness: myBusiness,
+        adWords: adWords,
+        nextQuestion: nextQuestion
+      }
+      return this.http.post<respData>(uri,obj)
+
+    }
+
+    //delete question function
+    deleteQuestion(questionNumber, questionBody){
+      //recive data of answer
+      const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
+      //obj of answer data
+      const obj ={
+        questionNumber: questionNumber,
+        questionBody: questionBody
+      }
+      return this.http.post<respData>(uri,obj)
+    }
+
 }

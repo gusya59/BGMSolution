@@ -32,17 +32,27 @@ export class AdminQuestionsComponent implements OnInit {
     googlePlus: number;
     myBusiness: number;
     adWords: number;
+    nextQuestion: number;
+    nextQuestionBody: string;
+
+    //error msg
+    msgError: string;
+  
   
 
   // question form
   questionBodyForm: FormGroup;
   // answer form
   answerBodyForm: FormGroup;
-  //answer Edit Form
-  editFormGroup: FormGroup;
 
-  //allow to see removeModal for removeModal modal use
+
+  //allow to see editModal for answers modal use
   @ViewChild('editModal') editModal: ModalDirective;
+  //allow to see errorModal for removeModal modal use
+  @ViewChild('errorModal') errorModal: ModalDirective;
+  //allow to see deleteQuestionModal to delete question
+  @ViewChild('deleteQuestionModal') deleteQuestionModal: ModalDirective;
+  
 
 
   constructor(private adminservice: AdminServiceService, private fb:FormBuilder ) {
@@ -55,14 +65,6 @@ export class AdminQuestionsComponent implements OnInit {
     this.answerBodyForm= fb.group({
         answerNumber: this.answerNumber,
         answerBody: this.answerBody
-    });
-    this.editFormGroup= fb.group({
-      facebook : this.facebook,
-      twitter: this.twitter,
-      instagram: this.instagram,
-      googlePlus: this.googlePlus,
-      myBusiness: this.myBusiness,
-      adWords: this.adWords,
     });
    }
 
@@ -95,12 +97,33 @@ export class AdminQuestionsComponent implements OnInit {
 
   
 // save question function new question body
-  saveQuestion(body,number){
-    console.log(body.value,number)
+  saveQuestion(questionBody,questionNumber){
+    return this.adminservice.saveQuestion(questionBody,questionNumber).subscribe(
+      resp => {
+        if(resp.success){
+          console.log("Posted");
+        }
+        else{
+          this.msgError = resp.message;
+          this.errorModal.show();
+        } 
+      }
+    )
   }
+
   // save answer function new answer body
   saveAnswer(answerBody,answerNumber, questionNumber){
-    console.log(answerBody.value, answerNumber, questionNumber)
+    return this.adminservice.saveAnswer(answerBody,answerNumber,questionNumber).subscribe(
+      resp => {
+        if(resp.success){
+          console.log("Posted");
+        }
+        else{
+          this.msgError = resp.message;
+          this.errorModal.show();
+        } 
+      }
+    )
   }
 
   toArray(answers: object) {
@@ -123,10 +146,56 @@ export class AdminQuestionsComponent implements OnInit {
           this.googlePlus = resp.googlePlus;
           this.myBusiness = resp.myBusiness;
           this.adWords = resp.adWords;
+          this.nextQuestion = resp.nextQuestion;
+          this.nextQuestionBody = resp.nextQuestionBody;
+        }
+        else{
+          this.msgError = resp.message;
+          this.errorModal.show();
         }
       }
     )
     this.editModal.show();
+  }
+
+  //recive data from edit form
+  updateAnswerData(facebook,twitter,instagram,googlePlus,myBusiness,adWords,nextQuestion){
+    return this.adminservice.updateAnswerData(facebook,twitter,instagram,googlePlus,myBusiness,adWords,nextQuestion).subscribe(
+      resp => {
+        if(resp.success){
+          console.log("Posted");
+          this.editModal.hide();
+        }
+        else{
+          this.msgError = resp.message;
+          this.errorModal.show();
+        } 
+      }
+    )
+    
+  }
+
+  // show delete modal 
+  deleteQuestionShow(data){
+    this.questionNumber = data.questionNumber;
+    this.questionBody = data.questionBody,
+    this.deleteQuestionModal.show();
+  }
+
+  // delete question
+  deleteQuestion(questionNumber, questionBody){
+    return this.adminservice.deleteQuestion(questionNumber, questionBody).subscribe(
+      resp => {
+        if(resp.success){
+          console.log("Deleted: "+ questionNumber);
+          this.deleteQuestionModal.hide();
+        }
+        else{
+          this.msgError = resp.message;
+          this.deleteQuestionModal.show();
+        } 
+      }
+    )
   }
 
 }

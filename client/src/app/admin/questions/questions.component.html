@@ -94,7 +94,7 @@
                             </tr>
                         </td>
                         <td align="right">
-                            <button class="btn btn-lg danger-color" (click)="removeQuestion(data)">Remove Question</button>
+                            <button class="btn btn-lg danger-color" (click)="deleteQuestionShow(data)">Remove Question</button>
                             <!-- fire request questions -->
                             <button  class="btn btn-lg success-color" (click)="saveQuestion(questionBody, data.questionNumber)" >Save Question</button>
 
@@ -137,11 +137,17 @@
         </div>
         
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-4">
                 <div class="md-form">
                     <i class="fas fa-arrow-circle-right prefix grey-text"></i>
                     <input type="text" [(ngModel)]="nextQuestion" class="form-control" mdbInputDirective>
                     <label for="nextQuestion">Next Question Will Be</label>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="md-form">
+                    <i class="fas fa-align-justify prefix grey-text"></i>
+                    <input type="text" disabled [(ngModel)]="nextQuestionBody" class="form-control" mdbInputDirective>
                 </div>
             </div>
         </div>
@@ -152,12 +158,12 @@
                         <thead class="black white-text">
                             <tr>
                             <th scope="col"></th>
-                            <th scope="col">facebook</th>
-                            <th scope="col">instagram</th>
-                            <th scope="col">twitter</th>
-                            <th scope="col">googlePlus</th>
-                            <th scope="col">myBusiness</th>
-                            <th scope="col">adWords</th>
+                            <th scope="col">Facebook</th>
+                            <th scope="col">Instagram</th>
+                            <th scope="col">Twitter</th>
+                            <th scope="col">GooglePlus</th>
+                            <th scope="col">MyBusiness</th>
+                            <th scope="col">AdWords</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -167,33 +173,33 @@
                                 </td>
                                 <td>
                                     <div class="md-form">
-                                        <input type="text" [(ngModel)]="facebook"  class="form-control" mdbInputDirective>
+                                        <input type="number" [(ngModel)]="facebook"  class="form-control" mdbInputDirective>
                                         
                                     </div>
                                 </td>    
                                 <td>
                                     <div class="md-form">
-                                        <input type="text" [(ngModel)]="instagram"  class="form-control" mdbInputDirective>
+                                        <input type="number" [(ngModel)]="instagram"  class="form-control" mdbInputDirective>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="md-form">
-                                        <input type="text" [(ngModel)]="twitter" class="form-control" mdbInputDirective> 
+                                        <input type="number" [(ngModel)]="twitter" class="form-control" mdbInputDirective> 
                                     </div>
                                 </td>
                                 <td>
                                     <div class="md-form">
-                                        <input type="text" [(ngModel)]="googlePlus" class="form-control" mdbInputDirective>   
+                                        <input type="number" [(ngModel)]="googlePlus" class="form-control" mdbInputDirective>   
                                     </div>
                                 </td>
                                 <td>
                                     <div class="md-form">
-                                        <input type="text" [(ngModel)]="myBusiness" class="form-control" mdbInputDirective> 
+                                        <input type="number" [(ngModel)]="myBusiness" class="form-control" mdbInputDirective> 
                                     </div>
                                 </td>
                                 <td>
                                     <div class="md-form">
-                                        <input type="text" [(ngModel)]="adWords" class="form-control" mdbInputDirective>     
+                                        <input type="number" [(ngModel)]="adWords" class="form-control" mdbInputDirective>     
                                     </div>
                                 </td> 
                             </tr> 
@@ -207,8 +213,100 @@
       <div class="modal-footer">
           <!-- modal control buttons -->
         <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="editModal.hide()" mdbWavesEffect>Close</button>
-        <button type="button" mdbBtn color="success" class="relative waves-light" mdbWavesEffect>Save changes</button>
+        <button type="button" mdbBtn color="success" class="relative waves-light" (click)="updateAnswerData(facebook,twitter,instagram,googlePlus,myBusiness,adWords,nextQuestion)"mdbWavesEffect>Save changes</button>
       </div>
     </div>
+  </div>
+</div>
+
+
+<!-- error modal! -->
+<div mdbModal #errorModal="mdbModal" class="modal fade right" id="errorModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true" >
+  <div class="modal-dialog modal-notify modal-danger modal-side modal-top-right" role="document">
+    <!--Content-->
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header">
+        <p class="heading">Sorry Something Wen't Wrong</p>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="errorModal.hide()">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+
+        <div class="row">
+          <div class="col-3">
+            <p></p>
+            <p class="text-center color-danger">
+              <i class="fas fa-exclamation-triangle fa-4x" style="color:#ffbb33;"></i>
+            </p>
+          </div>
+
+          <div class="col-9">
+            <!-- error msg here -->
+            <h2>
+              <span class="badge">{{msgError}}</span>
+            </h2>
+          </div>
+        </div>
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer justify-content-center">
+        <a type="button" mdbBtn color="success" class="waves-effect btn-lg" mdbWavesEffect (click)="errorModal.hide()" data-dismiss="modal">Close</a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+
+
+<!-- Delete question modal! -->
+<div mdbModal #deleteQuestionModal="mdbModal" class="modal fade right" id="deleteQuestionModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true" >
+  <div class="modal-dialog modal-lg modal-notify modal-danger modal-top" role="document">
+    <!--Content-->
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header">
+        <p class="heading">Delete question</p>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="deleteQuestionModal.hide()">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+
+        <div class="row">
+          <div class="col-3">
+            <p></p>
+            <p class="text-center color-danger">
+              <i class="fas fa-trash-alt fa-4x" style="color:#ffbb33;"></i>
+            </p>
+          </div>
+
+          <div class="col-9">
+            <!-- question msg here -->
+            
+            <h2>Question number: <span class="badge">{{questionNumber}}</span></h2>
+            <h2>With body: <span class="badge">{{questionBody}}</span></h2>
+            * please keep in mind folowing question trace will be lost!
+          </div>
+        </div>
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer justify-content-center">
+        <a type="button" mdbBtn color="success" class="waves-effect btn-lg" mdbWavesEffect (click)="deleteQuestionModal.hide()" data-dismiss="modal">Close</a>
+        <a type="button" mdbBtn color="danger" class="waves-effect btn-lg" mdbWavesEffect (click)="deleteQuestion(questionNumber, questionBody)" data-dismiss="modal">DElete</a>  
+    </div>
+    </div>
+    <!--/.Content-->
   </div>
 </div>
