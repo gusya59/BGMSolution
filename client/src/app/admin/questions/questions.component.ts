@@ -1,7 +1,7 @@
 import { ModalDirective } from 'angular-bootstrap-md';
 import { AdminServiceService } from './../../service/admin-service.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder } from '../../../../node_modules/@angular/forms';
+import { FormGroup, FormBuilder, FormGroupDirective } from '../../../../node_modules/@angular/forms';
 
 @Component({
   selector: 'app-adminQuestions',
@@ -32,8 +32,14 @@ export class AdminQuestionsComponent implements OnInit {
     googlePlus: number;
     myBusiness: number;
     adWords: number;
+
+    //general data
     nextQuestion: number;
     nextQuestionBody: string;
+    answer1Body:string;
+    answer2Body: string;
+    answer3Body: string;
+    answer4Body: string;
 
     //error msg
     msgError: string;
@@ -44,6 +50,8 @@ export class AdminQuestionsComponent implements OnInit {
   questionBodyForm: FormGroup;
   // answer form
   answerBodyForm: FormGroup;
+  //add question form
+  newQuestionForm: FormGroup;
 
 
   //allow to see editModal for answers modal use
@@ -52,6 +60,8 @@ export class AdminQuestionsComponent implements OnInit {
   @ViewChild('errorModal') errorModal: ModalDirective;
   //allow to see deleteQuestionModal to delete question
   @ViewChild('deleteQuestionModal') deleteQuestionModal: ModalDirective;
+  // allow to see addQuestionModal to add question
+  @ViewChild('addQuestionModal') addQuestionModal: ModalDirective;
   
 
 
@@ -66,6 +76,13 @@ export class AdminQuestionsComponent implements OnInit {
         answerNumber: this.answerNumber,
         answerBody: this.answerBody
     });
+    this.newQuestionForm = fb.group({
+      questionBody: this.questionBody,
+      answer1Body: this.answer1Body,
+      answer2Body: this.answer2Body,
+      answer3Body: this.answer3Body,
+      answer4Body: this.answer4Body
+    })
    }
 
   ngOnInit() {
@@ -193,6 +210,22 @@ export class AdminQuestionsComponent implements OnInit {
         else{
           this.msgError = resp.message;
           this.deleteQuestionModal.show();
+        } 
+      }
+    )
+  }
+  // save new question button
+  saveNewQuestion(){
+    console.log(this.newQuestionForm.value)
+    return this.adminservice.saveNewQuestion(this.newQuestionForm.value).subscribe(
+      resp => {
+        if(resp.success){
+          console.log("Posted: " +this.newQuestionForm.value);
+          this.addQuestionModal.hide();
+        }
+        else{
+          this.msgError = resp.message;
+          this.errorModal.show();
         } 
       }
     )

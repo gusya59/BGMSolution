@@ -229,5 +229,16 @@ export class AdminServiceService {
       }
       return this.http.post<respData>(uri,obj)
     }
+//save new question to server
+    saveNewQuestion(newQuestion){
+      //recive data of quesiton
+      const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
+      //obj of question data
+      const obj ={
+        newQuestion: newQuestion
+      }
+      console.log(obj)
+      return this.http.post<respData>(uri,obj)
+    }
 
 }
