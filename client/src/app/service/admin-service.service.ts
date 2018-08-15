@@ -122,14 +122,14 @@ export class AdminServiceService {
     }
 
     // Change user status service (admin/user)
-    changeUserStatus(email){
+    changeUserStatus(email,IsAdminPer){
       //will post info if correct
       const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
 
         // send email in obj
         const obj = {
           email: email,
-          token: localStorage.getItem('token')
+          IsAdminPer: IsAdminPer
       };
       return this.http.post<respData>(uri,obj);
 

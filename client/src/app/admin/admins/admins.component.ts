@@ -99,9 +99,9 @@ export class AdminsComponent implements OnInit {
     )
   }
 
-    //Change user Status function
+    //Change user Status function admin: true
     changeUserStatus(){
-      this.adminservice.changeUserStatus(this.email).subscribe(
+      this.adminservice.changeUserStatus(this.email, true).subscribe(
         Data => {
           if(Data.success){
             console.log("demoted " + this.email);
