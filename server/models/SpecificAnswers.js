@@ -5,11 +5,12 @@ var SpecificAnswersSchema = mongoose.Schema({
     spec_question_text: { type: [], required: true}, 
     spec_answer_text: { type: [], required: true}, 
  
-    // insta_weight: { type: Number, required: true },
-    // facebook_ads_weight: { type: Number, required: true},
-    // linkedin_weight: { type: Number, required: true},
-    // google_search_weight: { type: Number, required: true},
-    // google_adds_weight: { type: Number, required: true },
+    // spec_insta_weight_budget: { type: Number, required: true },
+    // spec_facebook_weight_budget: { type: Number, required: true},
+    // spec_facebook_ads_weight_budget: { type: Number, required: true},
+    // spec_google_mybusiness_weight_budget: { type: Number, required: true},
+    // spec_google_search_weight_budget: { type: Number, required: true},
+    // spec_google_adds_weight_budget: { type: Number, required: true },
   });
   
   var SpecificAnswersSchemaExport = module.exports = mongoose.model('SpecificAnswers', SpecificAnswers);

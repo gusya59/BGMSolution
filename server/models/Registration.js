@@ -145,7 +145,11 @@ module.exports.findAllByPermission =async function(data){
   return userData;
 }
 
+//delete specific user.
+//input: email of the user
+//output: removed object if succeded, null if not
 module.exports.deleteUser =async function(data){
-  var removed = await UsersSchemaExport.findOneAndDelete({_id: data })
+  console.log("The data is: "+data);
+  var removed = await UsersSchemaExport.findOneAndDelete({email: data })
   return removed;
 }
