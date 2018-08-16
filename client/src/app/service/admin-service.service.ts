@@ -90,28 +90,16 @@ export class AdminServiceService {
 
   }
 
-    // admin service admins. get admin data table
-    fetchAdminTable(){
-      //will get info if correct
-      const uri = 'http://localhost:1234/admin/admins';
-      console.log("dfbjsfuk");
-        // send empty obj
-        const obj = {
-          isAdminPer: true,
-          token: localStorage.getItem('token')
-        };
-      //get data from server
-      return this.http.post<respData>(uri,obj)
-  
-    }
 
-    // admin service users. get user data table
-    fetchUsersTable(){
+    ///find user by permission
+    //input: token, permission type: true for admin, false for regular user
+    //output: object with all the relevant users
+    fetchUsersTable(isAdminPer){
       //will get info if correct
       const uri = 'http://localhost:1234/admin/admins';
         // send empty obj
         const obj = {
-          isAdminPer: false,
+          isAdminPer: isAdminPer,
           token: localStorage.getItem('token')
         };
       //get data from server

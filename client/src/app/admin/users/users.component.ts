@@ -51,10 +51,10 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit() {
-  //call admin service to get admins table
-  this.adminservice.fetchUsersTable().subscribe(
+  //call admin service to get user table
+  this.adminservice.fetchUsersTable(false).subscribe(
     Data=>{
-        this.users = Data.users;
+        this.users = Data.adminUsers;
            console.log(Data)
     })
 }
