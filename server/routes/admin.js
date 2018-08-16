@@ -3,6 +3,7 @@ var router = express();
 var jwt = require('jsonwebtoken');
 
 var registrationSchema = require('../models/Registration.js');
+var QuestionSchema = require('../models/Question')
 var verFuncs = require('../utils/verificationFunctions.js')
 
 //registration
@@ -67,6 +68,14 @@ router.post('/info',verFuncs.getTokenFromHeaders, async function (req, res) {
         res.status(200).send({ success: false, message: "error "});
       } 
     });
+
+    router.post('/addQuestion', async function (req,res){
+      var newQuestion =new QuestionSchema(req.body);
+      var result = await QuestionSchema.createQuestion(newQuestion);
+      console.log(result);
+    });
+
+
 
 
 
