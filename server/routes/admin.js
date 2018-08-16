@@ -69,13 +69,25 @@ router.post('/info',verFuncs.getTokenFromHeaders, async function (req, res) {
       } 
     });
 
-    router.post('/addQuestion', async function (req,res){
-      var newQuestion =new QuestionSchema(req.body);
-      var result = await QuestionSchema.createQuestion(newQuestion);
-      console.log(result);
+    // router.post('/addQuestion', async function (req,res){
+    //   var newQuestion =new QuestionSchema(req.body);
+    //   var result = await QuestionSchema.createQuestion(newQuestion);
+    //   console.log(result);
+    // });
+
+    //fetching user info from the db
+    //input: user's email
+    //output: on success: object with user's info, else false
+    router.post('/users/info', async function (req, res) {
+      var userdata = await registrationSchema.findByEmail(req.body.email);
+      if(userdata){
+        console.log(userdata);
+        res.status(200).send({ success: true, message: "success", userdata: userdata});
+      }
+      else{
+        res.status(200).send({ success: false, message: "there is no such user"});
+      } 
     });
-
-
 
 
 
