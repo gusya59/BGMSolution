@@ -69,9 +69,9 @@
                     <!--Table body-->
                     <tbody>
                         <tr *ngFor="let data of search()">
-                        <th class="numberCol" scope="row">
-                            {{data.questionNumber}}
-                        </th>
+                            <th class="numberCol" scope="row">
+                                {{data.questionNumber}}
+                            </th>
                         <td class="questionCol">
                             
                                 <div class="md-form">
@@ -145,14 +145,14 @@
             <div class="col-lg-4">
                 <div class="md-form">
                     <i class="fas fa-arrow-circle-right prefix grey-text"></i>
-                    <input type="text" #nextquestion [ngModel]="answer?.next_question" class="form-control" mdbInputDirective>
+                    <input type="text" [(ngModel)]="nextQuestion" class="form-control" mdbInputDirective>
                     <label for="nextQuestion">Next Question Will Be</label>
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="md-form">
                     <i class="fas fa-align-justify prefix grey-text"></i>
-                    <input type="text" disabled #nextQuestionBody [ngModel]="answer?.answer_text" class="form-control" mdbInputDirective>
+                    <input type="text" disabled [(ngModel)]="nextQuestionBody" class="form-control" mdbInputDirective>
                 </div>
             </div>
         </div>
@@ -160,22 +160,53 @@
             <div class="row justify-content-center">
                 <div class="col-lg-12">
                     <table class="table">
-                        <thead >
-                            <tr  >     
-                                <th *ngFor="let data of answer?.platforms " scope="col">
-                                    {{data.platform_name}}
-                                </th>
+                        <thead class="black white-text">
+                            <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Facebook</th>
+                            <th scope="col">Instagram</th>
+                            <th scope="col">Twitter</th>
+                            <th scope="col">GooglePlus</th>
+                            <th scope="col">MyBusiness</th>
+                            <th scope="col">AdWords</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                
-                                    <td *ngFor="let data of answer?.platforms ">
-                                        <div class="md-form">
-                                            <input type="number" [ngModel]="data.platform_weight"  class="form-control" mdbInputDirective>
-                                        </div>
-                                    </td> 
-                                  
+                                <td>
+
+                                </td>
+                                <td>
+                                    <div class="md-form">
+                                        <input type="number" [(ngModel)]="facebook"  class="form-control" mdbInputDirective>
+                                        
+                                    </div>
+                                </td>    
+                                <td>
+                                    <div class="md-form">
+                                        <input type="number" [(ngModel)]="instagram"  class="form-control" mdbInputDirective>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="md-form">
+                                        <input type="number" [(ngModel)]="twitter" class="form-control" mdbInputDirective> 
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="md-form">
+                                        <input type="number" [(ngModel)]="googlePlus" class="form-control" mdbInputDirective>   
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="md-form">
+                                        <input type="number" [(ngModel)]="myBusiness" class="form-control" mdbInputDirective> 
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="md-form">
+                                        <input type="number" [(ngModel)]="adWords" class="form-control" mdbInputDirective>     
+                                    </div>
+                                </td> 
                             </tr> 
                         </tbody>
                     </table>

@@ -1,7 +1,7 @@
 import { ModalDirective } from 'angular-bootstrap-md';
-import { AdminServiceService } from '../../service/admin-service.service';
+import { AdminServiceService } from './../../service/admin-service.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, FormGroupDirective } from '@angular/forms';
+import { FormGroup, FormBuilder, FormGroupDirective } from '../../../../node_modules/@angular/forms';
 
 @Component({
   selector: 'app-adminQuestions',
@@ -41,18 +41,6 @@ export class AdminQuestionsComponent implements OnInit {
     answer3Body: string;
     answer4Body: string;
 
-    // answer Edit data
-    answer: {
-      answer_id: string;
-      answer_text: string;
-      next_question: string;
-      platforms: {
-        platform_id: string,
-        platform_name: string,
-        platform_weight: number
-      }
-    }
-
     //error msg
     msgError: string;
   
@@ -64,8 +52,6 @@ export class AdminQuestionsComponent implements OnInit {
   answerBodyForm: FormGroup;
   //add question form
   newQuestionForm: FormGroup;
-  //answer DAta form
-  answerData: FormGroup;
 
 
   //allow to see editModal for answers modal use
@@ -80,9 +66,7 @@ export class AdminQuestionsComponent implements OnInit {
 
 
   constructor(private adminservice: AdminServiceService, private fb:FormBuilder ) {
-
-
-    // create question body form
+    // create angular form
     this.questionBodyForm= fb .group({
       questionNumber: this.questionNumber,
       questionBody: this.questionBody
@@ -92,18 +76,12 @@ export class AdminQuestionsComponent implements OnInit {
         answerNumber: this.answerNumber,
         answerBody: this.answerBody
     });
-    //create question form
     this.newQuestionForm = fb.group({
       questionBody: this.questionBody,
       answer1Body: this.answer1Body,
       answer2Body: this.answer2Body,
       answer3Body: this.answer3Body,
       answer4Body: this.answer4Body
-    });
-    //create question weights form
-    this.answerData = fb.group({
-
-
     })
    }
 
@@ -171,7 +149,6 @@ export class AdminQuestionsComponent implements OnInit {
 
   // edit question weights
   editWeights(questionNumber, answerNumber){
-    
     console.log("ans: " +answerNumber,"quest: " + questionNumber);
     this.answerNumber = answerNumber;
     this.questionNumber = questionNumber;
@@ -179,11 +156,15 @@ export class AdminQuestionsComponent implements OnInit {
     //get weights data from server
     this.adminservice.fetchPlatform(this.answerNumber,this.questionNumber).subscribe(
       resp =>{
-        console.log(resp);
         if(resp.success){
-          this.answer = resp;
-          console.log()
-          console.log(this.answer)
+          this.facebook = resp.facebook;
+          this.twitter = resp.twitter;
+          this.instagram = resp.instagram;
+          this.googlePlus = resp.googlePlus;
+          this.myBusiness = resp.myBusiness;
+          this.adWords = resp.adWords;
+          this.nextQuestion = resp.nextQuestion;
+          this.nextQuestionBody = resp.nextQuestionBody;
         }
         else{
           this.msgError = resp.message;
@@ -195,12 +176,11 @@ export class AdminQuestionsComponent implements OnInit {
   }
 
   //recive data from edit form
-  updateAnswerData(next_question){
-    
-    return this.adminservice.updateAnswerData(next_question,this.answerData).subscribe(
+  updateAnswerData(facebook,twitter,instagram,googlePlus,myBusiness,adWords,nextQuestion){
+    return this.adminservice.updateAnswerData(facebook,twitter,instagram,googlePlus,myBusiness,adWords,nextQuestion).subscribe(
       resp => {
         if(resp.success){
-          console.log("Posted: " + next_question);
+          console.log("Posted");
           this.editModal.hide();
         }
         else{

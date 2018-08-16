@@ -55,7 +55,7 @@ export class UsersComponent implements OnInit {
   this.adminservice.fetchUsersTable().subscribe(
     Data=>{
         this.users = Data.users;
-          //  console.log(Data)
+           console.log(Data)
     })
 }
   

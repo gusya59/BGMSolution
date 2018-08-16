@@ -44,6 +44,15 @@ interface respData {
 
 
   //platform decleration
+  answer_id: string;
+  answer_text: string;
+  next_question: string;
+  platforms: {
+    platform_id: string,
+    platform_name: string,
+    platform_weight: number
+  }
+
   facebook: number;
   twitter: number;
   instagram: number;
@@ -88,6 +97,7 @@ export class AdminServiceService {
       
         // send empty obj
         const obj = {
+          isAdminPer: true,
           token: localStorage.getItem('token')
         };
       //get data from server
@@ -98,9 +108,10 @@ export class AdminServiceService {
     // admin service users. get user data table
     fetchUsersTable(){
       //will get info if correct
-      const uri = 'http://www.mocky.io/v2/5b6e26d93100001000781957';
+      const uri = 'http://localhost:1234/admin/admins';
         // send empty obj
         const obj = {
+          isAdminPer: false,
           token: localStorage.getItem('token')
         };
       //get data from server
@@ -163,8 +174,8 @@ export class AdminServiceService {
     //request platform
     fetchPlatform(answerNumber,questionNumber){
       //will post fetchPlatform if correct
-      const uri = 'http://www.mocky.io/v2/5b72bef33200000e0e3a7dd5';
-
+      // const uri = 'http://www.mocky.io/v2/5b72bef33200000e0e3a7dd5';
+      const uri = 'http://www.mocky.io/v2/5b7534a32e00005300535f3c';
       //object of numbers
       const obj = {
         questionNumber: questionNumber,
@@ -201,18 +212,13 @@ export class AdminServiceService {
     }
 
     //save answer info function 
-    updateAnswerData(facebook,twitter,instagram,googlePlus,myBusiness,adWords,nextQuestion){
+    updateAnswerData(next_question,answer){
       //recive data of answer
       const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
       //obj of answer data
       const obj ={
-        facebook: facebook,
-        twitter: twitter,
-        instagram: instagram,
-        googlePlus: googlePlus,
-        myBusiness: myBusiness,
-        adWords: adWords,
-        nextQuestion: nextQuestion
+        next_question,
+        answer
       }
       return this.http.post<respData>(uri,obj)
 
@@ -237,7 +243,7 @@ export class AdminServiceService {
       const obj ={
         newQuestion: newQuestion
       }
-      console.log(obj)
+      // console.log(obj)
       return this.http.post<respData>(uri,obj)
     }
 
