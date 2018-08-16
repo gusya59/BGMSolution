@@ -219,14 +219,14 @@ export class AdminQuestionsComponent implements OnInit {
     )
   }
 
-  // show delete modal 
+  // show delete modal get id and text and showing modal 
   deleteQuestionShow(data){
     this.question_id = data.question_id;
     this.question_text = data.question_text,
     this.deleteQuestionModal.show();
   }
 
-  // delete question
+  // delete question get id and text and delete the question
   deleteQuestion(question_id, question_text){
     return this.adminservice.deleteQuestion(question_id, question_text).subscribe(
       resp => {
@@ -241,7 +241,7 @@ export class AdminQuestionsComponent implements OnInit {
       }
     )
   }
-  // save new question button
+  // save new question button generatets new question
   saveNewQuestion(){
     console.log(this.newQuestionForm.value)
     return this.adminservice.saveNewQuestion(this.newQuestionForm.value).subscribe(
@@ -249,6 +249,7 @@ export class AdminQuestionsComponent implements OnInit {
         if(resp.success){
           console.log("Posted: " +this.newQuestionForm.value);
           this.addQuestionModal.hide();
+          this.newQuestionForm.reset();
         }
         else{
           this.msgError = resp.message;
