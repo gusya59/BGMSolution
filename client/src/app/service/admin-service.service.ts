@@ -150,7 +150,7 @@ export class AdminServiceService {
     //request questions
     fetchQuestions(){
       //will post questions if correct
-      const uri = 'http://www.mocky.io/v2/5b759afd2e00005500536198';
+      const uri = 'http://www.mocky.io/v2/5b75aec32e000062005361db';
 
         // send email in obj
         const obj = {
@@ -205,7 +205,7 @@ export class AdminServiceService {
       const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
       //obj of answer data
       const obj = {
-        weight: platform_weight.value,
+        platform_weight: platform_weight.value,
         platform_id: platform_id,
         question_id: question_id,
         answer_id: answer_id
@@ -213,6 +213,21 @@ export class AdminServiceService {
       return this.http.post<respData>(uri,obj)
 
     }
+
+    //save nextquestion to server
+    updateNextQuestion(next_question,question_id,answer_id){
+      //recive data of answer
+    const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
+    //obj of answer data
+    const obj = {
+      next_question: next_question.value,
+      question_id: question_id,
+      answer_id: answer_id,
+      
+    }
+    return this.http.post<respData>(uri,obj)
+
+  }
 
     //delete question function
     deleteQuestion(question_id, question_text){

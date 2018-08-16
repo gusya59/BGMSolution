@@ -132,6 +132,7 @@
       <!-- modal body -->
       
       <div class="modal-body">
+          <!-- this question info -->
         <div class="row">
             <div class="col-lg-6">
                     <p class="h5 text-center mb-4"><span class="badge primary-color">Question Number: </span> {{question_id}}</p>
@@ -140,39 +141,46 @@
                 <p class="h5 text-center mb-4"><span class="badge primary-color">Answers Number: </span> {{answer_id}}</p>
             </div>
         </div>
-        
+        <!-- update next question -->
         <div class="row">
-            <div class="col-lg-4">
-                <div class="md-form">
+            <div class="col-lg-4 offset-lg-1 ">
+                <div class="md-form ">
                     <i class="fas fa-arrow-circle-right prefix grey-text"></i>
-                    <input type="text" #nextquestion [ngModel]="answer?.next_question" class="form-control" mdbInputDirective>
-                    <label for="nextQuestion">Next Question Will Be</label>
+                    <!-- get next question from answer modal -->
+                    <input type="text" #next_question [ngModel]="answer?.next_question" class="form-control" mdbInputDirective>
+                    <label for="next_question">Next Question Will Be</label>
                 </div>
             </div>
+
             <div class="col-lg-4">
                 <div class="md-form">
                     <i class="fas fa-align-justify prefix grey-text"></i>
+                    <!-- get test from answer modal -->
                     <input type="text" disabled #nextquestion_text [ngModel]="answer?.answer_text" class="form-control" mdbInputDirective>
                 </div>
             </div>
         </div>
+        <!-- table with platform info -->
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-lg-12">
-                    <table class="table">
-                        <thead >
-                            <tr  >     
-                                <th *ngFor="let data of answer?.platforms " scope="col">
+                    <table class="table" >
+                        <thead>
+                            <tr>  
+                                <!-- get platform names from answer modal -->   
+                                <th class="unique-color text-white" align="center" *ngFor="let data of answer?.platforms " scope="col">
                                     {{data.platform_name}}
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>                    
-                                <td *ngFor="let data of answer?.platforms ">
+                                <td align="right" *ngFor="let data of answer?.platforms ">
                                     <div class="md-form">
-                                        <input type="number" #platform_weight name="platform_weight" [ngModel]="data.platform_weight"  class="form-control" mdbInputDirective>
-                                        <button type="button" mdbBtn color="success" class="relative waves-light" (click)="updateAnswerData(platform_weight,data.platform_id,question_id,answer_id)"mdbWavesEffect>Save</button>
+                                        <input type="number" min="0" max="1" step="0.01" #platform_weight name="platform_weight" [ngModel]="data.platform_weight"  class="form-control" mdbInputDirective>
+                                        <td align="right">
+                                            <button type="button" mdbBtn color="info" class="relative waves-light btn-lg" (click)="updateAnswerData(platform_weight,data.platform_id,question_id,answer_id)"mdbWavesEffect><i class="fas fa-save fa-2x"></i></button>
+                                        </td>
                                     </div>
                                 </td>   
                             </tr> 
@@ -186,7 +194,7 @@
       <div class="modal-footer">
           <!-- modal control buttons -->
         <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="editModal.hide()" mdbWavesEffect>Close</button>
-        <button type="button" mdbBtn color="success" class="relative waves-light" (click)="updateAnswerData(facebook,twitter,instagram,googlePlus,myBusiness,adWords,nextQuestion)"mdbWavesEffect>Save changes</button>
+        <button type="button" mdbBtn color="success" class="relative waves-light" (click)="updateNextQuestion(next_question,question_id,answer_id)"mdbWavesEffect>Save changes</button>
       </div>
     </div>
   </div>

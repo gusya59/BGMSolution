@@ -1,7 +1,7 @@
 import { ModalDirective } from 'angular-bootstrap-md';
 import { AdminServiceService } from '../../service/admin-service.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, FormGroupDirective } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-adminQuestions',
@@ -25,16 +25,9 @@ export class AdminQuestionsComponent implements OnInit {
       answer_text: string;
     }
   }
-  //platform decleration
-    facebook: number;
-    twitter: number;
-    instagram: number;
-    googlePlus: number;
-    myBusiness: number;
-    adWords: number;
 
     //general data
-    nextQuestion: number;
+    nextQuestion: string;
     nextquestion_text: string;
     answer1Body:string;
     answer2Body: string;
@@ -64,8 +57,7 @@ export class AdminQuestionsComponent implements OnInit {
   answer_textForm: FormGroup;
   //add question form
   newQuestionForm: FormGroup;
-  //answer DAta form
-  answerData: FormGroup;
+
 
 
   //allow to see editModal for answers modal use
@@ -100,11 +92,6 @@ export class AdminQuestionsComponent implements OnInit {
       answer3Body: this.answer3Body,
       answer4Body: this.answer4Body
     });
-    //create question weights form
-    this.answerData = fb.group({
-
-
-    })
    }
 
   ngOnInit() {
@@ -180,11 +167,12 @@ export class AdminQuestionsComponent implements OnInit {
     //get weights data from server
     this.adminservice.fetchPlatform(this.answer_id,this.question_id).subscribe(
       resp =>{
-        console.log(resp);
+        // console.log(resp);
         if(resp.success){
           this.answer = resp;
-          console.log()
-          console.log(this.answer)
+          this.editModal.show();
+          // walk around known angular 6 issue
+          this.nextQuestion = resp.next_question;
         }
         else{
           this.msgError = resp.message;
@@ -192,7 +180,7 @@ export class AdminQuestionsComponent implements OnInit {
         }
       }
     )
-    this.editModal.show();
+    
   }
 
   //recive data from edit form
@@ -202,7 +190,6 @@ export class AdminQuestionsComponent implements OnInit {
       resp => {
         if(resp.success){
           console.log("Posted: " +platform_weight.value , platform_id , question_id , answer_id);
-          this.editModal.hide();
         }
         else{
           this.msgError = resp.message;
@@ -211,6 +198,25 @@ export class AdminQuestionsComponent implements OnInit {
       }
     )
     
+  }
+
+  //update edit form next question
+  updateNextQuestion(next_question,question_id,answer_id){
+    return this.adminservice.updateNextQuestion(next_question,question_id,answer_id).subscribe(
+      resp => {
+        if(resp.success){
+          console.log("Posted: " + next_question.value , question_id , answer_id);
+          // fix angular 6 known issue, modal content wont destory on hide()
+          this.answer.next_question = '';
+          this.editModal.hide();  
+
+        }
+        else{
+          this.msgError = resp.message;
+          this.errorModal.show();
+        } 
+      }
+    )
   }
 
   // show delete modal 
