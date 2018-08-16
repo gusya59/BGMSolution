@@ -70,12 +70,12 @@
                     <tbody>
                         <tr *ngFor="let data of search()">
                         <th class="numberCol" scope="row">
-                            {{data.questionNumber}}
+                            {{data.question_id}}
                         </th>
                         <td class="questionCol">
                             
                                 <div class="md-form">
-                                    <input mdbInputDirective type="text" name="questionBody" #questionBody [(ngModel)]="data.questionBody" class="form-control">
+                                    <input mdbInputDirective type="text" name="question_text" #question_text [(ngModel)]="data.question_text" class="form-control">
                                 </div>
                             
 
@@ -87,21 +87,21 @@
                                 <td class="answerCol">   
                                     
                                         <div class="md-form">
-                                            <input mdbInputDirective type="text" name="answerBody" #answerBody [(ngModel)]="answer.answerBody" class="form-control">
+                                            <input mdbInputDirective type="text" name="answer_text" #answer_text [(ngModel)]="answer.answer_text" class="form-control">
                                         </div>
                                     
                                 </td>
                                 <!-- fire request answers -->
                                 <td>
-                                    <button  class="btn btn-lg success-color" (click)="saveAnswer(answerBody, answer.answerNumber, data.questionNumber)" >Save</button>
-                                    <button  class="btn btn-lg info-color" (click)="editWeights(data.questionNumber, answer.answerNumber)" >Edit</button>
+                                    <button  class="btn btn-lg success-color" (click)="saveAnswer(answer_text, answer.answer_id, data.question_id)" >Save</button>
+                                    <button  class="btn btn-lg info-color" (click)="editWeights(data.question_id, answer.answer_id)" >Edit</button>
                                 </td>
                             </tr>
                         </td>
                         <td align="right">
                             <button class="btn btn-lg danger-color" (click)="deleteQuestionShow(data)">Remove Question</button>
                             <!-- fire request questions -->
-                            <button  class="btn btn-lg success-color" (click)="saveQuestion(questionBody, data.questionNumber)" >Save Question</button>
+                            <button  class="btn btn-lg success-color" (click)="saveQuestion(question_text, data.question_id)" >Save Question</button>
 
                         </td>
                         </tr>
@@ -134,10 +134,10 @@
       <div class="modal-body">
         <div class="row">
             <div class="col-lg-6">
-                    <p class="h5 text-center mb-4"><span class="badge primary-color">Question Number: </span> {{questionNumber}}</p>
+                    <p class="h5 text-center mb-4"><span class="badge primary-color">Question Number: </span> {{question_id}}</p>
                 </div>
             <div class="col-lg-6">
-                <p class="h5 text-center mb-4"><span class="badge primary-color">Answers Number: </span> {{answerNumber}}</p>
+                <p class="h5 text-center mb-4"><span class="badge primary-color">Answers Number: </span> {{answer_id}}</p>
             </div>
         </div>
         
@@ -152,7 +152,7 @@
             <div class="col-lg-4">
                 <div class="md-form">
                     <i class="fas fa-align-justify prefix grey-text"></i>
-                    <input type="text" disabled #nextQuestionBody [ngModel]="answer?.answer_text" class="form-control" mdbInputDirective>
+                    <input type="text" disabled #nextquestion_text [ngModel]="answer?.answer_text" class="form-control" mdbInputDirective>
                 </div>
             </div>
         </div>
@@ -168,14 +168,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                
-                                    <td *ngFor="let data of answer?.platforms ">
-                                        <div class="md-form">
-                                            <input type="number" [ngModel]="data.platform_weight"  class="form-control" mdbInputDirective>
-                                        </div>
-                                    </td> 
-                                  
+                            <tr>                    
+                                <td *ngFor="let data of answer?.platforms ">
+                                    <div class="md-form">
+                                        <input type="number" #platform_weight name="platform_weight" [ngModel]="data.platform_weight"  class="form-control" mdbInputDirective>
+                                        <button type="button" mdbBtn color="success" class="relative waves-light" (click)="updateAnswerData(platform_weight,data.platform_id,question_id,answer_id)"mdbWavesEffect>Save</button>
+                                    </div>
+                                </td>   
                             </tr> 
                         </tbody>
                     </table>
@@ -268,8 +267,8 @@
           <div class="col-9">
             <!-- question msg here -->
             
-            <h2>Question number: <span class="badge">{{questionNumber}}</span></h2>
-            <h2>With body: <span class="badge">{{questionBody}}</span></h2>
+            <h2>Question number: <span class="badge">{{question_id}}</span></h2>
+            <h2>With body: <span class="badge">{{question_text}}</span></h2>
             * please keep in mind folowing question trace will be lost!
           </div>
         </div>
@@ -278,7 +277,7 @@
       <!--Footer-->
       <div class="modal-footer justify-content-center">
         <a type="button" mdbBtn color="success" class="waves-effect btn-lg" mdbWavesEffect (click)="deleteQuestionModal.hide()" data-dismiss="modal">Close</a>
-        <a type="button" mdbBtn color="danger" class="waves-effect btn-lg" mdbWavesEffect (click)="deleteQuestion(questionNumber, questionBody)" data-dismiss="modal">DElete</a>  
+        <a type="button" mdbBtn color="danger" class="waves-effect btn-lg" mdbWavesEffect (click)="deleteQuestion(question_id, question_text)" data-dismiss="modal">DElete</a>  
     </div>
     </div>
     <!--/.Content-->
@@ -307,8 +306,8 @@
                     <div class="col-lg-12">
                         <div class="md-form">
                             <i class="fas fa-question prefix grey-text"></i>
-                            <input type="text"class="form-control validate" mdbInputDirective formControlName="questionBody">
-                            <label data-error="wrong" data-success="right" for="questionBody">Question text</label>
+                            <input type="text"class="form-control validate" mdbInputDirective formControlName="question_text">
+                            <label data-error="wrong" data-success="right" for="question_text">Question text</label>
                         </div>
                     </div>
 

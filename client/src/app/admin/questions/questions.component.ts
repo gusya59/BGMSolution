@@ -12,17 +12,17 @@ export class AdminQuestionsComponent implements OnInit {
 
   //table data inserted
   searchText: string;
-  questionNumber: number;
-  questionBody: string;
-  answerNumber: number;
-  answerBody: string;
+  question_id: number;
+  question_text: string;
+  answer_id: number;
+  answer_text: string;
   // question declaration
   questions:{
-    questionNumber: number,
-    questionBody: string
+    question_id: number,
+    question_text: string
     answers:{
-      answerNumber: number;
-      answerBody: string;
+      answer_id: number;
+      answer_text: string;
     }
   }
   //platform decleration
@@ -35,7 +35,7 @@ export class AdminQuestionsComponent implements OnInit {
 
     //general data
     nextQuestion: number;
-    nextQuestionBody: string;
+    nextquestion_text: string;
     answer1Body:string;
     answer2Body: string;
     answer3Body: string;
@@ -59,9 +59,9 @@ export class AdminQuestionsComponent implements OnInit {
   
 
   // question form
-  questionBodyForm: FormGroup;
+  question_textForm: FormGroup;
   // answer form
-  answerBodyForm: FormGroup;
+  answer_textForm: FormGroup;
   //add question form
   newQuestionForm: FormGroup;
   //answer DAta form
@@ -83,18 +83,18 @@ export class AdminQuestionsComponent implements OnInit {
 
 
     // create question body form
-    this.questionBodyForm= fb .group({
-      questionNumber: this.questionNumber,
-      questionBody: this.questionBody
+    this.question_textForm= fb .group({
+      question_id: this.question_id,
+      question_text: this.question_text
     });
     //create answer form
-    this.answerBodyForm= fb.group({
-        answerNumber: this.answerNumber,
-        answerBody: this.answerBody
+    this.answer_textForm= fb.group({
+        answer_id: this.answer_id,
+        answer_text: this.answer_text
     });
     //create question form
     this.newQuestionForm = fb.group({
-      questionBody: this.questionBody,
+      question_text: this.question_text,
       answer1Body: this.answer1Body,
       answer2Body: this.answer2Body,
       answer3Body: this.answer3Body,
@@ -136,8 +136,8 @@ export class AdminQuestionsComponent implements OnInit {
 
   
 // save question function new question body
-  saveQuestion(questionBody,questionNumber){
-    return this.adminservice.saveQuestion(questionBody,questionNumber).subscribe(
+  saveQuestion(question_text,question_id){
+    return this.adminservice.saveQuestion(question_text,question_id).subscribe(
       resp => {
         if(resp.success){
           console.log("Posted");
@@ -151,8 +151,8 @@ export class AdminQuestionsComponent implements OnInit {
   }
 
   // save answer function new answer body
-  saveAnswer(answerBody,answerNumber, questionNumber){
-    return this.adminservice.saveAnswer(answerBody,answerNumber,questionNumber).subscribe(
+  saveAnswer(answer_text,answer_id, question_id){
+    return this.adminservice.saveAnswer(answer_text,answer_id,question_id).subscribe(
       resp => {
         if(resp.success){
           console.log("Posted");
@@ -166,18 +166,19 @@ export class AdminQuestionsComponent implements OnInit {
   }
 
   toArray(answers: object) {
+    
     return Object.keys(answers).map(key => answers[key])
   }
 
   // edit question weights
-  editWeights(questionNumber, answerNumber){
+  editWeights(question_id, answer_id){
     
-    console.log("ans: " +answerNumber,"quest: " + questionNumber);
-    this.answerNumber = answerNumber;
-    this.questionNumber = questionNumber;
+    console.log("ans: " +answer_id,"quest: " + question_id);
+    this.answer_id = answer_id;
+    this.question_id = question_id;
 
     //get weights data from server
-    this.adminservice.fetchPlatform(this.answerNumber,this.questionNumber).subscribe(
+    this.adminservice.fetchPlatform(this.answer_id,this.question_id).subscribe(
       resp =>{
         console.log(resp);
         if(resp.success){
@@ -195,12 +196,12 @@ export class AdminQuestionsComponent implements OnInit {
   }
 
   //recive data from edit form
-  updateAnswerData(next_question){
+  updateAnswerData(platform_weight,platform_id,question_id,answer_id){
     
-    return this.adminservice.updateAnswerData(next_question,this.answerData).subscribe(
+    return this.adminservice.updateAnswerData(platform_weight,platform_id,question_id,answer_id).subscribe(
       resp => {
         if(resp.success){
-          console.log("Posted: " + next_question);
+          console.log("Posted: " +platform_weight.value , platform_id , question_id , answer_id);
           this.editModal.hide();
         }
         else{
@@ -214,17 +215,17 @@ export class AdminQuestionsComponent implements OnInit {
 
   // show delete modal 
   deleteQuestionShow(data){
-    this.questionNumber = data.questionNumber;
-    this.questionBody = data.questionBody,
+    this.question_id = data.question_id;
+    this.question_text = data.question_text,
     this.deleteQuestionModal.show();
   }
 
   // delete question
-  deleteQuestion(questionNumber, questionBody){
-    return this.adminservice.deleteQuestion(questionNumber, questionBody).subscribe(
+  deleteQuestion(question_id, question_text){
+    return this.adminservice.deleteQuestion(question_id, question_text).subscribe(
       resp => {
         if(resp.success){
-          console.log("Deleted: "+ questionNumber);
+          console.log("Deleted: "+ question_id);
           this.deleteQuestionModal.hide();
         }
         else{

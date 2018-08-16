@@ -34,11 +34,11 @@ interface respData {
 
   // question declaration
   questions:{
-    questionNumber: number,
-    questionBody: string
+    question_id: number,
+    question_text: string
     answers:{
-      answerNumber: number;
-      answerBody: string;
+      answer_id: number;
+      answer_text: string;
     }
   }
 
@@ -60,7 +60,7 @@ interface respData {
   myBusiness: number;
   adWords: number;
   nextQuestion: number;
-  nextQuestionBody: string;
+  nextquestion_text: string;
 
 }
 
@@ -162,7 +162,7 @@ export class AdminServiceService {
     //request questions
     fetchQuestions(){
       //will post questions if correct
-      const uri = 'http://www.mocky.io/v2/5b71b8643200005519f36f67';
+      const uri = 'http://www.mocky.io/v2/5b759afd2e00005500536198';
 
         // send email in obj
         const obj = {
@@ -172,66 +172,68 @@ export class AdminServiceService {
     }
 
     //request platform
-    fetchPlatform(answerNumber,questionNumber){
+    fetchPlatform(answer_id,question_id){
       //will post fetchPlatform if correct
-      // const uri = 'http://www.mocky.io/v2/5b72bef33200000e0e3a7dd5';
+
       const uri = 'http://www.mocky.io/v2/5b7534a32e00005300535f3c';
       //object of numbers
       const obj = {
-        questionNumber: questionNumber,
-        answerNumber: answerNumber
+        question_id: question_id,
+        answer_id: answer_id
       };
       return this.http.post<respData>(uri, obj)
     }
 
     // save question function new question body
-    saveQuestion(questionNumber,questionBody){
+    saveQuestion(question_id,question_text){
       //recive data of questions
       const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
       //obj of question data
       const obj ={
-        questionNumber: questionNumber,
-        questionBody: questionBody
+        question_id: question_id,
+        question_text: question_text
       }
       return this.http.post<respData>(uri,obj)
 
     }
 
     //save answer function new answer body
-    saveAnswer(answerBody,answerNumber,questionNumber){
+    saveAnswer(answer_text,answer_id,question_id){
       //recive data of answer
       const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
       //obj of answer data
       const obj ={
-        answerBody: answerBody,
-        answerNumber: answerNumber,
-        questionNumber: questionNumber
+        answer_text: answer_text,
+        answer_id: answer_id,
+        question_id: question_id
       }
       return this.http.post<respData>(uri,obj)
 
     }
 
     //save answer info function 
-    updateAnswerData(next_question,answer){
+    updateAnswerData(platform_weight,platform_id,question_id,answer_id){
       //recive data of answer
       const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
       //obj of answer data
-      const obj ={
-        next_question,
-        answer
+      const obj = {
+        weight: platform_weight.value,
+        platform_id: platform_id,
+        question_id: question_id,
+        answer_id: answer_id
       }
       return this.http.post<respData>(uri,obj)
 
     }
 
     //delete question function
-    deleteQuestion(questionNumber, questionBody){
+    deleteQuestion(question_id, question_text){
       //recive data of answer
       const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
       //obj of answer data
       const obj ={
-        questionNumber: questionNumber,
-        questionBody: questionBody
+        question_id: question_id,
+        question_text: question_text
       }
       return this.http.post<respData>(uri,obj)
     }
