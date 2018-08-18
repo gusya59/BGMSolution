@@ -17,7 +17,11 @@ export class NavigationGuestComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.tokenRecived = localStorage.getItem('token');
+    // if there is a token, get it
+    if(localStorage.getItem('token')){   
+       this.tokenRecived = localStorage.getItem('token');
+      }
+
   }
   //logout button
   logout(){
