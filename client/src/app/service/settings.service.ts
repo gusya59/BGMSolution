@@ -59,10 +59,9 @@ export class SettingsService {
   chosenPlatforms(platforms){
      //uri for Server
      const uri = 'http://www.mocky.io/v2/5b77c8fb2e00000e00864bb9';
-     const obj = {
-      platforms: platforms
-     }
-     return this.http.post<respData>(uri, obj)
+
+     console.log(platforms)
+     return this.http.post<respData>(uri, platforms)
   }
 
 
