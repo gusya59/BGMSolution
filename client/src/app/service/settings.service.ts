@@ -8,6 +8,12 @@ import { Router } from '@angular/router';
 interface respData {
   success: boolean,
   message: string
+  // array of platforms
+  platformsArray: [{        
+    platform_id: string,
+    platform_name: string,
+    platform_weight: number,
+    selected: boolean}];
 }
 
 @Injectable({
@@ -39,6 +45,24 @@ export class SettingsService {
     //post registration to server
     return this.http.post<respData>(uri, obj)
 
+  }
+
+  getUserPlatforms(){
+    //uri for Server
+    const uri = 'http://www.mocky.io/v2/5b77c8fb2e00000e00864bb9';
+    const obj = {
+
+    }
+    return this.http.post<respData>(uri, obj)
+  }
+
+  chosenPlatforms(platforms){
+     //uri for Server
+     const uri = 'http://www.mocky.io/v2/5b77c8fb2e00000e00864bb9';
+     const obj = {
+      platforms: platforms
+     }
+     return this.http.post<respData>(uri, obj)
   }
 
 
