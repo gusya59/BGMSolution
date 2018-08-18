@@ -32,5 +32,34 @@ var verFuncs = require('../utils/verificationFunctions.js');
       res.status(200).send({ success: false, message: "session is expired" })
     });
     
+    //change passwords
+    //input: email,old password, new password
+    //output:
+    router.post('/changePassword', async function (req, res){
+        var changed = await registrationSchema.changePassword(req.body);
+        if(true===changed){
+          res.status(200).send({ success: true, message: "password has changed"});
+        }
+        res.status(200).send({ success: false, message: "can't change password" })
+    })
+
+    //save data
+
+    //delete acount
+  //input: email of the user that need to be deleted
+  //output: true on success, else false
+  router.post('/remove', async function (req, res) {
+    var deleteUser = await registrationSchema.deleteUser(req.body.email);
+    if(deleteUser){
+      res.status(200).send({ success: true, message: "user removed"});
+    }
+    else{
+      res.status(200).send({ success: false, message: "user wasn't removed"});
+    } 
+  });
+
+
+    //pass algoritm weights data
+
 
     module.exports = router;

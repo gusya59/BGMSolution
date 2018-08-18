@@ -11,7 +11,7 @@ var verFuncs = require('../utils/verificationFunctions.js')
 //registration
 router.post('/registration', async function (req, res) {
  // console.log("the input is: " + req.body);
-  console.log(req.body.firstName ,req.body.email ,req.body.password ,req.body.passwordConfirmation, req.body.termsConfirmCheck)
+  //console.log(req.body.firstName ,req.body.email ,req.body.password ,req.body.passwordConfirmation, req.body.termsConfirmCheck)
   var user = req.body;
   var errors = []; //will contain all the errors
   

@@ -120,8 +120,27 @@ module.exports.verifyPassword = async function (pass, hash) {  //(pass to verify
 }
 
 //change user password
+//input: object withusers email, old password, new password
+//output: true on success, false otherwise
 module.exports.changePassword = async function (data) {
-  //do we need this one?
+  //find the user
+  try{
+      var userToUpdate = await this.findOne({email:data.email});
+      if(userToUpdate){
+        //hash the new password and update the db
+        var passCheck = await this.verifyPassword(data.password, userToUpdate.password);
+        if(true===passCheck){
+          var newPass = await bcrypt.hash(data.newPassword, 10);
+          var updated =await this.findOneAndUpdate({email:userToUpdate.email}, {$set:{ password: newPass}});
+          if(updated){ //if the user was updated
+            return true;
+          }
+        }
+      }
+      return false;
+  }catch (error) {
+    throw new Error('error')
+  }
 }
 
 //count the amount of admins
