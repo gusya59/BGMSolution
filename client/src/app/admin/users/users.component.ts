@@ -22,14 +22,14 @@ export class UsersComponent implements OnInit {
   email: string;
 
   //user data to show
-  b_name: string;
-  b_type: string;
+  business_name: string;
+  business_type: string;
   mobile: string; 
   phone: string; 
   city: string; 
   country: string; 
   address: string; 
-  totalBudget: number;
+  budget: number;
 
 
 
@@ -138,21 +138,21 @@ export class UsersComponent implements OnInit {
       this.adminservice.userInfo(this.email).subscribe(
         Data => {
           if(Data){
-            // console.log(Data)
-            this.b_name = Data.b_name;
-            this.b_type = Data.b_type;
-            this.mobile  = Data.mobile;
-            this.phone = Data.phone;
-            this.city  = Data.city;
-            this.country = Data.country;
-            this.address = Data.address;
-            this.totalBudget = Data.totalBudget;
+            console.log(Data.userdata)
+            this.business_name = Data.userdata.business_name;
+            this.business_type = Data.userdata.business_type;
+            this.mobile  = Data.userdata.mobile;
+            this.phone = Data.userdata.phone;
+            this.city  = Data.userdata.city;
+            this.country = Data.userdata.country;
+            this.address = Data.userdata.address;
+            this.budget = Data.userdata.budget;
             this.infoModal.show();
-            
           }
           else console.log(Data.message);
         }
       )
+      
     }
 
 }

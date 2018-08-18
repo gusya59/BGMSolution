@@ -34,7 +34,7 @@ export class InfoComponent implements OnInit {
     this.adminService.generalInformation().pipe(first()).subscribe(
             
       data =>{
-        // console.log("recived " + data)
+        // console.log("recived " + data.regUserAmount)
       if(data.success){
         this.numUsers = data.regUserAmount;
         this.numAdmins = data.adminUserAmount;

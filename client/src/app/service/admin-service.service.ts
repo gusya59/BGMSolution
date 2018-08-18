@@ -23,14 +23,18 @@ interface respData {
     email: string;
   }[];
   //user info
-  b_name: string;
-  b_type: string;
-  mobile: string; 
-  phone: string; 
-  city: string; 
-  country: string; 
-  address: string; 
-  totalBudget: number;
+  userdata:{
+    business_name: string;
+    business_type: string;
+    mobile: string; 
+    phone: string; 
+    city: string; 
+    country: string; 
+    address: string; 
+    budget: number;
+  }
+
+ 
 
   // question declaration
   questions:{
@@ -110,7 +114,7 @@ export class AdminServiceService {
     // remove user service
     removeUser(email){
       //will post info if correct
-      const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
+      const uri = 'http://localhost:1234/admin/admins/remove';
         // send email in obj
         const obj = {
           email: email,
@@ -123,13 +127,14 @@ export class AdminServiceService {
     // Change user status service (admin/user)
     changeUserStatus(email,IsAdminPer){
       //will post info if correct
-      const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
+      const uri = 'http://localhost:1234/admin/admins/changePermissions';
 
         // send email in obj
         const obj = {
           email: email,
           IsAdminPer: IsAdminPer
       };
+      console.log(obj)
       return this.http.post<respData>(uri,obj);
 
     }
@@ -137,12 +142,11 @@ export class AdminServiceService {
     //request user info
     userInfo(email){
       //will post info if correct
-      const uri = 'http://www.mocky.io/v2/5b6b223932000065073732f4';
+      const uri = 'http://localhost:1234/admin/users/info';
        
         // send email in obj
         const obj = {
-          email: email,
-          token: localStorage.getItem('token')
+          email: email
       };
       return this.http.post<respData>(uri,obj);
     }
