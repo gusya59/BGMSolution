@@ -125,14 +125,14 @@ export class AdminServiceService {
     }
 
     // Change user status service (admin/user)
-    changeUserStatus(email,IsAdminPer){
+    changeUserStatus(email,isAdminPer){
       //will post info if correct
       const uri = 'http://localhost:1234/admin/admins/changePermissions';
 
         // send email in obj
         const obj = {
           email: email,
-          IsAdminPer: IsAdminPer
+          isAdminPer: isAdminPer
       };
       console.log(obj)
       return this.http.post<respData>(uri,obj);

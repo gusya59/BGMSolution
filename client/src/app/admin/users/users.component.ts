@@ -112,7 +112,7 @@ export class UsersComponent implements OnInit {
 
     //Change user Status function is user false
     changeUserStatus(){
-      this.adminservice.changeUserStatus(this.email, false).subscribe(
+      this.adminservice.changeUserStatus(this.email, true).subscribe(
         Data => {
           if(Data.success){
             console.log("promoted " + this.email);
