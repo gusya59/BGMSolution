@@ -23,27 +23,40 @@ interface respData {
     email: string;
   }[];
   //user info
-  b_name: string;
-  b_type: string;
-  mobile: string; 
-  phone: string; 
-  city: string; 
-  country: string; 
-  address: string; 
-  totalBudget: number;
+  userdata:{
+    business_name: string;
+    business_type: string;
+    mobile: string; 
+    phone: string; 
+    city: string; 
+    country: string; 
+    address: string; 
+    budget: number;
+  }
+
+ 
 
   // question declaration
   questions:{
-    questionNumber: number,
-    questionBody: string
+    question_id: number,
+    question_text: string
     answers:{
-      answerNumber: number;
-      answerBody: string;
+      answer_id: number;
+      answer_text: string;
     }
   }
 
 
   //platform decleration
+  answer_id: string;
+  answer_text: string;
+  next_question: string;
+  platforms: {
+    platform_id: string,
+    platform_name: string,
+    platform_weight: number
+  }
+
   facebook: number;
   twitter: number;
   instagram: number;
@@ -51,7 +64,7 @@ interface respData {
   myBusiness: number;
   adWords: number;
   nextQuestion: number;
-  nextQuestionBody: string;
+  nextquestion_text: string;
 
 }
 
@@ -81,26 +94,16 @@ export class AdminServiceService {
 
   }
 
-    // admin service admins. get admin data table
-    fetchAdminTable(){
+
+    ///find user by permission
+    //input: token, permission type: true for admin, false for regular user
+    //output: object with all the relevant users
+    fetchUsersTable(isAdminPer){
       //will get info if correct
       const uri = 'http://localhost:1234/admin/admins';
-      console.log("dfbjsfuk");
         // send empty obj
         const obj = {
-          token: localStorage.getItem('token')
-        };
-      //get data from server
-      return this.http.post<respData>(uri,obj)
-  
-    }
-
-    // admin service users. get user data table
-    fetchUsersTable(){
-      //will get info if correct
-      const uri = 'http://www.mocky.io/v2/5b6e26d93100001000781957';
-        // send empty obj
-        const obj = {
+          isAdminPer: isAdminPer,
           token: localStorage.getItem('token')
         };
       //get data from server
@@ -111,7 +114,7 @@ export class AdminServiceService {
     // remove user service
     removeUser(email){
       //will post info if correct
-      const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
+      const uri = 'http://localhost:1234/admin/admins/remove';
         // send email in obj
         const obj = {
           email: email,
@@ -124,13 +127,14 @@ export class AdminServiceService {
     // Change user status service (admin/user)
     changeUserStatus(email,IsAdminPer){
       //will post info if correct
-      const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
+      const uri = 'http://localhost:1234/admin/admins/changePermissions';
 
         // send email in obj
         const obj = {
           email: email,
           IsAdminPer: IsAdminPer
       };
+      console.log(obj)
       return this.http.post<respData>(uri,obj);
 
     }
@@ -138,12 +142,11 @@ export class AdminServiceService {
     //request user info
     userInfo(email){
       //will post info if correct
-      const uri = 'http://www.mocky.io/v2/5b6b223932000065073732f4';
+      const uri = 'http://localhost:1234/admin/users/info';
        
         // send email in obj
         const obj = {
-          email: email,
-          token: localStorage.getItem('token')
+          email: email
       };
       return this.http.post<respData>(uri,obj);
     }
@@ -151,7 +154,7 @@ export class AdminServiceService {
     //request questions
     fetchQuestions(){
       //will post questions if correct
-      const uri = 'http://www.mocky.io/v2/5b71b8643200005519f36f67';
+      const uri = 'http://www.mocky.io/v2/5b75aec32e000062005361db';
 
         // send email in obj
         const obj = {
@@ -161,71 +164,83 @@ export class AdminServiceService {
     }
 
     //request platform
-    fetchPlatform(answerNumber,questionNumber){
+    fetchPlatform(answer_id,question_id){
       //will post fetchPlatform if correct
-      const uri = 'http://www.mocky.io/v2/5b72bef33200000e0e3a7dd5';
 
+      const uri = 'http://www.mocky.io/v2/5b7534a32e00005300535f3c';
       //object of numbers
       const obj = {
-        questionNumber: questionNumber,
-        answerNumber: answerNumber
+        question_id: question_id,
+        answer_id: answer_id
       };
       return this.http.post<respData>(uri, obj)
     }
 
     // save question function new question body
-    saveQuestion(questionNumber,questionBody){
+    saveQuestion(question_id,question_text){
       //recive data of questions
       const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
       //obj of question data
       const obj ={
-        questionNumber: questionNumber,
-        questionBody: questionBody
+        question_id: question_id,
+        question_text: question_text
       }
       return this.http.post<respData>(uri,obj)
 
     }
 
     //save answer function new answer body
-    saveAnswer(answerBody,answerNumber,questionNumber){
+    saveAnswer(answer_text,answer_id,question_id){
       //recive data of answer
       const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
       //obj of answer data
       const obj ={
-        answerBody: answerBody,
-        answerNumber: answerNumber,
-        questionNumber: questionNumber
+        answer_text: answer_text,
+        answer_id: answer_id,
+        question_id: question_id
       }
       return this.http.post<respData>(uri,obj)
 
     }
 
     //save answer info function 
-    updateAnswerData(facebook,twitter,instagram,googlePlus,myBusiness,adWords,nextQuestion){
+    updateAnswerData(platform_weight,platform_id,question_id,answer_id){
       //recive data of answer
       const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
       //obj of answer data
-      const obj ={
-        facebook: facebook,
-        twitter: twitter,
-        instagram: instagram,
-        googlePlus: googlePlus,
-        myBusiness: myBusiness,
-        adWords: adWords,
-        nextQuestion: nextQuestion
+      const obj = {
+        platform_weight: platform_weight.value,
+        platform_id: platform_id,
+        question_id: question_id,
+        answer_id: answer_id
       }
       return this.http.post<respData>(uri,obj)
 
     }
 
+    //save nextquestion to server
+    updateNextQuestion(next_question,question_id,answer_id){
+      //recive data of answer
+    const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
+    //obj of answer data
+    const obj = {
+      next_question: next_question.value,
+      question_id: question_id,
+      answer_id: answer_id,
+      
+    }
+    return this.http.post<respData>(uri,obj)
+
+  }
+
     //delete question function
-    deleteQuestion(questionNumber, questionBody){
+    deleteQuestion(question_id, question_text){
       //recive data of answer
       const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
       //obj of answer data
       const obj ={
-        questionNumber: questionNumber,
-        questionBody: questionBody
+        question_id: question_id,
+        question_text: question_text
       }
       return this.http.post<respData>(uri,obj)
     }
@@ -237,7 +252,7 @@ export class AdminServiceService {
       const obj ={
         newQuestion: newQuestion
       }
-      console.log(obj)
+      // console.log(obj)
       return this.http.post<respData>(uri,obj)
     }
 

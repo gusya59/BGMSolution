@@ -61,7 +61,7 @@
                           <!--Table body-->
                           <tbody>
                             <tr *ngFor="let data of search()">
-                              <th scope="row">{{data.created}}</th>
+                              <th scope="row">{{data.created |  date:'dd/MM/yyyy hh:mm:ss'}}</th>
                               <td>{{data.firstName}}</td>
                               <td>{{data.lastName}}</td>
                               <td>{{data.email}}</td>
@@ -97,7 +97,7 @@ aria-hidden="true">
     </div>
     <div class="modal-body">
       <!-- body -->
-      <p><span class="badge danger-color">created:</span> {{created}}</p>
+      <p><span class="badge danger-color">created:</span> {{created |  date:'dd/MM/yyyy hh:mm:ss'}}</p>
       <p><span class="badge danger-color">name:</span> {{firstName}} {{lastName}}</p>
       <p><span class="badge danger-color">email:</span> {{email}}</p>
       <p>* will permanently remove this user</p>
@@ -127,7 +127,7 @@ aria-hidden="true">
     </div>
     <!-- body -->
     <div class="modal-body">
-      <p><span class="badge success-color">created:</span> {{created}}</p>
+      <p><span class="badge success-color">created:</span> {{created |  date:'dd/MM/yyyy hh:mm:ss'}}</p>
       <p><span class="badge success-color">name:</span> {{firstName}} {{lastName}}</p>
       <p><span class="badge success-color">email:</span> {{email}}</p>
       <p>* will promte this user to admin position</p>
@@ -159,14 +159,14 @@ aria-hidden="true">
     <!-- for test only data will be shown is incorect -->
     <div class="modal-body">
       <h2>{{firstName}} {{lastName}}</h2>
-      <p><span class="badge info-color">Business Name:</span> {{b_name}}</p>
-      <p><span class="badge info-color">Business Type:</span> {{b_type}}</p>
+      <p><span class="badge info-color">Business Name:</span> {{business_name}}</p>
+      <p><span class="badge info-color">Business Type:</span> {{business_type}}</p>
       <p><span class="badge info-color">Mobile:</span> {{mobile}}</p>
       <p><span class="badge info-color">Phone:</span> {{phone}}</p>
       <p><span class="badge info-color">City:</span> {{city}}</p>
       <p><span class="badge info-color">Country:</span> {{country}}</p>
       <p><span class="badge info-color">Address:</span> {{address}}</p>
-      <p><span class="badge info-color">Total Budget: </span>  &nbsp; <i class="fas fa-dollar-sign"></i>{{totalBudget}} </p>
+      <p><span class="badge info-color">Total Budget: </span>  &nbsp; <i class="fas fa-dollar-sign"></i>{{budget}} </p>
 
     </div>
     <div class="modal-footer">

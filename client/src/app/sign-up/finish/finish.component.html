@@ -1,19 +1,47 @@
+<!-- Finish page, can select wanted platforms. and skip the one you dont -->
 <div class="container ">
-    <div class="card">
-        <!--Header-->
-        <h3 class="card-header primary-color white-text">Registration is complete</h3>
-        <h2 class="card-header primary-color-dark white-text">Your user had been created succsesfuly! </h2>
-        <!-- Body -->
-      <div class="card-body">
-          <div class="row justify-content-center">
-            <div class="col-md-8 offset-md-1">
-                <img src="assets/img/like-2634379_1920.png"/>
-            </div>
-          </div>
-          <div class="row justify-content-center">
-              <div class="col-md-8">
-                  <h4 class="text-center text-secondary">Page will redirect you automatically in 15s </h4>
+        <div class="card">
+            <!--Header-->
+            <h3 class="card-header primary-color white-text">Registration is complete</h3>
+            <h2 class="card-header primary-color-dark white-text">Please select the platforms you wish to skip </h2>
+            <!-- Body -->
+          <div class="card-body">
+              <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <!-- platform form -->
+                    <form [formGroup]="platformForm" (ngSubmit)="submit()">
+                        <!-- create form array name platforms -->
+                            <div formArrayName="platforms">
+                                <!-- loop over generated form on platforms array with controls -->
+                                <div *ngFor="let item of platformForm.get('platforms').controls; let i = index;" [formGroupName]="i">
+                                    <!-- testing only, print out json data -->
+                                    <!-- <div style="margin: 10px;">{{item.value | json }}</div> -->
+                                    <div class="row justify-content-center">
+                                        <div class="col-lg-5">
+                                            <!-- checkbox lable -->
+                                            <label><span class="badge secondary-color">{{platformForm.controls.platforms.controls[i].controls.platform_name.value}}</span></label>
+                                        </div>
+                                        <div class="col-lg-5 text-right">
+                                            <!-- checkbox control -->
+                                            <label class="switch">
+                                            <input type="checkbox" formControlName="selected" checked>
+                                            <span class="slider round"></span>
+                                        </label>
+                                        </div>
+                                    </div> 
+                                </div>
+                                <div>
+                                    <button class="btn btn-lg success-color" type="submit">Done</button>
+                                </div>
+                            </div>
+                        </form>
+                    <!-- platform form -->
+                </div>
               </div>
-            </div>
-      </div>
-    </div>
+              <div class="row justify-content-center">
+                  <div class="col-md-8">
+                      
+                  </div>
+              </div>
+          </div>
+        </div>

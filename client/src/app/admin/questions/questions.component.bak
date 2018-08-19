@@ -1,7 +1,7 @@
 import { ModalDirective } from 'angular-bootstrap-md';
-import { AdminServiceService } from '../../service/admin-service.service';
+import { AdminServiceService } from './../../service/admin-service.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, FormGroupDirective } from '../../../../node_modules/@angular/forms';
 
 @Component({
   selector: 'app-adminQuestions',
@@ -12,39 +12,34 @@ export class AdminQuestionsComponent implements OnInit {
 
   //table data inserted
   searchText: string;
-  question_id: number;
-  question_text: string;
-  answer_id: number;
-  answer_text: string;
+  questionNumber: number;
+  questionBody: string;
+  answerNumber: number;
+  answerBody: string;
   // question declaration
   questions:{
-    question_id: number,
-    question_text: string
+    questionNumber: number,
+    questionBody: string
     answers:{
-      answer_id: number;
-      answer_text: string;
+      answerNumber: number;
+      answerBody: string;
     }
   }
+  //platform decleration
+    facebook: number;
+    twitter: number;
+    instagram: number;
+    googlePlus: number;
+    myBusiness: number;
+    adWords: number;
 
     //general data
-    nextQuestion: string;
-    nextquestion_text: string;
+    nextQuestion: number;
+    nextQuestionBody: string;
     answer1Body:string;
     answer2Body: string;
     answer3Body: string;
     answer4Body: string;
-
-    // answer Edit data
-    answer: {
-      answer_id: string;
-      answer_text: string;
-      next_question: string;
-      platforms: {
-        platform_id: string,
-        platform_name: string,
-        platform_weight: number
-      }
-    }
 
     //error msg
     msgError: string;
@@ -52,12 +47,11 @@ export class AdminQuestionsComponent implements OnInit {
   
 
   // question form
-  question_textForm: FormGroup;
+  questionBodyForm: FormGroup;
   // answer form
-  answer_textForm: FormGroup;
+  answerBodyForm: FormGroup;
   //add question form
   newQuestionForm: FormGroup;
-
 
 
   //allow to see editModal for answers modal use
@@ -72,26 +66,23 @@ export class AdminQuestionsComponent implements OnInit {
 
 
   constructor(private adminservice: AdminServiceService, private fb:FormBuilder ) {
-
-
-    // create question body form
-    this.question_textForm= fb .group({
-      question_id: this.question_id,
-      question_text: this.question_text
+    // create angular form
+    this.questionBodyForm= fb .group({
+      questionNumber: this.questionNumber,
+      questionBody: this.questionBody
     });
     //create answer form
-    this.answer_textForm= fb.group({
-        answer_id: this.answer_id,
-        answer_text: this.answer_text
+    this.answerBodyForm= fb.group({
+        answerNumber: this.answerNumber,
+        answerBody: this.answerBody
     });
-    //create question form
     this.newQuestionForm = fb.group({
-      question_text: this.question_text,
+      questionBody: this.questionBody,
       answer1Body: this.answer1Body,
       answer2Body: this.answer2Body,
       answer3Body: this.answer3Body,
       answer4Body: this.answer4Body
-    });
+    })
    }
 
   ngOnInit() {
@@ -123,8 +114,8 @@ export class AdminQuestionsComponent implements OnInit {
 
   
 // save question function new question body
-  saveQuestion(question_text,question_id){
-    return this.adminservice.saveQuestion(question_text,question_id).subscribe(
+  saveQuestion(questionBody,questionNumber){
+    return this.adminservice.saveQuestion(questionBody,questionNumber).subscribe(
       resp => {
         if(resp.success){
           console.log("Posted");
@@ -138,8 +129,8 @@ export class AdminQuestionsComponent implements OnInit {
   }
 
   // save answer function new answer body
-  saveAnswer(answer_text,answer_id, question_id){
-    return this.adminservice.saveAnswer(answer_text,answer_id,question_id).subscribe(
+  saveAnswer(answerBody,answerNumber, questionNumber){
+    return this.adminservice.saveAnswer(answerBody,answerNumber,questionNumber).subscribe(
       resp => {
         if(resp.success){
           console.log("Posted");
@@ -153,26 +144,27 @@ export class AdminQuestionsComponent implements OnInit {
   }
 
   toArray(answers: object) {
-    
     return Object.keys(answers).map(key => answers[key])
   }
 
   // edit question weights
-  editWeights(question_id, answer_id){
-    
-    console.log("ans: " +answer_id,"quest: " + question_id);
-    this.answer_id = answer_id;
-    this.question_id = question_id;
+  editWeights(questionNumber, answerNumber){
+    console.log("ans: " +answerNumber,"quest: " + questionNumber);
+    this.answerNumber = answerNumber;
+    this.questionNumber = questionNumber;
 
     //get weights data from server
-    this.adminservice.fetchPlatform(this.answer_id,this.question_id).subscribe(
+    this.adminservice.fetchPlatform(this.answerNumber,this.questionNumber).subscribe(
       resp =>{
-        // console.log(resp);
         if(resp.success){
-          this.answer = resp;
-          this.editModal.show();
-          // walk around known angular 6 issue
-          this.nextQuestion = resp.next_question;
+          this.facebook = resp.facebook;
+          this.twitter = resp.twitter;
+          this.instagram = resp.instagram;
+          this.googlePlus = resp.googlePlus;
+          this.myBusiness = resp.myBusiness;
+          this.adWords = resp.adWords;
+          this.nextQuestion = resp.nextQuestion;
+          this.nextQuestionBody = resp.nextQuestionBody;
         }
         else{
           this.msgError = resp.message;
@@ -180,16 +172,16 @@ export class AdminQuestionsComponent implements OnInit {
         }
       }
     )
-    
+    this.editModal.show();
   }
 
   //recive data from edit form
-  updateAnswerData(platform_weight,platform_id,question_id,answer_id){
-    
-    return this.adminservice.updateAnswerData(platform_weight,platform_id,question_id,answer_id).subscribe(
+  updateAnswerData(facebook,twitter,instagram,googlePlus,myBusiness,adWords,nextQuestion){
+    return this.adminservice.updateAnswerData(facebook,twitter,instagram,googlePlus,myBusiness,adWords,nextQuestion).subscribe(
       resp => {
         if(resp.success){
-          console.log("Posted: " +platform_weight.value , platform_id , question_id , answer_id);
+          console.log("Posted");
+          this.editModal.hide();
         }
         else{
           this.msgError = resp.message;
@@ -200,38 +192,19 @@ export class AdminQuestionsComponent implements OnInit {
     
   }
 
-  //update edit form next question
-  updateNextQuestion(next_question,question_id,answer_id){
-    return this.adminservice.updateNextQuestion(next_question,question_id,answer_id).subscribe(
-      resp => {
-        if(resp.success){
-          console.log("Posted: " + next_question.value , question_id , answer_id);
-          // fix angular 6 known issue, modal content wont destory on hide()
-          this.answer.next_question = '';
-          this.editModal.hide();  
-
-        }
-        else{
-          this.msgError = resp.message;
-          this.errorModal.show();
-        } 
-      }
-    )
-  }
-
-  // show delete modal get id and text and showing modal 
+  // show delete modal 
   deleteQuestionShow(data){
-    this.question_id = data.question_id;
-    this.question_text = data.question_text,
+    this.questionNumber = data.questionNumber;
+    this.questionBody = data.questionBody,
     this.deleteQuestionModal.show();
   }
 
-  // delete question get id and text and delete the question
-  deleteQuestion(question_id, question_text){
-    return this.adminservice.deleteQuestion(question_id, question_text).subscribe(
+  // delete question
+  deleteQuestion(questionNumber, questionBody){
+    return this.adminservice.deleteQuestion(questionNumber, questionBody).subscribe(
       resp => {
         if(resp.success){
-          console.log("Deleted: "+ question_id);
+          console.log("Deleted: "+ questionNumber);
           this.deleteQuestionModal.hide();
         }
         else{
@@ -241,7 +214,7 @@ export class AdminQuestionsComponent implements OnInit {
       }
     )
   }
-  // save new question button generatets new question
+  // save new question button
   saveNewQuestion(){
     console.log(this.newQuestionForm.value)
     return this.adminservice.saveNewQuestion(this.newQuestionForm.value).subscribe(
@@ -249,7 +222,6 @@ export class AdminQuestionsComponent implements OnInit {
         if(resp.success){
           console.log("Posted: " +this.newQuestionForm.value);
           this.addQuestionModal.hide();
-          this.newQuestionForm.reset();
         }
         else{
           this.msgError = resp.message;
