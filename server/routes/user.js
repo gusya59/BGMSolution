@@ -4,6 +4,7 @@ var jwt = require('jsonwebtoken');
 
 var registrationSchema = require('../models/Registration.js');
 var verFuncs = require('../utils/verificationFunctions.js');
+var validFuncs = require('../utils/validationFunctions');
 
  //fetch user's data. the function get's user token, fetching an email and a user permission and searching for the user data in the db.
  //input: token
@@ -43,7 +44,31 @@ var verFuncs = require('../utils/verificationFunctions.js');
         res.status(200).send({ success: false, message: "can't change password" })
     })
 
-    //save data
+    //save data - userDataChanged
+    //input: user data to update
+    //output: respond to the client side. true on success, otherwith false and an array of errors
+    router.post('/changeUserData',verFuncs.getTokenFromHeaders, async function (req, res){
+      var errors = []; //will contain all the errors
+      var verifyToken = verFuncs.verifyToken(req.token, jwt);
+      if(verifyToken){
+        var email = verFuncs.decodeUserEmail(req.token, jwt);
+        var newData = req.body;
+        //to add validation
+        await userDataValidation(errors,newData); //data validation
+        if (errors.length) {
+          res.status(200).send({ success: false, errors: errors })
+        }
+        else{
+          var changed = await registrationSchema.userDataRegistration(newData,email);
+          if(true===changed){
+            res.status(200).send({ success: true, message: "data updated"});
+          }
+          res.status(200).send({ success: false, message: "error" })
+        }
+      }
+      res.status(200).send({ success: false, message: "session has expired" })
+
+  })
 
     //delete acount
   //input: email of the user that need to be deleted
@@ -60,6 +85,22 @@ var verFuncs = require('../utils/verificationFunctions.js');
 
 
     //pass algoritm weights data
+
+
+//unput user data validation
+async function userDataValidation(errors, data) {
+  await validFuncs.validateFirstName(errors, data.firstName);
+  validFuncs.validateLastName(errors, data.lastName);
+  validFuncs.validatePassword(errors, data.password);
+  validFuncs.validateBusinessName(errors, data.business_name);
+  //validateString(errors, data.bussiness_type);
+  validFuncs.validateMobile(errors, data.mobile);
+  validFuncs.validatePhone(errors, data.phone);
+  //validateCountry(errors, data.country);
+  //validateString(errors, data.city);
+  //validateAddress(errors, data.address);
+  validFuncs.validateBudget(errors, data.budget)
+}
 
 
     module.exports = router;

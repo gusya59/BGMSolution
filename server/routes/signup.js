@@ -6,7 +6,8 @@ var jwt = require('jsonwebtoken');
 
 
 var registrationSchema = require('../models/Registration.js');
-var verFuncs = require('../utils/verificationFunctions.js')
+var verFuncs = require('../utils/verificationFunctions.js');
+var validFuncs = require('../utils/validationFunctions');
 
 //registration
 router.post('/registration', async function (req, res) {
@@ -70,16 +71,18 @@ router.post('/usersettings',verFuncs.getTokenFromHeaders,async function (req, re
 
 //log in function
 router.post('/login', async function (req, res) {
-  console.log("the login input is: "+req.body);
   var body = req.body;
   var errors = [];
   // check the validation of email and password input
-  await validateEmail(errors, body.email).then(validatePassword(errors, body.password));
+  console.log(validFuncs.validateEmail(errors, body.email));
+  if(validFuncs.validateEmail(errors, body.email) && (validFuncs.validatePassword(errors, body.password)))
+  {
   if (!errors.length) { //validate email and password input
     //if email and password are valid
-    
+    console.log("here");
     var emailFound = await registrationSchema.findByEmail(body.email); //returns user object with all the data
     if (emailFound) {
+      console.log("here2");
       var passGood = await registrationSchema.verifyPassword(body.password, emailFound.password)
       //check if there is no such user and if the password is matching
       if (!passGood) {
@@ -94,6 +97,7 @@ router.post('/login', async function (req, res) {
     }
     res.status(200).send({ success: false, message: "email wasn't found" });
   }
+}
   else {
     res.status(200).send({ success: false, errors: errors });
   }
@@ -102,152 +106,24 @@ router.post('/login', async function (req, res) {
 //functions
 //registaration validation
 async function RegistrationValidation(errors, user) {
-  await validateFirstName(errors, user.firstName);
-  validateLastName(errors, user.lastName);
-  validateEmail(errors, user.email);
-  validatePassword(errors, user.password);
+  await validFuncs.validateFirstName(errors, user.firstName);
+  validFuncs.validateLastName(errors, user.lastName);
+  validFuncs.validateEmail(errors, user.email);
+  validFuncs.validatePassword(errors, user.password);
 }
 
 //unput user data validation
 async function userDataRegistrationValidation(errors, data) {
-  await validateBusinessName(errors, data.business_name);
+  await validFuncs.validateBusinessName(errors, data.business_name);
   //validateString(errors, data.bussiness_type);
-  validateMobile(errors, data.mobile);
-  validatePhone(errors, data.phone);
+  validFuncs.validateMobile(errors, data.mobile);
+  validFuncs.validatePhone(errors, data.phone);
   //validateCountry(errors, data.country);
   //validateString(errors, data.city);
   //validateAddress(errors, data.address);
-  validateBudget(errors, data.budget)
+  validFuncs.validateBudget(errors, data.budget)
 }
 
-//first name validation -> checks if there any numbers or characters in the name
-async function validateFirstName(errors, data) {
-  if (!isEmptyOrInvalid(data)) {
-    errors.push("first name is empty");
-  }
-  else {
-    var reg = RegExp('^[A-Za-z]+$')  //only alphabet  to do something with length?
-    if (!reg.test(data)) {
-      errors.push("the first name is not right")
-    }
-  }
-}
-//last name validation -> checks if there any numbers or characters in the name
-//שכפול קוד. לאחד לפונקציה אחת?
-async function validateLastName(errors, data) {
-  if (!isEmptyOrInvalid(data)) {
-    errors.push("last name is empty");
-  }
-  else {
-    var reg = RegExp('^[A-Za-z]+$')  //only alphabet   to do something with length?
-    if (!reg.test(data)) {
-      errors.push("the last name is not right")
-    }
-  }
-}
-//first name validation -> checks if there any numbers or characters in the name
-async function validateEmail(errors, data) {
-  if (!isEmptyOrInvalid(data)) {
-    errors.push("email is empty");
-  }
-  else {
-    //numbers, letters, @, characters
-    var reg = RegExp('^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$')
-    if (!reg.test(data)) {
-      errors.push("the email is not right")
-    }
-  }
-}
-//validate password
-async function validatePassword(errors, data) {
-  if (!isEmptyOrInvalid(data)) {
-    errors.push("last password is empty");
-  }
-  else {
-    var reg = RegExp('^(?=.*?[A-Z])(?=.*?[a-z]).{7,}([0-9])$')  //at least 8 characters, one upper and one lower case, numbers - ,{7,}->more than 8. it's counting from 0
-    if (!reg.test(data)) {
-      errors.push("the password is not right")
-    }
-  }
-}
-//check if the data input is empty
-async function isEmptyOrInvalid(str) {
-  if (typeof str != "undefined" && str != null && str.length != null && str.length > 0) {
-    return false;
-  }
-  return true;
-}
-//check if this a string - good for different functions
-async function validateString(errors, data) {
-  if (!isEmptyOrInvalid(data)) {
-    errors.push("string is empty");
-  }
-  else {
-    var reg = RegExp('^([A-Za-z])(//s)+$')  //only alphabet   to do something with length?
-    if (!reg.test(data)) {
-      errors.push(reg + "the string is not right")
-    }
-  }
-}
-async function validateBusinessName(errors, data) {
-  if (!isEmptyOrInvalid(data)) {
-    errors.push("string is empty");
-  }
-  else {
-    var reg = RegExp('^(.)+$')  //any caharacter except new line
-    if (!reg.test(data)) {
-      errors.push("the business is not right")
-    }
-  }
-}
-//mobile number validation
-async function validateMobile(errors, data) {
-  if (!isEmptyOrInvalid(data)) {
-    errors.push("mobile is empty");
-  }
-  else {
-    var reg = RegExp('^([0-9]*)$')  //numbers
-    if (!reg.test(data)) {
-      errors.push("the mobile is not right")
-    }
-  }
-}
-//phone number validation
-async function validatePhone(errors, data) {
-  if (!isEmptyOrInvalid(data)) {
-    errors.push("phone is empty");
-  }
-  else {
-    var reg = RegExp('^([0-9]*)$')  //numbers, '-',
-    if (!reg.test(data)) {
-      errors.push("the phone is not right")
-    }
-  }
-}
-//address validation
-async function validateAddress(errors, data) {
-  if (!isEmptyOrInvalid(data)) {
-    errors.push("address is empty");
-  }
-  else {
-    var reg = RegExp('^([A-Z]*)(/.*)(/,*)(/s*)$')  //alphabet, '.', ',' ,whitespaces
-    if (!reg.test(data)) {
-      errors.push("the address is not right")
-    }
-  }
-}
-//budget validation
-async function validateBudget(errors, data) {
-  if (!isEmptyOrInvalid(data)) {
-    errors.push("budget is empty");
-  }
-  else {
-    var reg = RegExp('^([0-9]*)$')  //numbers
-    if (!reg.test(data)) {
-      errors.push("the budget is not right")
-    }
-  }
-}
 
 
 

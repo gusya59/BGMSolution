@@ -50,7 +50,7 @@ module.exports.inputData = async function (newUser) {
     newUser.city = "true";
     newUser.address = "true";
     newUser.budget = "0";
-    newUser.isAdmin = "false";
+    newUser.isAdmin = false;
     var promise = newUser.save().then(result => {
       // console.log("the result is: " + result);
       return result;
