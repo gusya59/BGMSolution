@@ -3,116 +3,40 @@
   <div class="row justify-content-center">
       <div class="container card card-body">
         <div class="col-lg-12">
-        <table class="table">
-            <!-- Headeres -->
-            <thead class="thead-dark">
-            <tr>
-                <th style="width: 5%" scope="col">#</th>
-                <th style="width: 10%" scope="col">Platforms</th>
-                <th scope="col">Weights</th>
-                <th style="width: 10%" scope="col">Budget overall</th>
-            </tr>
-            </thead>
-
-            <!-- Table with data bars Style:Width controls the % number -->
-            <tbody>
-
-            <!-- Facebook -->
-            <tr>
-                <th scope="row">1</th>
-                <td>Facebook</td>
-                <td>
-                    <div class="progress">
-                        <div class="progress-bar bg-success" role="progressbar" [style.width]="widthFacebook" aria-valuenow="21" aria-valuemin="0" aria-valuemax="100">{{widthFacebook}}</div>
-                    </div>
-                </td>
-                <td>${{budgetFacebook}}</td>
-            </tr>
-
-            <!-- Instagram -->
-            <tr>
-                <th scope="row">2</th>
-                <td>Instagram</td>
-                <td>
-                    <div class="progress">
-                        <div class="progress-bar deep-purple" role="progressbar" [style.width]="widthInstagram" aria-valuenow="13" aria-valuemin="0" aria-valuemax="100">{{widthInstagram}}</div>
-                    </div>
-                </td>
-                <td>${{budgetInstagram}}</td>
-            </tr>
-
-            <!-- Google + -->
-            <tr>
-                <th scope="row">3</th>
-                <td>Google +</td>
-                <td>
-                    <div class="progress">
-                        <div class="progress-bar light-green" role="progressbar" [style.width]="widthGoogleP" aria-valuenow="8.7912" aria-valuemin="0" aria-valuemax="100">{{widthGoogleP}}</div>
-                    </div>
-                </td>
-                <td>${{budgethGoogleP}}</td>
-            </tr>
-
-            <!-- Google AdWords-->
-            <tr>
-                <th scope="row">4</th>
-                <td>Google AdWords</td>
-                <td>
-                    <div class="progress">
-                        <div class="progress-bar deep-orange" role="progressbar" [style.width]="widthGoogleAdWords" aria-valuenow="30.769" aria-valuemin="0" aria-valuemax="100">{{widthGoogleAdWords}}</div>
-                    </div>
-                </td>
-                <td>${{budgetGoogleAdWords}}</td>
-            </tr>
-
-            <!-- Google-->
-            <tr>
-                <th scope="row">5</th>
-                <td>Google</td>
-                <td>
-                    <div class="progress">
-                        <div class="progress-bar mdb-color" role="progressbar" [style.width]="widthGoogle" aria-valuenow="4.6153" aria-valuemin="0" aria-valuemax="100">{{widthGoogle}}</div>
-                    </div>
-                </td>
-                <td>${{budgetGoogle}}</td>
-            </tr>
-
-
-            <!-- Google My buissness-->
-            <tr>
-                <th scope="row">6</th>
-                <td>Google My Business</td>
-                <td>
-                    <div class="progress">
-                        <div class="progress-bar  lime" role="progressbar" [style.width]="widthGoogleMybuissness" aria-valuenow="14.065" aria-valuemin="0" aria-valuemax="100">{{widthGoogleMybuissness}}</div>
-                    </div>
-                </td>
-                <td>${{budgetGoogleMybuissness}}</td>
-            </tr>
-
-            <!-- Twiiter-->
-            <tr>
-                <th scope="row">7</th>
-                <td>Twiiter</td>
-                <td>
-                    <div class="progress">
-                        <div class="progress-bar teal" role="progressbar" [style.width]="widthTwiiter" aria-valuenow="6.5934" aria-valuemin="0" aria-valuemax="100">{{widthTwiiter}}</div>
-                    </div>
-                </td>
-                <td>${{budgetTwiiter}}</td>
-            </tr>
-
-            <!-- Tottal-->
-            <tr>
-                <th scope="row"></th>
-                <td></td>
-                <td></td>
-                <td class="success-color border border-primary">Total of: ${{budgetTotal}}</td>
-            </tr>
-
-
-            </tbody>
-        </table>
+            <table class="table">
+                <thead class="grey lighten-2">
+                    <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">First</th>
+                    <th scope="col">Last</th>
+                    <th scope="col">Budget</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- loop for platforms -->
+                    <tr *ngFor="let platform of platforms; let i = index">
+                        <!-- platform numbering -->
+                        <th scope="row">{{i+1}}</th>
+                        <!-- platform name -->
+                        <td>{{platform.platform_name}}</td>
+                        <!-- platform progress bar loop -->
+                            <td id="progressCol">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-striped" role="progressbar" [style.width]="widthBar[i]" [style.background-color]="colorArray[i]" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                {{widthBar[i]}}
+                            </td>
+                        <td>{{platform.platform_budget}}</td>
+                    </tr> 
+                    <tr>
+                        <!-- budget total row -->
+                        <th scope="row"></th>
+                        <td></td>
+                        <td></td>
+                        <td class="success-color border border-primary">Total of: ${{budgetTotal}}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
     </div>
