@@ -10,6 +10,13 @@ interface respData {
   budgetGoogleMybuissness: number;
   budgetTwiiter: number;
   
+  platforms:[
+    {
+      platform_id: string,
+      platform_name: string,
+      platform_budget: number
+    }
+  ];
 }
 
 @Injectable({
@@ -24,7 +31,7 @@ export class UserPreviewService {
   getPreview(){
 
     //will get user info if correct
-    const uri = 'http://www.mocky.io/v2/5b5f4a642e00007d006948e3';
+    const uri = 'http://www.mocky.io/v2/5b77f5c32e00004b00864be9';
 
     //get data from server
     return this.http.get<respData>(uri)

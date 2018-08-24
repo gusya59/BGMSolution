@@ -1,0 +1,39 @@
+
+<table class="table">
+            <!-- Headeres -->
+            <thead class="thead-dark">
+            <tr>
+                <th style="width: 5%" scope="col">#</th>
+                <th style="width: 10%" scope="col">Platforms</th>
+                <th scope="col">Weights</th>
+                <th style="width: 10%" scope="col">Budget overall</th>
+            </tr>
+            </thead>
+
+            <!-- Table with data bars Style:Width controls the % number -->
+            <tbody>
+            <!-- Facebook -->
+            <div *ngFor="let platform of platforms; let i = index">
+                <tr>
+                    <th scope="row">{{platform.platform_id}}</th>
+                    <td>{{platform.platform_name}}</td>
+                    <td>
+                        <div class="progress">
+                            <div class="progress-bar bg-success" role="progressbar" [style.width]="90" aria-valuenow="21" aria-valuemin="0" aria-valuemax="100">{{widthFacebook}}</div>
+                        </div>
+                    </td>
+                    <td>${{platform.budget}}</td>
+                </tr>
+            </div>
+            
+            <!-- Tottal-->
+            <tr>
+                <th scope="row"></th>
+                <td></td>
+                <td></td>
+                <td class="success-color border border-primary">Total of: ${{budgetTotal}}</td>
+            </tr>
+
+
+            </tbody>
+        </table>
