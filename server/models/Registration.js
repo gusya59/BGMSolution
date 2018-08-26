@@ -29,7 +29,7 @@ var UsersSchemaExport = module.exports = mongoose.model('Users', UsersSchema);
 
 //create user and hash it's password
 module.exports.inputData = async function (newUser) {
-  //console.log("the user is: " + newUser);
+  console.log("the user is: " + newUser);
   //hash and store the password in the DB
   var hashedPassword = await bcrypt.hash(newUser.password, 10).then(hashedPassword => {
     return hashedPassword

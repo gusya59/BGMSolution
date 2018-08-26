@@ -1,48 +1,87 @@
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
 //var Platforms = require('../models/Platforms')
 
 //algorithm's db scheme
 var SurveySchema = mongoose.Schema({
   question_id: { type: String }, //, unique: true
-  question_text: { type: String, required: true }, 
+  question_text: { type: String, required: true },
   //answer's object. will contain 4 answers
-  answers: { type:
-    [{
-      answer_id: { type: String}, //, unique: true 
-      answer_text: { type: String, required: true }, 
-      next_question: { type: String, required: true },
-      platforms: {
-        type: [{
-          platform_id: { type: String, required: true },
-          platform_name: { type: String, required: true },
-          platform_weight: { type: Number, required: true },
-        }]
-      }
-    }]
+  answers: {
+    type:
+      [{
+        answer_id: { type: String }, //, unique: true 
+        answer_text: { type: String, required: true },
+        next_question: { type: String, required: true },
+        //digital media platforms
+        platforms: {
+          type: [{
+            platform_id: { type: String, required: true },
+            platform_name: { type: String, required: true },
+            platform_weight: { type: Number, required: true },
+          }]
+        }
+      }]
   }
 });
 
 
 var SurveySchemaExport = module.exports = mongoose.model('Survey', SurveySchema);
 
-
-module.exports.inputData = async function (data){
-  console.log("the data is: "+data);
-  try {
-    var created = await data.save()(function (err) {
-      if (err){
-        console.log("can't input data "+ err);
-        return false;
-      }
-      else{
-        console.log("ok "+ created);
-        return created;
-      }
-    })
-  }catch (err) {
-    throw new Error('cant create a question')
+//find specific question and update it's text
+//input:  the id and the text of specific question
+//output: true on success, else false
+module.exports.updateQuestion = async function (data) {
+  var updated = await this.findOneAndUpdate({ "question_id": data.question_id }, { $set: { "question_text": data.question_text } });
+  if (updated) { //if the data was updated
+    return true;
+  } else {
+    return false;
   }
 }
 
+//find specific answer and update it's data
+//input: question id, answer id and answer's text
+//output: true on success, else false
+module.exports.updateAnswer = async function (data) {
+  var updated = await this.update({ "question_id": data.question_id, "answers.answer_id": data.answer_id }, { $set: { "answers.$.answer_text": data.answer_text } });
+  if (updated) { //if the data was updated
+    return true;
+  } else {
+    return false;
+  }
+}
 
+//find specific platform and update it's data
+//input: 
+//output: true on success, else false
+module.exports.updatePlatform = async function (data) {
+  console.log("the data is: ");
+  var updated = await this.update({ "answers.answer_id": data.answer_id }, { $set: { "answers.$.next_question": data.next_question } }).then(
+    await this.update({ "answers.$.platforms.$.platform_name": data.platform_name }, { $set: { "answers.$.platforms.$.platform_weight": data.platform_weight } })
+  );
+  console.log("updated: " + updated);
+  if (updated) { //if the data was updated
+    return true;
+  } else {
+    return false;
+  }
+}
+
+//insert specific data into the db
+//input: data
+//output: function promise. on success- object that has been created, on fail - false
+module.exports.insertDataIntoDB = async function (newQuestion) {
+  var promise = await this.create(newQuestion).then(result => {
+    return result;
+  })
+  return promise;
+}
+
+//delete specific question.
+//input: question id
+//output: removed object if succeded, null if not
+module.exports.deleteQuestion = async function (data) {
+  console.log("The data is: " + data);
+  var removed = await this.findOneAndDelete({ question_id: data.question_id })
+  return removed;
+}

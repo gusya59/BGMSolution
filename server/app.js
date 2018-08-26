@@ -13,6 +13,7 @@ var indexRouter = require('./routes/index');
 var signupRouter = require('./routes/signup');
 var adminRouter = require ('./routes/admin');
 var userRouter = require ('./routes/user')
+var surveyRouter = require('./routes/survey')
 var app = express();
 
 app.set('views', __dirname + '/views'); // general configuration
@@ -56,6 +57,7 @@ app.use('/', indexRouter);
 app.use('/signup', signupRouter); 
 app.use('/admin',adminRouter); 
 app.use('/user',userRouter); 
+app.use('/survey',surveyRouter);
 
 
 //app.use('./api', apiRouter);

@@ -69,11 +69,6 @@ router.post('/admins/changePermissions', async function (req, res) {
   }
 });
 
-// router.post('/addQuestion', async function (req,res){
-//   var newQuestion =new QuestionSchema(req.body);
-//   var result = await QuestionSchema.createQuestion(newQuestion);
-//   console.log(result);
-// });
 
 //fetching user info from the db
 //input: user's email
@@ -102,31 +97,11 @@ router.post('/users/info', async function (req, res) {
 //   } 
 // });
 
-//input: user's email
-//output: on success: object with user's info, else false
-router.post('/questions/createAlgoData', async function (req, res) {
-  var input = req.body;
-  //console.log(req.body.answers[0].platforms);
-  var newAlgoData = new SurveySchema({
-    question_id: input.question_id,
-    question_text: input.question_text,
-    next_question: input.next_question,
-    answers: input.answers 
-  });
 
-  console.log(newAlgoData);
-  var isCreated = newAlgoData.save((function (err) {
+// router.post('/addQuestion', async function (req,res){
+//   var newQuestion =new QuestionSchema(req.body);
+//   var result = await QuestionSchema.createQuestion(newQuestion);
+//   console.log(result);
+// });
 
-     if (err){
-       console.log("errorr");
-        //return false; 
-        res.status(200).send({ success: false, message: "can't create survey" })
-      } else{
-        console.log(isCreated);
-         //return isCreated; 
-         res.status(200).send({ success: true, message: "survey was created"})
-        }
-  }))
-  })
-
-  module.exports = router;
+module.exports = router;
