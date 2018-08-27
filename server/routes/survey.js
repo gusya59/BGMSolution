@@ -55,6 +55,19 @@ router.post('/addNewQuestion', async function (req, res) {
     }
 })
 
+//delete question and all the relevant data including the relevant answers and platforms data
+//input: question id
+//output: on success: success message , else false message
+router.post('/removeQuestion', async function (req, res) {
+    var isDeleted = await SurveySchema.deleteQuestion(req.body);
+    if (isDeleted) {
+        res.status(200).send({ success: true, message: "Question was deleted" })
+    }
+    else {
+        res.status(200).send({ success: false, message: "Cant delete the question" })
+    }
+})
+
 //*****************************************Update Survey's Data Functions*****************************/
 //edit question data
 //input: data: the id and the text of specific question
@@ -83,15 +96,14 @@ router.post('/saveAnswer', async function (req, res) {
     }
 })
 
+
+
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ ask david about this. one or two separate functions?
 //edit platforms data
 //input: data
 //output: on success: success message , else false message
 router.post('/savePlatform', async function (req, res) {
-    var temp = req.body;
-    var length = temp.platforms.size;
-    console.log("jbv " + length);
-    console.log(SurveySchema.answers.answer[0].platforms.size);
-    console.log((SurveySchema.answers.answer[0].platforms).size);
+
     var isCreated = await SurveySchema.updatePlatform(req.body);
     if (isCreated) {
         res.status(200).send({ success: true, message: "Answer's data has been updated" })
@@ -101,17 +113,6 @@ router.post('/savePlatform', async function (req, res) {
     }
 })
 
-//delete question and all the relevant data including the relevant answers and platforms data
-//input: question id
-//output: on success: success message , else false message
-router.post('/removeQuestion', async function (req, res) {
-    var isDeleted = await SurveySchema.deleteQuestion(req.body);
-    if (isDeleted) {
-        res.status(200).send({ success: true, message: "Question was deleted" })
-    }
-    else {
-        res.status(200).send({ success: false, message: "Cant delete the question" })
-    }
-})
+
 
 module.exports = router;
