@@ -68,6 +68,32 @@ router.post('/removeQuestion', async function (req, res) {
     }
 })
 
+//fetch specific answer data from the db (including the relevant platforms)
+//input: answer's id
+//output: answer's data on success, else false
+router.post('/fetchPlatform', async function (req, res) {
+    var result = await SurveySchema.fetchPlatformData(req.body);
+    if (result) {
+        res.status(200).send({ success: true, data: result })
+    }
+    else {
+        res.status(200).send({ success: false, message: "Can't fetch data" })
+    }
+})
+
+//fetch specific question data from the db (including the relevant answers)
+//input: question's id
+//output: question's data on success, else false
+router.post('/fetchQuestion', async function (req, res) {
+    var result = await SurveySchema.fetchQuestionData(req.body);
+    if (result) {
+        res.status(200).send({ success: true, data: result })
+    }
+    else {
+        res.status(200).send({ success: false, message: "Can't fetch data" })
+    }
+})
+
 //*****************************************Update Survey's Data Functions*****************************/
 //edit question data
 //input: data: the id and the text of specific question
@@ -103,7 +129,6 @@ router.post('/saveAnswer', async function (req, res) {
 //input: data
 //output: on success: success message , else false message
 router.post('/savePlatform', async function (req, res) {
-
     var isCreated = await SurveySchema.updatePlatform(req.body);
     if (isCreated) {
         res.status(200).send({ success: true, message: "Answer's data has been updated" })

@@ -93,7 +93,30 @@ module.exports.insertDataIntoDB = async function (newQuestion) {
 //input: question id
 //output: removed object if succeded, null if not
 module.exports.deleteQuestion = async function (data) {
-  console.log("The data is: " + data);
   var removed = await this.findOneAndDelete({ question_id: data.question_id })
   return removed;
+}
+
+//fetch specific answer data from the db (including the relevant platforms)
+//input: answer's id
+//output: answer's data on success, else false
+module.exports.fetchPlatformData = async function (data) {
+  var found = await this.findOne({ "answers.answer_id": data.answer_id}, {answers: {$elemMatch: {answer_id:data.answer_id}}});
+  if (found) { //if the data was found
+    return found;
+  } else {
+    return false;
+  }
+}
+
+//fetch specific question data from the db (including the relevant answers)
+//input: question's id
+//output: question's data on success, else false
+module.exports.fetchQuestionData = async function (data) {
+  var found = await this.findOne({ "question_id": data.question_id});
+  if (found) { //if the data was found
+    return found;
+  } else {
+    return false;
+  }
 }
