@@ -18,15 +18,15 @@ var SelectedPlatformsSchemaExport = module.exports = mongoose.model('SelectedPla
 
 //create selected platform scheme in the db
 //input:  user is and selected platform's data
-//output: true on success, else false
+//output: data on success, else false
 module.exports.inputData = async function (data) {
-     data.save((function (err) {
-        if (err) {
-            return false;
-        } else {
-            return true;
-        }
-    }))
+    var created = await data.save();
+    if(ctreated){
+      return created;
+    }
+    else{
+      return false
+    }   
 }
 
 //fetch user selected platform data from the db 

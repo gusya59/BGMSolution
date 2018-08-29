@@ -106,19 +106,14 @@ async function userDataValidation(errors, data) {
 //input: survey data
 //output: on success: success message, else false message
 router.post('/createUserAnswerDB', async function (req, res) {
-  var input = req.body;
-  var userAnswers = new userAnswersSchema({
-    user_email: input.user_email,
-    questions: input.questions
-  });
-  userAnswers.save((function (err) {
-    console.log(err);
-    if (err) {
-      res.status(200).send({ success: false, message: "can't create survey" })
+  var newDB = new userAnswersSchema(req.body);
+    var created = await userAnswersSchema.inputData(newDB)
+    console.log(created);
+    if (created) {
+      res.status(200).send({ success: true, message: "db was created" })
     } else {
-      res.status(200).send({ success: true, message: "survey was created" })
+      res.status(200).send({ success: false, message: "can't create selected platforms db" })
     }
-  }))
 })
 
 
@@ -134,6 +129,7 @@ router.post('/createSelectedPlatformDB', async function (req, res) {
     res.status(200).send({ success: false, message: "can't create selected platforms db" })
   }
 })
+
 
 //fetching the list of the platforms
 //input: user_id

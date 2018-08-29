@@ -24,5 +24,16 @@ var UserAnswersSchema = mongoose.Schema({
 
 var UserAnswersSchemaExport = module.exports = mongoose.model('UserAnswers', UserAnswersSchema);
 
-
+//create selected platform scheme in the db
+//input:  user is and selected platform's data
+//output: data on success, else false
+module.exports.inputData = async function (data) {
+    var created = await data.save();
+    if(ctreated){
+      return created;
+    }
+    else{
+      return false
+    }   
+}
 
