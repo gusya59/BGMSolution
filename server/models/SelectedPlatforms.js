@@ -15,3 +15,40 @@ var SelectedPlatformsSchema = mongoose.Schema({
 
 
 var SelectedPlatformsSchemaExport = module.exports = mongoose.model('SelectedPlatforms', SelectedPlatformsSchema);
+
+//create selected platform scheme in the db
+//input:  user is and selected platform's data
+//output: true on success, else false
+module.exports.inputData = async function (data) {
+     data.save((function (err) {
+        if (err) {
+            return false;
+        } else {
+            return true;
+        }
+    }))
+}
+
+//fetch user selected platform data from the db 
+//input: user's id
+//output: user's data on success, else false
+module.exports.fetchSelectedPlatformsData = async function (data) {
+    var found = await this.findOne({ "user_id": data.user_id});
+    if (found) { //if the data was found
+      return found;
+    } else {
+      return false;
+    }
+  }
+
+//finf specific user and updata it's selectedplatform data
+//input: user's id, platforms data
+//output: user's data on success, else false
+module.exports.updatePlatformSelection = async function (data) {
+    var found = await this.findOneAndUpdate({ "user_id": data.user_id}, {$set:{ platforms: data.platforms}});
+    if (found) { //if the data was updated
+      return found;
+    } else {
+      return false;
+    }
+  }

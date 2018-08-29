@@ -18,7 +18,6 @@ router.post('/createAlgoData', async function (req, res) {
     });
     newAlgoData.save((function (err) {
         if (err) {
-            console.log("errorr");
             res.status(200).send({ success: false, message: "can't create survey" })
         } else {
             res.status(200).send({ success: true, message: "survey was created" })

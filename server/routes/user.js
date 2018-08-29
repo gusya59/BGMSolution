@@ -3,6 +3,7 @@ var router = express();
 var jwt = require('jsonwebtoken');
 
 var registrationSchema = require('../models/Registration.js');
+var sPlatformSchema = require('../models/SelectedPlatforms.js');
 var userAnswersSchema = require('../models/UserAnswers.js');
 var verFuncs = require('../utils/verificationFunctions.js');
 var validFuncs = require('../utils/validationFunctions');
@@ -84,7 +85,6 @@ router.post('/remove', async function (req, res) {
   }
 });
 
-
 //user data validation
 //input: array that will contain validation errors, data to validate
 //output: promise 
@@ -108,18 +108,57 @@ async function userDataValidation(errors, data) {
 router.post('/createUserAnswerDB', async function (req, res) {
   var input = req.body;
   var userAnswers = new userAnswersSchema({
-      user_email: input.user_email,
-      questions: input.questions
+    user_email: input.user_email,
+    questions: input.questions
   });
   userAnswers.save((function (err) {
     console.log(err);
-      if (err) {
-          console.log("errorr");
-          res.status(200).send({ success: false, message: "can't create survey" })
-      } else {
-          res.status(200).send({ success: true, message: "survey was created" })
-      }
+    if (err) {
+      res.status(200).send({ success: false, message: "can't create survey" })
+    } else {
+      res.status(200).send({ success: true, message: "survey was created" })
+    }
   }))
+})
+
+
+//creating survey scheme in the db
+//input: survey data
+//output: on success: success message, else false message
+router.post('/createSelectedPlatformDB', async function (req, res) {
+  var newDB = new sPlatformSchema(req.body);
+  var created = await sPlatformSchema.inputData(newDB)
+  if (created) {
+    res.status(200).send({ success: true, message: "db was created" })
+  } else {
+    res.status(200).send({ success: false, message: "can't create selected platforms db" })
+  }
+})
+
+//fetching the list of the platforms
+//input: user_id
+//output: on success: success message and platforms, else false message
+router.post('/fetchPlatformList', async function (req, res) {
+  var result = await sPlatformSchema.fetchSelectedPlatformsData(req.body)
+  if (result) {
+    res.status(200).send({ success: true, data: result })
+  }
+  else {
+    res.status(200).send({ success: false, message: "Can't fetch data" })
+  }
+})
+
+//updating user platforms selection
+//input: user_id, platforms data
+//output: on success: success message ,else false message
+router.post('/updatePlatformsSelection', async function (req, res) {
+  var result = await sPlatformSchema.updatePlatformSelection(req.body)
+  if (result) {
+    res.status(200).send({ success: true, message: "Updated"  })
+  }
+  else {
+    res.status(200).send({ success: false, message: "Can't fetch data" })
+  }
 })
 
 
