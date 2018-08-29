@@ -5,6 +5,7 @@ var jwt = require('jsonwebtoken');
 var registrationSchema = require('../models/Registration.js');
 var sPlatformSchema = require('../models/SelectedPlatforms.js');
 var userAnswersSchema = require('../models/UserAnswers.js');
+
 var verFuncs = require('../utils/verificationFunctions.js');
 var validFuncs = require('../utils/validationFunctions');
 
@@ -102,8 +103,8 @@ async function userDataValidation(errors, data) {
   validFuncs.validateBudget(errors, data.budget)
 }
 
-//creating survey scheme in the db
-//input: survey data
+//create user's answers scheme in the db
+//input: user_email, questions and answers that were selected by user, relevant platform data for each answer
 //output: on success: success message, else false message
 router.post('/createUserAnswerDB', async function (req, res) {
   var newDB = new userAnswersSchema(req.body);
@@ -116,9 +117,32 @@ router.post('/createUserAnswerDB', async function (req, res) {
     }
 })
 
+//create user's answers scheme in the db
+//input: user_email, questions and answers that were selected by user, relevant platform data for each answer
+//output: on success: success message, else false message
+router.post('/addUserAnswer', async function (req, res) {
+  var data = req.body;
+  if(data.survey_completed){
+    res.status(200).send({ success: false, message: "the survey is done"})
+  }
+ else{
+  var nex = await userAnswersSchema.findOrCreateUserAnswer(data);
+ }
 
-//creating survey scheme in the db
-//input: survey data
+    // if (created) {
+    //   res.status(200).send({ success: true, message: "next question please" })
+    // } else {
+    //   res.status(200).send({ success: false, message: "the survey is done" })
+    // }
+})
+
+
+
+
+//---------------------SelectedPlatform relevant Functions ------------------------//
+
+//create selected platform scheme in the db
+//input:  user id and selected platform's data
 //output: on success: success message, else false message
 router.post('/createSelectedPlatformDB', async function (req, res) {
   var newDB = new sPlatformSchema(req.body);

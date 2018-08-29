@@ -19,21 +19,53 @@ var UserAnswersSchema = mongoose.Schema({
       }
     }]
   },
-
+  created: { type: Date, default: Date.now() }
 });
 
 var UserAnswersSchemaExport = module.exports = mongoose.model('UserAnswers', UserAnswersSchema);
 
 //create selected platform scheme in the db
-//input:  user is and selected platform's data
+//input:  user id and selected platform's data
 //output: data on success, else false
 module.exports.inputData = async function (data) {
     var created = await data.save();
-    if(ctreated){
+    if(created){
       return created;
     }
     else{
       return false
     }   
 }
+
+//check if the user email is un theUserAnswer db, if not, add one
+//input:  user email
+//output: data on success, else false
+module.exports.findOrCreateUserAnswer = async function (data) {
+  var userFound = await this.findOne({"user_email": data.user_email});
+  console.log(userFound);
+  if(userFound){
+    return userFound;
+  }
+  else{
+    var newDB = new UserAnswersSchemaExport({
+      user_email: data.user_email,
+      questions: [{
+        question_id: data.question_id,
+        question_text: data.question_text,
+        //all the selected answer
+        answer_id: data.answer_id,
+        answer_text: data.answer_text,
+        platforms: [{
+          platform_id: false,
+          platform_name: false,
+          platform_weight: false,
+        }]
+      }]
+      
+    });
+    console.log(newDB);
+    this.inputData (newDB)
+    }
+  }   
+
 
