@@ -45,12 +45,10 @@ module.exports.inputData = async function (data) {
 module.exports.findOrCreateUserAnswer = async function (data) {
   try {
     var userFound = await this.findOne({ "user_email": data.user_email });
-    console.log("user found " + userFound);
     if (userFound) {
-      console.log("heeeeeere");
-      var created = this.insertNewAnswer(data)
-      console.log("created " + created);
-      return true;
+      var created = this.insertNewAnswer(data);
+      return created;
+      
     }
     else {
       //if there is no scema for the user, create one new and insert thre relevant data
