@@ -5,6 +5,7 @@ var jwt = require('jsonwebtoken');
 var registrationSchema = require('../models/Registration.js');
 var sPlatformSchema = require('../models/SelectedPlatforms.js');
 var userAnswersSchema = require('../models/UserAnswers.js');
+var surveySchema = require('../models/Survey')
 
 var verFuncs = require('../utils/verificationFunctions.js');
 var validFuncs = require('../utils/validationFunctions');
@@ -122,18 +123,21 @@ router.post('/createUserAnswerDB', async function (req, res) {
 //output: on success: success message, else false message
 router.post('/addUserAnswer', async function (req, res) {
   var data = req.body;
+  
   if(data.survey_completed){
     res.status(200).send({ success: false, message: "the survey is done"})
   }
  else{
-  var nex = await userAnswersSchema.findOrCreateUserAnswer(data);
- }
-
+   //find or create new schema for the user if it is new entry. returns the user answers data object
+  var userToUpdate = await userAnswersSchema.findOrCreateUserAnswer(data);
+  var updated = await userAnswersSchema.insertPlatformsData(data, userToUpdate);
+  
     // if (created) {
     //   res.status(200).send({ success: true, message: "next question please" })
     // } else {
     //   res.status(200).send({ success: false, message: "the survey is done" })
     // }
+ }
 })
 
 

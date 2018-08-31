@@ -52,14 +52,14 @@ module.exports.updateAnswer = async function (data) {
 }
 
 //find specific platform and update it's weight
-//input: specific answer_id, platform's name, new platform's weight
+//input: specific answer_id, platforms{platform's name, new platform's weight}
 //output: true on success, else false
 module.exports.updatePlatform = async function (data) {
   var updated = await this.update(
     {
       //find the relevant objects in the sub arrays and there positions in the arrays
       "answers": {
-        "$elemMatch": { "answer_id": data.answer_id,"platforms.platform_name": data.platforms.platform_name }
+        "$elemMatch": { "answer_id": data.answer_id,"platforms.platform_name": data.platforms.platform_name}
       }
     },
     {
@@ -71,8 +71,9 @@ module.exports.updatePlatform = async function (data) {
       "arrayFilters": [{ "outer.answer_id" : data.answer_id },{ "inner.platform_name": data.platforms.platform_name}] 
     }
   )
+
 //update function returns the WriteResult object: WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
-  if (updated) { //if the data was updated
+  if (1 == updated.nModified) { //if the data was updated
     return true;
   } else {
     return false;

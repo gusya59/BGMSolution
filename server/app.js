@@ -60,14 +60,6 @@ app.use('/user',userRouter);
 app.use('/survey',surveyRouter);
 
 
-//app.use('./api', apiRouter);
-
-// required for passport -->probably will be deleted
-// //app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
-// app.use(passport.initialize());
-// app.use(passport.session()); // persistent login sessions
-// app.use(flash()); // use connect-flash for flash messages stored in session
-//require('./routes/users.js')(passport);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
