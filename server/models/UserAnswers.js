@@ -100,7 +100,8 @@ module.exports.insertPlatformsData = async function (data, userToUpdate) {
 //input: user's id, platforms data
 //output: user's data on success, else false
 module.exports.updatePlatformData = async function (platformIsFound, userToUpdate) {
-  console.log();
+var input = platformIsFound.answers[0]
+
 var query = {
  // "questions": [{name: 'answer_id.answer_id'}],
   "user_email":userToUpdate.user_email,
@@ -108,10 +109,11 @@ var query = {
     $elemMatch:{ "answer_id": input.answer_id}
   }};
  var update = {"$set": { "questions.$[outer].platforms":input.platforms}};
- var options = {upsert: true, arrayFilters:  [{ "outer.answer_id" : input.answer_id }]}
+ var options = {arrayFilters:  [{ "outer.answer_id" : input.answer_id }]}
  var updated = await this.findOneAndUpdate(query,update,options)
+
 console.log(updated);
-  if (1 == updated.nModified) { //if the data was updated
+  if (updated) { //if the data was updated
     return found;
   } else {
     return false;
