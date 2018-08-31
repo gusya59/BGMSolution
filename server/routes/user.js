@@ -109,13 +109,13 @@ async function userDataValidation(errors, data) {
 //output: on success: success message, else false message
 router.post('/createUserAnswerDB', async function (req, res) {
   var newDB = new userAnswersSchema(req.body);
-    var created = await userAnswersSchema.inputData(newDB)
-    console.log(created);
-    if (created) {
-      res.status(200).send({ success: true, message: "db was created" })
-    } else {
-      res.status(200).send({ success: false, message: "can't create selected platforms db" })
-    }
+  var created = await userAnswersSchema.inputData(newDB)
+  console.log(created);
+  if (created) {
+    res.status(200).send({ success: true, message: "db was created" })
+  } else {
+    res.status(200).send({ success: false, message: "can't create selected platforms db" })
+  }
 })
 
 //create user's answers scheme in the db
@@ -123,23 +123,25 @@ router.post('/createUserAnswerDB', async function (req, res) {
 //output: on success: success message, else false message
 router.post('/addUserAnswer', async function (req, res) {
   var data = req.body;
-  
-  if(data.survey_completed){
-    res.status(200).send({ success: false, message: "the survey is done"})
+  if (data.survey_completed) {
+    res.status(200).send({ success: false, message: "the survey is done" })
   }
- else{
-   //find or create new schema for the user if it is new entry. returns the user answers data object
-  var userToUpdate = await userAnswersSchema.findOrCreateUserAnswer(data);
-  var updated = await userAnswersSchema.insertPlatformsData(data, userToUpdate);
-  
-    // if (created) {
-    //   res.status(200).send({ success: true, message: "next question please" })
-    // } else {
-    //   res.status(200).send({ success: false, message: "the survey is done" })
-    // }
- }
+  else {
+    //find or create new schema for the user if it is new entry. returns the user answers data object
+    var user = await userAnswersSchema.findOrCreateUserAnswer(data);
+    if (user) {
+      var nextQuestion = await userAnswersSchema.insertPlatformsData(data);
+      if (nextQuestion) {
+        res.status(200).send({ success: true, nextQuestion: nextQuestion })
+      } else {
+        res.status(200).send({ success: false, message: "the survey is done" })
+      }
+    }
+    else {
+      res.status(200).send({ success: false, message: "error" })
+    }
+  }
 })
-
 
 
 
@@ -178,7 +180,7 @@ router.post('/fetchPlatformList', async function (req, res) {
 router.post('/updatePlatformsSelection', async function (req, res) {
   var result = await sPlatformSchema.updatePlatformSelection(req.body)
   if (result) {
-    res.status(200).send({ success: true, message: "Updated"  })
+    res.status(200).send({ success: true, message: "Updated" })
   }
   else {
     res.status(200).send({ success: false, message: "Can't fetch data" })
