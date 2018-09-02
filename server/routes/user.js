@@ -224,21 +224,15 @@ router.post('/createBudgetSchemaData', async function (req, res) {
 })
 
 router.post('/temp', async function (req, res) {
-  //  BudgetSchema.aggregate(
-  //     [{ $match: { user_email: "temp@temp.com" }},
-  //     { $project: { count: { $size: '$platforms_budget' } } }]).exec(function(err, result) {
-  //       console.log(result);
-  //       console.log(err);
-  //   });
-  var result = await BudgetSchema.aggregate(
-    [{ $match: { user_email: "temp@temp.com" } },
+  const result = (await BudgetSchema.aggregate([
+    { "$match": { "user_email": "temp@temp.com" } },
+    { "$project": { "count": { "$size": "$platforms_budget" }}}
+  ])).map(({ count }) => count)
+  var arraySize = result[0];
 
-    { $project: { count: { $size: '$platforms_budget' } } }
-      //,{ count: { $meta: "count" } }
-    ])
-  console.log(result);
+  console.log(arraySize);
 })
 
-//{ $match: { user_email: "test@test.com" } }, 
-
+// { $project: { count:{$arrayElemAt: [{ $size: '$platforms_budget' },1]}
+//[ { _id: 5b8aaaebf57de10e080c9151, count: 3 } ]
 module.exports = router;
