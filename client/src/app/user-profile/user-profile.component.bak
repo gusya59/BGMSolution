@@ -1,0 +1,437 @@
+<!-- User Navigation bar -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12">
+        <app-navigation-user></app-navigation-user>
+    </div>
+  </div>
+</div>
+
+<!-- body  -->
+<!-- Data -->
+<div  class="container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-lg-12">
+      <!--Panel-->
+      <div id="contentToPDF" class="card">
+        <!-- Buissnes name -->
+          <div class="card-header primary-color white-text">
+              <div class="row justify-content-center"> 
+                <h1 class="h1-responsive "><i class="far fa-building"></i> {{b_name}}</h1>
+              </div>
+          </div>
+          
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-5">
+                <h2 class="h2-responsive ">Your Details</h2>
+                
+              </div>
+            </div>
+            <hr>
+
+            <!-- Form starts here -->
+            <form [formGroup]="dataformgroup" novalidate (ngSubmit)="userDataChanged()" >
+            <div class="row justify-content-center" >
+
+                <!-- company details -->
+                <div class= "col-md-5">
+                    <div class="md-form">
+                        <input mdbInputDirective type="text" name="b_name" id="b_name" formControlName="b_name" class="form-control">
+                        <label for="b_name"  class="labels">Company Name</label>
+                    </div>
+
+                    <div class="md-form">    
+                        <label for="b_type" class="labels">Business Type</label>
+
+                        <select mdbInputDirective type="text" name="b_type" formControlName="b_type" class="form-control" required>
+                        <option [value]="b_type" selected="selected">{{b_type}}
+                        </option>
+                        <option *ngFor="let b_type of BuisnessType" [value] = "b_type">{{b_type}}
+                        </select>
+                    </div>
+
+                  
+
+                    <div class="md-form">
+                        <input mdbInputDirective type="text" name="mobile"  formControlName="mobile"  class="form-control">
+                        <label for="mobile"  class="labels">Mobile</label>
+                    </div>
+                    <div class="md-form">
+                        <input mdbInputDirective type="text" name="phone"  formControlName="phone" class="form-control">
+                        <label for="phone"  class="labels">Phone</label>
+                    </div>
+
+
+                    <div class="md-form">
+                        <label for="country"  class="labels">Country</label>
+                        <select mdbInputDirective mdbTooltip="city will be lost" placement="left" type="text" name="country" (change)="onSelect($event.target.value)" formControlName="country" id="country" class="form-control" required>
+                            <option [selected]="country.name" selected="selected">{{country}}
+                            </option>
+                          <option *ngFor="let country of countries" value= {{country.id}}>{{country.name}}
+                        </select>
+                    </div>
+
+                    <div class="md-form">
+                        <label for="city"  class="labels">City</label>
+                        <select mdbInputDirective mdbTooltip="Please reselect country" placement="left" type="text" name="city"  formControlName="city" id="city" class="form-control" required>
+                            <option [selected]="city.name" selected="selected">{{city}}
+                            </option>
+                            <option *ngFor="let city of cities" value = {{city.id}}>{{city.name}}
+                         </select> 
+                    </div>
+
+
+                    <div class="md-form">
+                        <input mdbInputDirective type="text" name="address"  formControlName="address" id="address" class="form-control">
+                        <label for="address"  class="labels">Address</label>
+                    </div>
+                </div>
+                <!-- user details -->
+                <div class= "col-md-5">
+                    <div class="md-form">
+                        <input mdbInputDirective type="text" name="email" disabled [(ngModel)]="email" [ngModelOptions]="{standalone: true}" id="email" class="form-control">
+                        <label for="email"  class="labels">eMail</label>
+                    </div>
+                    <div class="md-form">
+                        <input mdbInputDirective type="text" name="firstName"  formControlName="firstName" id="firstName" class="form-control">
+                        <label for="firstName"  class="labels">First Name</label>
+                    </div>
+                    <div class="md-form">
+                        <input mdbInputDirective type="text" name="lastName"  formControlName="lastName" id="lastName" class="form-control">
+                        <label for="lastName"  class="labels">Last Name</label>
+                    </div>
+                    <div class="md-form">
+                        <i class="fas fa-dollar-sign prefix"></i>
+                        <input mdbInputDirective type="number" min="0"  oninput="validity.valid||(value='');" name="TotalBudget"  formControlName="TotalBudget" id="TotalBudget" class="form-control">
+                        <label for="TotalBudget" id="budgetLable"  class="labels">Total Budget</label>
+                    </div>
+
+                    <!-- BGs Certification hiden by default -->
+                    <mdb-card id="BGscerti" class="text-center">
+                        <mdb-card-header class="warning-color white-text">
+                          <h3>BreakingGap's</h3>
+                        </mdb-card-header>
+                        <mdb-card-body>
+                          <mdb-card-title>
+                          </mdb-card-title>
+                          <img id="logoF" src="assets/img/Logo_Final.png">
+                        </mdb-card-body>
+
+                        <mdb-card-footer class="text-muted info-color white-text">
+                          <h4>Certified <i class="fas fa-certificate"></i></h4>
+                        </mdb-card-footer>
+                    </mdb-card>
+
+                    <div class="row-fluid align-self-end">
+                        <div class="md-form">
+                            <button mdbBtn type="button" class="btn btn-lg hides" color="warning" block="true" (click)="passChangeModal.show()" mdbWavesEffect>Change Password</button>
+                            <!-- diable button if not touched and not valid -->
+                            <button mdbBtn type="submit" class="btn btn-lg hides" color="success" block="true" (click)="userDataChanged()" [disabled]="!dataformgroup.valid || !dataformgroup.touched" mdbWavesEffect>Save Data</button>
+                            <button mdbBtn type="button" class="btn btn-lg hides" color="danger" block="true" (click)="deleteAccountModal.show()" mdbWavesEffect>Delete account</button>
+                        </div>
+                    </div>
+                  </div> 
+              </div>
+            </form>
+            <!-- end data form -->
+
+          </div>
+          <!-- Charts and Reports -->
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-5">
+                <h2 class="h2-responsive ">Charts and Reports</h2>
+              </div>
+            </div>
+            <hr>
+
+                   
+            <div class="row justify-content-center">
+              <!-- Charts and Reports -->
+                <div class="col-md-5">
+
+                  <!-- hidden Table -->
+                  <mdb-card id="BGsTable" class="text-center">
+                      <mdb-card-header class="success-color white-text">
+                        <h3>Table of your budget per class</h3>
+                      </mdb-card-header>
+                      <mdb-card-body>
+
+                          <!--Table-->
+                          <table class="table">
+
+                              <!--Table head-->
+                              <thead class="mdb-color darken-3">
+                                  <tr class="text-white">
+                                      <th>#</th>
+                                      <th>Platform</th>
+                                      <th>Budget</th>
+                                      
+                                  </tr>
+                              </thead>
+                              <!--Table head-->
+
+                              <!--Table body-->
+                              <tbody>
+                                  <tr>
+                                      <th scope="row" bgcolor="#e5110d"></th>
+                                      <td>GoogleP</td>
+                                      <td>{{budgethGoogleP}}</td>
+                                      
+                                  </tr>
+                                  <tr>
+                                      <th scope="row" bgcolor="#e21dd5"></th>
+                                      <td>Instagram</td>
+                                      <td>{{budgetInstagram}}</td>
+                                      
+                                  </tr>
+                                  <tr>
+                                      <th scope="row" bgcolor="#4250f4"></th>
+                                      <td>Facebook</td>
+                                      <td>{{budgetFacebook}}</td>
+                                      
+                                  </tr>
+                                  <tr>
+                                      <th scope="row" bgcolor="#00bdf7"></th>
+                                      <td>Twiiter</td>
+                                      <td>{{budgetTwiiter}}</td>
+                                      
+                                  </tr>
+                                  <tr>
+                                      <th scope="row" bgcolor="#06aa0f"></th>
+                                      <td>GoogleAdWords</td>
+                                      <td>{{budgetGoogleAdWords}}</td>
+                                      
+                                  </tr>
+                                  <tr>
+                                      <th scope="row" bgcolor="#fffa00"></th>
+                                      <td>Google</td>
+                                      <td>{{budgetGoogle}}</td>
+                                      
+                                  </tr>
+                                  <tr>
+                                      <th scope="row" bgcolor="#8c8c8c"></th>
+                                      <td>GoogleMybuissness</td>
+                                      <td>{{budgetGoogleMybuissness}}</td>
+                                      
+                                  </tr>
+                              </tbody>
+                              <!--Table body-->
+                          </table>
+                          <!--Table-->
+
+                      </mdb-card-body>
+
+                  </mdb-card>
+
+                  <!-- export card -->
+                    <mdb-card class="text-center hides">
+                        <mdb-card-header class="success-color white-text">
+                          <h3>Reports</h3>
+                        </mdb-card-header>
+                        <mdb-card-body>
+                          <mdb-card-title>
+                            <h4>Export to PDF</h4>
+                          </mdb-card-title>
+                          <mdb-card-text > <span style="font-size:1.5rem">Arrange your data in easy to use pretty PDF page from BG's.</span></mdb-card-text>
+                          <a mdbBtn color="danger" size="lg" class="waves-light" outline="true" (click)="exportToPdf()"  mdbWavesEffect>Export  <i class="fas fa-file-pdf fa-4x"></i></a>
+                        </mdb-card-body>
+                        <mdb-card-footer class="text-muted success-color white-text">
+                          <p class="mb-0">Exports to file</p>
+                        </mdb-card-footer>
+                    </mdb-card>
+
+
+
+                </div>
+                <div class="col-md-5">
+                    <div style="display: block">
+                      <!-- chart generated -->
+                      <canvas mdbChart
+                        [chartType]="chartType"
+                        [data]="chartData"
+                        [labels]="chartLabels"
+                        [colors]="chartColors"
+                        [options]="chartOptions"
+                        [legend]="true"
+                        (chartHover)="chartHovered($event)"
+                        (chartClick)="chartClicked($event)">
+                      </canvas>
+                    </div>
+                </div>          
+            </div>
+          </div>
+      </div>
+      <!--/.Panel-->
+    </div>
+  </div>
+</div>
+
+<!-- Password Change Modal -->
+
+<div mdbModal #passChangeModal="mdbModal" class="modal fade " tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-notify modal-warning" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!-- closing X -->
+        <button type="button" class="close pull-right btn-lg" aria-label="Close" (click)="passChangeModal.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+        <!-- headere title -->
+        <h4 class="modal-title w-100" id="myModalLabel">Change Password</h4>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="passwordFormGroup" novalidate (ngSubmit)="passChange()" >
+          <div class="md-form mb-4">
+            <i class="fa fa-lock prefix grey-text"></i>
+            <input type="password" id="oldPassword" class="form-control validate" minlength ="8" formControlName="oldPassword" required mdbInputDirective>
+            <label data-error="wrong" data-success="right" for="oldPassword">Old password</label>
+          </div>
+          
+          <div class="md-form mb-4">
+            <i class="fa fa-lock prefix grey-text"></i>
+            <input type="password" id="password" class="form-control validate" minlength ="8" formControlName="password" required mdbInputDirective>
+            <label data-error="wrong" data-success="right" for="password">New password</label>
+          </div>
+          
+          <div class="md-form mb-4">
+            <i class="fa fa-lock prefix grey-text"></i>
+            <input type="password" id="confirmPassword" class="form-control validate" minlength ="8" formControlName="confirmPassword" required mdbInputDirective>
+            <label data-error="wrong" data-success="right" for="confirmPassword">Confirm password</label>
+          </div>
+          
+          <!-- check password for validety frontend -->
+          <p class="bg-danger" *ngIf="passwordFormGroup.controls.confirmPassword.errors?.required && passwordFormGroup.controls.confirmPassword.touched">Repeat password is required</p>
+          <p class="bg-danger" *ngIf="passwordFormGroup.errors?.doesMatchPassword && passwordFormGroup.controls.confirmPassword.touched">Password does not match</p>
+          <p class="bg-danger" >{{ErroMsg}}</p>
+
+
+          
+          <button type="button" mdbBtn color="danger" class="waves-light btn-lg" aria-label="Close" (click)="passChangeModal.hide()" mdbWavesEffect>Close</button>
+          <button type="submit" mdbBtn color="success" class="relative waves-light btn-lg" [disabled]="!passwordFormGroup.valid"mdbWavesEffect>Save changes</button>
+  
+        
+        </form>  
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- printer splash screen modal -->
+<div mdbModal #printModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="printModal"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="printModal.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title w-100" id="myModalLabel">Exporting to PDF</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row justify-content-center">
+          <img id="exportPDF" src="assets/img/toPDF.png">
+        </div>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- user Data update modal -->
+<div mdbModal #dataChangeModal="mdbModal" class="modal fade" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-notify modal-success" role="document">
+    <!--Content-->
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header">
+        <p class="heading lead">User Information Updated Succesfuly</p>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="dataChangeModal.hide()">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+        <div class="text-center">
+          <i class="fa fa-check fa-4x mb-3 animated rotateIn"></i>
+          <div class="container">
+              <img id="keepCalm" src="/assets/img/keepCalm.png">
+          </div>
+          
+        </div>
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer justify-content-center">
+        <a type="button" mdbBtn color="primary" outline="true" class="waves-effect" mdbWavesEffect (click)="dataChangeModal.hide()" data-dismiss="modal">Close</a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+
+
+
+<!-- Delete account Modal -->
+
+<div mdbModal #deleteAccountModal="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  
+  <div class="modal-dialog modal-notify modal-danger" role="document">
+      
+    <!--Content-->
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header">
+        <p class="heading lead">Modal Danger</p>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="deleteAccountModal.hide()">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+        <div class="text-center">
+          <i class="fas fa-times  fa-4x mb-3 animated rotateIn"></i>
+          <p>this action will permanently delete your account. enter your password to confirm</p>
+          <form [formGroup]="passwordTestFormGroup" novalidate (ngSubmit)="deleteAccount()" >
+
+              
+              <div class="md-form mb-4">
+                
+                <input type="password" class="form-control validate" minlength ="8" formControlName="password" required mdbInputDirective>
+                <label data-error="wrong" data-success="right" for="password">Type your password</label>
+              </div>
+              
+
+              
+              <!-- check password for validety frontend -->
+              <p class="bg-danger" >{{ErroMsg}}</p>
+    
+    
+              
+              <button type="button" mdbBtn color="success" class="waves-light btn-lg" aria-label="Close" (click)="deleteAccountModal.hide()" mdbWavesEffect>NO! Thank you</button>
+              <button type="submit" mdbBtn color="danger" class="relative waves-light btn-lg" [disabled]="!passwordTestFormGroup.valid"mdbWavesEffect>Delete account</button>
+      
+            
+            </form>  
+    
+        </div>
+      </div>
+
+
+      </div>
+      <!--/.Content-->
+
+    </div>
+  </div>
