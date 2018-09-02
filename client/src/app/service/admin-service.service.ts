@@ -40,16 +40,29 @@ interface respData {
   //survay data contains question information
   surveyData:
     {
-      question_id: number,
+      question_id: string,
       question_text: string,
       answers:[
         {
-          answer_id: number;
+          answer_id: string;
           answer_text: string;
         }
       ]
     }[];
 
+  //answer decleration
+  data: {
+    answers: {
+      answer_id: string;
+      answer_text: string;
+      next_question: string;
+      platforms: {
+        platform_id: string,
+        platform_name: string,
+        platform_weight: number
+      }[];
+    }[];
+  }
 
   //platform decleration
   answer_id: string;
@@ -171,7 +184,7 @@ export class AdminServiceService {
     fetchPlatform(answer_id,question_id){
       //will post fetchPlatform if correct
 
-      const uri = 'http://www.mocky.io/v2/5b7534a32e00005300535f3c';
+      const uri = 'http://localhost:1234/survey/fetchPlatform';
       //object of numbers
       const obj = {
         question_id: question_id,

@@ -147,18 +147,18 @@
                 <div class="md-form ">
                     <i class="fas fa-arrow-circle-right prefix grey-text"></i>
                     <!-- get next question from answer modal -->
-                    <input type="text" #next_question [ngModel]="answer?.next_question" class="form-control" mdbInputDirective>
+                    <input type="text" #next_question [(ngModel)]="nextQuestion" class="form-control" mdbInputDirective>
                     <label for="next_question">Next Question Will Be</label>
                 </div>
             </div>
 
-            <div class="col-lg-4">
+            <!-- <div class="col-lg-4">
                 <div class="md-form">
-                    <i class="fas fa-align-justify prefix grey-text"></i>
+                    <i class="fas fa-align-justify prefix grey-text"></i> -->
                     <!-- get test from answer modal -->
-                    <input type="text" disabled #nextquestion_text [ngModel]="answer?.answer_text" class="form-control" mdbInputDirective>
+                    <!-- <input type="text" disabled #nextquestion_text [(ngModel)]="answer_text" class="form-control" mdbInputDirective>
                 </div>
-            </div>
+            </div> -->
         </div>
         <!-- table with platform info -->
         <div class="container-fluid">
