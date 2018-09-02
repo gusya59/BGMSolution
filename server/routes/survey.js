@@ -25,20 +25,33 @@ router.post('/createAlgoData', async function (req, res) {
     }))
 })
 
-
 //fetching all the data from the Survey Collection
-//input: none
+//input: user's token
 //output: on success: success message and survey db data, else false message
-router.post('/fetchSurveyData', async function (res) {
-    await SurveySchema.find(function (err, SurveySchemas) {
-        if (err) {
-            res.status(200).send({ success: fail, message: "can't fetch survey db data" });
+router.post('/fetchSurveyData', verFuncs.getTokenFromHeaders, async function (res) {
+    //verify loged user
+    var verifyToken = verFuncs.verifyToken(req.token, jwt);
+    if (verifyToken) {
+        //check if the token valid and if the user has admin permissions
+        //this is an admin. it will return false
+        var check = verFuncs.decodeisAdmin(req.token, jwt);
+        if (check) {
+            await SurveySchema.find(function (err, SurveySchemas) {
+                if (err) {
+                    res.status(200).send({ success: fail, message: "can't fetch survey db data" });
+                }
+                else {
+                    res.status(200).send({ success: true, surveyData: SurveySchemas });
+                }
+            })
         }
-        else {
-            res.status(200).send({ success: true, surveyData: SurveySchemas });
-        }
-    })
-})
+        res.status(200).send({ success: false, message: "it is a regular user" });
+    }
+    res.status(200).send({ success: false, message: "session is expired" })
+});
+
+
+
 //create new question
 //input: data:question and answers data
 //output: on success: success message , else false message
@@ -81,17 +94,24 @@ router.post('/fetchPlatform', async function (req, res) {
 })
 
 //fetch specific question data from the db (including the relevant answers)
-//input: question's id
+//input: user's token and question's id
 //output: question's data on success, else false
-router.post('/fetchQuestion', async function (req, res) {
-    var result = await SurveySchema.fetchQuestionData(req.body);
-    if (result) {
-        res.status(200).send({ success: true, data: result })
+router.post('/fetchQuestion', verFuncs.getTokenFromHeaders, async function (req, res) {
+    //verify loged user
+    var verifyToken = verFuncs.verifyToken(req.token, jwt);
+    if (verifyToken) {
+        var result = await SurveySchema.fetchQuestionData(req.body);
+        if (result) {
+            res.status(200).send({ success: true, data: result })
+        }
+        else {
+            res.status(200).send({ success: false, message: "Can't fetch data" })
+        }
     }
-    else {
-        res.status(200).send({ success: false, message: "Can't fetch data" })
-    }
-})
+    res.status(200).send({ success: false, message: "session is expired" })
+});
+
+
 
 //*****************************************Update Survey's Data Functions*****************************/
 //edit question data

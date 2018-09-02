@@ -5,7 +5,7 @@ var jwt = require('jsonwebtoken');
 var registrationSchema = require('../models/Registration.js');
 var sPlatformSchema = require('../models/SelectedPlatforms.js');
 var userAnswersSchema = require('../models/UserAnswers.js');
-var surveySchema = require('../models/Survey')
+var BudgetSchema = require('../models/Budget');
 
 var verFuncs = require('../utils/verificationFunctions.js');
 var validFuncs = require('../utils/validationFunctions');
@@ -14,18 +14,16 @@ var validFuncs = require('../utils/validationFunctions');
 //input: token
 //outpit: object with user's data on success, else false message
 router.post('/profile', verFuncs.getTokenFromHeaders, async function (req, res) {
+  //verify loged user
   var verifyToken = verFuncs.verifyToken(req.token, jwt);
-
-  //this a regular user. it will return false
-  //check if the loken valid and if the user has admin permissions
   if (verifyToken) {
+    //check if the token valid and if the user has admin permissions
+    //this is a regular user. it will return false
     var check = verFuncs.decodeisAdmin(req.token, jwt);
     if (!check) {
-      console.log("jbdfjb");
       var userEmail = verFuncs.decodeUserEmail(req.token, jwt);
       var userdata = await registrationSchema.findByEmail(userEmail);
       if (userdata) {
-        console.log(userdata);
         res.status(200).send({ success: true, message: "success", userdata: userdata });
       }
       else {
@@ -110,7 +108,6 @@ async function userDataValidation(errors, data) {
 router.post('/createUserAnswerDB', async function (req, res) {
   var newDB = new userAnswersSchema(req.body);
   var created = await userAnswersSchema.inputData(newDB)
-  console.log(created);
   if (created) {
     res.status(200).send({ success: true, message: "db was created" })
   } else {
@@ -121,27 +118,42 @@ router.post('/createUserAnswerDB', async function (req, res) {
 //create user's answers scheme in the db
 //input: user_email, questions and answers that were selected by user, relevant platform data for each answer
 //output: on success: success message, else false message
-router.post('/addUserAnswer', async function (req, res) {
-  var data = req.body;
-  if (data.survey_completed) {
-    res.status(200).send({ success: false, message: "the survey is done" })
-  }
-  else {
-    //find or create new schema for the user if it is new entry. returns the user answers data object
-    var user = await userAnswersSchema.findOrCreateUserAnswer(data);
-    if (user) {
-      var nextQuestion = await userAnswersSchema.insertPlatformsData(data);
-      if (nextQuestion) {
-        res.status(200).send({ success: true, nextQuestion: nextQuestion })
-      } else {
+router.post('/addUserAnswer', verFuncs.getTokenFromHeaders, async function (req, res) {
+  //verify loged user
+  var verifyToken = verFuncs.verifyToken(req.token, jwt);
+  if (verifyToken) {
+    //check if the token valid and if the user has admin permissions
+    //this a regular user. it will return true
+    var check = verFuncs.decodeisAdmin(req.token, jwt);
+    if (!check) {
+      var data = req.body;
+      //if the servey is completed
+      if (data.survey_completed) {
         res.status(200).send({ success: false, message: "the survey is done" })
       }
+      else {
+        //find or create new schema for the user if it is new entry. returns the user answers data object
+        var user = await userAnswersSchema.findOrCreateUserAnswer(data);
+        if (user) {
+          var nextQuestion = await userAnswersSchema.insertPlatformsData(data);
+          if (nextQuestion) {
+            res.status(200).send({ success: true, nextQuestion: nextQuestion })
+          } else {
+            //if there no more questions to answer on
+            res.status(200).send({ success: false, message: "the survey is done" })
+          }
+        }
+        else {
+          res.status(200).send({ success: false, message: "error" })
+        }
+      }
     }
-    else {
-      res.status(200).send({ success: false, message: "error" })
-    }
+    res.status(200).send({ success: false, message: "it is an admin user" });
   }
-})
+  res.status(200).send({ success: false, message: "session is expired" })
+});
+
+
 
 
 
@@ -187,5 +199,46 @@ router.post('/updatePlatformsSelection', async function (req, res) {
   }
 })
 
+
+//---------------------------Budget calaculations----------------------------//
+
+//creating budget scheme in the db
+//input: budget data
+//output: on success: success message, else false message
+router.post('/createBudgetSchemaData', async function (req, res) {
+  var input = req.body;
+  console.log(input);
+  var newBudgetData = new BudgetSchema({
+    user_email: input.user_email,
+    user_budget: input.user_budget,
+    platforms_budget: input.platforms_budget
+
+  });
+  var created = await BudgetSchema.inputData(newBudgetData)
+  if (!created) {
+    res.status(200).send({ success: false, message: "can't create schema" })
+  } else {
+    res.status(200).send({ success: true, message: "schema was created" })
+  }
+
+})
+
+router.post('/temp', async function (req, res) {
+  //  BudgetSchema.aggregate(
+  //     [{ $match: { user_email: "temp@temp.com" }},
+  //     { $project: { count: { $size: '$platforms_budget' } } }]).exec(function(err, result) {
+  //       console.log(result);
+  //       console.log(err);
+  //   });
+  var result = await BudgetSchema.aggregate(
+    [{ $match: { user_email: "temp@temp.com" } },
+
+    { $project: { count: { $size: '$platforms_budget' } } }
+      //,{ count: { $meta: "count" } }
+    ])
+  console.log(result);
+})
+
+//{ $match: { user_email: "test@test.com" } }, 
 
 module.exports = router;

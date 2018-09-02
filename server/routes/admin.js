@@ -3,15 +3,18 @@ var router = express();
 var jwt = require('jsonwebtoken');
 
 var registrationSchema = require('../models/Registration.js');
-var SurveySchema = require('../models/Survey')
 var verFuncs = require('../utils/verificationFunctions.js')
 
-//registration
+//the function fetches the amount of regular and admin users
+//input: token
+//output: on success: the amount of regular and admin users, error message on fail
 router.post('/info', verFuncs.getTokenFromHeaders, async function (req, res) {
-  console.log("the input is: " + req.body);
+  //verify loged user
   var verifyToken = verFuncs.verifyToken(req.token, jwt);
+  //check if the token valid and if the user has admin permissions
+  //this is an admin. it will return true
   var check = verFuncs.decodeisAdmin(req.token, jwt);
-  //check if the loken valid and if the user has admin permissions
+  //check if the token valid and if the user has admin permissions
   if (verifyToken && check) {
     //the amount of regular users
     var regUserAmount = await registrationSchema.countRegularUsers();
@@ -29,11 +32,14 @@ router.post('/info', verFuncs.getTokenFromHeaders, async function (req, res) {
 //input: token, permission type: true for admin, false for regular user
 //outpit: object with all the relevant users
 router.post('/admins', verFuncs.getTokenFromHeaders, async function (req, res) {
+  //verify loged user
   var verifyToken = verFuncs.verifyToken(req.token, jwt);
-  if (verifyToken) {
+  //check if the token valid and if the user has admin permissions
+  //this is an admin. it will return true
+  var check = verFuncs.decodeisAdmin(req.token, jwt);
+  if (verifyToken && check) {
     //find all users with specific permissions.
     var adminUsers = await registrationSchema.findAllByPermission(req.body.isAdminPer);
-    console.log(adminUsers);
     res.status(200).send({ success: true, adminUsers: adminUsers })
   }
   else {
@@ -46,7 +52,6 @@ router.post('/admins', verFuncs.getTokenFromHeaders, async function (req, res) {
 //input: email of the user that need to be deleted
 //output: true on success, else false
 router.post('/admins/remove', async function (req, res) {
-  console.log("the input is: " + req.body.email);
   var deleteUser = await registrationSchema.deleteUser(req.body.email);
   if (deleteUser) {
     res.status(200).send({ success: true, message: "user removed" });
@@ -74,15 +79,28 @@ router.post('/admins/changePermissions', async function (req, res) {
 //input: user's email
 //output: on success: object with user's info, else false
 router.post('/users/info', async function (req, res) {
-  var userdata = await registrationSchema.findByEmail(req.body.email);
-  if (userdata) {
-    console.log(userdata);
-    res.status(200).send({ success: true, message: "success", userdata: userdata });
+  //verify loged user
+  var verifyToken = verFuncs.verifyToken(req.token, jwt);
+  if (verifyToken) {
+    //check if the token valid and if the user has admin permissions
+    //this is an admin. it will return true
+    var check = verFuncs.decodeisAdmin(req.token, jwt);
+    if (check) {
+      var userdata = await registrationSchema.findByEmail(req.body.email);
+      if (userdata) {
+        res.status(200).send({ success: true, message: "success", userdata: userdata });
+      }
+      else {
+        res.status(200).send({ success: false, message: "there is no such user" });
+      }
+    }
+    res.status(200).send({ success: false, message: "it is an admin user" });
   }
-  else {
-    res.status(200).send({ success: false, message: "there is no such user" });
-  }
+  res.status(200).send({ success: false, message: "session is expired" })
 });
+
+
+
 
 //input: user's email
 //output: on success: object with user's info, else false
