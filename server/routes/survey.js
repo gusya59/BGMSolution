@@ -28,13 +28,13 @@ router.post('/createAlgoData', async function (req, res) {
 //fetching all the data from the Survey Collection
 //input: user's token
 //output: on success: success message and survey db data, else false message
-router.post('/fetchSurveyData', verFuncs.getTokenFromHeaders, async function (req,res) {
+router.post('/fetchSurveyData', verFuncs.getTokenFromHeaders, async function (req, res) {
     //verify loged user
-    var verifyToken = verFuncs.verifyToken(req.token, jwt);
+    var verifyToken = await verFuncs.verifyToken(req.token, jwt);
     if (verifyToken) {
         //check if the token valid and if the user has admin permissions
         //this is an admin. it will return false
-        var check = verFuncs.decodeisAdmin(req.token, jwt);
+        var check = await verFuncs.decodeisAdmin(req.token, jwt);
         if (check) {
             await SurveySchema.find(function (err, SurveySchemas) {
                 if (err) {
@@ -44,10 +44,12 @@ router.post('/fetchSurveyData', verFuncs.getTokenFromHeaders, async function (re
                     res.status(200).send({ success: true, surveyData: SurveySchemas });
                 }
             })
+        } else {
+            res.status(200).send({ success: false, message: "it is a regular user" });
         }
-        res.status(200).send({ success: false, message: "it is a regular user" });
+    } else {
+        res.status(200).send({ success: false, message: "session is expired" })
     }
-    res.status(200).send({ success: false, message: "session is expired" })
 });
 
 
@@ -107,8 +109,9 @@ router.post('/fetchQuestion', verFuncs.getTokenFromHeaders, async function (req,
         else {
             res.status(200).send({ success: false, message: "Can't fetch data" })
         }
-    }
-    res.status(200).send({ success: false, message: "session is expired" })
+    }else{
+        res.status(200).send({ success: false, message: "session is expired" })
+    }   
 });
 
 

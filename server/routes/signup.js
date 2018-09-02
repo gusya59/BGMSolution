@@ -41,30 +41,32 @@ router.post('/usersettings', verFuncs.getTokenFromHeaders, async function (req, 
 
   if (!tokenVerification) {
     res.status(403).send({ success: false, message: "session is expired" })
-  }
-  //decode and extract an email
-  var userEmail = verFuncs.decodeUserEmail(req.token, jwt);
-  var data = req.body;
-  var errors = []; //will contain all the errors
-  //find specific DB by the email from the token
-  var ans = await registrationSchema.isEmailExists(userEmail);
-  if (ans) {
-    await userDataRegistrationValidation(errors, data); //data validation
+  } else {
+    //decode and extract an email
+    var userEmail = verFuncs.decodeUserEmail(req.token, jwt);
+    var data = req.body;
+    var errors = []; //will contain all the errors
+    //find specific DB by the email from the token
+    var ans = await registrationSchema.isEmailExists(userEmail);
+    if (ans) {
+      await userDataRegistrationValidation(errors, data); //data validation
 
-    if (errors.length) {
-      res.status(200).send({ success: false, errors: errors })
-    }
-    else {
-      var input = await registrationSchema.userDataRegistration(data, userEmail); //insert data into the DB
-      if (input) {
-        res.status(200).send({ success: true, message: "User Settings data was inserted!" })
+      if (errors.length) {
+        res.status(200).send({ success: false, errors: errors })
+      }
+      else {
+        var input = await registrationSchema.userDataRegistration(data, userEmail); //insert data into the DB
+        if (input) {
+          res.status(200).send({ success: true, message: "User Settings data was inserted!" })
+        } else {
+          res.status(200).send({ success: true, message: "There is no such user" })
+        }
       }
     }
+    else {
+      res.status(200).send({ success: true, message: "There is no such user" })
+    }
   }
-  else {
-    res.status(200).send({ success: true, message: "There is no such user" })
-  }
-
 });
 
 //log in function
@@ -88,8 +90,11 @@ router.post('/login', async function (req, res) {
           //console.log("the token is "+ token);
           res.status(200).send({ success: true, token: token });
         }
-      }
-      res.status(200).send({ success: false, message: "email wasn't found" });
+      }else{
+        res.status(200).send({ success: false, message: "email wasn't found" });
+      }    
+    }else{
+      res.status(200).send({ success: false, errors: errors });
     }
   }
   else {
