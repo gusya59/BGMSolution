@@ -38,7 +38,7 @@ interface respData {
 
   // question declaration
   //survay data contains question information
-  surveyData:[
+  surveyData:
     {
       question_id: number,
       question_text: string,
@@ -48,8 +48,7 @@ interface respData {
           answer_text: string;
         }
       ]
-    }
-  ];
+    }[];
 
 
   //platform decleration
@@ -160,7 +159,7 @@ export class AdminServiceService {
     fetchSurveyData(){
       //will post questions if correct
       const uri = 'http://localhost:1234/survey/fetchSurveyData';
-
+      
         // send email in obj
         const obj = {
           token: localStorage.getItem('token')

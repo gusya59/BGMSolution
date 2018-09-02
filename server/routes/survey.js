@@ -28,7 +28,7 @@ router.post('/createAlgoData', async function (req, res) {
 //fetching all the data from the Survey Collection
 //input: user's token
 //output: on success: success message and survey db data, else false message
-router.post('/fetchSurveyData', verFuncs.getTokenFromHeaders, async function (res) {
+router.post('/fetchSurveyData', verFuncs.getTokenFromHeaders, async function (req,res) {
     //verify loged user
     var verifyToken = verFuncs.verifyToken(req.token, jwt);
     if (verifyToken) {

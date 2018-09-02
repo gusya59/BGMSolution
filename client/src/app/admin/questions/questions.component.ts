@@ -16,19 +16,12 @@ export class AdminQuestionsComponent implements OnInit {
   question_text: string;
   answer_id: number;
   answer_text: string;
+  
   // question declaration
-  surveyData:[
-    {
+  surveyData: {
       question_id: number,
       question_text: string,
-      answers:[
-        {
-          answer_id: number;
-          answer_text: string;
-        }
-      ]
-    }
-  ];
+    }[];
 
     //general data
     nextQuestion: string;
@@ -99,14 +92,16 @@ export class AdminQuestionsComponent implements OnInit {
    }
 
   ngOnInit() {
+    
   //call admin service to get questions table
   this.adminservice.fetchSurveyData().subscribe(
     Data=>{
+      console.log(Data);
         this.surveyData = Data.surveyData;
-          //  console.log(Data)
     })
   }
 
+  
 // fillter search
   filterIt(arr, searchKey) {
     return arr.filter((obj) => {
