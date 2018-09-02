@@ -29,7 +29,7 @@ var UsersSchemaExport = module.exports = mongoose.model('Users', UsersSchema);
 
 //create user and hash it's password
 module.exports.inputData = async function (newUser) {
-  //console.log("the user is: " + newUser);
+  console.log("the user is: " + newUser);
   //hash and store the password in the DB
   var hashedPassword = await bcrypt.hash(newUser.password, 10).then(hashedPassword => {
     return hashedPassword
@@ -50,7 +50,7 @@ module.exports.inputData = async function (newUser) {
     newUser.city = "true";
     newUser.address = "true";
     newUser.budget = "0";
-    newUser.isAdmin = "false";
+    newUser.isAdmin = false;
     var promise = newUser.save().then(result => {
       // console.log("the result is: " + result);
       return result;
@@ -120,8 +120,27 @@ module.exports.verifyPassword = async function (pass, hash) {  //(pass to verify
 }
 
 //change user password
+//input: object withusers email, old password, new password
+//output: true on success, false otherwise
 module.exports.changePassword = async function (data) {
-  //do we need this one?
+  //find the user
+  try{
+      var userToUpdate = await this.findOne({email:data.email});
+      if(userToUpdate){
+        //hash the new password and update the db
+        var passCheck = await this.verifyPassword(data.password, userToUpdate.password);
+        if(true===passCheck){
+          var newPass = await bcrypt.hash(data.newPassword, 10);
+          var updated =await this.findOneAndUpdate({email:userToUpdate.email}, {$set:{ password: newPass}});
+          if(updated){ //if the user was updated
+            return true;
+          }
+        }
+      }
+      return false;
+  }catch (error) {
+    throw new Error('error')
+  }
 }
 
 //count the amount of admins
