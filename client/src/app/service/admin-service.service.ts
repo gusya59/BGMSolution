@@ -37,14 +37,19 @@ interface respData {
  
 
   // question declaration
-  questions:{
-    question_id: number,
-    question_text: string
-    answers:{
-      answer_id: number;
-      answer_text: string;
+  //survay data contains question information
+  surveyData:[
+    {
+      question_id: number,
+      question_text: string,
+      answers:[
+        {
+          answer_id: number;
+          answer_text: string;
+        }
+      ]
     }
-  }
+  ];
 
 
   //platform decleration
@@ -152,9 +157,9 @@ export class AdminServiceService {
     }
 
     //request questions
-    fetchQuestions(){
+    fetchSurveyData(){
       //will post questions if correct
-      const uri = 'http://www.mocky.io/v2/5b75aec32e000062005361db';
+      const uri = 'http://localhost:1234/survey/fetchSurveyData';
 
         // send email in obj
         const obj = {
