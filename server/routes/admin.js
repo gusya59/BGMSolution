@@ -93,10 +93,12 @@ router.post('/users/info', async function (req, res) {
       else {
         res.status(200).send({ success: false, message: "there is no such user" });
       }
-    }
-    res.status(200).send({ success: false, message: "it is an admin user" });
-  }
-  res.status(200).send({ success: false, message: "session is expired" })
+    }else{
+      res.status(200).send({ success: false, message: "it is an admin user" });
+    } 
+  }else{
+    res.status(200).send({ success: false, message: "session is expired" })
+  }  
 });
 
 

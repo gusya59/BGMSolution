@@ -29,10 +29,12 @@ router.post('/profile', verFuncs.getTokenFromHeaders, async function (req, res) 
       else {
         res.status(200).send({ success: false, message: "there is no such user" });
       }
+    } else {
+      res.status(200).send({ success: false, message: "it is an admin user" });
     }
-    res.status(200).send({ success: false, message: "it is an admin user" });
+  } else {
+    res.status(200).send({ success: false, message: "session is expired" })
   }
-  res.status(200).send({ success: false, message: "session is expired" })
 });
 
 //change passwords
@@ -42,8 +44,9 @@ router.post('/changePassword', async function (req, res) {
   var changed = await registrationSchema.changePassword(req.body);
   if (true === changed) {
     res.status(200).send({ success: true, message: "password has changed" });
+  } else {
+    res.status(200).send({ success: false, message: "can't change password" })
   }
-  res.status(200).send({ success: false, message: "can't change password" })
 })
 
 //save data - userDataChanged
@@ -64,12 +67,13 @@ router.post('/changeUserData', verFuncs.getTokenFromHeaders, async function (req
       var changed = await registrationSchema.userDataRegistration(newData, email);
       if (true === changed) {
         res.status(200).send({ success: true, message: "data updated" });
+      } else {
+        res.status(200).send({ success: false, message: "error" })
       }
-      res.status(200).send({ success: false, message: "error" })
     }
+  } else {
+    res.status(200).send({ success: false, message: "session has expired" })
   }
-  res.status(200).send({ success: false, message: "session has expired" })
-
 })
 
 //delete acount
@@ -147,10 +151,12 @@ router.post('/addUserAnswer', verFuncs.getTokenFromHeaders, async function (req,
           res.status(200).send({ success: false, message: "error" })
         }
       }
+    } else {
+      res.status(200).send({ success: false, message: "it is an admin user" });
     }
-    res.status(200).send({ success: false, message: "it is an admin user" });
+  } else {
+    res.status(200).send({ success: false, message: "session is expired" })
   }
-  res.status(200).send({ success: false, message: "session is expired" })
 });
 
 
@@ -224,15 +230,11 @@ router.post('/createBudgetSchemaData', async function (req, res) {
 })
 
 router.post('/temp', async function (req, res) {
-  const result = (await BudgetSchema.aggregate([
-    { "$match": { "user_email": "temp@temp.com" } },
-    { "$project": { "count": { "$size": "$platforms_budget" }}}
-  ])).map(({ count }) => count)
-  var arraySize = result[0];
 
+  var arraySize = await BudgetSchema.calculateLength(req.body.user_email)
+  // result.find(count)
   console.log(arraySize);
 })
 
-// { $project: { count:{$arrayElemAt: [{ $size: '$platforms_budget' },1]}
-//[ { _id: 5b8aaaebf57de10e080c9151, count: 3 } ]
+
 module.exports = router;
