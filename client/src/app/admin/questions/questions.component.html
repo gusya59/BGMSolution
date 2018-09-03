@@ -93,7 +93,7 @@
                                 </td>
                                 <!-- fire request answers -->
                                 <td>
-                                    <button  class="btn btn-lg success-color" (click)="saveAnswer(answer_text, answer.answer_id, data.question_id)" >Save</button>
+                                    <button  class="btn btn-lg success-color" (click)="saveAnswer(answer_text.value, answer.answer_id, data.question_id)" >Save</button>
                                     <button  class="btn btn-lg info-color" (click)="editWeights(data.question_id, answer.answer_id)" >Edit</button>
                                 </td>
                             </tr>
@@ -101,7 +101,7 @@
                         <td align="right">
                             <button class="btn btn-lg danger-color" (click)="deleteQuestionShow(data)">Remove Question</button>
                             <!-- fire request questions -->
-                            <button  class="btn btn-lg success-color" (click)="saveQuestion(question_text, data.question_id)" >Save Question</button>
+                            <button  class="btn btn-lg success-color" (click)="saveQuestion(data.question_id, question_text.value)" >Save Question</button>
 
                         </td>
                         </tr>

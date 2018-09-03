@@ -196,12 +196,13 @@ export class AdminServiceService {
     // save question function new question body
     saveQuestion(question_id,question_text){
       //recive data of questions
-      const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
+      const uri = 'http://localhost:1234/survey/saveQuestion';
       //obj of question data
       const obj ={
         question_id: question_id,
         question_text: question_text
       }
+      console.log(obj)
       return this.http.post<respData>(uri,obj)
 
     }
@@ -209,13 +210,14 @@ export class AdminServiceService {
     //save answer function new answer body
     saveAnswer(answer_text,answer_id,question_id){
       //recive data of answer
-      const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
+      const uri = 'http://localhost:1234/survey/saveAnswer';
       //obj of answer data
       const obj ={
         answer_text: answer_text,
         answer_id: answer_id,
         question_id: question_id
       }
+      
       return this.http.post<respData>(uri,obj)
 
     }

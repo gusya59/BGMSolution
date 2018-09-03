@@ -131,13 +131,14 @@ export class AdminQuestionsComponent implements OnInit {
 
   
 // save question function new question body
-  saveQuestion(question_text,question_id){
-    return this.adminservice.saveQuestion(question_text,question_id).subscribe(
+  saveQuestion(question_id,question_text){
+    return this.adminservice.saveQuestion(question_id,question_text).subscribe(
       resp => {
         if(resp.success){
           console.log("Posted");
         }
         else{
+          console.log("Faild");
           this.msgError = resp.message;
           this.errorModal.show();
         } 
