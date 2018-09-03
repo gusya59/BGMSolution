@@ -25,6 +25,7 @@ export class AdminQuestionsComponent implements OnInit {
 
     //general data
     nextQuestion: string;
+
     answer1Body:string;
     answer2Body: string;
     answer3Body: string;
@@ -44,6 +45,12 @@ export class AdminQuestionsComponent implements OnInit {
       }[];
     }
 
+    // platforms fixture to our needs
+    platforms: {
+      platform_id: string,
+      platform_name: string,
+      platform_weight: number
+    }[];
 
     //error msg
     msgError: string;
@@ -176,6 +183,8 @@ export class AdminQuestionsComponent implements OnInit {
           // get the next question value out of array with only one parameter
           // console.log(this.data.answers[this.data.answers.length-1].next_question);
           this.nextQuestion = this.data.answers[this.data.answers.length-1].next_question;
+          //fetch platforms out of backend response
+          this.platforms = this.data.answers[this.data.answers.length-1].platforms;
         }
         else{
           this.msgError = data.message;
