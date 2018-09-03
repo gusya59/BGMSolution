@@ -203,7 +203,12 @@ public chartOptions:any = {
  
     //server up get request for data
     this.userPreview.getPreview().subscribe(Data =>{
-      this.createChart(Data);
+      
+      setTimeout(function () {
+        this.chartData = [Data.budgethGoogleP, Data.budgetInstagram, Data.budgetFacebook, Data.budgetTwiiter, Data.budgetGoogleAdWords, Data.budgetGoogle, Data.budgetGoogleMybuissness];
+      }, 0);
+
+
       this.budgetFacebook = Data.budgetFacebook,
       this.budgetInstagram = Data.budgetInstagram,
       this.budgethGoogleP = Data.budgethGoogleP,
@@ -218,11 +223,6 @@ public chartOptions:any = {
 
   }
 
-    createChart(Data){
-      // chart data inserted array: here we place the budgets
-      this.chartData = [Data.budgethGoogleP, Data.budgetInstagram, Data.budgetFacebook, Data.budgetTwiiter, Data.budgetGoogleAdWords, Data.budgetGoogle, Data.budgetGoogleMybuissness];
-        
-    }
 
     //print page 2 PDF https://rawgit.com/MrRio/jsPDF/master/docs/index.html <= more info imported and tested alpha
     exportToPdf(){
