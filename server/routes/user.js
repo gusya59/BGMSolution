@@ -205,36 +205,4 @@ router.post('/updatePlatformsSelection', async function (req, res) {
   }
 })
 
-
-//---------------------------Budget calaculations----------------------------//
-
-//creating budget scheme in the db
-//input: budget data
-//output: on success: success message, else false message
-router.post('/createBudgetSchemaData', async function (req, res) {
-  var input = req.body;
-  console.log(input);
-  var newBudgetData = new BudgetSchema({
-    user_email: input.user_email,
-    user_budget: input.user_budget,
-    platforms_budget: input.platforms_budget
-
-  });
-  var created = await BudgetSchema.inputData(newBudgetData)
-  if (!created) {
-    res.status(200).send({ success: false, message: "can't create schema" })
-  } else {
-    res.status(200).send({ success: true, message: "schema was created" })
-  }
-
-})
-
-router.post('/temp', async function (req, res) {
-
-  var arraySize = await BudgetSchema.calculateLength(req.body.user_email)
-  // result.find(count)
-  console.log(arraySize);
-})
-
-
 module.exports = router;

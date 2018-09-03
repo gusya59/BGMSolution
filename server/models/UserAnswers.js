@@ -48,7 +48,7 @@ module.exports.findOrCreateUserAnswer = async function (data) {
     if (userFound) {
       var created = this.insertNewAnswer(data);
       return created;
-      
+
     }
     else {
       //if there is no scema for the user, create one new and insert thre relevant data
@@ -151,3 +151,36 @@ module.exports.updatePlatformData = async function (platformIsFound, data) {
     return false;
   }
 }
+
+
+//find the answers array of the specific user and calculte it's size - gets the amount of platforms 
+//input: user's email
+//output: the size on success, else undefind. 
+module.exports.calculateLength = async function (user_email) {
+  var result = (await this.aggregate([
+    { "$match": { "user_email": user_email } },
+    { '$sort': { 'created': -1 } }, //sort by the date. from the newest to oldest
+    { "$project": { "count": { "$size": "$questions" } } }
+  ])).map(({ count }) => count)
+  if (result) {
+    return result[0]
+  } else {
+    return false
+  }
+
+}
+
+
+//find the newest (last) user answer schema. 
+//input: user's email
+//output: the schema data as an object on success, else null. 
+module.exports.findNewestUserAnswers = async function (user_email) {
+  var result = await this.findOne({ user_email: user_email }).sort({ created: -1 }).limit(1)
+  if (result) {
+    return result
+  } else {
+    return false
+  }
+}
+
+
