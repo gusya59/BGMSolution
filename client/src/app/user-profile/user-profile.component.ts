@@ -29,19 +29,19 @@ export class UserProfileComponent implements OnInit {
    cities: city[];
 
   // inpage values
-  b_name: string = "Davids Co";
-  b_type: string = "Web Shop";
-  mobile: string = "0501234585";
-  phone: string = "046999745";
-  city: string = "Nazareth illit";
-  country: string = "Israel";
-  address: string = "Hazoref 6, har yona";
+  b_name: string = "";
+  b_type: string = "";
+  mobile: string = "";
+  phone: string = "";
+  city: string = "";
+  country: string = "";
+  address: string = "";
 
-  firstName: string ="David"
-  lastName: string = "Berdichevsky"
-  email: string = "DavidMD@bgm.com"
+  firstName: string =""
+  lastName: string = ""
+  email: string = ""
 
-  TotalBudget :number = 15550
+  TotalBudget :number = null;
   
 
   // error msg recived string
@@ -170,19 +170,20 @@ public chartOptions:any = {
     // Request data from server
     this.userdata.getUserData().subscribe(
       data=>{
+        console.log(data)
         
         //fatch data from server
-        this.b_name = data.b_name,
-        this.b_type = data.b_type, 
-        this.mobile = data.mobile, 
-        this.phone = data.phone, 
-        this.city = data.city, 
-        this.country = data.country, 
-        this.address = data.address, 
-        this.firstName = data.firstName, 
-        this.lastName = data.lastName, 
-        this.email = data.email,
-        this.TotalBudget = data.totalBudget
+        this.b_name = data.userdata.business_name,
+        this.b_type = data.userdata.business_type, 
+        this.mobile = data.userdata.mobile, 
+        this.phone = data.userdata.phone, 
+        this.city = "test",  //change to data.userdata.city 
+        this.country = data.userdata.country, 
+        this.address = data.userdata.address, 
+        this.firstName = data.userdata.firstName, 
+        this.lastName = data.userdata.lastName, 
+        this.email = data.userdata.email,
+        this.TotalBudget = data.userdata.budget
 
 
         //build angular form (nG removed in 7 version)

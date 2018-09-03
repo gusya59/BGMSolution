@@ -3,22 +3,26 @@ import { Injectable } from '@angular/core';
 
 // Data that will be pulled or bushed to known user
 interface respData {
-  firstName: string,
-  lastName: string,
-  email: string,
-  b_name: string,
-  b_type: string,
-  mobile: string,
-  phone: string,
-  city: string,
-  country: string,
-  address: string,
-  old_password: string,
-  password: string,
-  passwordConfirmation: string,
-  success: boolean,
-  message: string,
-  totalBudget: number
+  success: string;
+  message: string;
+  userdata:{
+    firstName: string,
+    lastName: string,
+    email: string,
+    business_name: string,
+    business_type: string,
+    mobile: string,
+    phone: string,
+    city: string,
+    country: string,
+    address: string,
+    old_password: string,
+    password: string,
+    passwordConfirmation: string,
+    success: boolean,
+    message: string,
+    budget: number
+  }
 }
 
 @Injectable({
@@ -31,11 +35,14 @@ export class UserDataService {
 
   getUserData(){
     //will get user info if correct
-    const uri = 'http://www.mocky.io/v2/5b6b223932000065073732f4';
-
+    const uri = 'http://localhost:1234/user/profile';
+    //payload obj
+    const obj = {
+      token: localStorage.getItem('token')
+    };
 
     //get data from server
-    return this.http.get<respData>(uri)
+    return this.http.post<respData>(uri,obj)
   }
 
   //password change function assembly. 
