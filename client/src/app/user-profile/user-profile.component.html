@@ -125,7 +125,7 @@
 
                     <div class="row-fluid align-self-end">
                         <div class="md-form">
-                            <button mdbBtn type="button" class="btn btn-lg hides" color="warning" block="true" (click)="passChangeModal.show()" mdbWavesEffect>Change Password</button>
+                            <button mdbBtn type="button" class="btn btn-lg hides" color="warning" block="true" (click)="changePasswordModal.show()" mdbWavesEffect>Change Password</button>
                             <!-- diable button if not touched and not valid -->
                             <button mdbBtn type="submit" class="btn btn-lg hides" color="success" block="true" (click)="changeUserData()" [disabled]="!dataformgroup.valid || !dataformgroup.touched" mdbWavesEffect>Save Data</button>
                             <button mdbBtn type="button" class="btn btn-lg hides" color="danger" block="true" (click)="deleteAccountModal.show()" mdbWavesEffect>Delete account</button>
@@ -270,20 +270,20 @@
 
 <!-- Password Change Modal -->
 
-<div mdbModal #passChangeModal="mdbModal" class="modal fade " tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
+<div mdbModal #changePasswordModal="mdbModal" class="modal fade " tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-notify modal-warning" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <!-- closing X -->
-        <button type="button" class="close pull-right btn-lg" aria-label="Close" (click)="passChangeModal.hide()">
+        <button type="button" class="close pull-right btn-lg" aria-label="Close" (click)="changePasswordModal.hide()">
           <span aria-hidden="true">×</span>
         </button>
         <!-- headere title -->
         <h4 class="modal-title w-100" id="myModalLabel">Change Password</h4>
       </div>
       <div class="modal-body">
-        <form [formGroup]="passwordFormGroup" novalidate (ngSubmit)="passChange()" >
+        <form [formGroup]="passwordFormGroup" novalidate (ngSubmit)="changePassword()" >
           <div class="md-form mb-4">
             <i class="fa fa-lock prefix grey-text"></i>
             <input type="password" id="oldPassword" class="form-control validate" minlength ="8" formControlName="oldPassword" required mdbInputDirective>
@@ -309,7 +309,7 @@
 
 
           
-          <button type="button" mdbBtn color="danger" class="waves-light btn-lg" aria-label="Close" (click)="passChangeModal.hide()" mdbWavesEffect>Close</button>
+          <button type="button" mdbBtn color="danger" class="waves-light btn-lg" aria-label="Close" (click)="changePasswordModal.hide()" mdbWavesEffect>Close</button>
           <button type="submit" mdbBtn color="success" class="relative waves-light btn-lg" [disabled]="!passwordFormGroup.valid"mdbWavesEffect>Save changes</button>
   
         

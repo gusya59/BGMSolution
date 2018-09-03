@@ -44,15 +44,15 @@ export class UserDataService {
   }
 
   //password change function assembly. 
-  passChange(password, oldPassword, confirmPassword){
+  changePassword(email, password, oldPassword){
     //will get user info if correct
-    const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
+    const uri = 'http://localhost:1234/user/changePassword';
 
     //object with old password, new password and confirmation
     const obj = {
-      password: password,
-      oldPassword: oldPassword,
-      confirmPassword: confirmPassword
+      newPassword: password,
+      password: oldPassword,
+      email: email
     };
 
     //post data to server
@@ -78,7 +78,7 @@ export class UserDataService {
       address: user.address,
       budget: user.TotalBudget
     }
-    console.log(obj);
+    // console.log(obj);
     return this.http.post<respData>(uri,obj); //will subscripe succsess or faill
   }
   

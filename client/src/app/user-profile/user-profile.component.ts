@@ -47,8 +47,8 @@ export class UserProfileComponent implements OnInit {
   // error msg recived string
   ErroMsg: string;
 
-  //allow to see passChangeModal for error modal use
-  @ViewChild('passChangeModal') passChangeModal: ModalDirective;
+  //allow to see changePasswordModal for error modal use
+  @ViewChild('changePasswordModal') changePasswordModal: ModalDirective;
   // Print splash screen modal
   @ViewChild('printModal') printModal: ModalDirective;
   //user updated modal
@@ -139,15 +139,15 @@ public chartOptions:any = {
   public chartHovered(e: any): void { }
 
   //password change function
-  passChange(){
+  changePassword(){
     if(this.passwordFormGroup.valid){
       this.password = this.passwordFormGroup.value.password;
       this.oldPassword = this.passwordFormGroup.value.oldPassword;
       this.confirmPassword = this.passwordFormGroup.value.confirmPassword;
-      this.userdata.passChange(this.password,this.oldPassword,this.confirmPassword).subscribe(
+      this.userdata.changePassword(this.email,this.password,this.oldPassword).subscribe(
         Data => {
           if(Data.success){
-            this.passChangeModal.hide();
+            this.changePasswordModal.hide();
           }
           else{
             this.ErroMsg =  Data.message;
@@ -170,7 +170,7 @@ public chartOptions:any = {
     // Request data from server
     this.userdata.getUserData().subscribe(
       data=>{
-        console.log(data)
+        // console.log(data)
         
         //fatch data from server
         this.b_name = data.userdata.business_name,
