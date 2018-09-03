@@ -60,13 +60,14 @@ export class UsersComponent implements OnInit {
 }
   
 
-  filterIt(arr, searchKey) {
-    return arr.filter((obj) => {
-      return Object.keys(obj).some((key) => {
-        return obj[key].includes(searchKey);
-      });
+// fillter search
+filterIt(arr, searchKey) {
+  return arr.filter((obj) => {
+    return Object.keys(obj).some((key) => {
+      return obj.firstName.includes(searchKey) || obj.lastName.includes(searchKey) || obj.email.includes(searchKey) ;
     });
-  }
+  });
+}
 
   search() {
     if (!this.searchText) {

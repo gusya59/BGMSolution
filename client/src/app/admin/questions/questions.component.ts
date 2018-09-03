@@ -111,14 +111,15 @@ export class AdminQuestionsComponent implements OnInit {
   }
 
   
-// fillter search
-  filterIt(arr, searchKey) {
-    return arr.filter((obj) => {
-      return Object.keys(obj).some((key) => {
-        return obj[key].includes(searchKey);
-      });
+// fillter search 
+filterIt(arr, searchKey) {
+  return arr.filter((obj) => {
+    return Object.keys(obj).some((key) => {
+      return obj.question_text.includes(searchKey) ;
     });
-  }
+  });
+}
+
 //preper search
   search() {
     if (!this.searchText) {
