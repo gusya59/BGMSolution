@@ -203,8 +203,9 @@ public chartOptions:any = {
  
     //server up get request for data
     this.userPreview.getPreview().subscribe(Data =>{
-      
+      //delay the load of the chart, wait untile all values recived from server
       setTimeout(function () {
+        //insert values into chart data
         this.chartData = [Data.budgethGoogleP, Data.budgetInstagram, Data.budgetFacebook, Data.budgetTwiiter, Data.budgetGoogleAdWords, Data.budgetGoogle, Data.budgetGoogleMybuissness];
       }, 0);
 
