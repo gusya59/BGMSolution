@@ -251,20 +251,19 @@ export class AdminServiceService {
   }
 
     //delete question function
-    deleteQuestion(question_id, question_text){
+    deleteQuestion(question_id){
       //recive data of answer
-      const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
+      const uri = 'http://localhost:1234/survey/removeQuestion';
       //obj of answer data
       const obj ={
-        question_id: question_id,
-        question_text: question_text
+        question_id: question_id
       }
       return this.http.post<respData>(uri,obj)
     }
-//save new question to server
+    //save new question to server
     saveNewQuestion(newQuestion){
       //recive data of quesiton
-      const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
+      const uri = 'http://localhost:1234/survey/addNewQuestion';
       //obj of question data
       const obj ={
         newQuestion: newQuestion

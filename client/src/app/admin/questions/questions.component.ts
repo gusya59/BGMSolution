@@ -239,8 +239,8 @@ export class AdminQuestionsComponent implements OnInit {
   }
 
   // delete question get id and text and delete the question
-  deleteQuestion(question_id, question_text){
-    return this.adminservice.deleteQuestion(question_id, question_text).subscribe(
+  deleteQuestion(question_id){
+    return this.adminservice.deleteQuestion(question_id).subscribe(
       resp => {
         if(resp.success){
           console.log("Deleted: "+ question_id);
