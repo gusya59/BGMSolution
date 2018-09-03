@@ -284,30 +284,30 @@ public chartOptions:any = {
 
 
     //change user data if changed obj will hold user changeable data
-    userDataChanged(){
+    changeUserData(){
       if(this.dataformgroup.valid){
         const obj={
           b_name: this.dataformgroup.value.b_name,
           b_type: this.dataformgroup.value.b_type,
           mobile:  this.dataformgroup.value.mobile,
           phone: this.dataformgroup.value.phone,
-          city:  this.dataformgroup.value.city,
-          country: this.dataformgroup.value.country,
+          city:  this.cities[this.dataformgroup.value.city-1].name,
+          country: this.countries[this.dataformgroup.value.country-1].name,
           address:  this.dataformgroup.value.address,
           firstName:  this.dataformgroup.value.firstName,
           lastName: this.dataformgroup.value.lastName,
           TotalBudget: this.dataformgroup.value.TotalBudget
         }
-        this.userdata.userDataChanged(obj).subscribe(
+        this.userdata.changeUserData(obj).subscribe(
           data =>{
             if(data.success){                //if information was fatched successfuly show modal
               this.dataChangeModal.show();
             }
-            else console.log("error server"); // log error
+            else console.log("error server" + data); // log error
           }
         )
         
-        // this.userdata.userDataChanged(obj).subscribe();
+        // this.userdata.changeUserData(obj).subscribe();
       } else{console.log("Error on input")};
 
       

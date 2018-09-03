@@ -19,8 +19,6 @@ interface respData {
     old_password: string,
     password: string,
     passwordConfirmation: string,
-    success: boolean,
-    message: string,
     budget: number
   }
 }
@@ -63,10 +61,25 @@ export class UserDataService {
 
   //change user data acordingly reciveds user obj
   //name,lastname and user settings
-  userDataChanged(user){
+  changeUserData(user){
     //posting new user data 
-    const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
-    return this.http.post<respData>(uri,user); //will subscripe succsess or faill
+    const uri = 'http://localhost:1234/user/changeUserData';
+    //obj contains response from user and token
+    const obj = {
+      token: localStorage.getItem('token'),
+      firstName: user.firstName,
+      lastName: user.lastName,
+      business_name: user.b_name,
+      business_type: user.b_type,
+      mobile: user.mobile,
+      phone: user.phone,
+      city: user.city,
+      country: user.country,
+      address: user.address,
+      budget: user.TotalBudget
+    }
+    console.log(obj);
+    return this.http.post<respData>(uri,obj); //will subscripe succsess or faill
   }
   
 }

@@ -31,7 +31,7 @@
             <hr>
 
             <!-- Form starts here -->
-            <form [formGroup]="dataformgroup" novalidate (ngSubmit)="userDataChanged()" >
+            <form [formGroup]="dataformgroup" novalidate (ngSubmit)="changeUserData()" >
             <div class="row justify-content-center" >
 
                 <!-- company details -->
@@ -77,7 +77,7 @@
                         <select mdbInputDirective mdbTooltip="Please reselect country" placement="left" type="text" name="city"  formControlName="city" id="city" class="form-control" required>
                             <option [selected]="city" selected="selected">{{city}}
                             </option>
-                            <option *ngFor="let city of cities" value = {{city.id}}>{{city.name}}
+                            <option *ngFor="let city of cities" value={{city.id}}>{{city.name}}
                          </select> 
                     </div>
 
@@ -127,7 +127,7 @@
                         <div class="md-form">
                             <button mdbBtn type="button" class="btn btn-lg hides" color="warning" block="true" (click)="passChangeModal.show()" mdbWavesEffect>Change Password</button>
                             <!-- diable button if not touched and not valid -->
-                            <button mdbBtn type="submit" class="btn btn-lg hides" color="success" block="true" (click)="userDataChanged()" [disabled]="!dataformgroup.valid || !dataformgroup.touched" mdbWavesEffect>Save Data</button>
+                            <button mdbBtn type="submit" class="btn btn-lg hides" color="success" block="true" (click)="changeUserData()" [disabled]="!dataformgroup.valid || !dataformgroup.touched" mdbWavesEffect>Save Data</button>
                             <button mdbBtn type="button" class="btn btn-lg hides" color="danger" block="true" (click)="deleteAccountModal.show()" mdbWavesEffect>Delete account</button>
                         </div>
                     </div>
