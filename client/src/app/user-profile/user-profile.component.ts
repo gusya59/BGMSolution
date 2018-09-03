@@ -286,6 +286,7 @@ public chartOptions:any = {
     //change user data if changed obj will hold user changeable data
     changeUserData(){
       if(this.dataformgroup.valid){
+        //obj contains all the property for out user to see
         const obj={
           b_name: this.dataformgroup.value.b_name,
           b_type: this.dataformgroup.value.b_type,
