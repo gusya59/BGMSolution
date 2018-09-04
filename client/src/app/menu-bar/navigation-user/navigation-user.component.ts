@@ -9,11 +9,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavigationUserComponent implements OnInit {
 
+  //nav bar user constructor
+  //input: auth as AuthService import, router as Router import.
+  //output: 
   constructor(private auth: AuthService,  private router: Router) { }
 
+  //nav bar init
+  //input: 
+  //output: 
   ngOnInit() {
   }
-//log out button function
+
+  //logout button function
+  //input: 
+  //output: redirect to login 
   logout(){
     this.auth.logout();
     this.router.navigate(['/login']);
