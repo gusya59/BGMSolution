@@ -33,6 +33,7 @@ module.exports.inputData = async function (data) {
 //input: user's email
 //output: the size on success, else undefind. 
 module.exports.calculateLength = async function (user_email) {
+  console.log();
   var result = (await this.aggregate([
     { "$match": { "user_email": user_email } },
     { '$sort': { 'created': -1 } }, //sort by the date. from the newest to oldest
@@ -49,7 +50,6 @@ module.exports.calculateLength = async function (user_email) {
 //input: user'e email, plftform name, data to update with
 //output: true on success, else false
 module.exports.updateBudgetPercent = async function (user_email, platform_name, p_budget) {
-  console.log(p_budget);
   var query = {
     "user_email": user_email,
     "platforms_budget": {
@@ -84,7 +84,7 @@ module.exports.updateBudget = async function (user_email, platform_name, p_budge
   var options = { arrayFilters: [{ "outer.platform_name": platform_name }] };
   var updated = await this.findOneAndUpdate(query, update, options).sort({ created: -1 })
   if (updated) { //if the data was updated
-    return true;
+    return updated;
   } else {
     return false;
   }
@@ -104,11 +104,11 @@ module.exports.findNewestUserBudget = async function (user_email) {
 
 //fetch user's latest budget distribution
 //input: user's email
-//output: udget distribution that contains platforms names and budgets on success, else false. 
+//output: budget distribution that contains platforms names and budgets on success, else false. 
 module.exports.fetchBudgetData = async function (user_email) {
   var result = await this.findOne({ user_email: user_email }).sort({ created: -1 }).limit(1)
   if (result) {
-    return result.platforms_budget;
+    return result;
   } else {
     return false
   }

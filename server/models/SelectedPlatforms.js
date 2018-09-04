@@ -33,7 +33,7 @@ module.exports.inputData = async function (data) {
 //input: user's id
 //output: user's data on success, else false
 module.exports.fetchSelectedPlatformsData = async function (data) {
-    var found = await this.findOne({ "user_id": data.user_id});
+    var found = await this.findOne({ "user_id": data.user_email});
     if (found) { //if the data was found
       return found;
     } else {
@@ -45,10 +45,22 @@ module.exports.fetchSelectedPlatformsData = async function (data) {
 //input: user's id, platforms data
 //output: user's data on success, else false
 module.exports.updatePlatformSelection = async function (data) {
-    var found = await this.findOneAndUpdate({ "user_id": data.user_id}, {$set:{ platforms: data.platforms}});
+    var found = await this.findOneAndUpdate({ "user_id": data.user_email}, {$set:{ platforms: data.platforms}}).sort({ created: -1 }).limit(1);
     if (found) { //if the data was updated
       return found;
     } else {
       return false;
     }
   }
+
+//check if the specific platform has been selected for budget calculations
+//input: user's email, platform's name
+//output: if was choosen - true, else false
+module.exports.fetchPlatformSelected = async function (email, name) {
+  var found = await this.findOne({ "user_id": email},{platforms: {$elemMatch: {platform_name:name}}}).sort({ created: -1 }).limit(1);
+  if(found.platforms[0].platform_selected){ // if was selected
+    return true
+  }else{
+    return false
+  }
+}
