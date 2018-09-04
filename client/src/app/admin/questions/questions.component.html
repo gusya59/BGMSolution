@@ -93,7 +93,7 @@
                                 </td>
                                 <!-- fire request answers -->
                                 <td>
-                                    <button  class="btn btn-lg success-color" (click)="saveAnswer(answer_text, answer.answer_id, data.question_id)" >Save</button>
+                                    <button  class="btn btn-lg success-color" (click)="saveAnswer(answer_text.value, answer.answer_id, data.question_id)" >Save</button>
                                     <button  class="btn btn-lg info-color" (click)="editWeights(data.question_id, answer.answer_id)" >Edit</button>
                                 </td>
                             </tr>
@@ -101,7 +101,7 @@
                         <td align="right">
                             <button class="btn btn-lg danger-color" (click)="deleteQuestionShow(data)">Remove Question</button>
                             <!-- fire request questions -->
-                            <button  class="btn btn-lg success-color" (click)="saveQuestion(question_text, data.question_id)" >Save Question</button>
+                            <button  class="btn btn-lg success-color" (click)="saveQuestion(data.question_id, question_text.value)" >Save Question</button>
 
                         </td>
                         </tr>
@@ -147,18 +147,18 @@
                 <div class="md-form ">
                     <i class="fas fa-arrow-circle-right prefix grey-text"></i>
                     <!-- get next question from answer modal -->
-                    <input type="text" #next_question [ngModel]="answer?.next_question" class="form-control" mdbInputDirective>
+                    <input type="text" #next_question [(ngModel)]="nextQuestion" class="form-control" mdbInputDirective>
                     <label for="next_question">Next Question Will Be</label>
                 </div>
             </div>
 
-            <div class="col-lg-4">
+            <!-- <div class="col-lg-4">
                 <div class="md-form">
-                    <i class="fas fa-align-justify prefix grey-text"></i>
+                    <i class="fas fa-align-justify prefix grey-text"></i> -->
                     <!-- get test from answer modal -->
-                    <input type="text" disabled #nextquestion_text [ngModel]="answer?.answer_text" class="form-control" mdbInputDirective>
+                    <!-- <input type="text" disabled #nextquestion_text [(ngModel)]="answer_text" class="form-control" mdbInputDirective>
                 </div>
-            </div>
+            </div> -->
         </div>
         <!-- table with platform info -->
         <div class="container-fluid">
@@ -168,16 +168,16 @@
                         <thead>
                             <tr>  
                                 <!-- get platform names from answer modal -->   
-                                <th class="unique-color text-white" align="center" *ngFor="let data of answer?.platforms " scope="col">
+                                <th class="unique-color text-white" align="center" *ngFor="let data of platforms" scope="col">
                                     {{data.platform_name}}
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>                    
-                                <td align="right" *ngFor="let data of answer?.platforms ">
+                                <td align="right" *ngFor="let data of platforms">
                                     <div class="md-form">
-                                        <input type="number" min="0" max="1" step="0.01" #platform_weight name="platform_weight" [ngModel]="data.platform_weight"  class="form-control" mdbInputDirective>
+                                        <input type="number" min="0" max="1" step="0.01" #platform_weight name="platform_weight" [(ngModel)]="data.platform_weight"  class="form-control" mdbInputDirective>
                                         <td align="right">
                                             <button type="button" mdbBtn color="info" class="relative waves-light btn-lg" (click)="updateAnswerData(platform_weight,data.platform_id,question_id,answer_id)"mdbWavesEffect><i class="fas fa-save fa-2x"></i></button>
                                         </td>

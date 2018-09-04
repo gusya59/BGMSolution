@@ -31,14 +31,14 @@
             <hr>
 
             <!-- Form starts here -->
-            <form [formGroup]="dataformgroup" novalidate (ngSubmit)="changeUserData()" >
+            <form [formGroup]="dataformgroup" novalidate (ngSubmit)="userDataChanged()" >
             <div class="row justify-content-center" >
 
                 <!-- company details -->
                 <div class= "col-md-5">
                     <div class="md-form">
                         <input mdbInputDirective type="text" name="b_name" id="b_name" formControlName="b_name" class="form-control">
-                        <label for="b_name" class="labels">Company Name</label>
+                        <label for="b_name"  class="labels">Company Name</label>
                     </div>
 
                     <div class="md-form">    
@@ -66,7 +66,7 @@
                     <div class="md-form">
                         <label for="country"  class="labels">Country</label>
                         <select mdbInputDirective mdbTooltip="city will be lost" placement="left" type="text" name="country" (change)="onSelect($event.target.value)" formControlName="country" id="country" class="form-control" required>
-                            <option [selected]="country" selected="selected">{{country}}
+                            <option [selected]="country.name" selected="selected">{{country}}
                             </option>
                           <option *ngFor="let country of countries" value= {{country.id}}>{{country.name}}
                         </select>
@@ -75,9 +75,9 @@
                     <div class="md-form">
                         <label for="city"  class="labels">City</label>
                         <select mdbInputDirective mdbTooltip="Please reselect country" placement="left" type="text" name="city"  formControlName="city" id="city" class="form-control" required>
-                            <option [selected]="city" selected="selected">{{city}}
+                            <option [selected]="city.name" selected="selected">{{city}}
                             </option>
-                            <option *ngFor="let city of cities" value={{city.id}}>{{city.name}}
+                            <option *ngFor="let city of cities" value = {{city.id}}>{{city.name}}
                          </select> 
                     </div>
 
@@ -125,9 +125,9 @@
 
                     <div class="row-fluid align-self-end">
                         <div class="md-form">
-                            <button mdbBtn type="button" class="btn btn-lg hides" color="warning" block="true" (click)="changePasswordModal.show()" mdbWavesEffect>Change Password</button>
+                            <button mdbBtn type="button" class="btn btn-lg hides" color="warning" block="true" (click)="passChangeModal.show()" mdbWavesEffect>Change Password</button>
                             <!-- diable button if not touched and not valid -->
-                            <button mdbBtn type="submit" class="btn btn-lg hides" color="success" block="true" (click)="changeUserData()" [disabled]="!dataformgroup.valid || !dataformgroup.touched" mdbWavesEffect>Save Data</button>
+                            <button mdbBtn type="submit" class="btn btn-lg hides" color="success" block="true" (click)="userDataChanged()" [disabled]="!dataformgroup.valid || !dataformgroup.touched" mdbWavesEffect>Save Data</button>
                             <button mdbBtn type="button" class="btn btn-lg hides" color="danger" block="true" (click)="deleteAccountModal.show()" mdbWavesEffect>Delete account</button>
                         </div>
                     </div>
@@ -270,20 +270,20 @@
 
 <!-- Password Change Modal -->
 
-<div mdbModal #changePasswordModal="mdbModal" class="modal fade " tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
+<div mdbModal #passChangeModal="mdbModal" class="modal fade " tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-notify modal-warning" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <!-- closing X -->
-        <button type="button" class="close pull-right btn-lg" aria-label="Close" (click)="changePasswordModal.hide()">
+        <button type="button" class="close pull-right btn-lg" aria-label="Close" (click)="passChangeModal.hide()">
           <span aria-hidden="true">×</span>
         </button>
         <!-- headere title -->
         <h4 class="modal-title w-100" id="myModalLabel">Change Password</h4>
       </div>
       <div class="modal-body">
-        <form [formGroup]="passwordFormGroup" novalidate (ngSubmit)="changePassword()" >
+        <form [formGroup]="passwordFormGroup" novalidate (ngSubmit)="passChange()" >
           <div class="md-form mb-4">
             <i class="fa fa-lock prefix grey-text"></i>
             <input type="password" id="oldPassword" class="form-control validate" minlength ="8" formControlName="oldPassword" required mdbInputDirective>
@@ -309,7 +309,7 @@
 
 
           
-          <button type="button" mdbBtn color="danger" class="waves-light btn-lg" aria-label="Close" (click)="changePasswordModal.hide()" mdbWavesEffect>Close</button>
+          <button type="button" mdbBtn color="danger" class="waves-light btn-lg" aria-label="Close" (click)="passChangeModal.hide()" mdbWavesEffect>Close</button>
           <button type="submit" mdbBtn color="success" class="relative waves-light btn-lg" [disabled]="!passwordFormGroup.valid"mdbWavesEffect>Save changes</button>
   
         

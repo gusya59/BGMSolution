@@ -29,26 +29,26 @@ export class UserProfileComponent implements OnInit {
    cities: city[];
 
   // inpage values
-  b_name: string = "Davids Co";
-  b_type: string = "Web Shop";
-  mobile: string = "0501234585";
-  phone: string = "046999745";
-  city: string = "Nazareth illit";
-  country: string = "Israel";
-  address: string = "Hazoref 6, har yona";
+  b_name: string = "";
+  b_type: string = "";
+  mobile: string = "";
+  phone: string = "";
+  city: string = "";
+  country: string = "";
+  address: string = "";
 
-  firstName: string ="David"
-  lastName: string = "Berdichevsky"
-  email: string = "DavidMD@bgm.com"
+  firstName: string =""
+  lastName: string = ""
+  email: string = ""
 
-  TotalBudget :number = 15550
+  TotalBudget :number = null;
   
 
   // error msg recived string
   ErroMsg: string;
 
-  //allow to see passChangeModal for error modal use
-  @ViewChild('passChangeModal') passChangeModal: ModalDirective;
+  //allow to see changePasswordModal for error modal use
+  @ViewChild('changePasswordModal') changePasswordModal: ModalDirective;
   // Print splash screen modal
   @ViewChild('printModal') printModal: ModalDirective;
   //user updated modal
@@ -139,15 +139,15 @@ public chartOptions:any = {
   public chartHovered(e: any): void { }
 
   //password change function
-  passChange(){
+  changePassword(){
     if(this.passwordFormGroup.valid){
       this.password = this.passwordFormGroup.value.password;
       this.oldPassword = this.passwordFormGroup.value.oldPassword;
       this.confirmPassword = this.passwordFormGroup.value.confirmPassword;
-      this.userdata.passChange(this.password,this.oldPassword,this.confirmPassword).subscribe(
+      this.userdata.changePassword(this.email,this.password,this.oldPassword).subscribe(
         Data => {
           if(Data.success){
-            this.passChangeModal.hide();
+            this.changePasswordModal.hide();
           }
           else{
             this.ErroMsg =  Data.message;
@@ -170,19 +170,20 @@ public chartOptions:any = {
     // Request data from server
     this.userdata.getUserData().subscribe(
       data=>{
+        // console.log(data)
         
         //fatch data from server
-        this.b_name = data.b_name,
-        this.b_type = data.b_type, 
-        this.mobile = data.mobile, 
-        this.phone = data.phone, 
-        this.city = data.city, 
-        this.country = data.country, 
-        this.address = data.address, 
-        this.firstName = data.firstName, 
-        this.lastName = data.lastName, 
-        this.email = data.email,
-        this.TotalBudget = data.totalBudget
+        this.b_name = data.userdata.business_name,
+        this.b_type = data.userdata.business_type, 
+        this.mobile = data.userdata.mobile, 
+        this.phone = data.userdata.phone, 
+        this.city = "test",  //change to data.userdata.city 
+        this.country = data.userdata.country, 
+        this.address = data.userdata.address, 
+        this.firstName = data.userdata.firstName, 
+        this.lastName = data.userdata.lastName, 
+        this.email = data.userdata.email,
+        this.TotalBudget = data.userdata.budget
 
 
         //build angular form (nG removed in 7 version)
@@ -202,7 +203,13 @@ public chartOptions:any = {
  
     //server up get request for data
     this.userPreview.getPreview().subscribe(Data =>{
-      this.createChart(Data);
+      //delay the load of the chart, wait untile all values recived from server
+      setTimeout(function () {
+        //insert values into chart data
+        this.chartData = [Data.budgethGoogleP, Data.budgetInstagram, Data.budgetFacebook, Data.budgetTwiiter, Data.budgetGoogleAdWords, Data.budgetGoogle, Data.budgetGoogleMybuissness];
+      }, 0);
+
+
       this.budgetFacebook = Data.budgetFacebook,
       this.budgetInstagram = Data.budgetInstagram,
       this.budgethGoogleP = Data.budgethGoogleP,
@@ -217,11 +224,6 @@ public chartOptions:any = {
 
   }
 
-    createChart(Data){
-      // chart data inserted array: here we place the budgets
-      this.chartData = [Data.budgethGoogleP, Data.budgetInstagram, Data.budgetFacebook, Data.budgetTwiiter, Data.budgetGoogleAdWords, Data.budgetGoogle, Data.budgetGoogleMybuissness];
-        
-    }
 
     //print page 2 PDF https://rawgit.com/MrRio/jsPDF/master/docs/index.html <= more info imported and tested alpha
     exportToPdf(){
@@ -282,30 +284,31 @@ public chartOptions:any = {
 
 
     //change user data if changed obj will hold user changeable data
-    userDataChanged(){
+    changeUserData(){
       if(this.dataformgroup.valid){
+        //obj contains all the property for out user to see
         const obj={
           b_name: this.dataformgroup.value.b_name,
           b_type: this.dataformgroup.value.b_type,
           mobile:  this.dataformgroup.value.mobile,
           phone: this.dataformgroup.value.phone,
-          city:  this.dataformgroup.value.city,
-          country: this.dataformgroup.value.country,
+          city:  this.cities[this.dataformgroup.value.city-1].name,
+          country: this.countries[this.dataformgroup.value.country-1].name,
           address:  this.dataformgroup.value.address,
           firstName:  this.dataformgroup.value.firstName,
           lastName: this.dataformgroup.value.lastName,
           TotalBudget: this.dataformgroup.value.TotalBudget
         }
-        this.userdata.userDataChanged(obj).subscribe(
+        this.userdata.changeUserData(obj).subscribe(
           data =>{
             if(data.success){                //if information was fatched successfuly show modal
               this.dataChangeModal.show();
             }
-            else console.log("error server"); // log error
+            else console.log("error server" + data); // log error
           }
         )
         
-        // this.userdata.userDataChanged(obj).subscribe();
+        // this.userdata.changeUserData(obj).subscribe();
       } else{console.log("Error on input")};
 
       

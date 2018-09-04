@@ -3,22 +3,24 @@ import { Injectable } from '@angular/core';
 
 // Data that will be pulled or bushed to known user
 interface respData {
-  firstName: string,
-  lastName: string,
-  email: string,
-  b_name: string,
-  b_type: string,
-  mobile: string,
-  phone: string,
-  city: string,
-  country: string,
-  address: string,
-  old_password: string,
-  password: string,
-  passwordConfirmation: string,
-  success: boolean,
-  message: string,
-  totalBudget: number
+  success: string;
+  message: string;
+  userdata:{
+    firstName: string,
+    lastName: string,
+    email: string,
+    business_name: string,
+    business_type: string,
+    mobile: string,
+    phone: string,
+    city: string,
+    country: string,
+    address: string,
+    old_password: string,
+    password: string,
+    passwordConfirmation: string,
+    budget: number
+  }
 }
 
 @Injectable({
@@ -31,23 +33,26 @@ export class UserDataService {
 
   getUserData(){
     //will get user info if correct
-    const uri = 'http://www.mocky.io/v2/5b6b223932000065073732f4';
-
+    const uri = 'http://localhost:1234/user/profile';
+    //payload obj
+    const obj = {
+      token: localStorage.getItem('token')
+    };
 
     //get data from server
-    return this.http.get<respData>(uri)
+    return this.http.post<respData>(uri,obj)
   }
 
   //password change function assembly. 
-  passChange(password, oldPassword, confirmPassword){
+  changePassword(email, password, oldPassword){
     //will get user info if correct
-    const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
+    const uri = 'http://localhost:1234/user/changePassword';
 
     //object with old password, new password and confirmation
     const obj = {
-      password: password,
-      oldPassword: oldPassword,
-      confirmPassword: confirmPassword
+      newPassword: password,
+      password: oldPassword,
+      email: email
     };
 
     //post data to server
@@ -56,10 +61,25 @@ export class UserDataService {
 
   //change user data acordingly reciveds user obj
   //name,lastname and user settings
-  userDataChanged(user){
+  changeUserData(user){
     //posting new user data 
-    const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
-    return this.http.post<respData>(uri,user); //will subscripe succsess or faill
+    const uri = 'http://localhost:1234/user/changeUserData';
+    //obj contains response from user and token
+    const obj = {
+      token: localStorage.getItem('token'),
+      firstName: user.firstName,
+      lastName: user.lastName,
+      business_name: user.b_name,
+      business_type: user.b_type,
+      mobile: user.mobile,
+      phone: user.phone,
+      city: user.city,
+      country: user.country,
+      address: user.address,
+      budget: user.TotalBudget
+    }
+    // console.log(obj);
+    return this.http.post<respData>(uri,obj); //will subscripe succsess or faill
   }
   
 }

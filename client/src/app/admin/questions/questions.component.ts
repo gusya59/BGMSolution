@@ -12,39 +12,45 @@ export class AdminQuestionsComponent implements OnInit {
 
   //table data inserted
   searchText: string;
-  question_id: number;
+  question_id: string;
   question_text: string;
-  answer_id: number;
+  answer_id: string;
   answer_text: string;
+
   // question declaration
-  questions:{
-    question_id: number,
-    question_text: string
-    answers:{
-      answer_id: number;
-      answer_text: string;
-    }
-  }
+  surveyData: {
+      question_id: string,
+      question_text: string,
+    }[];
 
     //general data
     nextQuestion: string;
-    nextquestion_text: string;
+
     answer1Body:string;
     answer2Body: string;
     answer3Body: string;
     answer4Body: string;
 
     // answer Edit data
-    answer: {
-      answer_id: string;
-      answer_text: string;
-      next_question: string;
-      platforms: {
-        platform_id: string,
-        platform_name: string,
-        platform_weight: number
-      }
+    data: {
+      answers: {
+        answer_id: string;
+        answer_text: string;
+        next_question: string;
+        platforms: {
+          platform_id: string,
+          platform_name: string,
+          platform_weight: number
+        }[];
+      }[];
     }
+
+    // platforms fixture to our needs
+    platforms: {
+      platform_id: string,
+      platform_name: string,
+      platform_weight: number
+    }[];
 
     //error msg
     msgError: string;
@@ -95,41 +101,45 @@ export class AdminQuestionsComponent implements OnInit {
    }
 
   ngOnInit() {
+    
   //call admin service to get questions table
-  this.adminservice.fetchQuestions().subscribe(
+  this.adminservice.fetchSurveyData().subscribe(
     Data=>{
-        this.questions = Data.questions;
-          //  console.log(Data)
+      console.log(Data);
+        this.surveyData = Data.surveyData;
     })
   }
 
-// fillter search
-  filterIt(arr, searchKey) {
-    return arr.filter((obj) => {
-      return Object.keys(obj).some((key) => {
-        return obj[key].includes(searchKey);
-      });
+  
+// fillter search 
+filterIt(arr, searchKey) {
+  return arr.filter((obj) => {
+    return Object.keys(obj).some((key) => {
+      return obj.question_text.includes(searchKey) ;
     });
-  }
+  });
+}
+
 //preper search
   search() {
     if (!this.searchText) {
-      return this.questions;
+      return this.surveyData;
     }
     if (this.searchText) {
-      return this.filterIt(this.questions, this.searchText);
+      return this.filterIt(this.surveyData, this.searchText);
     }
   }
 
   
 // save question function new question body
-  saveQuestion(question_text,question_id){
-    return this.adminservice.saveQuestion(question_text,question_id).subscribe(
+  saveQuestion(question_id,question_text){
+    return this.adminservice.saveQuestion(question_id,question_text).subscribe(
       resp => {
         if(resp.success){
           console.log("Posted");
         }
         else{
+          console.log("Faild");
           this.msgError = resp.message;
           this.errorModal.show();
         } 
@@ -166,16 +176,20 @@ export class AdminQuestionsComponent implements OnInit {
 
     //get weights data from server
     this.adminservice.fetchPlatform(this.answer_id,this.question_id).subscribe(
-      resp =>{
-        // console.log(resp);
-        if(resp.success){
-          this.answer = resp;
+      data =>{
+        console.log(data);
+        if(data.success){
+          this.data = data.data;
           this.editModal.show();
           // walk around known angular 6 issue
-          this.nextQuestion = resp.next_question;
+          // get the next question value out of array with only one parameter
+          // console.log(this.data.answers[this.data.answers.length-1].next_question);
+          this.nextQuestion = this.data.answers[this.data.answers.length-1].next_question;
+          //fetch platforms out of backend response
+          this.platforms = this.data.answers[this.data.answers.length-1].platforms;
         }
         else{
-          this.msgError = resp.message;
+          this.msgError = data.message;
           this.errorModal.show();
         }
       }
@@ -207,7 +221,7 @@ export class AdminQuestionsComponent implements OnInit {
         if(resp.success){
           console.log("Posted: " + next_question.value , question_id , answer_id);
           // fix angular 6 known issue, modal content wont destory on hide()
-          this.answer.next_question = '';
+          // this.answer.next_question.value = '';
           this.editModal.hide();  
 
         }
@@ -227,8 +241,8 @@ export class AdminQuestionsComponent implements OnInit {
   }
 
   // delete question get id and text and delete the question
-  deleteQuestion(question_id, question_text){
-    return this.adminservice.deleteQuestion(question_id, question_text).subscribe(
+  deleteQuestion(question_id){
+    return this.adminservice.deleteQuestion(question_id).subscribe(
       resp => {
         if(resp.success){
           console.log("Deleted: "+ question_id);

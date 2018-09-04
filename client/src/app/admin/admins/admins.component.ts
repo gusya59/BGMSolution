@@ -47,14 +47,14 @@ export class AdminsComponent implements OnInit {
 
   }
 
-  //search key in arr
-  filterIt(arr, searchKey) {
-    return arr.filter((obj) => {
-      return Object.keys(obj).some((key) => {
-        return obj[key].includes(searchKey);
-      });
+// fillter search
+filterIt(arr, searchKey) {
+  return arr.filter((obj) => {
+    return Object.keys(obj).some((key) => {
+      return obj.firstName.includes(searchKey) || obj.lastName.includes(searchKey) ;
     });
-  }
+  });
+}
 
   //search function
   search() {
