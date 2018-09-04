@@ -9,10 +9,17 @@ import  decode  from 'jwt-decode';
 })
 export class GuestComponent implements OnInit {
   returnUrl: string;
+  //guest component constructor
+  //input: router as Router import and route as ActivatedRoute import
+  //output: send admin status "true" to server
   constructor(private router: Router , private route: ActivatedRoute) { }
 
+  // router url decleration
   routeUrl: string;
 
+  //guest on page init check token for admin/user
+  //input: saved token
+  //output: reroute
   ngOnInit() {
     //get token
     const token = localStorage.getItem('token');
