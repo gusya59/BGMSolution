@@ -125,7 +125,6 @@ export class LoginComponent implements OnInit {
   //function to deal with admin login or user login
   //input: token
   //output: redirect if admin to admin and if user to user
-  
   isAdmin(){
     const token = localStorage.getItem('token');
     const tokenPayLoad = decode(token);
@@ -140,6 +139,4 @@ export class LoginComponent implements OnInit {
       this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/user';
     }
   }
-
-
 }
