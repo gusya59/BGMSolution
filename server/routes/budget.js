@@ -2,7 +2,6 @@ var express = require('express');
 var router = express();
 var jwt = require('jsonwebtoken');
 
-var registrationSchema = require('../models/Registration.js');
 var sPlatformSchema = require('../models/SelectedPlatforms.js');
 var userAnswersSchema = require('../models/UserAnswers.js');
 var BudgetSchema = require('../models/Budget');
