@@ -1,87 +1,87 @@
 <!-- Admin Navigation bar -->
 <div class="container-fluid">
-    <div class="row">
-      <div class="col-lg-12">
-          <app-navigation-admin></app-navigation-admin>
-      </div>
+  <div class="row">
+    <div class="col-lg-12">
+        <app-navigation-admin></app-navigation-admin>
     </div>
   </div>
+</div>
   
-  <!-- admin page body -->
-  <div  class="container-fluid">
-      <div class="row justify-content-center">
-        <div class="col-lg-12">
-            <div class="card">
-                <!-- Admin Dashboard name -->
-                  <div class="card-header special-color white-text">
-                      <div class="row justify-content-center"> 
-                        <h1 class="h1-responsive "><i class="fas fa-toolbox"></i> Admin Dashboard - Admins Manage</h1>
-                      </div>
-                  </div>
-                  <!-- admin body  -->
-                <div id="main_body" class="container-fluid">
-                  <app-info></app-info>
-                  <!-- admins list -->
-                  <div class="card">
-                      <div class="card-body">
-                    
-                        <!-- Grid row -->
-                        <div class="row">
-                    
-                          <!-- Grid column -->
-                          <div class="col-md-12">
-                    
-                            <div class="md-form">
-                              <i class="fas fa-search prefix"></i>
-                              <input type="search" [(ngModel)]="searchText" id="search" class="form-control" mdbInputDirective [mdbValidate]="false"> 
-                              <label for="search">Search data</label>
-                            </div>
-                    
-                          </div>
-                          <!-- Grid column -->
-                    
-                        </div>
-                        <!-- Grid row -->
-                    
-                        <!--Table-->
-                        <table class="table table-striped">
-                    
-                          <!--Table head-->
-                          <thead>
-                            <tr>
-                              <th>Date</th>
-                              <th>First Name</th>
-                              <th>Last Name</th>
-                              <th>Email</th>
-                              <th></th>
-                            </tr>
-                          </thead>
-                          <!--Table head-->
-                    
-                          <!--Table body-->
-                          <tbody>
-                            <tr *ngFor="let data of search()">
-                              <th scope="row">{{data.created |  date:'dd/MM/yyyy hh:mm:ss'}}</th>
-                              <td>{{data.firstName}}</td>
-                              <td>{{data.lastName}}</td>
-                              <td>{{data.email}}</td>
-                              <td align="right">
-                                <button class="btn btn-lg danger-color" (click)="removeAdminModal(data)">Remove</button>
-                                <button class="btn btn-lg info-color" (click)="demoteAdminModal(data)">Demote Admin</button>
-                              </td>
-                            </tr>
-                          </tbody>
-                          <!--Table body-->
-                        </table>
-                        <!--Table-->
-                    
-                      </div>
+<!-- admin page body -->
+<div  class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-lg-12">
+          <div class="card">
+              <!-- Admin Dashboard name -->
+                <div class="card-header special-color white-text">
+                    <div class="row justify-content-center"> 
+                      <h1 class="h1-responsive "><i class="fas fa-toolbox"></i> Admin Dashboard - Admins Manage</h1>
                     </div>
                 </div>
-            </div>
-        </div>
+                <!-- admin body  -->
+              <div id="main_body" class="container-fluid">
+                <app-info></app-info>
+                <!-- admins list -->
+                <div class="card">
+                    <div class="card-body">
+                  
+                      <!-- Grid row -->
+                      <div class="row">
+                  
+                        <!-- Grid column -->
+                        <div class="col-md-12">
+                  
+                          <div class="md-form">
+                            <i class="fas fa-search prefix"></i>
+                            <input type="search" [(ngModel)]="searchText" id="search" class="form-control" mdbInputDirective [mdbValidate]="false"> 
+                            <label for="search">Search data</label>
+                          </div>
+                  
+                        </div>
+                        <!-- Grid column -->
+                  
+                      </div>
+                      <!-- Grid row -->
+                  
+                      <!--Table-->
+                      <table class="table table-striped">
+                  
+                        <!--Table head-->
+                        <thead>
+                          <tr>
+                            <th>Date</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Email</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <!--Table head-->
+                  
+                        <!--Table body-->
+                        <tbody>
+                          <tr *ngFor="let data of search()">
+                            <th scope="row">{{data.created |  date:'dd/MM/yyyy hh:mm:ss'}}</th>
+                            <td>{{data.firstName}}</td>
+                            <td>{{data.lastName}}</td>
+                            <td>{{data.email}}</td>
+                            <td align="right">
+                              <button class="btn btn-lg danger-color" (click)="removeAdminModal(data)">Remove</button>
+                              <button class="btn btn-lg info-color" (click)="demoteAdminModal(data)">Demote Admin</button>
+                            </td>
+                          </tr>
+                        </tbody>
+                        <!--Table body-->
+                      </table>
+                      <!--Table-->
+                  
+                    </div>
+                  </div>
+              </div>
+          </div>
       </div>
-  </div>
+    </div>
+</div>
 
 <!-- remove modal -->
 
@@ -117,28 +117,28 @@
 
 <div mdbModal #demoteModal="mdbModal" class="modal fade right" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
 aria-hidden="true">
-<div class="modal-dialog modal-side modal-bottom-right" role="document">
-  <div class="modal-content">
-    <div class="modal-header info-color text-white">
-      <!-- closing X button -->
-      <button type="button" class="close pull-right" aria-label="Close" (click)="demoteModal.hide()">
-        <span aria-hidden="true">×</span>
-      </button>
-      <!-- title -->
-      <h4 class="modal-title w-100" id="demoteModalLabel">Demote User</h4>
-    </div>
-    <!-- body -->
-    <div class="modal-body">
-      <p><span class="badge info-color">created:</span> {{created |  date:'dd/MM/yyyy hh:mm:ss'}}</p>
-      <p><span class="badge info-color">name:</span> {{firstName}} {{lastName}}</p>
-      <p><span class="badge info-color">email:</span> {{email}}</p>
-      <p>* will remove this Admin to user position</p>
-    </div>
-    <div class="modal-footer">
-       <!-- contorol buttons -->
-      <button type="button" mdbBtn color="success" class="waves-light" aria-label="Close" (click)="demoteModal.hide()" mdbWavesEffect>Close</button>
-      <button type="button" mdbBtn color="danger" class="relative waves-light" (click)="changeUserStatus()" mdbWavesEffect>Demote</button>
+  <div class="modal-dialog modal-side modal-bottom-right" role="document">
+    <div class="modal-content">
+      <div class="modal-header info-color text-white">
+        <!-- closing X button -->
+        <button type="button" class="close pull-right" aria-label="Close" (click)="demoteModal.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+        <!-- title -->
+        <h4 class="modal-title w-100" id="demoteModalLabel">Demote User</h4>
+      </div>
+      <!-- body -->
+      <div class="modal-body">
+        <p><span class="badge info-color">created:</span> {{created |  date:'dd/MM/yyyy hh:mm:ss'}}</p>
+        <p><span class="badge info-color">name:</span> {{firstName}} {{lastName}}</p>
+        <p><span class="badge info-color">email:</span> {{email}}</p>
+        <p>* will remove this Admin to user position</p>
+      </div>
+      <div class="modal-footer">
+        <!-- contorol buttons -->
+        <button type="button" mdbBtn color="success" class="waves-light" aria-label="Close" (click)="demoteModal.hide()" mdbWavesEffect>Close</button>
+        <button type="button" mdbBtn color="danger" class="relative waves-light" (click)="changeUserStatus()" mdbWavesEffect>Demote</button>
+      </div>
     </div>
   </div>
-</div>
 </div>
