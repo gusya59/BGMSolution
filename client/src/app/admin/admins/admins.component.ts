@@ -38,9 +38,9 @@ export class AdminsComponent implements OnInit {
 
   }
 
-//on page init fetch admin table
-//input: on success: admin rank user table data
-//output: send admin status "true" to server
+  //on page init fetch admin table
+  //input: on success: admin rank user table data
+  //output: send admin status "true" to server
   ngOnInit() {
 
   //call admin service to get admins table

@@ -13,9 +13,12 @@ export class InputErrorComponent implements OnInit {
 msg: string[];
 constructor(private registercomp: RegistrationComponent) { }
 
+//on page init fetch msg
+//input: 
+//output: error msg
 ngOnInit() {
   this.msg = this.registercomp.errorMSG;
-  console.log(this.registercomp.errorMSG);
+  // console.log(this.registercomp.errorMSG);
 }
 
 }

@@ -10,10 +10,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./wrong-data.component.css']
 })
 export class WrongDataComponent implements OnInit {
-  //define vars
+  //define msg
   msg: string[];
+
+  //construct component
+  //input: registercomp imported as RegistrationComponent
+  //output: 
   constructor(private registercomp: RegistrationComponent) { }
 
+  //on page init fetch msg
+  //input:
+  //output: 
   ngOnInit() {
     this.msg = this.registercomp.errorMSG
   }
