@@ -9,14 +9,15 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 })
 export class AdminsComponent implements OnInit {
 
-// admin table
+// admin table decleration
   admins: {
     created: string;
     firstName: string;  
     lastName: string;
     email: string;
   }[];
-  //admin data
+
+  //admin data decleration
   created: string;
   firstName: string;  
   lastName: string;
@@ -32,31 +33,39 @@ export class AdminsComponent implements OnInit {
 
   //table data inserted
   searchText: string;
+
   constructor(private adminservice: AdminServiceService) { 
 
   }
 
+//on page init fetch admin table
+//input: on success: admin rank user table data
+//output: send admin status "true" to server
   ngOnInit() {
 
   //call admin service to get admins table
     this.adminservice.fetchUsersTable(true).subscribe(
       Data=>{
           this.admins = Data.adminUsers; 
-             console.log(this.admins)
+            //  console.log(this.admins)
       })
 
   }
 
-// fillter search
-filterIt(arr, searchKey) {
-  return arr.filter((obj) => {
-    return Object.keys(obj).some((key) => {
-      return obj.firstName.includes(searchKey) || obj.lastName.includes(searchKey) ;
+  //fillter table (search)
+  //input: array of admins and search key.
+  //output: show only if includes the key in our row.
+  filterIt(arr, searchKey) {
+    return arr.filter((obj) => {
+      return Object.keys(obj).some((key) => {
+        return obj.firstName.includes(searchKey) || obj.lastName.includes(searchKey) ;
+      });
     });
-  });
-}
+  }
 
-  //search function
+  //Search init function
+  //input: 
+  //output: if we have search word, do fillter. if we don't, wait.
   search() {
     if (!this.searchText) {   //if we didnt search show table
       return this.admins;
@@ -66,32 +75,40 @@ filterIt(arr, searchKey) {
     }
   }
 
-  //remove admin modal
+  //remove admin modal lunch
+  //input: admin data
+  //output: selected admin data to remove
   removeAdminModal(admin){
-    console.log(admin);
+    // console.log(admin);
     this.created = admin.created;
     this.firstName = admin.firstName;
     this.lastName = admin.lastName;
     this.email = admin.email;
+    //lunch modal
     this.removeModal.show();
   }
 
-  //demote admin
+  //demote admin modal
+  //input: admin data
+  //output: show admin data to demote
   demoteAdminModal(admin){
-    console.log(admin);
+    // console.log(admin);
     this.created = admin.created;
     this.firstName = admin.firstName;
     this.lastName = admin.lastName;
     this.email = admin.email;
+    //lunch modal
     this.demoteModal.show();
   }
 
-  //remove user function
+  //remove user function, send email and recive data
+  //input:
+  //output: on success: remove admin and hide modal, on fail: error.
   removeUser(){
     this.adminservice.removeUser(this.email).subscribe(
       Data => {
         if(Data.success){
-          console.log("removed " + this.email);
+          // console.log("removed " + this.email);
           this.removeModal.hide();
         }
         else console.log(Data.message);
@@ -99,17 +116,19 @@ filterIt(arr, searchKey) {
     )
   }
 
-    //Change user Status function admin: true
-    changeUserStatus(){
-      this.adminservice.changeUserStatus(this.email, false).subscribe(
-        Data => {
-          if(Data.success){
-            console.log("demoted " + this.email);
-            this.demoteModal.hide();
-          }
-          else console.log(Data.message);
+  //change user status function, demote admin to user
+  //input: email and admin value false.
+  //output: on success:demote admin and close modal, on fail: error.
+  changeUserStatus(){
+    this.adminservice.changeUserStatus(this.email, false).subscribe(
+      Data => {
+        if(Data.success){
+          // console.log("demoted " + this.email);
+          this.demoteModal.hide();
         }
-      )
-    }
+        else console.log(Data.message);
+      }
+    )
+  }
 
 }

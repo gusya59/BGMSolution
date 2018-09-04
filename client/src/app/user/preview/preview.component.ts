@@ -60,7 +60,7 @@ export class PreviewComponent implements OnInit {
     //puch to arr
     arr.push(this.getRandomColor());
 
-    console.log(arr);
+    // console.log(arr);
     //set to our color array
     this.colorArray = arr; 
   }
