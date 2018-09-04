@@ -8,78 +8,79 @@
 <!-- unknown tokken login -->
 
 <div class="container ">
-    <div class="card">
-      <!--Header-->
+  <div class="card">
+
+        <!--Header-->
         <h3 class="card-header primary-color white-text">Welcome</h3>
 
       
-      <div class="card-body">
-        <div class="row justify-content-center">
-          <div class="col-md-6 ">
-            <!-- Material form login -->
-            <form [formGroup]="loginForm" (ngSubmit)="login()">
-              <!-- Material input password -->
-              <div class="col-md-12">
-                  <div class="md-form">
-                      <i class="fa fa-user prefix grey-text"></i>
-                      <input mdbInputDirective 
-                      type="email" 
-                      class="form-control"
-                      formControlName="InputEmail" 
-                      id="InputEmail" 
-                      name="InputEmail"
-                      required>
-                      <label for="InputEmail" class="">Email:</label>
-                  </div>
-              </div>
-
-              <!-- Material input password -->
-              <div class="col-md-12">
+    <div class="card-body">
+      <div class="row justify-content-center">
+        <div class="col-md-6 ">
+          <!-- Material form login -->
+          <form [formGroup]="loginForm" (ngSubmit)="login()">
+            <!-- Material input password -->
+            <div class="col-md-12">
                 <div class="md-form">
-                    <i class="fa fa-key prefix grey-text"></i>
+                    <i class="fa fa-user prefix grey-text"></i>
                     <input mdbInputDirective 
-                    type="password" 
+                    type="email" 
                     class="form-control"
-                    formControlName="InputPassword" 
-                    id="InputPassword" 
-                    name="InputPassword"
+                    formControlName="InputEmail" 
+                    id="InputEmail" 
+                    name="InputEmail"
                     required>
-                    <label for="InputPassword" class="">Password:</label>
+                    <label for="InputEmail" class="">Email:</label>
                 </div>
             </div>
 
-            <!-- Error Modal -->
-            <div mdbModal #basicModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
-              aria-hidden="true">
-              <div class="modal-dialog modal-notify modal-warning"  role="document">
-                <div class="modal-content">
-                  <!-- Modal Header -->
-                  <div class="modal-header">
-                    <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
-                      <span aria-hidden="true">×</span>
-                    </button>
-                    <h4 class="modal-title w-100" id="myModalLabel">Email or Password are incorrect</h4>
-                  </div>
+            <!-- Material input password -->
+            <div class="col-md-12">
+              <div class="md-form">
+                  <i class="fa fa-key prefix grey-text"></i>
+                  <input mdbInputDirective 
+                  type="password" 
+                  class="form-control"
+                  formControlName="InputPassword" 
+                  id="InputPassword" 
+                  name="InputPassword"
+                  required>
+                  <label for="InputPassword" class="">Password:</label>
+              </div>
+          </div>
 
-                  <!-- Modal body contant -->
-                  <div class="modal-body">
+          <!-- Error Modal -->
+          <div mdbModal #basicModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-notify modal-warning"  role="document">
+              <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                  <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                  <h4 class="modal-title w-100" id="myModalLabel">Email or Password are incorrect</h4>
+                </div>
 
-                    <app-wrong-e-p></app-wrong-e-p>
+                <!-- Modal body contant -->
+                <div class="modal-body">
 
-                  </div>
-                  <!-- Modal footer contant -->
-                  <div class="modal-footer">
-                      <h6>*{{ErroMsg}}</h6>
-                  </div>
+                  <app-wrong-e-p></app-wrong-e-p>
+
+                </div>
+                <!-- Modal footer contant -->
+                <div class="modal-footer">
+                    <h6>*{{ErroMsg}}</h6>
                 </div>
               </div>
             </div>
-            
-              <div class="text-center mt-8">
-                <br>
-                <button type="submit" value="submit" class="btn btn-outline-primary btn-lg">Login</button>   
-                <button routerLink="/signup" routerLinkActive="active" class="btn btn-outline-warning btn-lg">New User</button>
-              </div>
+          </div>
+          <!-- buttons -->
+            <div class="text-center mt-8">
+              <br>
+              <button type="submit" value="submit" class="btn btn-outline-primary btn-lg">Login</button>   
+              <button routerLink="/signup" routerLinkActive="active" class="btn btn-outline-warning btn-lg">New User</button>
+            </div>
           </form>
         </div>
       </div>

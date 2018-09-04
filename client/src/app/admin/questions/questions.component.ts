@@ -10,7 +10,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 })
 export class AdminQuestionsComponent implements OnInit {
 
-  //table data inserted
+  //table data inserted decleration
   searchText: string;
   question_id: string;
   question_text: string;
@@ -21,9 +21,10 @@ export class AdminQuestionsComponent implements OnInit {
   surveyData: {
       question_id: string,
       question_text: string,
-    }[];
+  }[];
 
-    //general data
+    //general data decleration
+
     nextQuestion: string;
 
     answer1Body:string;
@@ -31,7 +32,7 @@ export class AdminQuestionsComponent implements OnInit {
     answer3Body: string;
     answer4Body: string;
 
-    // answer Edit data
+    // answer Edit data decleration
     data: {
       answers: {
         answer_id: string;
@@ -45,23 +46,23 @@ export class AdminQuestionsComponent implements OnInit {
       }[];
     }
 
-    // platforms fixture to our needs
+    // platforms fixture decleration
     platforms: {
       platform_id: string,
       platform_name: string,
       platform_weight: number
     }[];
 
-    //error msg
+    //error msg decleration
     msgError: string;
   
   
 
-  // question form
+  // question form decleration
   question_textForm: FormGroup;
-  // answer form
+  // answer form decleration
   answer_textForm: FormGroup;
-  //add question form
+  //add question form decleration
   newQuestionForm: FormGroup;
 
 
@@ -98,29 +99,36 @@ export class AdminQuestionsComponent implements OnInit {
       answer3Body: this.answer3Body,
       answer4Body: this.answer4Body
     });
-   }
+  }
 
+  //on page init fetch survey data
+  //input: 
+  //output: on success: place survey data 
   ngOnInit() {
     
   //call admin service to get questions table
   this.adminservice.fetchSurveyData().subscribe(
     Data=>{
-      console.log(Data);
+      // console.log(Data);
         this.surveyData = Data.surveyData;
     })
   }
 
   
-// fillter search 
-filterIt(arr, searchKey) {
-  return arr.filter((obj) => {
-    return Object.keys(obj).some((key) => {
-      return obj.question_text.includes(searchKey) ;
+  //fillter table (search)
+  //input: array of question and search key.
+  //output: show only if includes the key in our row.
+  filterIt(arr, searchKey) {
+    return arr.filter((obj) => {
+      return Object.keys(obj).some((key) => {
+        return obj.question_text.includes(searchKey) ;
+      });
     });
-  });
-}
+  }
 
-//preper search
+  //Search init function
+  //input: 
+  //output: if we have search word, do fillter. if we don't, wait.
   search() {
     if (!this.searchText) {
       return this.surveyData;
@@ -130,16 +138,17 @@ filterIt(arr, searchKey) {
     }
   }
 
-  
-// save question function new question body
+  //save question function new question body
+  //input: question id and text
+  //output: on fail: error msg
   saveQuestion(question_id,question_text){
     return this.adminservice.saveQuestion(question_id,question_text).subscribe(
       resp => {
         if(resp.success){
-          console.log("Posted");
+          // console.log("Posted");
         }
         else{
-          console.log("Faild");
+          // console.log("Faild");
           this.msgError = resp.message;
           this.errorModal.show();
         } 
@@ -147,12 +156,14 @@ filterIt(arr, searchKey) {
     )
   }
 
-  // save answer function new answer body
+  //save answer function new answer body
+  //input: answer text.id and question id.
+  //output: on fail: error msg
   saveAnswer(answer_text,answer_id, question_id){
     return this.adminservice.saveAnswer(answer_text,answer_id,question_id).subscribe(
       resp => {
         if(resp.success){
-          console.log("Posted");
+          // console.log("Posted");
         }
         else{
           this.msgError = resp.message;
@@ -162,22 +173,26 @@ filterIt(arr, searchKey) {
     )
   }
 
+  //set asnswers obj into array
+  //input: answer object
+  //output: map to array 
   toArray(answers: object) {
-    
     return Object.keys(answers).map(key => answers[key])
   }
 
-  // edit question weights
+  //edit question weights
+  //input: answer question id and answer id.
+  //output: on success: open modal to show data on fail: error msg
   editWeights(question_id, answer_id){
     
-    console.log("ans: " +answer_id,"quest: " + question_id);
+    // console.log("ans: " +answer_id,"quest: " + question_id);
     this.answer_id = answer_id;
     this.question_id = question_id;
 
     //get weights data from server
     this.adminservice.fetchPlatform(this.answer_id,this.question_id).subscribe(
       data =>{
-        console.log(data);
+        // console.log(data);
         if(data.success){
           this.data = data.data;
           this.editModal.show();
@@ -197,33 +212,36 @@ filterIt(arr, searchKey) {
     
   }
 
-  //recive data from edit form
+  //recive data from edit form to update answer
+  //input: platform id and weight, question and answer id.
+  //output: on success: updated data on fail: error msg
   updateAnswerData(platform_weight,platform_id,question_id,answer_id){
     
     return this.adminservice.updateAnswerData(platform_weight,platform_id,question_id,answer_id).subscribe(
       resp => {
         if(resp.success){
-          console.log("Posted: " +platform_weight.value , platform_id , question_id , answer_id);
+          // console.log("Posted: " +platform_weight.value , platform_id , question_id , answer_id);
         }
         else{
           this.msgError = resp.message;
           this.errorModal.show();
         } 
       }
-    )
-    
+    ) 
   }
 
-  //update edit form next question
+  //edit form, next question
+  //input: next question, question and answer id
+  //output: on success: updated data on fail: error msg
+
   updateNextQuestion(next_question,question_id,answer_id){
     return this.adminservice.updateNextQuestion(next_question,question_id,answer_id).subscribe(
       resp => {
         if(resp.success){
-          console.log("Posted: " + next_question.value , question_id , answer_id);
+          // console.log("Posted: " + next_question.value , question_id , answer_id);
           // fix angular 6 known issue, modal content wont destory on hide()
           // this.answer.next_question.value = '';
           this.editModal.hide();  
-
         }
         else{
           this.msgError = resp.message;
@@ -233,19 +251,23 @@ filterIt(arr, searchKey) {
     )
   }
 
-  // show delete modal get id and text and showing modal 
+  //show delete modal get id and text and showing modal 
+  //input: question data
+  //output: show model with data
   deleteQuestionShow(data){
     this.question_id = data.question_id;
     this.question_text = data.question_text,
     this.deleteQuestionModal.show();
   }
 
-  // delete question get id and text and delete the question
+  //delete question get id and text and delete the question 
+  //input: question id
+  //output: on success: delete quesiton on fail: error msg
   deleteQuestion(question_id){
     return this.adminservice.deleteQuestion(question_id).subscribe(
       resp => {
         if(resp.success){
-          console.log("Deleted: "+ question_id);
+          // console.log("Deleted: "+ question_id);
           this.deleteQuestionModal.hide();
         }
         else{
@@ -255,13 +277,17 @@ filterIt(arr, searchKey) {
       }
     )
   }
-  // save new question button generatets new question
+
+  //save new question, generatets new question
+  //input: new question form values
+  //output: on success: save question on fail: error msg
+
   saveNewQuestion(){
     console.log(this.newQuestionForm.value)
     return this.adminservice.saveNewQuestion(this.newQuestionForm.value).subscribe(
       resp => {
         if(resp.success){
-          console.log("Posted: " +this.newQuestionForm.value);
+          // console.log("Posted: " +this.newQuestionForm.value);
           this.addQuestionModal.hide();
           this.newQuestionForm.reset();
         }

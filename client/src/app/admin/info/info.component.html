@@ -1,6 +1,6 @@
 <!-- upper general info bar -->
 <form #adminInfo="ngForm">
-                    
+  <!-- number of users section -->
   <div class="row justify-content-center">
     <div class="col-lg-4">
       <div class="md-form">
@@ -8,14 +8,16 @@
           <label for="numUsers"  class="labels">Number of Users</label>
       </div>
     </div>
-    
+
+    <!-- number of admins section -->
     <div class="col-lg-4">
       <div class="md-form">
           <input mdbInputDirective type="text" disabled name="numAdmins" id="numAdmins" [(ngModel)]="numAdmins" class="form-control">
           <label for="numAdmins"  class="labels">Number of Admins</label>
       </div>
     </div>
-      
+
+    <!-- number of local time and date section -->  
     <div class="col-lg-4">
       <div class="md-form">
           <input mdbInputDirective type="text" disabled name="serverTime" id="serverTime" [(ngModel)]="serverTime" class="form-control">

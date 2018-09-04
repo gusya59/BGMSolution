@@ -9,16 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavigationAdminComponent implements OnInit {
 
+  //nav bar admin constructor
+  //input: auth as AuthService import, router as Router import.
+  //output: 
   constructor(private auth: AuthService,  private router: Router) { }
 
   ngOnInit() {
 
   }
-    //logout button
-    logout(){
-      this.auth.logout();
-      this.router.navigate(['/login']);
-    }
+
+  //logout button function
+  //input: 
+  //output: redirect to login 
+  logout(){
+    this.auth.logout();
+    this.router.navigate(['/login']);
+  }
 
 }
 

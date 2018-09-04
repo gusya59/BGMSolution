@@ -6,12 +6,6 @@ import { ModalDirective } from 'angular-bootstrap-md';
 import { first } from '../../../node_modules/rxjs/operators';
 import  decode  from 'jwt-decode';
 
-
-
-
-
-
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -19,7 +13,7 @@ import  decode  from 'jwt-decode';
 })
 export class LoginComponent implements OnInit {
 
-  // setup form
+  //login form data decleration
   loginForm: FormGroup;
   loading = false;
   submitted = false;
@@ -27,17 +21,26 @@ export class LoginComponent implements OnInit {
   error = '';
   routerPage = '/';
 
-  // propertys
+  //propertys
   isLoginError: boolean = false;
+
   //allow to see basicModal for error modal use
   @ViewChild('basicModal') basicModal: ModalDirective;
 
-  //vars
+  //error msg decleration
   ErroMsg: string[];
+
+    
+  //login page constructor
+  //input: auth as AuthService import, route as ActivatedRoute import, router as Router import and fb as FormBuilder import.
+  //output: send admin status "true" to server
   constructor(private auth: AuthService, private route: ActivatedRoute,  private router: Router,private fb: FormBuilder){
 
    }
 
+  //on login page init
+  //input: 
+  //output: validators init
   ngOnInit() {
     this.loginForm = this.fb.group({
       InputEmail: ['', [ Validators.required,Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
@@ -46,9 +49,6 @@ export class LoginComponent implements OnInit {
 
     // reset login status
     this.auth.logout();
-
-    
-
 
   }
 
@@ -80,8 +80,12 @@ export class LoginComponent implements OnInit {
   //     });
   // }
 
-//get email and password from component and send it to auth
+  //get email and password from component and send it to auth
+  //input: email and password
+  //output: on success: redirect on fail: error msg
+
   login() {
+    //set submittion to true
     this.submitted = true;
     
     // stop here if form is invalid
@@ -116,9 +120,11 @@ export class LoginComponent implements OnInit {
               }
                 
             })
-          }
+  }
 
   //function to deal with admin login or user login
+  //input: token
+  //output: redirect if admin to admin and if user to user
   isAdmin(){
     const token = localStorage.getItem('token');
     const tokenPayLoad = decode(token);
@@ -133,6 +139,4 @@ export class LoginComponent implements OnInit {
       this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/user';
     }
   }
-
-
 }
