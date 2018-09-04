@@ -23,9 +23,14 @@ export class AuthService {
 // false for logged out true for logged in.
   // private loggedInStatus = false;
 
-
+  //component construction function
+  //input: HttpClient imported as http and JwtHelperService imported as jwtHelper
+  //output:  
   constructor(private http: HttpClient, public jwtHelper: JwtHelperService) { }
-     //check seasion
+
+  //function to check seasion
+  //input:
+  //output: true if not expired or false if do expired
   public isAuthenticated(): boolean{
     //get token
     const token = localStorage.getItem('token');
@@ -45,6 +50,8 @@ export class AuthService {
   // }
 
   //get user info from backend HTTP
+  //input: user inputed email and password
+  //output: success or fail
   UserLogin(InputEmail: string, InputPassword: string){
     //will get user info if correct
     const uri = 'http://localhost:1234/signup/login';
@@ -68,11 +75,17 @@ export class AuthService {
     
   }
 
+  //logout function delete token and redirect
+  //input:
+  //output:
   logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('token');
   } 
 
+  //add user registration function
+  //input: users firstname, last name, email, password and confirmation and check box for aggrement
+  //output: success or fail
   addUser(inputfirstname, inputlastname, inputEmail, inputPassword, confirmPassword,checkBox) {
     const uri = 'http://localhost:1234/signup/registration';
     const obj = {
@@ -103,7 +116,8 @@ export class AuthService {
   }
 
   //delete user function
-
+  //input: user password
+  //output: success or fail
   deleteUser(password){
     const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
     return this.http.post<respData>(uri,password)
