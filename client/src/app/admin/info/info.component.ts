@@ -10,11 +10,13 @@ import { first } from '../../../../node_modules/rxjs/operators';
 })
 export class InfoComponent implements OnInit {
 
-  //general values
+  //decleration for user admins and time
   numUsers: number = 0;
   numAdmins: number =0;
   serverTime: Date;
 
+  //constructor decleration
+  //admin service imported as adminService from AdminServiceService
   constructor(private adminService: AdminServiceService) { 
     //get system time acording to zolo
     setInterval(() => {
@@ -22,13 +24,21 @@ export class InfoComponent implements OnInit {
   }, 1); 
   }
 
+  //on page init load empty values to show some data
+  //input: 
+  //output: 
   ngOnInit() {
 
     this.numUsers;
     this.numAdmins;
 
-  this.updatePage();
+    // call update function
+    this.updatePage();
  }
+
+  //page update function 
+  //input: non
+  //output: on success: setup number of user and number of admins on fail: msg
   updatePage(){
     //get general data from service
     this.adminService.generalInformation().pipe(first()).subscribe(
