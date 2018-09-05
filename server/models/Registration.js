@@ -19,7 +19,8 @@ var UsersSchema = mongoose.Schema({
   mobile: { type: String, required: true, trim:true },
   phone: { type: String, required: true, trim:true },
   country: { type: String, required: true},
-  address: { type: String, required: true },
+  city: { type: String, required: true },
+  address: { type: String, required: true},
   budget: { type: Number, required: true, trim:true },
   ////
   created: { type: Date, default: Date.now() }
@@ -78,7 +79,7 @@ module.exports.userDataRegistration = async function (data,userEmail) {
     return false;
   }
   else {
-    return true;
+    return update;
   }
 }
 

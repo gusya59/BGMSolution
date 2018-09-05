@@ -2,10 +2,10 @@ var express = require('express');
 var router = express();
 var jwt = require('jsonwebtoken');
 
-var registrationSchema = require('../models/Registration.js');
 var sPlatformSchema = require('../models/SelectedPlatforms.js');
 var userAnswersSchema = require('../models/UserAnswers.js');
 var BudgetSchema = require('../models/Budget');
+var PlatformsSchema = require('../models/Platforms')
 
 //---------------------------Budget calaculations----------------------------//
 
@@ -13,14 +13,8 @@ var BudgetSchema = require('../models/Budget');
 //input: budget data
 //output: on success: success message, else false message
 router.post('/createBudgetSchemaData', async function (req, res) {
-    var input = req.body;
-    var newBudgetData = new BudgetSchema({
-        user_email: input.user_email,
-        user_budget: input.user_budget,
-        platforms_budget: input.platforms_budget
-    });
-    var created = await BudgetSchema.inputData(newBudgetData)
-    if (!created) {
+    var result = await BudgetSchema.inputData(req.body.user_email, req.body.user_budget)
+    if (!result) {
         res.status(200).send({ success: false, message: "can't create schema" })
     } else {
         res.status(200).send({ success: true, message: "schema was created" })

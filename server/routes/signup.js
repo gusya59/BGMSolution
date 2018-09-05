@@ -8,6 +8,9 @@ var jwt = require('jsonwebtoken');
 var registrationSchema = require('../models/Registration.js');
 var verFuncs = require('../utils/verificationFunctions.js');
 var validFuncs = require('../utils/validationFunctions');
+var BudgetSchema = require('../models/Budget');
+var SurveySchema = require('../models/Survey');
+var SelectPlatformSchema = require('../models/SelectedPlatforms.js');
 
 //registration
 router.post('/registration', async function (req, res) {
@@ -55,11 +58,16 @@ router.post('/usersettings', verFuncs.getTokenFromHeaders, async function (req, 
         res.status(200).send({ success: false, errors: errors })
       }
       else {
-        var input = await registrationSchema.userDataRegistration(data, userEmail); //insert data into the DB
-        if (input) {
+        var input = await registrationSchema.userDataRegistration(data, userEmail); //insert data into the DB  
+         //create budget schem for the user in the Budget Collection
+         var createdBudget = await BudgetSchema.inputData(userEmail,input.budget)
+         var createdSelectedP = await SelectPlatformSchema.inputData(userEmail)
+
+        if (input && createdBudget && createdSelectedP) {
+         
           res.status(200).send({ success: true, message: "User Settings data was inserted!" })
         } else {
-          res.status(200).send({ success: true, message: "There is no such user" })
+          res.status(200).send({ success: true, message: "Error in Registration" })
         }
       }
     }
@@ -90,10 +98,10 @@ router.post('/login', async function (req, res) {
           //console.log("the token is "+ token);
           res.status(200).send({ success: true, token: token });
         }
-      }else{
+      } else {
         res.status(200).send({ success: false, message: "email wasn't found" });
-      }    
-    }else{
+      }
+    } else {
       res.status(200).send({ success: false, errors: errors });
     }
   }

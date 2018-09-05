@@ -95,7 +95,7 @@ router.post('/remove', async function (req, res) {
 async function userDataValidation(errors, data) {
   await validFuncs.validateFirstName(errors, data.firstName);
   validFuncs.validateLastName(errors, data.lastName);
-  validFuncs.validatePassword(errors, data.password);
+ // validFuncs.validatePassword(errors, data.password);
   validFuncs.validateBusinessName(errors, data.business_name);
   //validateString(errors, data.bussiness_type);
   validFuncs.validateMobile(errors, data.mobile);
@@ -169,8 +169,7 @@ router.post('/addUserAnswer', verFuncs.getTokenFromHeaders, async function (req,
 //input:  user id and selected platform's data
 //output: on success: success message, else false message
 router.post('/createSelectedPlatformDB', async function (req, res) {
-  var newDB = new sPlatformSchema(req.body);
-  var created = await sPlatformSchema.inputData(newDB)
+  var created = await sPlatformSchema.inputData(req.body.user_email)
   if (created) {
     res.status(200).send({ success: true, message: "db was created" })
   } else {
@@ -180,7 +179,7 @@ router.post('/createSelectedPlatformDB', async function (req, res) {
 
 
 //fetching the list of the platforms
-//input: user_id
+//input: user_email
 //output: on success: success message and platforms, else false message
 router.post('/fetchPlatformList', async function (req, res) {
   var result = await sPlatformSchema.fetchSelectedPlatformsData(req.body)
@@ -193,7 +192,7 @@ router.post('/fetchPlatformList', async function (req, res) {
 })
 
 //updating user platforms selection
-//input: user_id, platforms data
+//input: user_email, platforms data
 //output: on success: success message ,else false message
 router.post('/updatePlatformsSelection', async function (req, res) {
   var result = await sPlatformSchema.updatePlatformSelection(req.body)
