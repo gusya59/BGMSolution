@@ -11,6 +11,9 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from
 
 export class AuthGuard implements CanActivate {
 
+  //constructor function
+  //input: Router imported as router, AuthService imported as auth.
+
   constructor(private router: Router, public auth: AuthService){
 
   }
@@ -26,15 +29,18 @@ export class AuthGuard implements CanActivate {
 //     return false;
 // }
 
-canActivate(): boolean {
-  //if token exsist and not expired
-  if(!this.auth.isAuthenticated()){
-    this.router.navigate(['login']);
-    return false;
-    }
-  else {
-    return true; //if not token or expired remove it
-    }
-}
+  //function that decided if the user can active the route
+  //input:
+  //output: true if yes and false if no. 
+  canActivate(): boolean {
+    //if token exsist and not expired
+    if(!this.auth.isAuthenticated()){
+      this.router.navigate(['login']);
+      return false;
+      }
+    else {
+      return true; //if not token or expired remove it
+      }
+  }
 
 }

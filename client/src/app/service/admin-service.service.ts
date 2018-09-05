@@ -92,10 +92,15 @@ interface respData {
 
 export class AdminServiceService {
   
-
+  //component construct
+  //input: HttpClient imported as http
+  //output: 
   constructor(private http: HttpClient) { }
 
-  // admin service info bar. get server data
+  //admin service info bar. get server data
+  //input: 
+  //output: server general server information
+  
   generalInformation(){
     //will get info if correct
     // console.log("requested qet!")
@@ -113,7 +118,7 @@ export class AdminServiceService {
 
 
     ///find user by permission
-    //input: token, permission type: true for admin, false for regular user
+    //input: permission type: true for admin, false for regular user
     //output: object with all the relevant users
     fetchUsersTable(isAdminPer){
       //will get info if correct
@@ -129,6 +134,8 @@ export class AdminServiceService {
     }
 
     // remove user service
+    //input: user email
+    //output: payload with success of fail
     removeUser(email){
       //will post info if correct
       const uri = 'http://localhost:1234/admin/admins/remove';
@@ -142,6 +149,8 @@ export class AdminServiceService {
     }
 
     // Change user status service (admin/user)
+    //input: user email and is Admin
+    //output: payload with success or fail
     changeUserStatus(email,isAdminPer){
       //will post info if correct
       const uri = 'http://localhost:1234/admin/admins/changePermissions';
@@ -157,6 +166,8 @@ export class AdminServiceService {
     }
 
     //request user info
+    //input: user email
+    //output: payload with user info
     userInfo(email){
       //will post info if correct
       const uri = 'http://localhost:1234/admin/users/info';
@@ -169,6 +180,8 @@ export class AdminServiceService {
     }
 
     //request questions
+    //input:
+    //output: payload with survey data
     fetchSurveyData(){
       //will post questions if correct
       const uri = 'http://localhost:1234/survey/fetchSurveyData';
@@ -181,6 +194,8 @@ export class AdminServiceService {
     }
 
     //request platform
+    //input: answer id and question id
+    //output: payload with platforms data
     fetchPlatform(answer_id,question_id){
       //will post fetchPlatform if correct
 
@@ -194,6 +209,8 @@ export class AdminServiceService {
     }
 
     // save question function new question body
+    //input: question id and question text
+    //output: payload with success or faill
     saveQuestion(question_id,question_text){
       //recive data of questions
       const uri = 'http://localhost:1234/survey/saveQuestion';
@@ -202,12 +219,14 @@ export class AdminServiceService {
         question_id: question_id,
         question_text: question_text
       }
-      console.log(obj)
+      // console.log(obj)
       return this.http.post<respData>(uri,obj)
 
     }
 
     //save answer function new answer body
+    //input: answer id answer text and question id
+    //output: payload with success or faill
     saveAnswer(answer_text,answer_id,question_id){
       //recive data of answer
       const uri = 'http://localhost:1234/survey/saveAnswer';
@@ -223,6 +242,8 @@ export class AdminServiceService {
     }
 
     //save answer info function 
+    //input: platform weight, platform id , question id and answer id
+    //output: payload with success or fail
     updateAnswerData(platform_weight,platform_id,question_id,answer_id){
       //recive data of answer
       const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
@@ -238,8 +259,10 @@ export class AdminServiceService {
     }
 
     //save nextquestion to server
+    //input: next question, question id and answer id
+    //output: payload with success or fail
     updateNextQuestion(next_question,question_id,answer_id){
-      //recive data of answer
+    //recive data of answer
     const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
     //obj of answer data
     const obj = {
@@ -253,6 +276,8 @@ export class AdminServiceService {
   }
 
     //delete question function
+    //input: question id
+    //output: payload with success or fail.
     deleteQuestion(question_id){
       //recive data of answer
       const uri = 'http://localhost:1234/survey/removeQuestion';
@@ -262,7 +287,10 @@ export class AdminServiceService {
       }
       return this.http.post<respData>(uri,obj)
     }
+
     //save new question to server
+    //input: new question
+    //output: payload with success or fail.
     saveNewQuestion(newQuestion){
       //recive data of quesiton
       const uri = 'http://localhost:1234/survey/addNewQuestion';
