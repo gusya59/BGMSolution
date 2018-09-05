@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var PlatformsSchema = require('../models/Platforms')
 
 var BudgetSchema = mongoose.Schema({
   user_email: { type: String, required: true },
@@ -19,10 +20,39 @@ var BudgetSchemaExport = module.exports = mongoose.model('Budget', BudgetSchema)
 //create Budget scheme in the db
 //input:  relevant data
 //output: data on success, else false
-module.exports.inputData = async function (data) {
-  var created = await data.save();
+module.exports.inputData = async function (input) {
+  //find the amount of platforms
+  var platformsAmount = await PlatformsSchema.calculateLength();
+  //find the newest (last) platforms. 
+  var latestPlatforms = await PlatformsSchema.findNewestPlatforms()
+  var budgetArray = []
+  //fetch the relevant data: platform id and name and create those platforms data in the budget schema
+  for (var i = 0; i < platformsAmount; i++) {
+    var budgectObj = {
+      platform_id: "ppp",
+      platform_name: "ppp",
+      platform_budget_percent: 0,
+      platform_budget: 0
+    }
+    //update parametrs
+    budgectObj.platform_id = latestPlatforms.platforms[i].platform_id;
+    budgectObj.platform_name = latestPlatforms.platforms[i].platform_name;
+    budgectObj.platform_budget_percent = 0;
+    budgectObj.platform_budget = 0;
+
+    budgetArray.push(budgectObj);
+  }
+  //create new schema
+  var newBudgetData = new BudgetSchemaExport();
+
+  newBudgetData.user_email = input.user_email;
+  newBudgetData.user_budget = input.user_budget;
+  newBudgetData.platforms_budget = budgetArray;
+  //save data in schema
+  var created = await newBudgetData.save();
   if (created) {
-    return created;
+
+    return true
   }
   else {
     return false
