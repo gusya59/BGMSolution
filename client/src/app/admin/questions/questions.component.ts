@@ -146,6 +146,7 @@ export class AdminQuestionsComponent implements OnInit {
       resp => {
         if(resp.success){
           // console.log("Posted");
+          location.reload();
         }
         else{
           // console.log("Faild");
@@ -164,6 +165,8 @@ export class AdminQuestionsComponent implements OnInit {
       resp => {
         if(resp.success){
           // console.log("Posted");
+          location.reload();
+          
         }
         else{
           this.msgError = resp.message;
@@ -269,6 +272,7 @@ export class AdminQuestionsComponent implements OnInit {
         if(resp.success){
           // console.log("Deleted: "+ question_id);
           this.deleteQuestionModal.hide();
+          location.reload();
         }
         else{
           this.msgError = resp.message;
@@ -290,6 +294,9 @@ export class AdminQuestionsComponent implements OnInit {
           // console.log("Posted: " +this.newQuestionForm.value);
           this.addQuestionModal.hide();
           this.newQuestionForm.reset();
+          //reload our component
+          location.reload();
+          
         }
         else{
           this.msgError = resp.message;

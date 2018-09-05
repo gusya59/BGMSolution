@@ -154,6 +154,8 @@
                     <label for="next_question">Next Question Will Be</label>
                 </div>
             </div>
+            <button type="button" mdbBtn color="success" class="relative waves-light btn-lg" (click)="updateNextQuestion(next_question,question_id,answer_id)"mdbWavesEffect><i class="fas fa-save fa-2x"></i></button>
+
 
             <!-- <div class="col-lg-4">
                 <div class="md-form">
@@ -197,7 +199,6 @@
       <div class="modal-footer">
           <!-- modal control buttons -->
         <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="editModal.hide()" mdbWavesEffect>Close</button>
-        <button type="button" mdbBtn color="success" class="relative waves-light" (click)="updateNextQuestion(next_question,question_id,answer_id)"mdbWavesEffect>Save changes</button>
       </div>
     </div>
   </div>
