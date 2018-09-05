@@ -21,7 +21,8 @@ var SurveySchema = mongoose.Schema({
           }]
         }
       }]
-  }
+  },
+  created: { type: Date, default: Date.now() }
 });
 
 
