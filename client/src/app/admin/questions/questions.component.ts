@@ -138,7 +138,7 @@ export class AdminQuestionsComponent implements OnInit {
     }
   }
 
-  //save question function new question body
+  //save question function question body
   //input: question id and text
   //output: on fail: error msg
   saveQuestion(question_id,question_text){
