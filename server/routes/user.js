@@ -180,7 +180,7 @@ router.post('/createSelectedPlatformDB', async function (req, res) {
 
 
 //fetching the list of the platforms
-//input: user_id
+//input: user_email
 //output: on success: success message and platforms, else false message
 router.post('/fetchPlatformList', async function (req, res) {
   var result = await sPlatformSchema.fetchSelectedPlatformsData(req.body)
@@ -193,7 +193,7 @@ router.post('/fetchPlatformList', async function (req, res) {
 })
 
 //updating user platforms selection
-//input: user_id, platforms data
+//input: user_email, platforms data
 //output: on success: success message ,else false message
 router.post('/updatePlatformsSelection', async function (req, res) {
   var result = await sPlatformSchema.updatePlatformSelection(req.body)

@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 //selected platform's db scheme
 var SelectedPlatformsSchema = mongoose.Schema({
-    user_id: { type: String, required: true },
+    user_email: { type: String, required: true },
     //digital media platforms
     platforms: {
         type: [{
@@ -10,7 +10,8 @@ var SelectedPlatformsSchema = mongoose.Schema({
             platform_name: { type: String, required: true },
             platform_selected: { type: Boolean, required: true },
         }]
-    }
+    },
+    created: { type: Date, default: Date.now() }
 });
 
 
@@ -33,7 +34,7 @@ module.exports.inputData = async function (data) {
 //input: user's id
 //output: user's data on success, else false
 module.exports.fetchSelectedPlatformsData = async function (data) {
-    var found = await this.findOne({ "user_id": data.user_email});
+    var found = await this.findOne({ "user_email": data.user_email});
     if (found) { //if the data was found
       return found;
     } else {
@@ -45,7 +46,7 @@ module.exports.fetchSelectedPlatformsData = async function (data) {
 //input: user's id, platforms data
 //output: user's data on success, else false
 module.exports.updatePlatformSelection = async function (data) {
-    var found = await this.findOneAndUpdate({ "user_id": data.user_email}, {$set:{ platforms: data.platforms}}).sort({ created: -1 }).limit(1);
+    var found = await this.findOneAndUpdate({ "user_email": data.user_email}, {$set:{ platforms: data.platforms}}).sort({ created: -1 }).limit(1);
     if (found) { //if the data was updated
       return found;
     } else {
@@ -57,7 +58,7 @@ module.exports.updatePlatformSelection = async function (data) {
 //input: user's email, platform's name
 //output: if was choosen - true, else false
 module.exports.fetchPlatformSelected = async function (email, name) {
-  var found = await this.findOne({ "user_id": email},{platforms: {$elemMatch: {platform_name:name}}}).sort({ created: -1 }).limit(1);
+  var found = await this.findOne({ "user_email": email},{platforms: {$elemMatch: {platform_name:name}}}).sort({ created: -1 }).limit(1);
   if(found.platforms[0].platform_selected){ // if was selected
     return true
   }else{
