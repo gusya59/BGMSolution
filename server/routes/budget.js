@@ -13,7 +13,7 @@ var PlatformsSchema = require('../models/Platforms')
 //input: budget data
 //output: on success: success message, else false message
 router.post('/createBudgetSchemaData', async function (req, res) {
-    var result = await BudgetSchema.inputData(req.body)
+    var result = await BudgetSchema.inputData(req.body.user_email, req.body.user_budget)
     if (!result) {
         res.status(200).send({ success: false, message: "can't create schema" })
     } else {

@@ -58,14 +58,10 @@ router.post('/usersettings', verFuncs.getTokenFromHeaders, async function (req, 
       }
       else {
         var input = await registrationSchema.userDataRegistration(data, userEmail); //insert data into the DB  
-        if (input) {
-          //create budget schem for the user in the Budget Collection
-          var newBudgetData = new BudgetSchema({
-            user_email: userEmail,
-            user_budget: input.budget,
-            platforms_budget: []
-          });
-          var created = await BudgetSchema.inputData(newBudgetData)
+         //create budget schem for the user in the Budget Collection
+         var created = await BudgetSchema.inputData(userEmail,input.budget)
+        if (input && created) {
+         
           res.status(200).send({ success: true, message: "User Settings data was inserted!" })
         } else {
           res.status(200).send({ success: true, message: "There is no such user" })

@@ -20,7 +20,7 @@ var BudgetSchemaExport = module.exports = mongoose.model('Budget', BudgetSchema)
 //create Budget scheme in the db
 //input:  relevant data
 //output: data on success, else false
-module.exports.inputData = async function (input) {
+module.exports.inputData = async function (email, budget) {
   //find the amount of platforms
   var platformsAmount = await PlatformsSchema.calculateLength();
   //find the newest (last) platforms. 
@@ -45,8 +45,8 @@ module.exports.inputData = async function (input) {
   //create new schema
   var newBudgetData = new BudgetSchemaExport();
 
-  newBudgetData.user_email = input.user_email;
-  newBudgetData.user_budget = input.user_budget;
+  newBudgetData.user_email = email;
+  newBudgetData.user_budget = budget;
   newBudgetData.platforms_budget = budgetArray;
   //save data in schema
   var created = await newBudgetData.save();
