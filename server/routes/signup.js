@@ -10,6 +10,7 @@ var verFuncs = require('../utils/verificationFunctions.js');
 var validFuncs = require('../utils/validationFunctions');
 var BudgetSchema = require('../models/Budget');
 var SurveySchema = require('../models/Survey');
+var SelectPlatformSchema = require('../models/SelectedPlatforms.js');
 
 //registration
 router.post('/registration', async function (req, res) {
@@ -59,12 +60,14 @@ router.post('/usersettings', verFuncs.getTokenFromHeaders, async function (req, 
       else {
         var input = await registrationSchema.userDataRegistration(data, userEmail); //insert data into the DB  
          //create budget schem for the user in the Budget Collection
-         var created = await BudgetSchema.inputData(userEmail,input.budget)
-        if (input && created) {
+         var createdBudget = await BudgetSchema.inputData(userEmail,input.budget)
+         var createdSelectedP = await SelectPlatformSchema.inputData(userEmail)
+
+        if (input && createdBudget && createdSelectedP) {
          
           res.status(200).send({ success: true, message: "User Settings data was inserted!" })
         } else {
-          res.status(200).send({ success: true, message: "There is no such user" })
+          res.status(200).send({ success: true, message: "Error in Registration" })
         }
       }
     }

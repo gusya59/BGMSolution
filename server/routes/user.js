@@ -169,8 +169,7 @@ router.post('/addUserAnswer', verFuncs.getTokenFromHeaders, async function (req,
 //input:  user id and selected platform's data
 //output: on success: success message, else false message
 router.post('/createSelectedPlatformDB', async function (req, res) {
-  var newDB = new sPlatformSchema(req.body);
-  var created = await sPlatformSchema.inputData(newDB)
+  var created = await sPlatformSchema.inputData(req.body.user_email)
   if (created) {
     res.status(200).send({ success: true, message: "db was created" })
   } else {
