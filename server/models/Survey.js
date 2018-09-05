@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-//var Platforms = require('../models/Platforms')
+var PlatformsSchema = require('../models/Platforms')
 
 //algorithm's db scheme
 var SurveySchema = mongoose.Schema({
@@ -32,7 +32,7 @@ var SurveySchemaExport = module.exports = mongoose.model('Survey', SurveySchema)
 //input:  the id and the text of specific question
 //output: true on success, else false
 module.exports.updateQuestion = async function (data) {
-  var updated = await this.findOneAndUpdate({ "question_id": data.question_id }, { $set: { "question_text": data.question_text } });
+  var updated = await this.findOneAndUpdate({ "question_id": data.question_id }, { $set: { "question_text": data.question_text } }).sort({ created: -1 });
   if (updated) { //if the data was updated
     return true;
   } else {
@@ -60,7 +60,7 @@ module.exports.updatePlatform = async function (data) {
     {
       //find the relevant objects in the sub arrays and there positions in the arrays
       "answers": {
-        "$elemMatch": { "answer_id": data.answer_id,"platforms.platform_name": data.platforms.platform_name}
+        "$elemMatch": { "answer_id": data.answer_id, "platforms.platform_name": data.platforms.platform_name }
       }
     },
     {
@@ -69,11 +69,11 @@ module.exports.updatePlatform = async function (data) {
     },
     {
       //filter the array's objects accordingly to their positions in the arrays
-      "arrayFilters": [{ "outer.answer_id" : data.answer_id },{ "inner.platform_name": data.platforms.platform_name}] 
+      "arrayFilters": [{ "outer.answer_id": data.answer_id }, { "inner.platform_name": data.platforms.platform_name }]
     }
   )
 
-//update function returns the WriteResult object: WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+  //update function returns the WriteResult object: WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
   if (1 == updated.nModified) { //if the data was updated
     return true;
   } else {
@@ -85,7 +85,33 @@ module.exports.updatePlatform = async function (data) {
 //input: data
 //output: function promise. on success- object that has been created, on fail - false
 module.exports.insertDataIntoDB = async function (newQuestion) {
-  var promise = await this.create(newQuestion).then(result => {
+  //  find the amount of platforms
+  var platformsAmount = await PlatformsSchema.calculateLength();
+  //find the newest (last) platforms. 
+  var latestPlatforms = await PlatformsSchema.findNewestPlatforms()
+  var platformsArray = []
+
+  //fetch the relevant data: platform id and name and create those platforms data in the budget schema
+  for (var i = 0; i < platformsAmount; i++) {
+    var platformObj = {
+      platform_id: "ppp",
+      platform_name: "ppp",
+      platform_weight: 0
+    }
+    //update parametrs
+    platformObj.platform_id = latestPlatforms.platforms[i].platform_id;
+    platformObj.platform_name = latestPlatforms.platforms[i].platform_name;
+    platformObj.platform_weight = 0;
+
+    platformsArray.push(platformObj);
+  }
+  //insert platforms into answers array
+  for (var j = 0; j < 4; j++) {
+    newQuestion.answers[j].platforms = platformsArray;
+  }
+
+  var promise = await newQuestion.save(newQuestion).then(result => {
+
     return result;
   })
   return promise;
@@ -95,7 +121,7 @@ module.exports.insertDataIntoDB = async function (newQuestion) {
 //input: question id
 //output: removed object if succeded, null if not
 module.exports.deleteQuestion = async function (data) {
-  var removed = await this.findOneAndDelete({ question_id: data.question_id })
+  var removed = await this.findOneAndDelete({ question_id: data.question_id }.sort({ created: -1 }))
   return removed;
 }
 
@@ -103,7 +129,7 @@ module.exports.deleteQuestion = async function (data) {
 //input: answer's id
 //output: answer's data on success, else false
 module.exports.fetchPlatformData = async function (data) {
-  var found = await this.findOne({ "answers.answer_id": data.answer_id}, {answers: {$elemMatch: {answer_id:data.answer_id}}});
+  var found = await this.findOne({ "answers.answer_id": data.answer_id }, { answers: { $elemMatch: { answer_id: data.answer_id } } }).sort({ created: -1 });
   if (found) { //if the data was found
     return found;
   } else {
@@ -115,7 +141,7 @@ module.exports.fetchPlatformData = async function (data) {
 //input: question's id
 //output: question's data on success, else false
 module.exports.fetchQuestionData = async function (data) {
-  var found = await this.findOne({ "question_id": data.question_id});
+  var found = await this.findOne({ "question_id": data.question_id }).sort({ created: -1 });
   if (found) { //if the data was found
     return found;
   } else {
