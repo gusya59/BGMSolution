@@ -17,7 +17,7 @@ interface respData {
         {
             platform_id: string,
             platform_name: string,
-            platform_budget_percent: string,
+            platform_budget_percent: number,
             platform_budget: number
         }];
       }
@@ -43,7 +43,7 @@ export class UserPreviewService {
   getPreview(){
 
     //will get user info if correct
-    const uri = 'http://localhost:1234/budget/calculateBudget';
+    const uri = 'http://www.mocky.io/v2/5b9011002e0000741ba89dea';
 
     //object with email payload
     const obj = {

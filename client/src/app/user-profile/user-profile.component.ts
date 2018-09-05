@@ -42,10 +42,14 @@ export class UserProfileComponent implements OnInit {
   email: string = ""
 
   TotalBudget :number = null;
+
   
 
   // error msg recived string
   ErroMsg: string;
+
+  // Declaring the Promise
+  pageLoaded: Promise<boolean>;
 
   //allow to see changePasswordModal for error modal use
   @ViewChild('changePasswordModal') changePasswordModal: ModalDirective;
@@ -54,16 +58,6 @@ export class UserProfileComponent implements OnInit {
   //user updated modal
   @ViewChild('dataChangeModal') dataChangeModal: ModalDirective;
   
-  // Define the original budget per line
-  
-  budgetFacebook: number;
-  budgetInstagram: number;
-  budgethGoogleP : number;
-  budgetGoogleAdWords: number;
-  budgetGoogle: number;
-  budgetGoogleMybuissness: number;
-  budgetTwiiter: number;
-
   //data change group
   dataformgroup: FormGroup;
 
@@ -78,6 +72,7 @@ export class UserProfileComponent implements OnInit {
   confirmPassword: string;
 
   constructor(private router: Router ,  private auth: AuthService ,private _countryService: countryService, private userdata: UserDataService, private userPreview: UserPreviewService, private fb: FormBuilder) {
+    
     
     //define list of countries to use from service
     this.countries = this._countryService.getCountries();
@@ -113,30 +108,7 @@ export class UserProfileComponent implements OnInit {
 
   }
 
-  // chart deceleration //
-
-  // apply MDB Chart preference type doughnut
-  public chartType:string = 'doughnut';
-  // chart data inserted array: here we place the budgets
-  public chartData:Array<any>  = [50,50,50,50,50,50,50];
-
-  // chart data inserted array: here we place the names
-  public chartLabels:Array<any> = ['GoogleP', 'Instagram', 'Facebook', 'Twiiter',  'GoogleAdWords', 'Google', 'GoogleMybuissness'];
-
-// chart data inserted array: on hover change color and set chart color
-public chartColors:Array<any> = [{
-  hoverBorderColor: ['rgba(0, 0, 0, 0.1)', 'rgba(0, 0, 0, 0.1)', 'rgba(0, 0, 0, 0.1)', 'rgba(0, 0, 0, 0.1)', 'rgba(0, 0, 0, 0.1)', 'rgba(0, 0, 0, 0.1)', 'rgba(0, 0, 0, 0.1)'],
-  hoverBorderWidth: 0,
-  backgroundColor: ["#e5110d", "#e21dd5", "#4250f4","#00bdf7", "#06aa0f", "#fffa00", "#8c8c8c" ], //same as set on lable
-  hoverBackgroundColor: ["#e28583", "#db64d3", "#5c67ed", "#3392af", "#73ce78","#d3d043", "#d8d8d8" ]
-}];
-
-public chartOptions:any = {
-  responsive: true
-};
-  // chart hover and chart click: empty will put label and action nothing
-  public chartClicked(e: any): void { }
-  public chartHovered(e: any): void { }
+  
 
   //password change function
   changePassword(){
@@ -158,9 +130,55 @@ public chartOptions:any = {
   }
   
   
+  // chart deceleration //
+
+  // apply MDB Chart preference type doughnut
+  public chartType:string = 'doughnut';
   
+  
+// chart data inserted array: here we place the budgets
+public chartData:Array<number>  = [];
+
+// chart data inserted array: here we place the names
+public chartLabels:Array<any> = [];
+
+// chart data inserted array: on hover change color and set chart color
+public chartColors:Array<any> = [{
+  hoverBorderColor: ['rgba(0, 0, 0, 0.1)', 'rgba(0, 0, 0, 0.1)', 'rgba(0, 0, 0, 0.1)'],
+  hoverBorderWidth: 0,
+  backgroundColor: ["#e5110d", "#e21dd5", "#4250f4" ], //same as set on lable
+  hoverBackgroundColor: ["#e28583", "#db64d3", "#5c67ed" ]
+}];
+
+public chartOptions:any = {
+  responsive: true
+};
+  // chart hover and chart click: empty will put label and action nothing
+  public chartClicked(e: any): void { }
+  public chartHovered(e: any): void { }
 
   ngOnInit() {
+    
+    
+    //server up get request for data
+    this.userPreview.getPreview().subscribe(Data =>{
+
+        //insert values into chart data
+        const budgets =[];
+        const names =[];
+        Data.message.platforms_budget.forEach(budget => {
+          // console.log(budget.platform_budget_percent);
+          budgets.push(budget.platform_budget_percent);
+          names.push(budget.platform_name)
+        }); 
+        this.chartData  = budgets;
+        this.chartLabels = names;
+    
+    });
+
+
+
+
     document.getElementById('BGsTable').style.display = 'none';
     document.getElementById('BGscerti').style.display = 'none';
 
@@ -201,28 +219,9 @@ public chartOptions:any = {
       
     );
  
-    //server up get request for data
-    this.userPreview.getPreview().subscribe(Data =>{
-      //delay the load of the chart, wait untile all values recived from server
-      setTimeout(function () {
-        //insert values into chart data
-        this.chartData = [Data.budgethGoogleP, Data.budgetInstagram, Data.budgetFacebook, Data.budgetTwiiter, Data.budgetGoogleAdWords, Data.budgetGoogle, Data.budgetGoogleMybuissness];
-      }, 0);
-
-
-      this.budgetFacebook = Data.budgetFacebook,
-      this.budgetInstagram = Data.budgetInstagram,
-      this.budgethGoogleP = Data.budgethGoogleP,
-      this.budgetGoogleAdWords = Data.budgetGoogleAdWords,
-      this.budgetGoogle = Data.budgetGoogle,
-      this.budgetGoogleMybuissness = Data.budgetGoogleMybuissness,
-      this.budgetTwiiter = Data.budgetTwiiter
-    });
     
-    
-
-
   }
+
 
 
     //print page 2 PDF https://rawgit.com/MrRio/jsPDF/master/docs/index.html <= more info imported and tested alpha
