@@ -95,7 +95,7 @@ router.post('/remove', async function (req, res) {
 async function userDataValidation(errors, data) {
   await validFuncs.validateFirstName(errors, data.firstName);
   validFuncs.validateLastName(errors, data.lastName);
-  validFuncs.validatePassword(errors, data.password);
+ // validFuncs.validatePassword(errors, data.password);
   validFuncs.validateBusinessName(errors, data.business_name);
   //validateString(errors, data.bussiness_type);
   validFuncs.validateMobile(errors, data.mobile);
