@@ -40,8 +40,9 @@ export class PreviewComponent implements OnInit {
   ngOnInit() {
     
     //Budgets on page load
-    this.setupBudgetPage();
-
+    setTimeout(
+    this.setupBudgetPage()
+    ,0);
 
   }
 
@@ -70,29 +71,14 @@ export class PreviewComponent implements OnInit {
   // console.log(this.widthBar)
 };
 
-  
-  // functions will intercept server budgets and will generate table
-
-  countTotal(){
-    
-    //loop and calculate budget Total
-    this.platforms.forEach((p)=>{
-      this.budgetTotal = this.budgetTotal + p.platform_budget;
-      // console.log(p.platform_budget)
-    }
-    
-  )
-  // console.log("total: " + this.budgetTotal)
-  }
 
   setupBudgetPage(){
     //server up get request for data
-    this.userPreview.getPreview().subscribe(Data =>{
-      this.platforms = Data.platforms;
-      
+    this.userPreview.getPreview().subscribe(data =>{
+      this.platforms = data.message.platforms_budget;
+      this.budgetTotal = data.message.user_budget;
+      console.log(this.platforms,this.budgetTotal)
   
-    this.countTotal();
-
     // console.log(this.budget);
     //calc total budget
     this.barSettings();
