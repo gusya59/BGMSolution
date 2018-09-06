@@ -40,7 +40,7 @@ router.post('/test', async function (req, res) {
 
 
 //--------------------------create DB in insert full data -------------------//
-//--------------------------Survey---Budget---Platforms---UserAnswers-------------------//
+//--------------------------Survey---Budget---Platforms---UserAnswers---SelectedPlatforms----------------//
 
 
 //creating survey scheme in the db
@@ -62,6 +62,17 @@ router.post('/createAlgoData', async function (req, res) {
         }
     }))
 })
+//create selected platform scheme in the db
+//input:  user id and selected platform's data
+//output: on success: success message, else false message
+router.post('/createSelectedPlatformDB', async function (req, res) {
+    var created = await sPlatformSchema.inputData(req.body.user_email)
+    if (created) {
+      res.status(200).send({ success: true, message: "db was created" })
+    } else {
+      res.status(200).send({ success: false, message: "can't create selected platforms db" })
+    }
+  })
 
 //creating budget scheme in the db
 //input: budget data

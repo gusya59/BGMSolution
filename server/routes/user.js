@@ -121,6 +121,7 @@ router.post('/addUserAnswer', verFuncs.getTokenFromHeaders, async function (req,
   //verify loged user
   var verifyToken = verFuncs.verifyToken(req.token, jwt);
   if (verifyToken) {
+    var userEmail = verFuncs.decodeUserEmail(req.token, jwt);
     //check if the token valid and if the user has admin permissions
     //this a regular user. it will return true
     var check = verFuncs.decodeisAdmin(req.token, jwt);
@@ -132,9 +133,9 @@ router.post('/addUserAnswer', verFuncs.getTokenFromHeaders, async function (req,
       }
       else {
         //find or create new schema for the user if it is new entry. returns the user answers data object
-        var user = await userAnswersSchema.findOrCreateUserAnswer(data);
+        var user = await userAnswersSchema.findOrCreateUserAnswer(data, userEmail);
         if (user) {
-          var nextQuestion = await userAnswersSchema.insertPlatformsData(data);
+          var nextQuestion = await userAnswersSchema.insertPlatformsData(data, userEmail);
           if (nextQuestion) {
             res.status(200).send({ success: true, nextQuestion: nextQuestion })
           } else {
@@ -159,18 +160,6 @@ router.post('/addUserAnswer', verFuncs.getTokenFromHeaders, async function (req,
 
 
 //---------------------SelectedPlatform relevant Functions ------------------------//
-
-//create selected platform scheme in the db
-//input:  user id and selected platform's data
-//output: on success: success message, else false message
-router.post('/createSelectedPlatformDB', async function (req, res) {
-  var created = await sPlatformSchema.inputData(req.body.user_email)
-  if (created) {
-    res.status(200).send({ success: true, message: "db was created" })
-  } else {
-    res.status(200).send({ success: false, message: "can't create selected platforms db" })
-  }
-})
 
 
 //fetching the list of the platforms

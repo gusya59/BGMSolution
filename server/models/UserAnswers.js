@@ -42,18 +42,18 @@ module.exports.inputData = async function (data) {
 //check if the user is in theUserAnswer db, if not, add one
 //input:  user email, question_id, question_text, answer_id, answer_text
 //output: data on success, else false
-module.exports.findOrCreateUserAnswer = async function (data) {
+module.exports.findOrCreateUserAnswer = async function (data, userEmail) {
   try {
-    var userFound = await this.findOne({ "user_email": data.user_email });
+    var userFound = await this.findOne({ "user_email": userEmail });
     if (userFound) {
-      var created = this.insertNewAnswer(data);
+      var created = this.insertNewAnswer(data, userEmail);
       return created;
 
     }
     else {
       //if there is no scema for the user, create one new and insert thre relevant data
       var newDB = new UserAnswersSchemaExport({
-        user_email: data.user_email,
+        user_email: userEmail,
         questions: [{
           question_id: data.question_id,
           question_text: data.question_text,
@@ -83,7 +83,7 @@ module.exports.findOrCreateUserAnswer = async function (data) {
 //input new survey answer for the specific user into user answers db
 //input: user's email, question's id and text, answer's id and text
 //output: true on success, else false
-module.exports.insertNewAnswer = async function (data) {
+module.exports.insertNewAnswer = async function (data, userEmail) {
   //create new survey answer for user
   var newAnswerData = new UserAnswersSchemaExport({
     questions: [{
@@ -99,7 +99,7 @@ module.exports.insertNewAnswer = async function (data) {
     }]
   });
   //find specific user (user_email) in the user answers db and add a new answer for the survey
-  var updated = await this.findOneAndUpdate({ "user_email": data.user_email }, { upsert: true, $push: { questions: newAnswerData.questions } });
+  var updated = await this.findOneAndUpdate({ "user_email": userEmail }, { upsert: true, $push: { questions: newAnswerData.questions } });
   if (updated) { //if the data was updated
     return true;
   } else {
@@ -110,14 +110,13 @@ module.exports.insertNewAnswer = async function (data) {
 //fetch the relevant answer's platform data from the survey db and update the user answer's data in the user answers db
 //input: data - object from the front end. contains: user_email, question_id, anser_id
 //output: on success the function will return the id of the next question that user have to answer on, else false
-module.exports.insertPlatformsData = async function (data) {
-  console.log("my data " + data);
+module.exports.insertPlatformsData = async function (data, userEmail) {
   //fetch specific answer's platform data from Survey db
   var platformIsFound = await surveySchema.fetchPlatformData(data)
   if (platformIsFound) {
     //update user answer's data. find the relevant schema and insert or update it's platforms data
     //on success the function will return the id of the next question that user have to answer on
-    var nextQuestion = await this.updatePlatformData(platformIsFound, data)
+    var nextQuestion = await this.updatePlatformData(platformIsFound, userEmail)
     if (nextQuestion) {
       return nextQuestion;
     }
@@ -128,12 +127,12 @@ module.exports.insertPlatformsData = async function (data) {
 //find specific answer_id in user answers scheme and update it's selected platform data 
 //input: platforms data fron the survey db, data: contains user's email
 //output: on success the function will return the id of the next question that user have to answer on, else false
-module.exports.updatePlatformData = async function (platformIsFound, data) {
+module.exports.updatePlatformData = async function (platformIsFound, userEmail) {
   //platforms to insert
   var input = platformIsFound.answers[0]
 
   var query = {
-    "user_email": data.user_email,
+    "user_email": userEmail,
     "questions": {
       $elemMatch: { "answer_id": input.answer_id }
     }
