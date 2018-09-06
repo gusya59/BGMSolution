@@ -127,29 +127,22 @@ router.post('/addUserAnswer', verFuncs.getTokenFromHeaders, async function (req,
     var check = verFuncs.decodeisAdmin(req.token, jwt);
     if (!check) {
       var data = req.body;
-      //if the servey is completed
-      if (data.survey_completed) {
-      //  res.status(200).send({ success: false, message: "the survey is done" })
-      }
-      else {
+     // if the servey is completed
         //find or create new schema for the user if it is new entry. returns the user answers data object
         var user = await userAnswersSchema.findOrCreateUserAnswer(data, userEmail);
         if (user) {
-          console.log("here");
-          var nextQuestion = await userAnswersSchema.insertPlatformsData(data, userEmail);
-          console.log(nextQuestion);
+          var nextQuestion = await userAnswersSchema.insertPlatformsData(data, userEmail);         
           if (nextQuestion) {
             res.status(200).send({ success: true, nextQuestion: nextQuestion })
           } else {
             //if there no more questions to answer on
-            res.status(200).send({ success: false, message: "the survey is done" })
-          }
+            res.status(200).send({ success: false, message: "error" })
+          }      
         }
         else {
           res.status(200).send({ success: false, message: "error" })
         }
-      }
-    } else {
+      }else {
       res.status(200).send({ success: false, message: "it is an admin user" });
     }
   } else {

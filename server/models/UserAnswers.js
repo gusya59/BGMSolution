@@ -21,6 +21,7 @@ var UserAnswersSchema = mongoose.Schema({
       }
     }]
   },
+  completed:{ type: Boolean, required: true },
   created: { type: Date, default: Date.now() }
 });
 
@@ -44,37 +45,37 @@ module.exports.inputData = async function (data) {
 //output: data on success, else false
 module.exports.findOrCreateUserAnswer = async function (data, userEmail) {
   try {
-    var userFound = await this.findOne({ "user_email": userEmail });
-    if (userFound) {
-      var created = this.insertNewAnswer(data, userEmail);
-      return created;
-
-    }
-    else {
-      //if there is no scema for the user, create one new and insert thre relevant data
-      var newDB = new UserAnswersSchemaExport({
-        user_email: userEmail,
-        questions: [{
-          question_id: data.question_id,
-          question_text: data.question_text,
-          //all the selected answer
-          answer_id: data.answer_id,
-          answer_text: data.answer_text,
-          platforms: [{
-            platform_id: false,
-            platform_name: false,
-            platform_weight: false,
-          }]
-        }]
-      });
-      //insert new scheme to the collection
-      this.inputData(newDB)
-      if (newDB) {
-        return newDB;
-      } else {
-        return false;
+    var userFound = await this.findOne({ "user_email": userEmail }).sort({ created: -1 }).limit(1);
+      if (userFound && (!userFound.completed)) {
+        var created = await this.insertNewAnswer(data, userEmail);
+        return created;
       }
-    }
+      else {
+        //if there is no scema for the user, create one new and insert thre relevant data
+        var newDB = new UserAnswersSchemaExport({
+          user_email: userEmail,
+          completed: false,
+          questions: [{
+            question_id: data.question_id,
+            question_text: data.question_text,
+            //all the selected answer
+            answer_id: data.answer_id,
+            answer_text: data.answer_text,
+            platforms: [{
+              platform_id: false,
+              platform_name: false,
+              platform_weight: false,
+            }]
+          }]
+        });
+        //insert new scheme to the collection
+        this.inputData(newDB)
+        if (newDB) {
+          return newDB;
+        } else {
+          return false;
+        }
+      }   
   } catch (err) {
     throw new Error("Error")
   }
@@ -84,6 +85,7 @@ module.exports.findOrCreateUserAnswer = async function (data, userEmail) {
 //input: user's email, question's id and text, answer's id and text
 //output: true on success, else false
 module.exports.insertNewAnswer = async function (data, userEmail) {
+  console.log("inputAnswer");
   //create new survey answer for user
   var newAnswerData = new UserAnswersSchemaExport({
     questions: [{
@@ -99,7 +101,8 @@ module.exports.insertNewAnswer = async function (data, userEmail) {
     }]
   });
   //find specific user (user_email) in the user answers db and add a new answer for the survey
-  var updated = await this.findOneAndUpdate({ "user_email": userEmail }, { upsert: true, $push: { questions: newAnswerData.questions } });
+  var updated = await this.findOneAndUpdate({ "user_email": userEmail }, { upsert: true, $push: { questions: newAnswerData.questions } }).sort({ created: -1 });
+
   if (updated) { //if the data was updated
     return true;
   } else {
@@ -118,6 +121,9 @@ module.exports.insertPlatformsData = async function (data, userEmail) {
     //on success the function will return the id of the next question that user have to answer on
     var nextQuestion = await this.updatePlatformData(platformIsFound, userEmail)
     if (nextQuestion) {
+      if(nextQuestion == 1){
+        var updated = await this.findOneAndUpdate({ "user_email": userEmail }, {$set:{"completed":true}},{new: true}).sort({ created: -1 });
+      }
       return nextQuestion;
     }
   }
@@ -142,7 +148,7 @@ module.exports.updatePlatformData = async function (platformIsFound, userEmail) 
   //array's index
   var options = { arrayFilters: [{ "outer.answer_id": input.answer_id }] };
 
-  var updated = await this.findOneAndUpdate(query, update, options);
+  var updated = await this.findOneAndUpdate(query, update, options).sort({ created: -1 });
 
   if (updated) { //if the data was updated
     return platformIsFound.answers[0].next_question;
@@ -174,7 +180,7 @@ module.exports.calculateLength = async function (user_email) {
 //input: user's email
 //output: the schema data as an object on success, else null. 
 module.exports.findNewestUserAnswers = async function (user_email) {
-  var result = await this.findOne({ user_email: user_email }).sort({ created: -1 }).limit(1)
+  var result = await this.findOne({ user_email: user_email }).sort({ created: -1 })
   if (result) {
     return result
   } else {
