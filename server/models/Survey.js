@@ -84,8 +84,11 @@ module.exports.updatePlatform = async function (data) {
 //insert specific data into the db
 //input: data
 //output:on success- object that has been created, on fail - false
-module.exports.insertDataIntoDB = async function (newQuestion) {
-  //find the last added question
+module.exports.insertDataIntoDB = async function (data) {
+  //create new schrma
+  var newQuestion = new SurveySchemaExport();
+  //update question's text
+  newQuestion.question_text = data.question_text;
   var found = await this.findOne().sort({ created: -1 });
   if (found) {
     //generate and set the new questin_id accordingly to the privious question. q<number>
@@ -93,9 +96,14 @@ module.exports.insertDataIntoDB = async function (newQuestion) {
   } else {//if not found -> there is no question in the db ->set the question id to q0 -> will be changed to q1
     newQuestion.question_id = await this.questionIdGenerator("q0")
   }
-  //genearte and set an answer id according to the question id. q<number>ans<index in the answer array>
+  newQuestion.answers = data.answers;
+  //genearte and set an answer id according to the question id. q<number>ans<index in the answer array>7
+  //and update answer array data
   for (var i = 0; i < 4; i++) {
     newQuestion.answers[i].answer_id = await this.answerIdGenerator(i)
+    newQuestion.answers[i].answer_text = data.answers[i].answer_text
+    newQuestion.answers[i].next_question = "0"
+    // answersArray.push(platformObj);
   }
 
   //  find the amount of platforms
@@ -188,22 +196,18 @@ module.exports.checkIfThereQuestion = async function (data) {
   }
 }
 
-// module.exports.checkIfThereAnswer = async function (data) {
-//   var found = await this.findOne({"answers.answer_id": data},{ lean: true });
-//   if (found === undefined || found === null) { //if the data was found
-//     return false;
-//   } else {
-//     return true;
-//   }
-// }
-
 //generate answer_id
 //input: the latest answer's id in the db
 //output: new answer_id on success, else null
 module.exports.answerIdGenerator = async function (index) {
   //find the newest survey
   var found = await this.findOne().sort({ created: -1 });
-  var latestQuestionId = found.question_id; //q<number>
+  if (null == found) {
+    //if the survey db is empty ant there are no questions
+    var latestQuestionId = "q1"
+  } else {
+    var latestQuestionId = found.question_id; //q<number>
+  }
   //cut the string
   var neQuestionId = latestQuestionId.substring(1);  //<number>
   //create the new aswer_id

@@ -58,10 +58,8 @@ router.post('/fetchSurveyData', verFuncs.getTokenFromHeaders, async function (re
 //input: data:question and answers data
 //output: on success: success message , else false message
 router.post('/addNewQuestion', async function (req, res) {
-
-    var newQuestion = new SurveySchema(req.body);
-
-    var isCreated = await SurveySchema.insertDataIntoDB(newQuestion);
+    //create new schema
+    var isCreated = await SurveySchema.insertDataIntoDB(req.body);
     if (isCreated) {
         res.status(200).send({ success: true, message: "New question has been saved" })
     }
