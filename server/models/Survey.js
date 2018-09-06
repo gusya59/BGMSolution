@@ -32,7 +32,7 @@ var SurveySchemaExport = module.exports = mongoose.model('Survey', SurveySchema)
 //input:  the id and the text of specific question
 //output: true on success, else false
 module.exports.updateQuestion = async function (data) {
-  var updated = await this.findOneAndUpdate({ "question_id": data.question_id }, { $set: { "question_text": data.question_text } }).sort({ created: -1 });
+  var updated = await this.findOneAndUpdate({ "question_id": data.question_id }, { $set: { "question_text": data.question_text } }, { lean: true }).sort({ created: -1 });
   if (updated) { //if the data was updated
     return true;
   } else {
@@ -83,8 +83,29 @@ module.exports.updatePlatform = async function (data) {
 
 //insert specific data into the db
 //input: data
-//output: function promise. on success- object that has been created, on fail - false
-module.exports.insertDataIntoDB = async function (newQuestion) {
+//output:on success- object that has been created, on fail - false
+module.exports.insertDataIntoDB = async function (data) {
+  //create new schrma
+  var newQuestion = new SurveySchemaExport();
+  //update question's text
+  newQuestion.question_text = data.question_text;
+  var found = await this.findOne().sort({ created: -1 });
+  if (found) {
+    //generate and set the new questin_id accordingly to the privious question. q<number>
+    newQuestion.question_id = await this.questionIdGenerator(found.question_id)
+  } else {//if not found -> there is no question in the db ->set the question id to q0 -> will be changed to q1
+    newQuestion.question_id = await this.questionIdGenerator("q0")
+  }
+  newQuestion.answers = data.answers;
+  //genearte and set an answer id according to the question id. q<number>ans<index in the answer array>7
+  //and update answer array data
+  for (var i = 0; i < 4; i++) {
+    newQuestion.answers[i].answer_id = await this.answerIdGenerator(i)
+    newQuestion.answers[i].answer_text = data.answers[i].answer_text
+    newQuestion.answers[i].next_question = "0"
+    // answersArray.push(platformObj);
+  }
+
   //  find the amount of platforms
   var platformsAmount = await PlatformsSchema.calculateLength();
   //find the newest (last) platforms. 
@@ -102,16 +123,14 @@ module.exports.insertDataIntoDB = async function (newQuestion) {
     platformObj.platform_id = latestPlatforms.platforms[i].platform_id;
     platformObj.platform_name = latestPlatforms.platforms[i].platform_name;
     platformObj.platform_weight = 0;
-
+    //push platforms array into the question schema
     platformsArray.push(platformObj);
   }
   //insert platforms into answers array
   for (var j = 0; j < 4; j++) {
     newQuestion.answers[j].platforms = platformsArray;
   }
-
   var promise = await newQuestion.save(newQuestion).then(result => {
-
     return result;
   })
   return promise;
@@ -121,7 +140,7 @@ module.exports.insertDataIntoDB = async function (newQuestion) {
 //input: question id
 //output: removed object if succeded, null if not
 module.exports.deleteQuestion = async function (data) {
-  var removed = await this.findOneAndDelete({ question_id: data.question_id }.sort({ created: -1 }))
+  var removed = await this.findOneAndDelete({ question_id: data.question_id })
   return removed;
 }
 
@@ -129,7 +148,7 @@ module.exports.deleteQuestion = async function (data) {
 //input: answer's id
 //output: answer's data on success, else false
 module.exports.fetchPlatformData = async function (data) {
-  var found = await this.findOne({ "answers.answer_id": data.answer_id }, { answers: { $elemMatch: { answer_id: data.answer_id } } }).sort({ created: -1 });
+  var found = await this.findOne({ "answers.answer_id": data.answer_id }, { answers: { $elemMatch: { answer_id: data.answer_id } } }, { lean: true }).sort({ created: -1 });
   if (found) { //if the data was found
     return found;
   } else {
@@ -141,9 +160,60 @@ module.exports.fetchPlatformData = async function (data) {
 //input: question's id
 //output: question's data on success, else false
 module.exports.fetchQuestionData = async function (data) {
-  var found = await this.findOne({ "question_id": data.question_id }).sort({ created: -1 });
+  var found = await this.findOne({ "question_id": data.question_id });
   if (found) { //if the data was found
     return found;
+  } else {
+    return false;
+  }
+}
+
+//generate question_id
+//input: the latest question's id in the db
+//output: new question_id on success, else null
+module.exports.questionIdGenerator = async function (latestQuestionId) {
+  //cut the string
+  var neQuestionId = latestQuestionId.substring(1); //<number>
+  //create new question_id
+  neQuestionId = "q" + (++neQuestionId) //q<++number>
+  //check if the new question_id is unique, if not - increase the number
+  while (await this.checkIfThereQuestion(neQuestionId)) {
+    var neQuestionId = neQuestionId.substring(1); //<number>
+    neQuestionId = "q" + (++neQuestionId) //q<++number>
+  }
+  return neQuestionId
+}
+
+//check if there is question_id like that in the db.
+//input: question_id
+//output: true on success, else false
+module.exports.checkIfThereQuestion = async function (data) {
+  var found = await this.findOne({ "question_id": data }, { lean: true });
+  if (found === undefined || found === null) { //if the data was found
+    return false;
+  } else {
+    return true;
+  }
+}
+
+//generate answer_id
+//input: the latest answer's id in the db
+//output: new answer_id on success, else null
+module.exports.answerIdGenerator = async function (index) {
+  //find the newest survey
+  var found = await this.findOne().sort({ created: -1 });
+  if (null == found) {
+    //if the survey db is empty ant there are no questions
+    var latestQuestionId = "q1"
+  } else {
+    var latestQuestionId = found.question_id; //q<number>
+  }
+  //cut the string
+  var neQuestionId = latestQuestionId.substring(1);  //<number>
+  //create the new aswer_id
+  var newAnsId = "q" + (neQuestionId) + "ans" + (index+1) //q<number>ans<index>
+  if (newAnsId) { //if the data has been created
+    return newAnsId;
   } else {
     return false;
   }

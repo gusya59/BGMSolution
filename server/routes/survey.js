@@ -5,25 +5,6 @@ var jwt = require('jsonwebtoken');
 var SurveySchema = require('../models/Survey')
 var verFuncs = require('../utils/verificationFunctions.js')
 
-//creating survey scheme in the db
-//input: survey data
-//output: on success: success message, else false message
-router.post('/createAlgoData', async function (req, res) {
-    var input = req.body;
-    var newAlgoData = new SurveySchema({
-        question_id: input.question_id,
-        question_text: input.question_text,
-        next_question: input.next_question,
-        answers: input.answers
-    });
-    newAlgoData.save((function (err) {
-        if (err) {
-            res.status(200).send({ success: false, message: "can't create survey" })
-        } else {
-            res.status(200).send({ success: true, message: "survey was created" })
-        }
-    }))
-})
 
 //fetching all the data from the Survey Collection
 //input: user's token
@@ -58,9 +39,8 @@ router.post('/fetchSurveyData', verFuncs.getTokenFromHeaders, async function (re
 //input: data:question and answers data
 //output: on success: success message , else false message
 router.post('/addNewQuestion', async function (req, res) {
-
-    var newQuestion = new SurveySchema(req.body);
-    var isCreated = await SurveySchema.insertDataIntoDB(newQuestion);
+    //create new schema
+    var isCreated = await SurveySchema.insertDataIntoDB(req.body);
     if (isCreated) {
         res.status(200).send({ success: true, message: "New question has been saved" })
     }
@@ -102,16 +82,21 @@ router.post('/fetchQuestion', verFuncs.getTokenFromHeaders, async function (req,
     //verify loged user
     var verifyToken = verFuncs.verifyToken(req.token, jwt);
     if (verifyToken) {
-        var result = await SurveySchema.fetchQuestionData(req.body);
+        //if this the first user's question
+        if(0 == req.body.question_id){
+            var result = await SurveySchema.findOne().sort({ created: -1 });
+        }else{
+            var result = await SurveySchema.fetchQuestionData(req.body);
+        }      
         if (result) {
             res.status(200).send({ success: true, data: result })
         }
         else {
             res.status(200).send({ success: false, message: "Can't fetch data" })
         }
-    }else{
+    } else {
         res.status(200).send({ success: false, message: "session is expired" })
-    }   
+    }
 });
 
 

@@ -18,14 +18,17 @@ router.post('/info', verFuncs.getTokenFromHeaders, async function (req, res) {
   if (verifyToken && check) {
     //the amount of regular users
     var regUserAmount = await registrationSchema.countRegularUsers();
-    console.log("the regular user's amount is " + regUserAmount);
     //the amount of admin users
     var adminUserAmount = await registrationSchema.countAdminUsers();
-    console.log("the admin user's amount is " + adminUserAmount);
-    res.status(200).send({ success: true, regUserAmount: regUserAmount, adminUserAmount: adminUserAmount })
-  }
-
-  res.status(200).send({ success: false, message: "session is expired" })
+    if(regUserAmount && adminUserAmount){
+      res.status(200).send({ success: true, regUserAmount: regUserAmount, adminUserAmount: adminUserAmount })
+    }
+    else{
+      res.status(200).send({ success: false, message: "can't fetch an amount" })
+    }
+  }else{
+    res.status(200).send({ success: false, message: "session is expired" })
+  } 
 });
 
 //find user by permission. token verification
@@ -93,35 +96,14 @@ router.post('/users/info', async function (req, res) {
       else {
         res.status(200).send({ success: false, message: "there is no such user" });
       }
-    }else{
+    } else {
       res.status(200).send({ success: false, message: "it is an admin user" });
-    } 
-  }else{
+    }
+  } else {
     res.status(200).send({ success: false, message: "session is expired" })
-  }  
+  }
 });
 
 
-
-
-//input: user's email
-//output: on success: object with user's info, else false
-// router.post('/questions/saveNewQuestion', async function (req, res) {
-//   var userdata = await registrationSchema.findByEmail(req.body.email);
-//   if(userdata){
-//     console.log(userdata);
-//     res.status(200).send({ success: true, message: "success", userdata: userdata});
-//   }
-//   else{
-//     res.status(200).send({ success: false, message: "there is no such user"});
-//   } 
-// });
-
-
-// router.post('/addQuestion', async function (req,res){
-//   var newQuestion =new QuestionSchema(req.body);
-//   var result = await QuestionSchema.createQuestion(newQuestion);
-//   console.log(result);
-// });
 
 module.exports = router;

@@ -1,31 +1,12 @@
 var express = require('express');
 var router = express();
-var jwt = require('jsonwebtoken');
 
 var sPlatformSchema = require('../models/SelectedPlatforms.js');
 var userAnswersSchema = require('../models/UserAnswers.js');
 var BudgetSchema = require('../models/Budget');
-var PlatformsSchema = require('../models/Platforms')
 
 //---------------------------Budget calaculations----------------------------//
 
-//creating budget scheme in the db
-//input: budget data
-//output: on success: success message, else false message
-router.post('/createBudgetSchemaData', async function (req, res) {
-    var result = await BudgetSchema.inputData(req.body.user_email, req.body.user_budget)
-    if (!result) {
-        res.status(200).send({ success: false, message: "can't create schema" })
-    } else {
-        res.status(200).send({ success: true, message: "schema was created" })
-    }
-})
-
-router.post('/temp', async function (req, res) {
-    var email = "yyy@hhh.com";
-    var name = "Facebook";
-    var result = await isPlatformSelected(email, name)
-})
 
 //calculate and update user's budget distribution for the platforms that user selected.
 //this function operate the calculation and update
