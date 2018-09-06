@@ -245,10 +245,11 @@
 
 
                 </div>
-                <div class="col-md-5">
+
+                <div class="col-md-5" >
                     <div style="display: block">
                       <!-- chart generated -->
-                      <canvas mdbChart
+                      <canvas mdbChart 
                         [chartType]="chartType"
                         [data]="chartData"
                         [labels]="chartLabels"
@@ -259,7 +260,8 @@
                         (chartClick)="chartClicked($event)">
                       </canvas>
                     </div>
-                </div>          
+                </div>  
+
             </div>
           </div>
       </div>

@@ -294,11 +294,31 @@ export class AdminServiceService {
     saveNewQuestion(newQuestion){
       //recive data of quesiton
       const uri = 'http://localhost:1234/survey/addNewQuestion';
-      //obj of question data
+      //obj of question data will be generated firsts footprint of our question. will be proccessed at server.
+      // console.log(newQuestion)
       const obj ={
-        newQuestion: newQuestion
+        question_id: "0",
+        question_text: newQuestion.question_text,
+            answers: [{
+                answer_id: "0",
+                answer_text:  newQuestion.answer1Body,
+                next_question: "0"
+            },
+            {
+                answer_id: "0",
+                answer_text: newQuestion.answer2Body,
+                next_question: "0"
+            },        {
+                answer_id: "0",
+                answer_text: newQuestion.answer3Body,
+                next_question: "0"
+            },        {
+                answer_id: "0",
+                answer_text: newQuestion.answer4Body,
+                next_question: "0"
+            }]
       }
-      // console.log(obj)
+      console.log(obj)
       return this.http.post<respData>(uri,obj)
     }
 
