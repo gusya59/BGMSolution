@@ -35,11 +35,11 @@ interface respData {
   data: {
     question_text: string,
     question_id: string,
+    nextQuestion: string,
     answers: [
       {
           answer_id: string,
           answer_text: string,
-          next_question: string
       }]
   };
 }
@@ -58,8 +58,9 @@ export class QuestionService {
   getQuestion(question_id,question_text,answer_id,answer_text){
     
     //will get user info if correct
-    const uri = 'http://www.mocky.io/v2/5b9194f23100005a00939a32';
+    const uri = 'http://localhost:1234/user/addUserAnswer';
     const obj ={
+      token: localStorage.getItem('token'),
       question_id: question_id,
       question_text: question_text,
       answer_id: answer_id,

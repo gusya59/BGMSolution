@@ -34,21 +34,20 @@ export class QuestionsComponent implements OnInit {
 
 //server data structure declration
 data: {
-  question_text: string,
   question_id: string,
+  question_text: string,
+  nextQuestion: string,
   answers: [
     {
         answer_id: string,
         answer_text: string,
-        next_question: string
     }]
 };
 
 //selected answer flags
 selectedEntry: {
   answer_id: string,
-  answer_text: string,
-  next_question: string
+  answer_text: string
 }
 
   constructor(private router: Router, private quest: QuestionService, private form: FormsModule) { }
@@ -56,16 +55,17 @@ selectedEntry: {
   ngOnInit() {
 
     //Init the question form 
-    this.quest.getQuestion("1","","","").subscribe(
+    this.quest.getQuestion("0","","","").subscribe(
       data=> {
         if(data.success){
         this.data = {
             question_id: data.data.question_id,
             question_text: data.data.question_text,
+            nextQuestion: data.data.nextQuestion,
             answers: data.data.answers
             }
           }
-        else console.log("Error q not recived")
+        else console.log(data)
       })
 
       
@@ -86,11 +86,12 @@ selectedEntry: {
           this.data = {
             question_id: data.data.question_id,
             question_text: data.data.question_text,
+            nextQuestion: data.data.nextQuestion,
             answers: data.data.answers
             }
         }
         //no more quesiton remain
-        else if(data.data.question_id == "0"){
+        else if(data.data.nextQuestion == "1"){
           this.router.navigate(['/signup/userSettings/questions/finish']);
         }
         //on error
