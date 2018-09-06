@@ -60,6 +60,7 @@ router.post('/fetchSurveyData', verFuncs.getTokenFromHeaders, async function (re
 router.post('/addNewQuestion', async function (req, res) {
 
     var newQuestion = new SurveySchema(req.body);
+
     var isCreated = await SurveySchema.insertDataIntoDB(newQuestion);
     if (isCreated) {
         res.status(200).send({ success: true, message: "New question has been saved" })
@@ -109,9 +110,9 @@ router.post('/fetchQuestion', verFuncs.getTokenFromHeaders, async function (req,
         else {
             res.status(200).send({ success: false, message: "Can't fetch data" })
         }
-    }else{
+    } else {
         res.status(200).send({ success: false, message: "session is expired" })
-    }   
+    }
 });
 
 

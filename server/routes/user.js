@@ -80,6 +80,7 @@ router.post('/changeUserData', verFuncs.getTokenFromHeaders, async function (req
 //input: email of the user that need to be deleted
 //output: true on success, else false
 router.post('/remove', async function (req, res) {
+  //add password check
   var deleteUser = await registrationSchema.deleteUser(req.body.email);
   if (deleteUser) {
     res.status(200).send({ success: true, message: "user removed" });
