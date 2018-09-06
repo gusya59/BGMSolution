@@ -15,8 +15,8 @@ router.post('/fetchSurveyData', verFuncs.getTokenFromHeaders, async function (re
     if (verifyToken) {
         //check if the token valid and if the user has admin permissions
         //this is an admin. it will return false
-        var check = await verFuncs.decodeisAdmin(req.token, jwt);
-        if (check) {
+        // var check = await verFuncs.decodeisAdmin(req.token, jwt);
+        // if (check) {
             await SurveySchema.find(function (err, SurveySchemas) {
                 if (err) {
                     res.status(200).send({ success: fail, message: "can't fetch survey db data" });
@@ -25,9 +25,9 @@ router.post('/fetchSurveyData', verFuncs.getTokenFromHeaders, async function (re
                     res.status(200).send({ success: true, surveyData: SurveySchemas });
                 }
             })
-        } else {
-            res.status(200).send({ success: false, message: "it is a regular user" });
-        }
+        // } else {
+        //     res.status(200).send({ success: false, message: "it is a regular user" });
+        // }
     } else {
         res.status(200).send({ success: false, message: "session is expired" })
     }
