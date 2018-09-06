@@ -170,14 +170,16 @@ module.exports.checkUserWithPassword = async function (userEmail, passTocheck) {
 
 //count the amount of admins
 module.exports.countRegularUsers = async function () {
-  var userData = await UsersSchemaExport.count({ isAdmin: 'false' }, function (err, count) {
+  var userData = await UsersSchemaExport.countDocuments({ isAdmin: 'false' }, function (err, countDocuments) {
+    return countDocuments
   });
   return userData;
 }
 
 //count the amount of regular users
 module.exports.countAdminUsers = async function () {
-  var userData = await UsersSchemaExport.count({ isAdmin: 'true' }, function (err, count) {
+  var userData = await UsersSchemaExport.countDocuments({ isAdmin: 'true' }, function (err, count) {
+    return count;
   });
   return userData;
 }

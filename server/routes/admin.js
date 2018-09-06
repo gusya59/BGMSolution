@@ -22,10 +22,15 @@ router.post('/info', verFuncs.getTokenFromHeaders, async function (req, res) {
     //the amount of admin users
     var adminUserAmount = await registrationSchema.countAdminUsers();
     console.log("the admin user's amount is " + adminUserAmount);
-    res.status(200).send({ success: true, regUserAmount: regUserAmount, adminUserAmount: adminUserAmount })
-  }
-
-  res.status(200).send({ success: false, message: "session is expired" })
+    if(regUserAmount && adminUserAmount){
+      res.status(200).send({ success: true, regUserAmount: regUserAmount, adminUserAmount: adminUserAmount })
+    }
+    else{
+      res.status(200).send({ success: false, message: "can't fetch an amount" })
+    }
+  }else{
+    res.status(200).send({ success: false, message: "session is expired" })
+  } 
 });
 
 //find user by permission. token verification
