@@ -30,16 +30,18 @@ import { Injectable } from '@angular/core';
 
 //define interface class for managing response from serverץ
 interface respData {
-  status: string,
-  message: string,
-  question : {
-    id: number;
-    body: string;
-    answers: {
-      id: number;
-      body: string;
-    }[]
-  }
+  //server data structure declration
+  success: boolean,
+  data: {
+    question_text: string,
+    question_id: string,
+    answers: [
+      {
+          answer_id: string,
+          answer_text: string,
+          next_question: string
+      }]
+  };
 }
 
 @Injectable({
@@ -53,25 +55,32 @@ export class QuestionService {
 
   //get question info from backend HTTP
 
-  getQuestion(){
-    //will get user info if correct
-    const uri = 'http://www.mocky.io/v2/5b69df38320000ed11af5e7e';
-
-
-    //get data from server
-    return this.http.get<respData>(uri)
+  getQuestion(question_id,question_text,answer_id,answer_text){
     
-  }
-  //get next question from server
-  getNextQuestion(question_Num,answere_Num){
     //will get user info if correct
-    const uri = 'http://www.mocky.io/v2/5b69df38320000ed11af5e7e';
+    const uri = 'http://www.mocky.io/v2/5b9194f23100005a00939a32';
     const obj ={
-      question_Num: question_Num,
-      answere_Num: answere_Num
+      question_id: question_id,
+      question_text: question_text,
+      answer_id: answer_id,
+      answer_text: answer_text  
     }
 
+    console.log(obj)
     //get data from server
     return this.http.post<respData>(uri,obj)
+    
   }
+  // //get next question from server
+  // getNextQuestion(question_Num,answere_Num){
+  //   //will get user info if correct
+  //   const uri = 'http://www.mocky.io/v2/5b69df38320000ed11af5e7e';
+  //   const obj ={
+  //     question_Num: question_Num,
+  //     answere_Num: answere_Num
+  //   }
+
+  //   //get data from server
+  //   return this.http.post<respData>(uri,obj)
+  // }
 }

@@ -13,13 +13,13 @@
                 <form (ngSubmit)="QuestionAns()">
                   
                   <!-- Question body Delivered here -->
-                  <h2 >{{question.body}}</h2>
+                  <h2 >{{data?.question_text}}</h2>
                   <!-- Answers delivered here -->
                   <!-- Group of radios - option -->
 
-                  <div class="custom-control custom-radio" *ngFor="let question of question?.answers">
-                      <input (change)="onSelectionChange(question)"  type="radio" class="custom-control-input" id="{{question.id}}" name="groupOfRadios">
-                      <label  class="custom-control-label" for="{{question.id}}">{{question.body}}</label>
+                  <div class="custom-control custom-radio" *ngFor="let answer of data?.answers">
+                      <input (change)="onSelectionChange(answer)"  type="radio" class="custom-control-input" id="{{answer.answer_id}}" name="groupOfRadios">
+                      <label  class="custom-control-label" for="{{answer.answer_id}}">{{answer.answer_text}}</label>
                   </div>
                   <br>
                 <div class="text-center mt-8">
