@@ -18,10 +18,8 @@ router.post('/info', verFuncs.getTokenFromHeaders, async function (req, res) {
   if (verifyToken && check) {
     //the amount of regular users
     var regUserAmount = await registrationSchema.countRegularUsers();
-    console.log("the regular user's amount is " + regUserAmount);
     //the amount of admin users
     var adminUserAmount = await registrationSchema.countAdminUsers();
-    console.log("the admin user's amount is " + adminUserAmount);
     if(regUserAmount && adminUserAmount){
       res.status(200).send({ success: true, regUserAmount: regUserAmount, adminUserAmount: adminUserAmount })
     }

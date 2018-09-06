@@ -85,7 +85,6 @@ module.exports.findOrCreateUserAnswer = async function (data, userEmail) {
 //input: user's email, question's id and text, answer's id and text
 //output: true on success, else false
 module.exports.insertNewAnswer = async function (data, userEmail) {
-  console.log("inputAnswer");
   //create new survey answer for user
   var newAnswerData = new UserAnswersSchemaExport({
     questions: [{

@@ -30,7 +30,6 @@ module.exports.inputData = async function (data) {
 //input: none
 //output: the size on success, else undefind. 
 module.exports.calculateLength = async function () {
-    console.log();
     var result = (await this.aggregate([
       { '$sort': { 'created': -1 } }, //sort by the date. from the newest to oldest
       { "$project": { "count": { "$size": "$platforms" } } }

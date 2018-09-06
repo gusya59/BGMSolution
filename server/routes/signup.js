@@ -93,7 +93,6 @@ router.post('/login', async function (req, res) {
         else {
           //create token
           var token = jwt.sign({ userID: emailFound.email, isAdmin: emailFound.isAdmin }, 'todo-app-super-shared-secret', { expiresIn: '4h' });
-          //console.log("the token is "+ token);
           res.status(200).send({ success: true, token: token });
         }
       } else {

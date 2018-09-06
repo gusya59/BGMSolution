@@ -63,7 +63,6 @@ module.exports.inputData = async function (email, budget) {
 //input: user's email
 //output: the size on success, else undefind. 
 module.exports.calculateLength = async function (user_email) {
-  console.log();
   var result = (await this.aggregate([
     { "$match": { "user_email": user_email } },
     { '$sort': { 'created': -1 } }, //sort by the date. from the newest to oldest

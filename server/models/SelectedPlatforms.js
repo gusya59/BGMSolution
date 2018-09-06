@@ -21,7 +21,6 @@ var SelectedPlatformsSchemaExport = module.exports = mongoose.model('SelectedPla
 //input:  user id and selected platform's data
 //output: data on success, else false
 module.exports.inputData = async function (userEmail) {
-console.log(userEmail);
   //  find the amount of platforms
   var platformsAmount = await PlatformsSchema.calculateLength();
   //find the newest (last) platforms. 
