@@ -211,7 +211,7 @@ module.exports.answerIdGenerator = async function (index) {
   //cut the string
   var neQuestionId = latestQuestionId.substring(1);  //<number>
   //create the new aswer_id
-  var newAnsId = "q" + (neQuestionId) + "ans" + index //q<number>ans<index>
+  var newAnsId = "q" + (neQuestionId) + "ans" + (index+1) //q<number>ans<index>
   if (newAnsId) { //if the data has been created
     return newAnsId;
   } else {
