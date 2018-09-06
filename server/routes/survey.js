@@ -83,7 +83,7 @@ router.post('/fetchQuestion', verFuncs.getTokenFromHeaders, async function (req,
     var verifyToken = verFuncs.verifyToken(req.token, jwt);
     if (verifyToken) {
         //if this the first user's question
-        if("1" == req.body.question_id){
+        if(0 == req.body.question_id){
             var result = await SurveySchema.findOne().sort({ created: -1 });
         }else{
             var result = await SurveySchema.fetchQuestionData(req.body);

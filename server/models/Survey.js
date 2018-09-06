@@ -148,7 +148,9 @@ module.exports.deleteQuestion = async function (data) {
 //input: answer's id
 //output: answer's data on success, else false
 module.exports.fetchPlatformData = async function (data) {
+  console.log(data);
   var found = await this.findOne({ "answers.answer_id": data.answer_id }, { answers: { $elemMatch: { answer_id: data.answer_id } } }, { lean: true }).sort({ created: -1 });
+  console.log(found);
   if (found) { //if the data was found
     return found;
   } else {

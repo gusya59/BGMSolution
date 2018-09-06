@@ -129,13 +129,15 @@ router.post('/addUserAnswer', verFuncs.getTokenFromHeaders, async function (req,
       var data = req.body;
       //if the servey is completed
       if (data.survey_completed) {
-        res.status(200).send({ success: false, message: "the survey is done" })
+      //  res.status(200).send({ success: false, message: "the survey is done" })
       }
       else {
         //find or create new schema for the user if it is new entry. returns the user answers data object
         var user = await userAnswersSchema.findOrCreateUserAnswer(data, userEmail);
         if (user) {
+          console.log("here");
           var nextQuestion = await userAnswersSchema.insertPlatformsData(data, userEmail);
+          console.log(nextQuestion);
           if (nextQuestion) {
             res.status(200).send({ success: true, nextQuestion: nextQuestion })
           } else {
