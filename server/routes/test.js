@@ -40,7 +40,7 @@ router.post('/test', async function (req, res) {
 
 
 //--------------------------create DB in insert full data -------------------//
-//--------------------------Survey---Budget---Platforms----------------------//
+//--------------------------Survey---Budget---Platforms---UserAnswers-------------------//
 
 
 //creating survey scheme in the db
@@ -91,6 +91,19 @@ router.post('/createBudgetSchemaData', async function (req, res) {
         res.status(200).send({ success: true, message: "schema was created" })
     }
 })
+
+//create user's answers scheme in the db
+//input: user_email, questions and answers that were selected by user, relevant platform data for each answer
+//output: on success: success message, else false message
+router.post('/createUserAnswerDB', async function (req, res) {
+    var newDB = new userAnswersSchema(req.body);
+    var created = await userAnswersSchema.inputData(newDB)
+    if (created) {
+      res.status(200).send({ success: true, message: "db was created" })
+    } else {
+      res.status(200).send({ success: false, message: "can't create selected platforms db" })
+    }
+  })
 
 
 

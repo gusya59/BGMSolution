@@ -113,18 +113,6 @@ async function userDataValidation(errors, data) {
   validFuncs.validateBudget(errors, data.budget)
 }
 
-//create user's answers scheme in the db
-//input: user_email, questions and answers that were selected by user, relevant platform data for each answer
-//output: on success: success message, else false message
-router.post('/createUserAnswerDB', async function (req, res) {
-  var newDB = new userAnswersSchema(req.body);
-  var created = await userAnswersSchema.inputData(newDB)
-  if (created) {
-    res.status(200).send({ success: true, message: "db was created" })
-  } else {
-    res.status(200).send({ success: false, message: "can't create selected platforms db" })
-  }
-})
 
 //create user's answers scheme in the db
 //input: user_email, questions and answers that were selected by user, relevant platform data for each answer
@@ -138,11 +126,7 @@ router.post('/addUserAnswer', verFuncs.getTokenFromHeaders, async function (req,
     var check = verFuncs.decodeisAdmin(req.token, jwt);
     if (!check) {
       var data = req.body;
-      //if the servey is completed
-      if (data.survey_completed) {
-        res.status(200).send({ success: false, message: "the survey is done" })
-      }
-      else {
+
         //find or create new schema for the user if it is new entry. returns the user answers data object
         var user = await userAnswersSchema.findOrCreateUserAnswer(data);
         if (user) {
@@ -156,8 +140,7 @@ router.post('/addUserAnswer', verFuncs.getTokenFromHeaders, async function (req,
         }
         else {
           res.status(200).send({ success: false, message: "error" })
-        }
-      }
+        }  
     } else {
       res.status(200).send({ success: false, message: "it is an admin user" });
     }
