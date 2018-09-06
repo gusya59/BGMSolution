@@ -78,14 +78,21 @@ router.post('/changeUserData', verFuncs.getTokenFromHeaders, async function (req
 //delete acount
 //input: email of the user that need to be deleted
 //output: true on success, else false
-router.post('/remove', async function (req, res) {
-  //add password check
-  var deleteUser = await registrationSchema.deleteUser(req.body.email);
-  if (deleteUser) {
-    res.status(200).send({ success: true, message: "user removed" });
-  }
-  else {
-    res.status(200).send({ success: false, message: "user wasn't removed" });
+router.post('/remove',verFuncs.getTokenFromHeaders, async function (req, res) {
+  var userEmail = await verFuncs.decodeUserEmail(req.token, jwt);
+  //find user in the db by it's email and check if the password that has been is correct
+  var passGood = await registrationSchema.checkUserWithPassword(userEmail, req.body.password)
+  if (passGood) {
+    //add password check
+    var deleteUser = await registrationSchema.deleteUser(userEmail);
+    if (deleteUser) {
+      res.status(200).send({ success: true, message: "user removed" });
+    }
+    else {
+      res.status(200).send({ success: false, message: "user wasn't removed" });
+    }
+  } else {
+    res.status(200).send({ success: false, message: "wrong password" });
   }
 });
 

@@ -6,22 +6,22 @@ var bcrypt = require('bcrypt');
 // Registration DB Schema --------->to add unique: true to the email later
 var UsersSchema = mongoose.Schema({
 
-  firstName: { type: String, required: true, trim:true },
-  lastName: { type: String, required: true, trim:true },
+  firstName: { type: String, required: true, trim: true },
+  lastName: { type: String, required: true, trim: true },
   email: { type: String, required: true, trim: true, index: true, sparse: true },
-  password: { type: String, required: true, trim:true },
-  passwordConfirmation: { type: String, required: true, trim:true },
+  password: { type: String, required: true, trim: true },
+  passwordConfirmation: { type: String, required: true, trim: true },
   termsConfirmCheck: { type: Boolean, required: true },
-  isAdmin: {type: Boolean, required:true},  //true for admin, false for regular user
+  isAdmin: { type: Boolean, required: true },  //true for admin, false for regular user
   ////
   business_name: { type: String, required: true },
   business_type: { type: String, required: true },
-  mobile: { type: String, required: true, trim:true },
-  phone: { type: String, required: true, trim:true },
-  country: { type: String, required: true},
+  mobile: { type: String, required: true, trim: true },
+  phone: { type: String, required: true, trim: true },
+  country: { type: String, required: true },
   city: { type: String, required: true },
-  address: { type: String, required: true},
-  budget: { type: Number, required: true, trim:true },
+  address: { type: String, required: true },
+  budget: { type: Number, required: true, trim: true },
   ////
   created: { type: Date, default: Date.now() }
 });
@@ -40,7 +40,7 @@ module.exports.inputData = async function (newUser) {
   var isMatched = await this.verifyPassword(newUser.passwordConfirmation, newUser.password);
   //console.log("is matched? " +isMatched);
   if (isMatched) {
-    
+
     //
     newUser.passwordConfirmation = hashedPassword;
     newUser.business_name = "true";
@@ -66,7 +66,7 @@ module.exports.inputData = async function (newUser) {
 //input regestration data to the User database
 //input:user data, eser's email that was extracted from the token
 //output: true if succeded, else false
-module.exports.userDataRegistration = async function (data,userEmail) {
+module.exports.userDataRegistration = async function (data, userEmail) {
   var update = await this.findByEmailAndUpdate(userEmail, { business_name: data.business_name });
   this.findByEmailAndUpdate(userEmail, { business_type: data.business_type });
   this.findByEmailAndUpdate(userEmail, { mobile: data.mobile });
@@ -98,7 +98,7 @@ module.exports.findByEmail = async function (email) {
 //find user by email
 module.exports.isEmailExists = async function (email) {
   var userData = await UsersSchemaExport.findOne({ email: email })
-  if(userData){
+  if (userData) {
     return true;
   }
   return false;
@@ -125,42 +125,66 @@ module.exports.verifyPassword = async function (pass, hash) {  //(pass to verify
 //output: true on success, false otherwise
 module.exports.changePassword = async function (data) {
   //find the user
-  try{
-      var userToUpdate = await this.findOne({email:data.email});
-      if(userToUpdate){
-        //hash the new password and update the db
-        var passCheck = await this.verifyPassword(data.password, userToUpdate.password);
-        if(true===passCheck){
-          var newPass = await bcrypt.hash(data.newPassword, 10);
-          var updated =await this.findOneAndUpdate({email:userToUpdate.email}, {$set:{ password: newPass}});
-          if(updated){ //if the user was updated
-            return true;
-          }
+  try {
+    var userToUpdate = await this.findOne({ email: data.email });
+    if (userToUpdate) {
+      //hash the new password and update the db
+      var passCheck = await this.verifyPassword(data.password, userToUpdate.password);
+      if (true === passCheck) {
+        var newPass = await bcrypt.hash(data.newPassword, 10);
+        var updated = await this.findOneAndUpdate({ email: userToUpdate.email }, { $set: { password: newPass } });
+        if (updated) { //if the user was updated
+          return true;
         }
       }
+    }
+    return false;
+  } catch (error) {
+    throw new Error('error')
+  }
+}
+
+
+//find user in the db by it's email and check if the password that has been is correct
+//input: email, password to check
+//output: true if the password is correct' else false
+module.exports.checkUserWithPassword = async function (userEmail, passTocheck) {
+  //find the user
+  try {
+    var userToCheck = await this.findOne({ email: userEmail });
+    if (userToCheck) {
+      //hash the new password and check the db
+      var passCheck = await this.verifyPassword(passTocheck, userToCheck.password);
+      if (true === passCheck) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
       return false;
-  }catch (error) {
+    }
+  } catch (error) {
     throw new Error('error')
   }
 }
 
 //count the amount of admins
-module.exports.countRegularUsers = async function () { 
-  var userData = await UsersSchemaExport.count({isAdmin: 'false'}, function (err, count){
+module.exports.countRegularUsers = async function () {
+  var userData = await UsersSchemaExport.count({ isAdmin: 'false' }, function (err, count) {
   });
   return userData;
 }
 
 //count the amount of regular users
-module.exports.countAdminUsers = async function () { 
-  var userData = await UsersSchemaExport.count({isAdmin: 'true'}, function (err, count){
+module.exports.countAdminUsers = async function () {
+  var userData = await UsersSchemaExport.count({ isAdmin: 'true' }, function (err, count) {
   });
   return userData;
 }
 //find all users with specific type of permission :regular or admin
 //input: permision: true for admin, false for regular
 //output: object with all relevant users
-module.exports.findAllByPermission =async function(data){
+module.exports.findAllByPermission = async function (data) {
   var userData = await UsersSchemaExport.find({ isAdmin: data })
   return userData;
 }
@@ -168,8 +192,8 @@ module.exports.findAllByPermission =async function(data){
 //delete specific user.
 //input: email of the user
 //output: removed object if succeded, null if not
-module.exports.deleteUser =async function(data){
-  console.log("The data is: "+data);
-  var removed = await UsersSchemaExport.findOneAndDelete({email: data })
+module.exports.deleteUser = async function (data) {
+  console.log("The data is: " + data);
+  var removed = await UsersSchemaExport.findOneAndDelete({ email: data })
   return removed;
 }
