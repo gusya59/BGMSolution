@@ -89,7 +89,7 @@ valid.validateBudget = function (errors, data) {
     errors.push("budget is empty");
     return false;
   } else {
-    var reg = RegExp('^([0-9]*)$')  //numbers and . for percentage
+    var reg = RegExp('^([0-9]*)$')  //numbers and . for decimal
     if (!reg.test(data)) {
       errors.push("the budget is not right")
       return false;
