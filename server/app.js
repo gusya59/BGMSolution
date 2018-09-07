@@ -5,8 +5,6 @@ var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var cors = require('cors');
-var passport = require('passport');
-var flash = require('connect-flash');
 
 //routes configuration
 var indexRouter = require('./routes/index');
@@ -31,7 +29,6 @@ mongoose.connect('mongodb+srv://BGM:' + "BgM123456" + '@bgmsoultion-znmku.mongod
   .then(() => console.log('connection succesful'))
   .catch((err) => console.error(err));
 
-//require('./config/passport')(passport); // pass passport for configuration -->delete passport
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
