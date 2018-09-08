@@ -40,22 +40,26 @@ export class PreviewComponent implements OnInit {
   ngOnInit() {
     
     //Budgets on page load
-    setTimeout(
+    setTimeout(() => {
     this.setupBudgetPage()
-    ,0);
+    },0);
 
+    //Budgets on page load
+    setTimeout(() => {
+      console.log(this.platforms)
+      },8000);
+    
   }
 
   //set bar settings
   barSettings(){
     //define empty array
-  var arr = new Array();
+    var arr = new Array();
     //new array to build
     var widhtB = new Array();
 
     // loop and set push to array
-
-  this.platforms.forEach((p) => {
+    this.platforms.forEach((p) => {
     widhtB.push(+((p.platform_budget / this.budgetTotal) *100).toFixed(2) +"%");
 
     //puch to arr
@@ -64,20 +68,23 @@ export class PreviewComponent implements OnInit {
     // console.log(arr);
     //set to our color array
     this.colorArray = arr; 
-  }
-  )
-  //set width bar with our width
-  this.widthBar = widhtB;
-  // console.log(this.widthBar)
-};
+   })
+  
+    //set width bar with our width
+    this.widthBar = widhtB;
+    // console.log(this.widthBar)
+  };
 
 
   setupBudgetPage(){
+    console.log("function called")
     //server up get request for data
     this.userPreview.getPreview().subscribe(data =>{
+
+      // console.log(data.message)
       this.platforms = data.message.platforms_budget;
       this.budgetTotal = data.message.user_budget;
-      console.log(this.platforms,this.budgetTotal)
+      // console.log(this.platforms,this.budgetTotal)
   
     // console.log(this.budget);
     //calc total budget
