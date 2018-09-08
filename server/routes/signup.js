@@ -110,21 +110,16 @@ router.post('/login', async function (req, res) {
 //functions
 //registaration validation
 async function RegistrationValidation(errors, user) {
-  await validFuncs.validateFirstName(errors, user.firstName);
-  validFuncs.validateLastName(errors, user.lastName);
+  await validFuncs.validateName(errors, user.firstName);
+  validFuncs.validateName(errors, user.lastName);
   validFuncs.validateEmail(errors, user.email);
   validFuncs.validatePassword(errors, user.password);
 }
 
 //unput user data validation
 async function userDataRegistrationValidation(errors, data) {
-  await validFuncs.validateBusinessName(errors, data.business_name);
-  //validateString(errors, data.bussiness_type);
-  validFuncs.validateMobile(errors, data.mobile);
+  await validFuncs.validatePhone(errors, data.mobile);
   validFuncs.validatePhone(errors, data.phone);
-  //validateCountry(errors, data.country);
-  //validateString(errors, data.city);
-  //validateAddress(errors, data.address);
   validFuncs.validateBudget(errors, data.budget)
 }
 
