@@ -76,16 +76,19 @@ async function budgetCalculations(userAnswersData, errors) {
 async function calculateAndUpdatePercentage(userAnswersData, questionsArraySize, platformsArraySize) {
     var pbpResult = 1; //platform budget percentage
     //scan all the platforms for each question, check if the platform was selected for calculations and later check if the data was updated in the db (on first run it always ok)
-    for (var j = 0; j < platformsArraySize && pbpResult && await isPlatformSelected(userAnswersData.user_email, userAnswersData.questions[0].platforms[j].platform_name); j++) {
-        var p_budget_percent = 1;
-        //scan all the questions that was answered by user and calculate the total weight of the platform
-        for (var i = 0; i < questionsArraySize; i++) {
-            p_budget_percent = p_budget_percent * userAnswersData.questions[i].platforms[j].platform_weight;
+    for (var j = 0; j < platformsArraySize && pbpResult; j++) {
+        var check = await isPlatformSelected(userAnswersData.user_email, userAnswersData.questions[0].platforms[j].platform_name)
+        if (check) {
+            var p_budget_percent = 1;
+            //scan all the questions that was answered by user and calculate the total weight of the platform
+            for (var i = 0; i < questionsArraySize; i++) {
+                p_budget_percent = p_budget_percent * userAnswersData.questions[i].platforms[j].platform_weight;
+            }
+            //the name of the platform
+            var platform_name = userAnswersData.questions[0].platforms[j].platform_name;
+            //update the budget persentage for a specific platform
+            pbpResult = await BudgetSchema.updateBudgetPercent(userAnswersData.user_email, platform_name, p_budget_percent);
         }
-        //the name of the platform
-        var platform_name = userAnswersData.questions[0].platforms[j].platform_name;
-        //update the budget persentage for a specific platform
-        pbpResult = await BudgetSchema.updateBudgetPercent(userAnswersData.user_email, platform_name, p_budget_percent);
     }
     return true;
 }
@@ -101,20 +104,28 @@ async function calculateRelativePercentage(user_email, platformsArraySize, error
         var newPer;
         var pbpResult = 1
         //scan all the platforms. check if the platform was selected for calculations 
-        for (var j = 0; j < platformsArraySize && await isPlatformSelected(user_email, updatedBudget.platforms_budget[j].platform_name); j++) {
-            //calculate the relative percentage
-            p_budget_percent = p_budget_percent + updatedBudget.platforms_budget[j].platform_budget_percent;
+        for (var j = 0; j < platformsArraySize; j++) {
+            var check = await isPlatformSelected(user_email, updatedBudget.platforms_budget[j].platform_name);
+            if (check) {
+                //calculate the relative percentage
+                p_budget_percent = p_budget_percent + updatedBudget.platforms_budget[j].platform_budget_percent;
+            }
+
         }
         //calculate the relative percentage
         var relativePercentage = 1 / p_budget_percent;
         if (relativePercentage) {
             //scan all the platforms. check if the platform was selected for calculations and later check if the data was updated in the db (on first run it always ok)
-            for (var j = 0; j < platformsArraySize && pbpResult && await isPlatformSelected(user_email, updatedBudget.platforms_budget[j].platform_name); j++) {
-                newPer = relativePercentage * updatedBudget.platforms_budget[j].platform_budget_percent;
-                //the name of the platform
-                var platform_name = updatedBudget.platforms_budget[j].platform_name;
-                //update the budget persentage for a specific platform
-                pbpResult = await BudgetSchema.updateBudgetPercent(user_email, platform_name, newPer);
+            for (var j = 0; j < platformsArraySize && pbpResult; j++) {
+                var check = await isPlatformSelected(user_email, updatedBudget.platforms_budget[j].platform_name)
+                if (check) {
+                    newPer = relativePercentage * updatedBudget.platforms_budget[j].platform_budget_percent;
+                    //the name of the platform
+                    var platform_name = updatedBudget.platforms_budget[j].platform_name;
+                    //update the budget persentage for a specific platform
+                    pbpResult = await BudgetSchema.updateBudgetPercent(user_email, platform_name, newPer);
+                }
+
             }
             return true;
         } else {
@@ -137,14 +148,18 @@ async function calculatePlatformBudget(user_email, platformsArraySize, errors) {
         //total budget for calculations
         var p_budget = updatedBudget.user_budget;
         //scan all the platforms for each question, check if the platform was selected for calculations
-        for (var j = 0; j < platformsArraySize && await isPlatformSelected(user_email, updatedBudget.platforms_budget[j].platform_name); j++) {
-            p_budget = updatedBudget.user_budget;
-            //calculate budget distribution per each platfor
-            var new_budget = p_budget * updatedBudget.platforms_budget[j].platform_budget_percent;
-            //the name of the platform
-            var platform_name = updatedBudget.platforms_budget[j].platform_name;
-            //update the budget for a specific platform
-            var pbResult = await BudgetSchema.updateBudget(user_email, platform_name, new_budget);
+        for (var j = 0; j < platformsArraySize; j++) {
+
+            var check = await isPlatformSelected(user_email, updatedBudget.platforms_budget[j].platform_name)
+            if (check) {
+                p_budget = updatedBudget.user_budget;
+                //calculate budget distribution per each platfor
+                var new_budget = p_budget * updatedBudget.platforms_budget[j].platform_budget_percent;
+                //the name of the platform
+                var platform_name = updatedBudget.platforms_budget[j].platform_name;
+                //update the budget for a specific platform
+                var pbResult = await BudgetSchema.updateBudget(user_email, platform_name, new_budget);
+            }
         }
         return pbResult;
     } else {
