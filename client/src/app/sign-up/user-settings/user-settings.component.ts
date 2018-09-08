@@ -33,7 +33,7 @@ export class UserSettingsComponent implements OnInit {
   selectCountry: string;
   selectCity: string;
   inputAddress: string;
-  budgetTotal: number;
+  budgetTotal: string;
 
       //Property for the user
       private company: company;
@@ -96,7 +96,9 @@ export class UserSettingsComponent implements OnInit {
             this.router.navigate(['/signup/userSettings/questions']);
           }
           else {
-            window.alert(resp.message)
+            console.log(resp);
+            for(let err of resp.errors)
+            window.alert(err)
           }    
           });;
     }

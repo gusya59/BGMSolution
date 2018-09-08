@@ -9,7 +9,8 @@ import jwt_decode from 'jwt-decode';
 //interface for returning router resp
 interface respData {
   success: boolean,
-  message: string
+  message: string,
+  errors: string[],
   data: {
     user_email: string,
     platforms: [
