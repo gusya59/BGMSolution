@@ -1,5 +1,5 @@
 <!-- Preview top -->
-<div class="container-fluid blue lighten-5 ">
+<div class="container-fluid blue lighten-5 " *ngIf="budgetTotal">
   <div class="row justify-content-center">
       <div class="container card card-body">
         <div class="col-lg-12">
@@ -7,18 +7,18 @@
                 <thead class="grey lighten-2">
                     <tr>
                     <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
+                    <th scope="col">Platform Name</th>
+                    <th scope="col">Platform Rate</th>
                     <th scope="col">Budget</th>
                     </tr>
                 </thead>
                 <tbody>
                     <!-- loop for platforms -->
-                    <tr *ngFor="let platform of platforms; let i = index">
+                    <tr *ngFor="let platform of platforms; let i = index ">
                         <!-- platform numbering -->
-                        <th scope="row">{{i+1}}</th>
+                        <th  scope="row" >{{i+1}}</th>
                         <!-- platform name -->
-                        <td>{{platform.platform_name}}</td>
+                        <td >{{platform.platform_name}}</td>
                         <!-- platform progress bar loop -->
                             <td id="progressCol">
                                 <div class="progress">
@@ -26,7 +26,7 @@
                                 </div>
                                 {{widthBar[i]}}
                             </td>
-                        <td>{{platform.platform_budget}}</td>
+                        <td >{{platform.platform_budget}}</td>
                     </tr> 
                     <tr>
                         <!-- budget total row -->
@@ -39,5 +39,5 @@
             </table>
         </div>
     </div>
-    </div>
+  </div>
 </div>

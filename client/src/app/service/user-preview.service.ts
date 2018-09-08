@@ -43,12 +43,11 @@ export class UserPreviewService {
   getPreview(){
 
     //will get user info if correct
-    const uri = 'http://www.mocky.io/v2/5b9011002e0000741ba89dea';
+    const uri = 'http://localhost:1234/budget/calculateBudget';
 
     //object with email payload
     const obj = {
-      user_email: jwt_decode(localStorage.getItem('token')).userID,
-      token: localStorage.getItem('token')
+      user_email: jwt_decode(localStorage.getItem('token')).userID
     }
     console.log(obj)
     //get data from server
