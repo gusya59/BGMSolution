@@ -69,7 +69,7 @@ module.exports.fetchSelectedPlatformsData = async function (data) {
 //input: user's id, platforms data
 //output: user's data on success, else false
 module.exports.updatePlatformSelection = async function (data) {
-  var found = await this.findOneAndUpdate({ "user_email": data.user_email }, { $set: { platforms: data.platforms } }).sort({ created: -1 }).limit(1);
+  var found = await this.findOneAndUpdate({ "user_email": data.user_email }, { $set: { platforms: data.platforms } }).sort({ created: -1 });
   if (found) { //if the data was updated
     return found;
   } else {
