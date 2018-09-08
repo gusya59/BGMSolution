@@ -90,6 +90,12 @@ export class PreviewComponent implements OnInit {
     //calc total budget
     this.barSettings();
 
+    //remove decimals up to fixed 2 X.XX
+    for(let p of this.platforms){
+      p.platform_budget = +p.platform_budget.toFixed(2);
+      
+    }
+
   });
   }
 

@@ -167,6 +167,7 @@
                                       <th>#</th>
                                       <th>Platform</th>
                                       <th>Budget</th>
+                                      <th>%</th>
                                       
                                   </tr>
                               </thead>
@@ -174,46 +175,11 @@
 
                               <!--Table body-->
                               <tbody>
-                                  <tr>
-                                      <th scope="row" bgcolor="#e5110d"></th>
-                                      <td>GoogleP</td>
-                                      <td>{{budgethGoogleP}}</td>
-                                      
-                                  </tr>
-                                  <tr>
-                                      <th scope="row" bgcolor="#e21dd5"></th>
-                                      <td>Instagram</td>
-                                      <td>{{budgetInstagram}}</td>
-                                      
-                                  </tr>
-                                  <tr>
-                                      <th scope="row" bgcolor="#4250f4"></th>
-                                      <td>Facebook</td>
-                                      <td>{{budgetFacebook}}</td>
-                                      
-                                  </tr>
-                                  <tr>
-                                      <th scope="row" bgcolor="#00bdf7"></th>
-                                      <td>Twiiter</td>
-                                      <td>{{budgetTwiiter}}</td>
-                                      
-                                  </tr>
-                                  <tr>
-                                      <th scope="row" bgcolor="#06aa0f"></th>
-                                      <td>GoogleAdWords</td>
-                                      <td>{{budgetGoogleAdWords}}</td>
-                                      
-                                  </tr>
-                                  <tr>
-                                      <th scope="row" bgcolor="#fffa00"></th>
-                                      <td>Google</td>
-                                      <td>{{budgetGoogle}}</td>
-                                      
-                                  </tr>
-                                  <tr>
-                                      <th scope="row" bgcolor="#8c8c8c"></th>
-                                      <td>GoogleMybuissness</td>
-                                      <td>{{budgetGoogleMybuissness}}</td>
+                                  <tr *ngFor="let platform of platforms">
+                                      <th scope="row"></th>
+                                      <td>{{platform.platform_name}}</td>
+                                      <td>{{platform.platform_budget}}</td>
+                                      <td>{{platform.platform_budget_percent}}</td>
                                       
                                   </tr>
                               </tbody>

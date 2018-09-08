@@ -21,6 +21,16 @@ import html2canvas from 'html2canvas';
 })
 export class UserProfileComponent implements OnInit {
 
+  // Define the original budget per line
+
+  platforms:[
+    {
+      platform_id: string,
+      platform_name: string,
+      platform_budget: number
+    }
+  ];
+
   //Buisness type
    private BuisnessType: string[];
 
@@ -43,7 +53,6 @@ export class UserProfileComponent implements OnInit {
 
   TotalBudget :number = null;
 
-  
 
   // error msg recived string
   ErroMsg: string;
@@ -135,20 +144,19 @@ export class UserProfileComponent implements OnInit {
   // apply MDB Chart preference type doughnut
   public chartType:string = 'doughnut';
   
-  
-// chart data inserted array: here we place the budgets
-public chartData:Array<number>  = [];
+  // chart data inserted array: here we place the budgets
+  public chartData:Array<number>  = [];
 
-// chart data inserted array: here we place the names
-public chartLabels:Array<any> = [];
+  // chart data inserted array: here we place the names
+  public chartLabels:Array<any> = [];
 
-// chart data inserted array: on hover change color and set chart color
-public chartColors:Array<any> = [{
-  hoverBorderColor: ['rgba(0, 0, 0, 0.1)', 'rgba(0, 0, 0, 0.1)', 'rgba(0, 0, 0, 0.1)'],
-  hoverBorderWidth: 0,
-  backgroundColor: ["#e5110d", "#e21dd5", "#4250f4" ], //same as set on lable
-  hoverBackgroundColor: ["#e28583", "#db64d3", "#5c67ed" ]
-}];
+  // chart data inserted array: on hover change color and set chart color
+  public chartColors:Array<any> = [{
+    hoverBorderColor: ["#e28583", "#db64d3", "#5c67ed"],
+    hoverBorderWidth: 0,
+    backgroundColor: ["#e28583", "#db64d3", "#5c67ed"], //same as set on lable
+    hoverBackgroundColor: ["#e28583", "#db64d3", "#5c67ed" ]
+  }];
 
 public chartOptions:any = {
   responsive: true
@@ -163,16 +171,29 @@ public chartOptions:any = {
     //server up get request for data
     this.userPreview.getPreview().subscribe(Data =>{
 
+      this.platforms = Data.message.platforms_budget;
+      console.log(this.platforms)
+
         //insert values into chart data
         const budgets =[];
         const names =[];
+        const colors =[];
         Data.message.platforms_budget.forEach(budget => {
           // console.log(budget.platform_budget_percent);
+          //budgets
           budgets.push(budget.platform_budget_percent);
-          names.push(budget.platform_name)
+          // names
+          names.push(budget.platform_name);
+          //colors
+          colors.push(this.getRandomColor());
+     
         }); 
         this.chartData  = budgets;
         this.chartLabels = names;
+        // change randomly chart colors
+        this.chartColors[0].backgroundColor = colors;
+        this.chartColors[0].hoverBackgroundColor = colors;
+        // console.log(this.chartColors)
     
     });
 
@@ -341,7 +362,14 @@ public chartOptions:any = {
       
     }
 
+  // randomize color
+  getRandomColor() {
+    var color = Math.floor(0x1000000 * Math.random()).toString(16);
+    return '#' + ('000000' + color).slice(-6);
+  }
+
 }
+
 
 // password validator front end form
 class passwordFormValidator {
