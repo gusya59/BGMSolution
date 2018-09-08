@@ -145,7 +145,7 @@ export const appRoutes: Routes = [
         canActivate: [AuthGuard]
       }, 
         {path: 'userSettings/questions', component: QuestionsComponent,
-        // canActivate: [AuthGuard]
+        canActivate: [AuthGuard]
       },
         {path: 'userSettings/questions/finish', component: FinishComponent,
         canActivate: [AuthGuard]
