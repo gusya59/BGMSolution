@@ -15,10 +15,10 @@ export class FinishComponent implements OnInit {
     
     // array of platforms
     platformsArray: [{
+      _id: string,
       platform_id: string,
       platform_name: string,
-      platform_weight: number,
-      selected: boolean
+      platform_selected: boolean
     }];
 
     //platforms form
@@ -56,12 +56,12 @@ export class FinishComponent implements OnInit {
   // get array function and build it.
   getArray(){
     // console.log("fired")
-    this.settings.getUserPlatforms().subscribe(
+    this.settings.fetchPlatformList().subscribe(
       data=>{
         // console.log("resp Recived")
         if(data.success){
           // console.log(data);
-          this.platformsArray = data.platformsArray;
+          this.platformsArray = data.data.platforms;
           // console.log(this.platformsArray)
           // console.log(this.platformsArray.length)
 
@@ -93,10 +93,10 @@ export class FinishComponent implements OnInit {
   createForm() {
     this.platformForm = this.fb.group({
       platforms: this.fb.array([this.buildPlatforms({
+        _id: null,
         platform_id: null,
         platform_name: null,
-        platform_weight: null,
-        selected: null
+        platform_selected: null
       })])
     });
   }
@@ -107,25 +107,25 @@ export class FinishComponent implements OnInit {
     // if data not arravied recived all null
     if (!data) {
       data = {
+        _id: null,
         platform_id: null,
         platform_name: null,
-        platform_weight: null,
-        selected: null
+        platform_selected: null
       }
     }
     // else get data
     return this.fb.group({
+      _id: data._id,
       platform_id: data.platform_id,
       platform_name: data.platform_name,
-      platform_weight: data.platform_weight,
-      selected: data.selected
+      platform_selected: data.platform_selected
     });
   }
 
   // submit function
   submit() {
     //send json to server if success redirect if error hold and log
-    this.settings.chosenPlatforms(this.platformForm.value).subscribe(
+    this.settings.updatePlatformsSelection(this.platformForm.value).subscribe(
       resp => {
       if(resp.success){
         this.router.navigate(['/user']);

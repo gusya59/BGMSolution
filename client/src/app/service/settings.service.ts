@@ -3,18 +3,25 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 //router
 import { Router } from '@angular/router';
+//jwt decoder handler 
+import jwt_decode from 'jwt-decode';
 
 //interface for returning router resp
 interface respData {
   success: boolean,
   message: string
-  // array of platforms
-  platformsArray: [{        
-    platform_id: string,
-    platform_name: string,
-    platform_weight: number,
-    selected: boolean}];
-}
+  data: {
+    user_email: string,
+    platforms: [
+        {
+          _id: string,
+          platform_id: string,
+          platform_name: string,
+          platform_selected: boolean
+        }
+      ]
+    }
+  }
 
 @Injectable({
   providedIn: 'root'
@@ -47,21 +54,27 @@ export class SettingsService {
 
   }
 
-  getUserPlatforms(){
+  //extract user platforms initiated in DB
+  fetchPlatformList(){
     //uri for Server
-    const uri = 'http://www.mocky.io/v2/5b77c8fb2e00000e00864bb9';
+    const uri = 'http://localhost:1234/user/fetchPlatformList';
     const obj = {
-
+      user_email: jwt_decode(localStorage.getItem("token")).userID
     }
     return this.http.post<respData>(uri, obj)
   }
 
-  chosenPlatforms(platforms){
+  //updated users platform list with selected values
+  updatePlatformsSelection(platformForm){
      //uri for Server
-     const uri = 'http://www.mocky.io/v2/5b77c8fb2e00000e00864bb9';
-
-     console.log(platforms)
-     return this.http.post<respData>(uri, platforms)
+     const uri = 'http://localhost:1234/user/updatePlatformsSelection';
+    // return data to server
+    const obj = {
+      user_email: jwt_decode(localStorage.getItem("token")).userID,
+      platforms: platformForm.platforms
+    }
+     console.log(obj)
+     return this.http.post<respData>(uri, obj)
   }
 
 
