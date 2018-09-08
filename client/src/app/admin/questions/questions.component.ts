@@ -121,7 +121,7 @@ export class AdminQuestionsComponent implements OnInit {
   filterIt(arr, searchKey) {
     return arr.filter((obj) => {
       return Object.keys(obj).some((key) => {
-        return obj.question_text.includes(searchKey) ;
+        return obj.question_text.includes(searchKey) || obj.question_id.includes(searchKey);
       });
     });
   }
