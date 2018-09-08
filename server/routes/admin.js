@@ -81,7 +81,7 @@ router.post('/admins/changePermissions', async function (req, res) {
 //fetching user info from the db
 //input: user's email
 //output: on success: object with user's info, else false
-router.post('/users/info', async function (req, res) {
+router.post('/users/info', verFuncs.getTokenFromHeaders,async function (req, res) {
   //verify loged user
   var verifyToken = verFuncs.verifyToken(req.token, jwt);
   if (verifyToken) {
