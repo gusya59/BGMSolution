@@ -44,6 +44,9 @@ data: {
     }]
 };
 
+//server response next question to ask
+nextQuestion: string
+
 //selected answer flags
 selectedEntry: {
   answer_id: string,
@@ -55,7 +58,7 @@ selectedEntry: {
   ngOnInit() {
 
     //Init the question form 
-    this.quest.getfirstQuestion("1","","","").subscribe(
+    this.quest.fetchQuestionQuestion("0").subscribe(
       data=> {
         if(data.success){
         this.data = {
@@ -67,8 +70,6 @@ selectedEntry: {
           }
         else console.log(data)
       })
-
-      
   }
 
   // catch selected entry from our radiobutton form
@@ -78,26 +79,33 @@ selectedEntry: {
 
   // run server request for new  question or route finish.
   QuestionAns(){
-    console.log("selected entery " + this.selectedEntry.answer_id)
-    this.quest.getQuestion(this.data.question_id,this.data.question_text,this.selectedEntry.answer_id,this.selectedEntry.answer_text).subscribe(
+    // console.log("selected entery " + this.selectedEntry.answer_id)
+    this.quest.addUserAnswer(this.data.question_id,this.data.question_text,this.selectedEntry.answer_id,this.selectedEntry.answer_text).subscribe(
       data=> {
-        //if we have next question
-        if(data.data.question_id != "0"){
-          this.data = {
-            question_id: data.data.question_id,
-            question_text: data.data.question_text,
-            nextQuestion: data.data.nextQuestion,
-            answers: data.data.answers
-            }
-        }
-        //no more quesiton remain
-        else if(data.data.nextQuestion == "1"){
-          this.router.navigate(['/signup/userSettings/questions/finish']);
+        if(data.success){
+          // console.log("data Recived from server: "+ data.nextQuestion)
+          if(data.nextQuestion != "1"){
+            this.quest.fetchQuestionQuestion(data.nextQuestion).subscribe(
+              data=> {
+                if(data.success){
+                this.data = {
+                    question_id: data.data.question_id,
+                    question_text: data.data.question_text,
+                    nextQuestion: data.data.nextQuestion,
+                    answers: data.data.answers
+                    }
+                  }
+                else console.log("Error getting question");
+              })
+          } else //survey ended with next question 1
+          {
+            this.router.navigate(['/signup/userSettings/questions/finish']);
+          }
+
         }
         //on error
-        else console.log("Error Qusetion")
+        else console.log("Error Qusetion");
       }
-      
     )
   }
 }

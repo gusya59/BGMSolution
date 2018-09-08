@@ -42,6 +42,9 @@ interface respData {
           answer_text: string,
       }]
   };
+
+  //server response next question to ask
+  nextQuestion: string
 }
 
 @Injectable({
@@ -55,7 +58,7 @@ export class QuestionService {
 
   //get question info from backend HTTP
 
-  getQuestion(question_id,question_text,answer_id,answer_text){
+  addUserAnswer(question_id,question_text,answer_id,answer_text){
     
     //will get user info if correct
     const uri = 'http://localhost:1234/user/addUserAnswer';
@@ -67,25 +70,22 @@ export class QuestionService {
       answer_text: answer_text  
     }
 
-    console.log(obj)
+    // console.log(obj)
     //get data from server
     return this.http.post<respData>(uri,obj)
     
   }
   
   //get first question from server
-  getfirstQuestion(question_id,question_text,answer_id,answer_text){
+  fetchQuestionQuestion(question_id){
     //will get user info if correct
     const uri = 'http://localhost:1234/survey/fetchQuestion';
     const obj ={
       token: localStorage.getItem('token'),
-      question_id: question_id,
-      question_text: question_text,
-      answer_id: answer_id,
-      answer_text: answer_text  
+      question_id: question_id  
     }
 
-    console.log(obj)
+    // console.log(obj)
     //get data from server
     return this.http.post<respData>(uri,obj)
   }
