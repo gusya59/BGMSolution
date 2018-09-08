@@ -119,8 +119,12 @@ export class AuthService {
   //input: user password
   //output: success or fail
   deleteUser(password){
-    const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
-    return this.http.post<respData>(uri,password)
+    const uri = 'http://localhost:1234/user/remove';
+    const obj ={
+      token: localStorage.getItem("token"),
+      password: password
+    }
+    return this.http.post<respData>(uri,obj)
     
   }
 
