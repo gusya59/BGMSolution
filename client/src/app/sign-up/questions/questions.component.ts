@@ -55,7 +55,7 @@ selectedEntry: {
   ngOnInit() {
 
     //Init the question form 
-    this.quest.getQuestion("0","","","").subscribe(
+    this.quest.getfirstQuestion("1","","","").subscribe(
       data=> {
         if(data.success){
         this.data = {

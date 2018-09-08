@@ -72,16 +72,21 @@ export class QuestionService {
     return this.http.post<respData>(uri,obj)
     
   }
-  // //get next question from server
-  // getNextQuestion(question_Num,answere_Num){
-  //   //will get user info if correct
-  //   const uri = 'http://www.mocky.io/v2/5b69df38320000ed11af5e7e';
-  //   const obj ={
-  //     question_Num: question_Num,
-  //     answere_Num: answere_Num
-  //   }
+  
+  //get first question from server
+  getfirstQuestion(question_id,question_text,answer_id,answer_text){
+    //will get user info if correct
+    const uri = 'http://localhost:1234/survey/fetchQuestion';
+    const obj ={
+      token: localStorage.getItem('token'),
+      question_id: question_id,
+      question_text: question_text,
+      answer_id: answer_id,
+      answer_text: answer_text  
+    }
 
-  //   //get data from server
-  //   return this.http.post<respData>(uri,obj)
-  // }
+    console.log(obj)
+    //get data from server
+    return this.http.post<respData>(uri,obj)
+  }
 }
