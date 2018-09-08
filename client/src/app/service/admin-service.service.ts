@@ -174,6 +174,7 @@ export class AdminServiceService {
        
         // send email in obj
         const obj = {
+          token: localStorage.getItem("token"),
           email: email
       };
       return this.http.post<respData>(uri,obj);

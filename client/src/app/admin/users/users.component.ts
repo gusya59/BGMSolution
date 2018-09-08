@@ -157,8 +157,8 @@ export class UsersComponent implements OnInit {
     //output: on success: get user data and show, on fail: error msg
     this.adminservice.userInfo(this.email).subscribe(
       Data => {
-        if(Data){
-          // console.log(Data.userdata)
+        if(Data.success){
+          console.log(Data)
           this.business_name = Data.userdata.business_name;
           this.business_type = Data.userdata.business_type;
           this.mobile  = Data.userdata.mobile;
