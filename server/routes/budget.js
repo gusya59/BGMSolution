@@ -27,6 +27,7 @@ router.post('/calculateBudget', async function (req, res) {
             res.status(200).send({ success: false, errors: errors });
         }
     } catch (err) {
+        errors.push("there is no such user");
         res.status(200).send({ success: false, message: errors })
     }
 
