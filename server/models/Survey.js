@@ -81,6 +81,35 @@ module.exports.updatePlatform = async function (data) {
   }
 }
 
+//find specific answer and update it's next question
+//input:answer id and next question
+//output: true on success, else false
+module.exports.updateNextQuestion = async function (data) {
+  var updated = await this.update(
+    {
+      //find the relevant objects in the sub arrays and there positions in the arrays
+      "answers": {
+        "$elemMatch": { "answer_id": data.answer_id}
+      }
+    },
+    {
+      //update the specific data
+      "$set": { "answers.$[outer].next_question": data.next_question }
+    },
+    {
+      //filter the array's objects accordingly to their positions in the arrays
+      "arrayFilters": [{ "outer.answer_id": data.answer_id }]
+    }
+  )
+
+  //update function returns the WriteResult object: WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+  if (1 == updated.nModified) { //if the data was updated
+    return true;
+  } else {
+    return false;
+  }
+}
+
 //insert specific data into the db
 //input: data
 //output:on success- object that has been created, on fail - false
