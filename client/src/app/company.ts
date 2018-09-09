@@ -1,3 +1,4 @@
+//compnay initiated interface class
 export class company {
  
     b_name: string;

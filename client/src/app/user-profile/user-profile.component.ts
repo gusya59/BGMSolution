@@ -246,6 +246,7 @@ public chartOptions:any = {
 
 
     //print page 2 PDF https://rawgit.com/MrRio/jsPDF/master/docs/index.html <= more info imported and tested alpha
+    //output: pdf file
     exportToPdf(){
       // Show splash screen
       this.printModal.show();
@@ -336,6 +337,7 @@ public chartOptions:any = {
 
 
     //define list of citis to use from service acording to country
+    //input: country id to filter
     onSelect(countryid) {
       this.cities = this._countryService.getCities().filter((item) => item.countryid == countryid)
     }
@@ -363,6 +365,7 @@ public chartOptions:any = {
     }
 
   // randomize color
+  //output: return random color hash
   getRandomColor() {
     var color = Math.floor(0x1000000 * Math.random()).toString(16);
     return '#' + ('000000' + color).slice(-6);
@@ -372,6 +375,7 @@ public chartOptions:any = {
 
 
 // password validator front end form
+//output: return if password form valid
 class passwordFormValidator {
   static validate(passwordFormGroup: FormGroup) {
       let password = passwordFormGroup.controls.password.value;

@@ -9,6 +9,9 @@ import { AuthService } from './auth.service';
 export class ErrorInterceptor implements HttpInterceptor {
     constructor(private authenticationService: AuthService) {}
 
+    // catch http error, prevents http pipe faill 
+    //inputs: http handler as next,request
+    //output: reload if error 401 or throw error
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(request).pipe(catchError(err => {
             if (err.status === 401) {

@@ -73,8 +73,7 @@ export class UserSettingsComponent implements OnInit {
     })
   }
 
-    //user settings event
-
+    //user settings created from form
     userSettings(){
         //set company settings
       this.company.b_name = this.inputBuisnessName;

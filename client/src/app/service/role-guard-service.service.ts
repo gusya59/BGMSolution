@@ -10,7 +10,9 @@ export class RoleGuardServiceService {
 
   constructor(public auth: AuthService, private router: Router) { }
 
-  //admin can activeate
+  //admin can activeate, protects access to admin page
+  //output: true if admin false if not.
+
   canActivate(): boolean{
 
     //get token

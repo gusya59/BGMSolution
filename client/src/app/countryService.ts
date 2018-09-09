@@ -4,6 +4,7 @@ import { city }  from './city';
 
 @Injectable()
 export class countryService {
+    //array of countries
     getCountries() {
         return [
             new country(1, 'Israel'),
@@ -11,6 +12,7 @@ export class countryService {
         ];
     }
 
+    //array of citys according to countrys
     getCities() {
         return [
             new city(1, 1, 'Haifa'),
