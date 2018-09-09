@@ -218,9 +218,9 @@ export class AdminQuestionsComponent implements OnInit {
   //recive data from edit form to update answer
   //input: platform id and weight, question and answer id.
   //output: on success: updated data on fail: error msg
-  updateAnswerData(platform_weight,platform_id,question_id,answer_id){
+  updateAnswerData(platform_weight,platform_id,question_id,answer_id,platform_name){
     
-    return this.adminservice.updateAnswerData(platform_weight,platform_id,question_id,answer_id).subscribe(
+    return this.adminservice.updateAnswerData(platform_weight,platform_id,question_id,answer_id,platform_name).subscribe(
       resp => {
         if(resp.success){
           // console.log("Posted: " +platform_weight.value , platform_id , question_id , answer_id);

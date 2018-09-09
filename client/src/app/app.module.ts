@@ -64,6 +64,8 @@ import { ReportsComponent } from './admin/reports/reports.component';
 import { SysinfoComponent } from './admin/sysinfo/sysinfo.component';
 import {AdminQuestionsComponent} from './admin/questions/questions.component';
 import { InfoComponent } from './admin/info/info.component'
+//paging import
+import {NgxPaginationModule} from 'ngx-pagination';
 
 //function for token getter
 export function tokenGetter() {
@@ -112,6 +114,7 @@ export function tokenGetter() {
 
   ],
   imports: [
+    NgxPaginationModule,
     BrowserModule,
     FormsModule,
     HttpClientModule,
