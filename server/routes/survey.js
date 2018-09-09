@@ -83,11 +83,11 @@ router.post('/fetchQuestion', verFuncs.getTokenFromHeaders, async function (req,
     var verifyToken = verFuncs.verifyToken(req.token, jwt);
     if (verifyToken) {
         //if this the first user's question
-        if(0 == req.body.question_id){
+        if (0 == req.body.question_id) {
             var result = await SurveySchema.findOne().sort({ created: -1 });
-        }else{
+        } else {
             var result = await SurveySchema.fetchQuestionData(req.body);
-        }      
+        }
         if (result) {
             res.status(200).send({ success: true, data: result })
         }
@@ -131,9 +131,8 @@ router.post('/saveAnswer', async function (req, res) {
 
 
 
-//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ ask david about this. one or two separate functions?
 //edit platforms data
-//input: data
+//input: answer_id, platform object with platform name ans platform weight
 //output: on success: success message , else false message
 router.post('/savePlatform', async function (req, res) {
     var isCreated = await SurveySchema.updatePlatform(req.body);
@@ -145,6 +144,27 @@ router.post('/savePlatform', async function (req, res) {
     }
 })
 
+//edit platforms data
+//input: answer_id, next question
+//output: on success: success message , else false message
+router.post('/saveNextQuestion', async function (req, res) {
+    var input = req.body;
+    //check if there is such question in the db
+    var check = await SurveySchema.checkIfThereQuestion(input.next_question)
+    //if the question has been found or if the question_id==1 (end of survey)
+    if (check || (1 == input.next_question)) {
+        //update question
+        var isCreated = await SurveySchema.updateNextQuestion(input);
+        if (isCreated) {
+            res.status(200).send({ success: true, message: "Answer's data has been updated" })
+        }
+        else {
+            res.status(200).send({ success: false, message: "Can't save the new question" })
+        }
+    } else {
+        res.status(200).send({ success: false, message: "There is no such question" })
+    }
+})
 
 
 module.exports = router;
