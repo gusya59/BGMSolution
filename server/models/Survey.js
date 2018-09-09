@@ -56,7 +56,9 @@ module.exports.updateAnswer = async function (data) {
 //input: specific answer_id, platforms{platform's name, new platform's weight}
 //output: true on success, else false
 module.exports.updatePlatform = async function (data) {
-  console.log("in the function: "+data);
+  if(0==data.platforms.platform_weight || "0"==data.platforms.platform_weight){
+    data.platforms.platform_weight = 0.00000000001;
+  }
   var updated = await this.update(
     {
       //find the relevant objects in the sub arrays and there positions in the arrays
@@ -73,7 +75,6 @@ module.exports.updatePlatform = async function (data) {
       "arrayFilters": [{ "outer.answer_id": data.answer_id }, { "inner.platform_name": data.platforms.platform_name }]
     }
   )
-console.log(updated);
   //update function returns the WriteResult object: WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
   if (updated) { //if the data was updated
     return true;

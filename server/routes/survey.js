@@ -135,7 +135,6 @@ router.post('/saveAnswer', async function (req, res) {
 //input: answer_id, platform object with platform name ans platform weight
 //output: on success: success message , else false message
 router.post('/savePlatform', async function (req, res) {
-   console.log("the body is: "+req.body);
     var isCreated = await SurveySchema.updatePlatform(req.body);
     if (isCreated) {
         res.status(200).send({ success: true, message: "Answer's data has been updated" })
