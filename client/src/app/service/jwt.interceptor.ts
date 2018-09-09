@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 
+//java web token interceptor and manager
+//saving token into localstorage
 export class JwtInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         

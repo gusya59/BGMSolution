@@ -57,7 +57,7 @@ selectedEntry: {
 
   ngOnInit() {
 
-    //Init the question form 
+    //Init the question form, get question from server
     this.quest.fetchQuestionQuestion("0").subscribe(
       data=> {
         if(data.success){
@@ -73,6 +73,7 @@ selectedEntry: {
   }
 
   // catch selected entry from our radiobutton form
+  //input: question array
   onSelectionChange(question) {
     this.selectedEntry = question;
   }

@@ -32,7 +32,9 @@ export class SettingsService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-
+  //userSettings application to server, will send user compnay settings
+  //input: company settings
+  //output: request to server carring an payload with object
   userSettings(company){
     console.log(company);
     const uri = 'http://localhost:1234/signup/usersettings';
@@ -56,6 +58,8 @@ export class SettingsService {
   }
 
   //extract user platforms initiated in DB
+  //input:
+  //output: request to server carring an payload with object
   fetchPlatformList(){
     //uri for Server
     const uri = 'http://localhost:1234/user/fetchPlatformList';
@@ -66,6 +70,8 @@ export class SettingsService {
   }
 
   //updated users platform list with selected values
+  //input: platforms array holding ourplatforms
+  //output: request to server carring an payload with object
   updatePlatformsSelection(platformForm){
      //uri for Server
      const uri = 'http://localhost:1234/user/updatePlatformsSelection';

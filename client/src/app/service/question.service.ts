@@ -57,6 +57,8 @@ export class QuestionService {
   constructor(private http: HttpClient) { }
 
   //get question info from backend HTTP
+  //input: question id and body text, answer id and body text
+  //output request to server carring an payload with object
 
   addUserAnswer(question_id,question_text,answer_id,answer_text){
     
@@ -77,6 +79,8 @@ export class QuestionService {
   }
   
   //get first question from server
+  //input: question id 
+  //output request to server carring an payload with object
   fetchQuestionQuestion(question_id){
     //will get user info if correct
     const uri = 'http://localhost:1234/survey/fetchQuestion';

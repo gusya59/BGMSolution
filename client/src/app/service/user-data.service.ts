@@ -31,6 +31,9 @@ export class UserDataService {
 
   constructor(private http: HttpClient) { }
 
+  //request server for user data
+  //input:
+  //output: request to server carring an payload with object
   getUserData(){
     //will get user info if correct
     const uri = 'http://localhost:1234/user/profile';
@@ -43,7 +46,9 @@ export class UserDataService {
     return this.http.post<respData>(uri,obj)
   }
 
-  //password change function assembly. 
+  //password change function assembly.
+  //input: users email, password and oldpassword to grant access
+  //output: request to server carring an payload with object 
   changePassword(email, password, oldPassword){
     //will get user info if correct
     const uri = 'http://localhost:1234/user/changePassword';
@@ -60,7 +65,9 @@ export class UserDataService {
   }
 
   //change user data acordingly reciveds user obj
-  //name,lastname and user settings
+  // will prevent change of critical data as email
+  //input: name,lastname and user settings
+  //output: request to server carring an payload with object
   changeUserData(user){
     //posting new user data 
     const uri = 'http://localhost:1234/user/changeUserData';

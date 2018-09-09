@@ -20,6 +20,8 @@ import { first } from '../../../../node_modules/rxjs/operators';
 })
 
 export class RegistrationComponent implements OnInit {
+
+  //initiated usable values
     angForm: FormGroup;
     errorMSG: string[];
     firstName: string;
@@ -112,7 +114,11 @@ export class RegistrationComponent implements OnInit {
 }
 
 // password validator for registration front end form
+
 class RegistrationValidator {
+
+  //input: form group carring the passwords
+  //output: if valid => true else false
   static validate(registrationFormGroup: FormGroup) {
       let inputPassword = registrationFormGroup.controls.inputPassword.value;
       let confirmPassword = registrationFormGroup.controls.confirmPassword.value;

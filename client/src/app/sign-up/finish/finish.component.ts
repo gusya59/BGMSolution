@@ -79,6 +79,7 @@ export class FinishComponent implements OnInit {
   }
 
   // get data from our Form as platforms
+  //output: build form array 
   getData() {
     return this.platformForm.get('platforms') as FormArray;
   }
@@ -90,6 +91,8 @@ export class FinishComponent implements OnInit {
   
 
   // form creation function call buildPlaforms function to generate dynamic data structure
+  //input: 
+  //output: recive data from server and build and platform array
   createForm() {
     this.platformForm = this.fb.group({
       platforms: this.fb.array([this.buildPlatforms({
@@ -102,6 +105,8 @@ export class FinishComponent implements OnInit {
   }
 
   // build data platforms function
+  //input: data contains platforms
+  //output: form build with data
   
   buildPlatforms(data) {
     // if data not arravied recived all null
@@ -122,7 +127,8 @@ export class FinishComponent implements OnInit {
     });
   }
 
-  // submit function
+  // submit function to server
+  //output: post selected data to server
   submit() {
     //send json to server if success redirect if error hold and log
     this.settings.updatePlatformsSelection(this.platformForm.value).subscribe(

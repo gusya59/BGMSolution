@@ -39,7 +39,8 @@ export class UserPreviewService {
   constructor(private http: HttpClient) { }
 
   //get preview info from backend HTTP
-
+  //input:
+  //output: request to server carring an payload with object
   getPreview(){
 
     //will get user info if correct
