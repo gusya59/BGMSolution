@@ -125,11 +125,12 @@ module.exports.insertDataIntoDB = async function (data) {
   } else {//if not found -> there is no question in the db ->set the question id to q0 -> will be changed to q1
     newQuestion.question_id = await this.questionIdGenerator("q0")
   }
+
   newQuestion.answers = data.answers;
   //genearte and set an answer id according to the question id. q<number>ans<index in the answer array>7
   //and update answer array data
   for (var i = 0; i < 4; i++) {
-    newQuestion.answers[i].answer_id = await this.answerIdGenerator(i)
+    newQuestion.answers[i].answer_id = await this.answerIdGenerator(newQuestion.question_id,i)
     newQuestion.answers[i].answer_text = data.answers[i].answer_text
     newQuestion.answers[i].next_question = "0"
     // answersArray.push(platformObj);
@@ -228,19 +229,20 @@ module.exports.checkIfThereQuestion = async function (data) {
 //generate answer_id
 //input: the latest answer's id in the db
 //output: new answer_id on success, else null
-module.exports.answerIdGenerator = async function (index) {
+module.exports.answerIdGenerator = async function (questionID,index) {
   //find the newest survey
-  var found = await this.findOne().sort({ created: -1 });
-  if (null == found) {
-    //if the survey db is empty ant there are no questions
-    var latestQuestionId = "q1"
-  } else {
-    var latestQuestionId = found.question_id; //q<number>
-  }
+  // var found = await this.findOne().sort({ created: -1 }).limit(1);
+  // console.log(found);
+  // if (null == found) {
+  //   //if the survey db is empty ant there are no questions
+  //   var latestQuestionId = "q1"
+  // } else {
+  //   var latestQuestionId = found.question_id; //q<number>
+  // }
   //cut the string
-  var neQuestionId = latestQuestionId.substring(1);  //<number>
+ // var neQuestionId = latestQuestionId.substring(1);  //<number>
   //create the new aswer_id
-  var newAnsId = "q" + (neQuestionId) + "ans" + (index+1) //q<number>ans<index>
+  var newAnsId = questionID + "ans" + (index+1) //q<number>ans<index>
   if (newAnsId) { //if the data has been created
     return newAnsId;
   } else {
