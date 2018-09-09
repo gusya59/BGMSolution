@@ -57,7 +57,7 @@ module.exports.updateAnswer = async function (data) {
 //output: true on success, else false
 module.exports.updatePlatform = async function (data) {
   if(0==data.platforms.platform_weight || "0"==data.platforms.platform_weight){
-    data.platforms.platform_weight = 0.00000000001;
+    data.platforms.platform_weight = 1;
   }
   var updated = await this.update(
     {
