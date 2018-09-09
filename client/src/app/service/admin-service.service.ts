@@ -243,18 +243,22 @@ export class AdminServiceService {
     }
 
     //save answer info function 
-    //input: platform weight, platform id , question id and answer id
+    //input: platform weight, platform id , question id and answer id and platform name
     //output: payload with success or fail
-    updateAnswerData(platform_weight,platform_id,question_id,answer_id){
+    updateAnswerData(platform_weight,platform_id,question_id,answer_id,platform_name){
       //recive data of answer
-      const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
+      const uri = 'http://localhost:1234/survey/savePlatform';
       //obj of answer data
       const obj = {
-        platform_weight: platform_weight.value,
-        platform_id: platform_id,
         question_id: question_id,
-        answer_id: answer_id
+        answer_id: answer_id,
+        platforms:{
+          platform_weight: platform_weight.value,
+          platform_id: platform_id,
+          platform_name: platform_name
+        }
       }
+      // console.log(obj)
       return this.http.post<respData>(uri,obj)
 
     }
@@ -264,14 +268,14 @@ export class AdminServiceService {
     //output: payload with success or fail
     updateNextQuestion(next_question,question_id,answer_id){
     //recive data of answer
-    const uri = 'http://www.mocky.io/v2/5b61f0f4300000e9366a4433';
+    const uri = 'http://localhost:1234/survey/saveNextQuestion';
     //obj of answer data
     const obj = {
       next_question: next_question.value,
       question_id: question_id,
-      answer_id: answer_id,
-      
+      answer_id: answer_id, 
     }
+    // console.log(obj)
     return this.http.post<respData>(uri,obj)
 
   }
