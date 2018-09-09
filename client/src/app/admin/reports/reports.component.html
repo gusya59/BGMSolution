@@ -29,63 +29,283 @@
 
 <!-- report btns -->
 <div  class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-lg-12">
         <div class="row justify-content-center">
-          <div class="col-lg-12">
-            <div class="row justify-content-center">
-              <div class="col-lg-4">
-                  <mdb-card>
-                      <!--Card image-->
-                      <mdb-card-img id="excel" src="/assets/img/Data2Excel.png" alt="Card image cap"></mdb-card-img>
-                      <!--Card content-->
-                      <mdb-card-body>
-                    
-                        <!--Title-->
-                        <mdb-card-title> <h4>Export Users</h4> </mdb-card-title>
-                    
-                        <!--Text-->
-                        <mdb-card-text> <h2>Export your budget layout to excel page.</h2> </mdb-card-text>
-                    
-                        <a href="#" class="btn btn-success waves-light" mdbWavesEffect>Export</a>
-                      </mdb-card-body>
-                  </mdb-card>
-              </div>
-    
-              <div class="col-lg-4">
-                  <mdb-card>
-                      <!--Card image-->
-                      <mdb-card-img id="pdf" src="/assets/img/Data2PDF.png" alt="Card image cap"></mdb-card-img>
-                      <!--Card content-->
-                      <mdb-card-body>
-                    
-                        <!--Title-->
-                        <mdb-card-title> <h4>Export Admins</h4> </mdb-card-title>
-                    
-                        <!--Text-->
-                        <mdb-card-text> <h2>Export your budget to printable pdf file.</h2> </mdb-card-text>
-                    
-                        <a href="#" class="btn btn-danger waves-light" mdbWavesEffect>Export</a>
-                      </mdb-card-body>
-                    </mdb-card>
-              </div>
+            <div class="col-lg-4">
+                <mdb-card>
+                    <!--Card image-->
+                    <mdb-card-img id="excel" src="/assets/img/Data2Excel.png" alt="Card image cap"></mdb-card-img>
+                    <!--Card content-->
+                    <mdb-card-body>
+                
+                    <!--Title-->
+                    <mdb-card-title> <h4>Export Users</h4> </mdb-card-title>
+                
+                    <!--Text-->
+                    <mdb-card-text> <h2>Export System Users to PDF.</h2> </mdb-card-text>
+                
+                    <button type="button" mdbBtn color="success" class="relative waves-light" (click)="openUsersModal(false)" mdbWavesEffect>Export</button>
+                    </mdb-card-body>
+                </mdb-card>
+            </div>
 
-              <div class="col-lg-4">
-                    <mdb-card>
-                        <!--Card image-->
-                        <mdb-card-img id="pdf" src="/assets/img/Data2PDF.png" alt="Card image cap"></mdb-card-img>
-                        <!--Card content-->
-                        <mdb-card-body>
-                      
-                          <!--Title-->
-                          <mdb-card-title> <h4>Export Platforms</h4> </mdb-card-title>
-                      
-                          <!--Text-->
-                          <mdb-card-text> <h2>Export your budget to printable pdf file.</h2> </mdb-card-text>
-                      
-                          <a href="#" class="btn btn-info waves-light" mdbWavesEffect>Export</a>
-                        </mdb-card-body>
-                      </mdb-card>
+            <div class="col-lg-4">
+                <mdb-card>
+                    <!--Card image-->
+                    <mdb-card-img id="pdf" src="/assets/img/Data2PDF.png" alt="Card image cap"></mdb-card-img>
+                    <!--Card content-->
+                    <mdb-card-body>
+                
+                    <!--Title-->
+                    <mdb-card-title> <h4>Export Admins</h4> </mdb-card-title>
+                
+                    <!--Text-->
+                    <mdb-card-text> <h2>Export System Admins to PDF.</h2> </mdb-card-text>
+                
+                    <button type="button" mdbBtn color="danger" class="relative waves-light" (click)="openUsersModal(true)" mdbWavesEffect>Export</button>
+
+                    </mdb-card-body>
+                </mdb-card>
+            </div>
+
+            <div class="col-lg-4">
+                <mdb-card>
+                    <!--Card image-->
+                    <mdb-card-img id="pdf" src="/assets/img/Data2PDF.png" alt="Card image cap"></mdb-card-img>
+                    <!--Card content-->
+                    <mdb-card-body>
+                    
+                        <!--Title-->
+                        <mdb-card-title> <h4>Export questions</h4> </mdb-card-title>
+                    
+                        <!--Text-->
+                        <mdb-card-text> <h2>Export Questions to PDF.</h2> </mdb-card-text>
+                        
+                        <button type="button" mdbBtn color="info" class="relative waves-light" (click)="questionsModal.show()" mdbWavesEffect>Export</button>
+                    </mdb-card-body>
+                    </mdb-card>
+            </div>
+        </div>
+        </div>
+    </div>  
+</div> 
+
+<!-- Users Print Modal -->
+<div mdbModal #usersModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myusersModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header success-color text-white">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="usersModal.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title w-100" id="myModalLabel">Admin Settings - Export Users</h4>
+      </div>
+      <div class="modal-body">
+        <!-- model body head -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-5">
+                    <img src="assets/img/Logo_Final.png" style="width:120px;">
+                </div>
+                <div class="col-md-5">
+                    <h1>BreakingGap's</h1>
                 </div>
             </div>
-          </div>
-        </div>  
-    </div> 
+        </div>
+        <!-- !model body head -->
+        <!--Table-->
+        <table class="table table-striped">
+                  
+                <!--Table head-->
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                  </tr>
+                </thead>
+                <!--Table head-->
+          
+                <!--Table body-->
+                <tbody *ngFor="let user of users | paginate: { itemsPerPage: 10, currentPage: p }">
+                  <tr >
+                    <th scope="row">{{user.created |  date:'dd/MM/yyyy hh:mm:ss'}}</th>
+                    <td>{{user.firstName}}</td>
+                    <td>{{user.lastName}}</td>
+                    <td>{{user.email}}</td>
+                  </tr>
+                </tbody>
+                <pagination-controls 
+                      (pageChange)="p =$event"
+                      maxSize="9"
+                      directionLinks="true"
+                      autoHide="true"
+                      responsive="true"
+                      previousLabel="Previous"
+                      nextLabel="Next"
+                      screenReaderPaginationLabel="Pagination"
+                      screenReaderPageLabel="page"
+                      screenReaderCurrentLabel="You're on page">
+                </pagination-controls>
+                <!--Table body-->
+              </table>
+              <!--Table-->
+      </div>
+      <div class="modal-footer">
+        <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="usersModal.hide()" mdbWavesEffect>Close</button>
+        <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect>Print</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Admins Print Modal -->
+<div mdbModal #adminsModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myadminsModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg " role="document">
+    <div class="modal-content">
+      <div class="modal-header danger-color text-white">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="adminsModal.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title w-100" id="myModalLabel">Admin Settings - Export Users</h4>
+      </div>
+      <div class="modal-body">
+        <!-- model body head -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-5">
+                    <img src="assets/img/Logo_Final.png" style="width:120px;">
+                </div>
+                <div class="col-md-5">
+                    <h1>BreakingGap's</h1>
+                </div>
+            </div>
+        </div>
+        <!-- !model body head -->
+          
+        <!--Table-->
+        <table class="table table-striped">
+                  
+                <!--Table head-->
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                  </tr>
+                </thead>
+                <!--Table head-->
+          
+                <!--Table body-->
+                <tbody *ngFor="let user of users | paginate: { itemsPerPage: 10, currentPage: p }">
+                  <tr >
+                    <th scope="row">{{user.created |  date:'dd/MM/yyyy hh:mm:ss'}}</th>
+                    <td>{{user.firstName}}</td>
+                    <td>{{user.lastName}}</td>
+                    <td>{{user.email}}</td>
+                  </tr>
+                </tbody>
+                <pagination-controls 
+                      (pageChange)="p =$event"
+                      maxSize="9"
+                      directionLinks="true"
+                      autoHide="true"
+                      responsive="true"
+                      previousLabel="Previous"
+                      nextLabel="Next"
+                      screenReaderPaginationLabel="Pagination"
+                      screenReaderPageLabel="page"
+                      screenReaderCurrentLabel="You're on page">
+                </pagination-controls>
+                <!--Table body-->
+              </table>
+              <!--Table-->
+      </div>
+      <div class="modal-footer">
+        <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="adminsModal.hide()" mdbWavesEffect>Close</button>
+        <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect>Print</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Admins Print Modal -->
+<div mdbModal #questionsModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myquestionsModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg " role="document">
+    <div class="modal-content">
+      <div class="modal-header info-color">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="questionsModal.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title w-100" id="myModalLabel">Admin Settings - Export Users</h4>
+      </div>
+      <div class="modal-body">
+                  <!-- model body head -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-5">
+                    <img src="assets/img/Logo_Final.png" style="width:120px;">
+                </div>
+                <div class="col-md-5">
+                    <h1>BreakingGap's</h1>
+                </div>
+            </div>
+        </div>
+        <!-- !model body head -->
+        <!--Table-->
+        <table class="table table-striped">
+                  
+                <!--Table head-->
+                <thead>
+                  <tr>
+                    <th>Question ID</th>
+                    <th>Question Text</th>
+                    <th>Answers</th>
+                  </tr>
+                </thead>
+                <!--Table head-->
+         
+                <!--Table body-->
+                <tbody *ngFor="let data of surveyData | paginate: { itemsPerPage: 3, currentPage: p }">
+                  <tr >
+                    <th scope="row">{{data.question_id}}</th>
+                    <td>{{data.question_text}}</td>
+                    <td>
+                        <tr *ngFor="let ans of toArray(data.answers)">
+                            <td>
+                                {{ans.answer_text}}
+                            </td>
+                        </tr>
+                    </td>
+                  </tr>
+                </tbody>
+                <pagination-controls 
+                      (pageChange)="p =$event"
+                      maxSize="9"
+                      directionLinks="true"
+                      autoHide="true"
+                      responsive="true"
+                      previousLabel="Previous"
+                      nextLabel="Next"
+                      screenReaderPaginationLabel="Pagination"
+                      screenReaderPageLabel="page"
+                      screenReaderCurrentLabel="You're on page">
+                </pagination-controls>
+                <!--Table body-->
+              </table>
+              <!--Table-->
+      </div>
+      <div class="modal-footer">
+        <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="questionsModal.hide()" mdbWavesEffect>Close</button>
+        <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect>Print</button>
+      </div>
+    </div>
+  </div>
+</div>
+
