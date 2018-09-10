@@ -56,9 +56,9 @@ module.exports.updateAnswer = async function (data) {
 //input: specific answer_id, platforms{platform's name, new platform's weight}
 //output: true on success, else false
 module.exports.updatePlatform = async function (data) {
-  // if(0==data.platforms.platform_weight || "0"==data.platforms.platform_weight){
-  //   data.platforms.platform_weight = 0.1;
-  // }
+  if(0==data.platforms.platform_weight || "0"==data.platforms.platform_weight){
+    data.platforms.platform_weight = 0.01;
+  }
   var updated = await this.update(
     {
       //find the relevant objects in the sub arrays and there positions in the arrays
