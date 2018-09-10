@@ -100,16 +100,10 @@ router.post('/remove',verFuncs.getTokenFromHeaders, async function (req, res) {
 //input: array that will contain validation errors, data to validate
 //output: promise 
 async function userDataValidation(errors, data) {
-  await validFuncs.validateFirstName(errors, data.firstName);
-  validFuncs.validateLastName(errors, data.lastName);
-  // validFuncs.validatePassword(errors, data.password);
-  validFuncs.validateBusinessName(errors, data.business_name);
-  //validateString(errors, data.bussiness_type);
-  validFuncs.validateMobile(errors, data.mobile);
+  await validFuncs.validateName(errors, data.firstName);
+  validFuncs.validateName(errors, data.lastName);
+  validFuncs.validatePhone(errors, data.mobile);
   validFuncs.validatePhone(errors, data.phone);
-  //validateCountry(errors, data.country);
-  //validateString(errors, data.city);
-  //validateAddress(errors, data.address);
   validFuncs.validateBudget(errors, data.budget)
 }
 

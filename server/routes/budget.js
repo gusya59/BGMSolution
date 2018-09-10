@@ -20,6 +20,7 @@ router.post('/calculateBudget', async function (req, res) {
         if (userAnswersData) {
             //budget distribution calculations and updates
             var result = await budgetCalculations(userAnswersData, errors);
+           // var result = await BudgetSchema.fetchBudgetData(req.body.user_email)
             if (!errors.length) { //if everuthing was fine and there were no errors
                 res.status(200).send({ success: true, message: result })
             }
@@ -54,6 +55,7 @@ async function budgetCalculations(userAnswersData, errors) {
               //  calculate the relative percentage of the total weigth of the platform per each platform and update the parametr in the budget db
                 var budgetUpdated = await calculatePlatformBudget(userAnswersData.user_email, platformsArraySize, errors);
                 if (budgetUpdated) {
+              
                     return budgetUpdated
                 } else {
                     errors.push("calculatePlatformBudget error")
@@ -124,7 +126,6 @@ async function calculateRelativePercentage(user_email, platformsArraySize, error
                     //update the budget persentage for a specific platform
                     pbpResult = await BudgetSchema.updateBudgetPercent(user_email, platform_name, newPer);
                 }
-
             }
             return true;
         } else {
@@ -160,7 +161,8 @@ async function calculatePlatformBudget(user_email, platformsArraySize, errors) {
                 var pbResult = await BudgetSchema.updateBudget(user_email, platform_name, new_budget);
             }
         }
-        return pbResult;
+        var result = await BudgetSchema.fetchBudgetData(user_email);
+        return result;
     } else {
         errors.push("can't fetch budget's data")
         return false;
@@ -175,6 +177,19 @@ async function isPlatformSelected(email, name) {
     return choise;
 }
 
+
+//fetch budget data for a specific user
+//input: user's email
+//output: busget's data on success, else false
+router.post('/fetchBudgetData', async function (req, res) {
+    var result = await BudgetSchema.fetchBudgetData(req.body.user_email);
+    if (result) {
+        res.status(200).send({ success: true, data: result })
+    }
+    else {
+        res.status(200).send({ success: false, message: "Can't fetch data" })
+    }
+})
 
 module.exports = router;
 
