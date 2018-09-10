@@ -24,8 +24,8 @@ import { Router } from '@angular/router';
 
 export class UserSettingsComponent implements OnInit {
   //define object from the form
-  inputBuisnessName: string;
-  selectedBuisnesstype: string;
+  inputbusinessName: string;
+  selectedbusinesstype: string;
   selectedPre_mobile: string = "";
   mobile: string = "";
   SelectedPre_phone: string = "";
@@ -41,8 +41,8 @@ export class UserSettingsComponent implements OnInit {
       private pre_mobile: string[];
       // property for pre_phone
       private pre_phone: string[];
-      //Buisness type
-      private BuisnessType: string[];
+      //business type
+      private businessType: string[];
 
       selectedCountry: country = new country(0,'Israel');
       countries: country[];
@@ -62,8 +62,8 @@ export class UserSettingsComponent implements OnInit {
     this.pre_mobile =  ['050', '052', '053','054','055','058'];
     //pre-phone settings
     this.pre_phone =  ['02', '03', '04','05','06','07','08','077'];
-    //Buisness type settings
-    this.BuisnessType = ['store','Webstore','manufacture','retailer','mobile','electronics'];
+    //business type settings
+    this.businessType = ['store','Webstore','manufacture','retailer','mobile','electronics'];
     
   
 
@@ -76,8 +76,8 @@ export class UserSettingsComponent implements OnInit {
     //user settings created from form
     userSettings(){
         //set company settings
-      this.company.b_name = this.inputBuisnessName;
-      this.company.b_type = this.selectedBuisnesstype;
+      this.company.b_name = this.inputbusinessName;
+      this.company.b_type = this.selectedbusinesstype;
       this.company.mobile = this.selectedPre_mobile.concat(this.mobile);
       this.company.phone = this.SelectedPre_phone.concat(this.phone);
       this.company.city = this.cities[+this.selectCity-1].name;  //unload city from list

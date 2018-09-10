@@ -47,7 +47,7 @@
                         <select mdbInputDirective type="text" name="b_type" formControlName="b_type" class="form-control" required>
                         <option [value]="b_type" selected="selected">{{b_type}}
                         </option>
-                        <option *ngFor="let b_type of BuisnessType" [value] = "b_type">{{b_type}}
+                        <option *ngFor="let b_type of businessType" [value] = "b_type">{{b_type}}
                         </select>
                     </div>
 

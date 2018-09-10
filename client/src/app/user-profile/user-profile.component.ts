@@ -31,8 +31,8 @@ export class UserProfileComponent implements OnInit {
     }
   ];
 
-  //Buisness type
-   private BuisnessType: string[];
+  //business type
+   private businessType: string[];
 
   //country and city
    countries: country[];
@@ -203,8 +203,8 @@ public chartOptions:any = {
     document.getElementById('BGsTable').style.display = 'none';
     document.getElementById('BGscerti').style.display = 'none';
 
-    //Buisness type settings
-    this.BuisnessType = ['store','Webstore','manufacture','retailer','mobile','electronics'];
+    //business type settings
+    this.businessType = ['store','Webstore','manufacture','retailer','mobile','electronics'];
     
     // Request data from server
     this.userdata.getUserData().subscribe(

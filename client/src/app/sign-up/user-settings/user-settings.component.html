@@ -9,7 +9,7 @@
 <div class="container ">
   <div class="card">
       <!--Header-->
-      <h3 class="card-header primary-color white-text">let us know more about your buisness.</h3>
+      <h3 class="card-header primary-color white-text">let us know more about your business.</h3>
       <!-- Body -->
       <div class="card-body">
 
@@ -17,36 +17,36 @@
         <div class= "col-md-8">
           <form #SettingsForm = "ngForm"  (ngSubmit)="userSettings()" >
 
-                  <!-- Buisness Name Block -->
+                  <!-- business Name Block -->
                   <div class="md-form">  
                     <i class="fas fa-briefcase prefix grey-text"></i>
                     <input mdbInputDirective
                      type="text"
-                      name="inputBuisnessName"
-                      id="inputBuisnessName"
-                      [(ngModel)]="inputBuisnessName"
+                      name="inputbusinessName"
+                      id="inputbusinessName"
+                      [(ngModel)]="inputbusinessName"
                       class="form-control"
                       required>
 
-                      <label for="inputBuisnessName">Buisness Name</label>
+                      <label for="inputbusinessName">business Name</label>
                   </div>
 
-                  <!-- Buisness Type Block -->
+                  <!-- business Type Block -->
                   <div class="md-form">
                     
-                    <label for="Buisnesstype">Buisness Type</label>
+                    <label for="businesstype">business Type</label>
 
                       <select mdbInputDirective
                               class="form-control"
-                              id="Buisnesstype"
-                              [(ngModel)]="selectedBuisnesstype"
-                              name = "Buisnesstype"
+                              id="businesstype"
+                              [(ngModel)]="selectedbusinesstype"
+                              name = "businesstype"
                               >
                                
                               <option value="0">
                                 --Select Type-- 
                               </option>
-                              <option *ngFor="let Buisness of BuisnessType" [value] = "Buisness">{{Buisness}}
+                              <option *ngFor="let business of businessType" [value] = "business">{{business}}
                       </select>
 
                       
@@ -150,10 +150,10 @@
                         </div>                                                      
                       </div>   
 
-                  <!-- Buisness Address -->
+                  <!-- business Address -->
                   <div class="md-form">
                       <i class="fas fa-map-marked-alt prefix grey-text"></i>
-                    <label for="inputAddress">Buisness Address</label>
+                    <label for="inputAddress">business Address</label>
                     <input mdbInputDirective
                     type="text"
                     [(ngModel)]="inputAddress"
@@ -164,10 +164,10 @@
                       required>
                   </div>
 
-                  <!-- Buisness budget oninput prevent "-"-->
+                  <!-- business budget oninput prevent "-"-->
                   <div class="md-form">
                       <i class="fas fa-dollar-sign prefix grey-text"></i>
-                      <label for="budgetTotal">Buisness budget</label>
+                      <label for="budgetTotal">business budget</label>
                       <input mdbInputDirective
                       type="text"
                       [(ngModel)]="budgetTotal"
