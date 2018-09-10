@@ -1,7 +1,7 @@
 import { UserPreviewService } from './../../service/user-preview.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { forEach } from '../../../../node_modules/@angular/router/src/utils/collection';
+
 
 
 @Component({
@@ -48,7 +48,6 @@ export class PreviewComponent implements OnInit {
     setTimeout(() => {
       console.log(this.platforms)
       },8000);
-    
   }
 
   //set bar settings
@@ -59,16 +58,18 @@ export class PreviewComponent implements OnInit {
     var widhtB = new Array();
 
     // loop and set push to array
-    this.platforms.forEach((p) => {
-    widhtB.push(+((p.platform_budget / this.budgetTotal) *100).toFixed(2) +"%");
+    if(this.platforms){ 
+      this.platforms.forEach((p) => {
+      widhtB.push(+((p.platform_budget / this.budgetTotal) *100).toFixed(2) +"%");
+    
+      //puch to arr
+      arr.push(this.getRandomColor());
 
-    //puch to arr
-    arr.push(this.getRandomColor());
-
-    // console.log(arr);
-    //set to our color array
-    this.colorArray = arr; 
-   })
+      // console.log(arr);
+      //set to our color array
+      this.colorArray = arr; 
+      })
+    }
   
     //set width bar with our width
     this.widthBar = widhtB;
@@ -81,7 +82,7 @@ export class PreviewComponent implements OnInit {
     //server up get request for data
     this.userPreview.getPreview().subscribe(data =>{
 
-      // console.log(data.message)
+      console.log(data.message)
       this.platforms = data.message.platforms_budget;
       this.budgetTotal = data.message.user_budget;
       // console.log(this.platforms,this.budgetTotal)

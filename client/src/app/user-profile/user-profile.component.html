@@ -127,7 +127,7 @@
                         <div class="md-form">
                             <button mdbBtn type="button" class="btn btn-lg hides" color="warning" block="true" (click)="changePasswordModal.show()" mdbWavesEffect>Change Password</button>
                             <!-- diable button if not touched and not valid -->
-                            <button mdbBtn type="submit" class="btn btn-lg hides" color="success" block="true" (click)="changeUserData()" [disabled]="!dataformgroup.valid || !dataformgroup.touched" mdbWavesEffect>Save Data</button>
+                            <button mdbBtn type="submit" class="btn btn-lg hides" color="success" block="true" [disabled]="!dataformgroup.valid || !dataformgroup.touched" mdbWavesEffect>Save Data</button>
                             <button mdbBtn type="button" class="btn btn-lg hides" color="danger" block="true" (click)="deleteAccountModal.show()" mdbWavesEffect>Delete account</button>
                         </div>
                     </div>
