@@ -58,11 +58,14 @@ router.post('/changeUserData', verFuncs.getTokenFromHeaders, async function (req
     var email = verFuncs.decodeUserEmail(req.token, jwt);
     var newData = req.body;
     //to add validation
+    console.log(errors);
     await userDataValidation(errors, newData); //data validation
+    console.log(errors);
     if (errors.length) {
       res.status(200).send({ success: false, errors: errors })
     }
     else {
+      console.log(newData);
       var changed = await registrationSchema.userDataRegistration(newData, email);
       if (true === changed) {
         res.status(200).send({ success: true, message: "data updated" });
@@ -124,10 +127,8 @@ router.post('/addUserAnswer', verFuncs.getTokenFromHeaders, async function (req,
      // if the servey is completed
         //find or create new schema for the user if it is new entry. returns the user answers data object
         var user = await userAnswersSchema.findOrCreateUserAnswer(data, userEmail);
-        console.log(user);
         if (user) {
-          var nextQuestion = await userAnswersSchema.insertPlatformsData(data, userEmail);      
-          console.log(nextQuestion);   
+          var nextQuestion = await userAnswersSchema.insertPlatformsData(data, userEmail);       
           if (nextQuestion) {
             res.status(200).send({ success: true, nextQuestion: nextQuestion })
           } else {

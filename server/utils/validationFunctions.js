@@ -85,16 +85,10 @@ valid.validatePhone = function (errors, data) {
 //input: an array that will contain errors if found, data to check 
 //output: true on success, else false
 valid.validateBudget = function (errors, data) {
-  if (!this.isEmptyOrInvalid(data)) { //check if the string is empty or invalid
-    errors.push("budget is empty");
-    return false;
-  } else {
     var reg = RegExp('^([0-9]*)$')  //numbers and . for decimal
     if (!reg.test(data)) {
       errors.push("the budget is not right")
       return false;
     }
-    return true
-  }
 }
 
