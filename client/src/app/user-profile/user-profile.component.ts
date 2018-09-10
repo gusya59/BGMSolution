@@ -216,7 +216,7 @@ public chartOptions:any = {
         this.b_type = data.userdata.business_type, 
         this.mobile = data.userdata.mobile, 
         this.phone = data.userdata.phone, 
-        this.city = "test",  //change to data.userdata.city 
+        this.city = data.userdata.city,   
         this.country = data.userdata.country, 
         this.address = data.userdata.address, 
         this.firstName = data.userdata.firstName, 
@@ -307,14 +307,26 @@ public chartOptions:any = {
     //change user data if changed obj will hold user changeable data
     changeUserData(){
       if(this.dataformgroup.valid){
+        //translate the selected city/country
+        // console.log(this.dataformgroup.value.city)
+        if(isNaN(this.dataformgroup.value.city)){
+          this.city =  this.dataformgroup.value.city
+        }
+        else this.city = this.cities[this.dataformgroup.value.city-1].name;
+
+        if(isNaN(this.dataformgroup.value.country)){
+          this.country = this.dataformgroup.value.country;
+        }
+        else this.country = this.countries[this.dataformgroup.value.country-1].name;
+
         //obj contains all the property for out user to see
         const obj={
           b_name: this.dataformgroup.value.b_name,
           b_type: this.dataformgroup.value.b_type,
           mobile:  this.dataformgroup.value.mobile,
           phone: this.dataformgroup.value.phone,
-          city:  this.cities[this.dataformgroup.value.city-1].name,
-          country: this.countries[this.dataformgroup.value.country-1].name,
+          city:  this.city,
+          country: this.country,
           address:  this.dataformgroup.value.address,
           firstName:  this.dataformgroup.value.firstName,
           lastName: this.dataformgroup.value.lastName,
@@ -324,6 +336,8 @@ public chartOptions:any = {
           data =>{
             if(data.success){                //if information was fatched successfuly show modal
               this.dataChangeModal.show();
+              //reload our component
+              location.reload();
             }
             else console.log("error server" + data); // log error
           }

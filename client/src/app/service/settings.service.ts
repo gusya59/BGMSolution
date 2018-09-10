@@ -36,7 +36,6 @@ export class SettingsService {
   //input: company settings
   //output: request to server carring an payload with object
   userSettings(company){
-    console.log(company);
     const uri = 'http://localhost:1234/signup/usersettings';
     const obj = {
     
@@ -47,8 +46,8 @@ export class SettingsService {
       city: company.city,
       country: company.country,
       address: company.address,
-      budget: company.budgetTotal
-      // token: localStorage.getItem('token') // will be used if necesery
+      budget: company.budgetTotal,
+      token: localStorage.getItem('token') // will be used if necesery
     };
 
     console.log(obj)
