@@ -14,13 +14,13 @@ var UsersSchema = mongoose.Schema({
   termsConfirmCheck: { type: Boolean, required: true },
   isAdmin: { type: Boolean, required: true },  //true for admin, false for regular user
   ////
-  business_name: { type: String, required: true },
-  business_type: { type: String, required: true },
-  mobile: { type: String, required: true, trim: true },
-  phone: { type: String, required: true, trim: true },
-  country: { type: String, required: true },
-  city: { type: String, required: true },
-  address: { type: String, required: true },
+  business_name: { type: String,required: true, },
+  business_type: { type: String,required: true, },
+  mobile: { type: String,required: true, trim: true },
+  phone: { type: String, trim: true },
+  country: { type: String,required: true,},
+  city: { type: String,required: true,},
+  address: { type: String,required: true,},
   budget: { type: Number, required: true, trim: true },
   ////
   created: { type: Date, default: Date.now() }
