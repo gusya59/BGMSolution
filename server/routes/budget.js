@@ -51,7 +51,7 @@ async function budgetCalculations(userAnswersData, errors) {
             //calculate the relative percentage of the total weigth of the platform per each platform and update the parametr in the budget db
             var relPerUpdated = await calculateRelativePercentage(userAnswersData.user_email, platformsArraySize, errors);
             if (relPerUpdated) {
-                //calculate the relative percentage of the total weigth of the platform per each platform and update the parametr in the budget db
+              //  calculate the relative percentage of the total weigth of the platform per each platform and update the parametr in the budget db
                 var budgetUpdated = await calculatePlatformBudget(userAnswersData.user_email, platformsArraySize, errors);
                 if (budgetUpdated) {
                     return budgetUpdated
@@ -102,16 +102,14 @@ async function calculateRelativePercentage(user_email, platformsArraySize, error
     var updatedBudget = await BudgetSchema.fetchBudgetData(user_email);
     if (updatedBudget) {
         var p_budget_percent = 0;
-        var newPer;
         var pbpResult = 1
         //scan all the platforms. check if the platform was selected for calculations 
-        for (var j = 0; j < platformsArraySize; j++) {
-            var check = await isPlatformSelected(user_email, updatedBudget.platforms_budget[j].platform_name);
+        for (var k = 0; k < platformsArraySize; k++) {
+            var check = await isPlatformSelected(user_email, updatedBudget.platforms_budget[k].platform_name);
             if (check) {
                 //calculate the relative percentage
-                p_budget_percent = p_budget_percent + updatedBudget.platforms_budget[j].platform_budget_percent;
+                p_budget_percent = p_budget_percent + updatedBudget.platforms_budget[k].platform_budget_percent;
             }
-
         }
         //calculate the relative percentage
         var relativePercentage = 1 / p_budget_percent;

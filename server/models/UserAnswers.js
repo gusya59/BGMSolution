@@ -148,7 +148,6 @@ module.exports.updatePlatformData = async function (platformIsFound, userEmail) 
   var options = { arrayFilters: [{ "outer.answer_id": input.answer_id }] };
 
   var updated = await this.findOneAndUpdate(query, update, options).sort({ created: -1 });
-
   if (updated) { //if the data was updated
     return platformIsFound.answers[0].next_question;
   } else {
@@ -180,6 +179,7 @@ module.exports.calculateLength = async function (user_email) {
 //output: the schema data as an object on success, else null. 
 module.exports.findNewestUserAnswers = async function (user_email) {
   var result = await this.findOne({ user_email: user_email }).sort({ created: -1 })
+  //console.log(result);
   if (result) {
     return result
   } else {

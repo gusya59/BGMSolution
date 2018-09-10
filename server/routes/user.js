@@ -5,7 +5,7 @@ var jwt = require('jsonwebtoken');
 var registrationSchema = require('../models/Registration.js');
 var sPlatformSchema = require('../models/SelectedPlatforms.js');
 var userAnswersSchema = require('../models/UserAnswers.js');
-
+var BudgetSchema = require('../models/Budget');
 var verFuncs = require('../utils/verificationFunctions.js');
 var validFuncs = require('../utils/validationFunctions');
 
@@ -130,8 +130,10 @@ router.post('/addUserAnswer', verFuncs.getTokenFromHeaders, async function (req,
      // if the servey is completed
         //find or create new schema for the user if it is new entry. returns the user answers data object
         var user = await userAnswersSchema.findOrCreateUserAnswer(data, userEmail);
+        console.log(user);
         if (user) {
-          var nextQuestion = await userAnswersSchema.insertPlatformsData(data, userEmail);         
+          var nextQuestion = await userAnswersSchema.insertPlatformsData(data, userEmail);      
+          console.log(nextQuestion);   
           if (nextQuestion) {
             res.status(200).send({ success: true, nextQuestion: nextQuestion })
           } else {
@@ -174,12 +176,31 @@ router.post('/fetchPlatformList', async function (req, res) {
 //input: user_email, platforms data
 //output: on success: success message ,else false message
 router.post('/updatePlatformsSelection', async function (req, res) {
-  var result = await sPlatformSchema.updatePlatformSelection(req.body)
-  if (result) {
-    res.status(200).send({ success: true, message: "Updated" })
-  }
-  else {
-    res.status(200).send({ success: false, message: "Can't fetch data" })
+
+  var userFound = await registrationSchema.findByEmail(req.body.user_email);
+  console.log(userFound);
+  if (userFound) {
+    var budget = userFound.budget;
+    //create budget schem for the user in the Budget Collection
+    var createdBudget = await BudgetSchema.inputData(req.body.user_email, budget)
+    console.log(createdBudget);
+    var createdSelectedP = await sPlatformSchema.inputData(req.body.user_email)
+    console.log(createdSelectedP);
+
+    if (createdBudget && createdSelectedP) {
+      var result = await sPlatformSchema.updatePlatformSelection(req.body)
+      if (result) {
+        res.status(200).send({ success: true, message: "Updated" })
+      }
+      else {
+        res.status(200).send({ success: false, message: "Can't fetch data" })
+      }
+    } else {
+      res.status(200).send({ success: false, message: "Error" })
+    }
+
+  } else {
+    res.status(200).send({ success: true, message: "Error in Registration" })
   }
 })
 

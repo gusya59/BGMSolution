@@ -58,15 +58,15 @@ router.post('/usersettings', verFuncs.getTokenFromHeaders, async function (req, 
       else {
         var input = await registrationSchema.userDataRegistration(data, userEmail); //insert data into the DB  
         //create budget schem for the user in the Budget Collection
-        var createdBudget = await BudgetSchema.inputData(userEmail, input.budget)
-        var createdSelectedP = await SelectPlatformSchema.inputData(userEmail)
+        // var createdBudget = await BudgetSchema.inputData(userEmail, input.budget)
+        // var createdSelectedP = await SelectPlatformSchema.inputData(userEmail)
 
-        if (input && createdBudget && createdSelectedP) {
+        // if (input && createdBudget && createdSelectedP) {
 
-          res.status(200).send({ success: true, message: "User Settings data was inserted!" })
-        } else {
-          res.status(200).send({ success: true, message: "Error in Registration" })
-        }
+        //   res.status(200).send({ success: true, message: "User Settings data was inserted!" })
+        // } else {
+        //   res.status(200).send({ success: true, message: "Error in Registration" })
+        // }
       }
     }
     else {
