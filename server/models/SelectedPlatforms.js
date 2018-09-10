@@ -53,6 +53,18 @@ module.exports.inputData = async function (userEmail) {
   }
 }
 
+//fetch the first platform
+//input: user's id
+//output: user's data on success, else false
+module.exports.fetchSPData = async function (data) {
+  var found = await this.findOne({});
+  if (found) { //if the data was found
+    return found;
+  } else {
+    return false;
+  }
+}
+
 //fetch user selected platform data from the db 
 //input: user's id
 //output: user's data on success, else false

@@ -163,7 +163,7 @@ router.post('/addUserAnswer', verFuncs.getTokenFromHeaders, async function (req,
 //input: user_email
 //output: on success: success message and platforms, else false message
 router.post('/fetchPlatformList', async function (req, res) {
-  var result = await sPlatformSchema.fetchSelectedPlatformsData(req.body)
+  var result = await sPlatformSchema.fetchSPData(req.body)
   if (result) {
     res.status(200).send({ success: true, data: result })
   }
