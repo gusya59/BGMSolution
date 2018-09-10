@@ -12,10 +12,6 @@ import {SettingsService} from './../../service/settings.service'
 //import router
 import { Router } from '@angular/router'; 
 
-
-
-
-
 @Component({
   selector: 'app-user-settings',
   templateUrl: './user-settings.component.html',
@@ -44,6 +40,7 @@ export class UserSettingsComponent implements OnInit {
       //business type
       private businessType: string[];
 
+      
       selectedCountry: country = new country(0,'Israel');
       countries: country[];
       cities: city[];
