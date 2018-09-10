@@ -176,5 +176,18 @@ async function isPlatformSelected(email, name) {
 }
 
 
+//fetch budget data for a specific user
+//input: user's email
+//output: busget's data on success, else false
+router.post('/fetchBudgetData', async function (req, res) {
+    var result = await BudgetSchema.fetchBudgetData(req.body.user_email);
+    if (result) {
+        res.status(200).send({ success: true, data: result })
+    }
+    else {
+        res.status(200).send({ success: false, message: "Can't fetch data" })
+    }
+})
+
 module.exports = router;
 
