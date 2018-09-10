@@ -121,7 +121,7 @@ module.exports.insertPlatformsData = async function (data, userEmail) {
     var nextQuestion = await this.updatePlatformData(platformIsFound, userEmail)
     if (nextQuestion) {
       if(nextQuestion == 1){
-        var updated = await this.findOneAndUpdate({ "user_email": userEmail }, {$set:{"completed":true}},{new: true}).sort({ created: -1 });
+        var updated = await this.findOneAndUpdate({ "user_email": userEmail }, {$set:{"completed":true}}).sort({ created: -1 });
       }
       return nextQuestion;
     }
