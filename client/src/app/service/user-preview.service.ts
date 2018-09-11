@@ -44,7 +44,7 @@ export class UserPreviewService {
   getPreview(){
 
     //will get user info if correct
-    const uri = 'http://localhost:1234/budget/calculateBudget';
+    const uri = 'http://localhost:1234/budget/fetchBudgetData';
 
     //object with email payload
     const obj = {
