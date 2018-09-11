@@ -7,8 +7,7 @@ var jwt = require('jsonwebtoken');
 var registrationSchema = require('../models/Registration.js');
 var verFuncs = require('../utils/verificationFunctions.js');
 var validFuncs = require('../utils/validationFunctions');
-var BudgetSchema = require('../models/Budget');
-var SelectPlatformSchema = require('../models/SelectedPlatforms.js');
+
 
 //registration
 router.post('/registration', async function (req, res) {
