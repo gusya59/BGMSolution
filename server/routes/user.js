@@ -181,17 +181,15 @@ router.post('/fetchPlatformList', async function (req, res) {
 //input: user_email, platforms data
 //output: on success: success message ,else false message
 router.post('/updatePlatformsSelection', async function (req, res) {
-console.log(req.body);
+//console.log(req.body);
   var userFound = await registrationSchema.findByEmail(req.body.user_email)
   if (userFound) {
     var budget = userFound.budget;
     //create budget schem for the user in the Budget Collection
     var createdBudget = await BudgetSchema.inputData(req.body.user_email, budget)
     var createdSelectedP = await sPlatformSchema.inputData(req.body.user_email)
-
     if (createdBudget && createdSelectedP) {
-      var result = await sPlatformSchema.updatePlatformSelection(req.body)
-      console.log(result);
+      var result = await sPlatformSchema.updatePlatformSelection(req.body) 
       if (result) {
           var calculated = await budgetCalculations.calculateBudget(req.body.user_email);
           if(calculated){
@@ -206,7 +204,6 @@ console.log(req.body);
     } else {
       res.status(200).send({ success: false, message: "Error" })
     }
-
   } else {
     res.status(200).send({ success: true, message: "Error in Registration" })
   }
