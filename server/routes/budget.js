@@ -12,26 +12,49 @@ var BudgetSchema = require('../models/Budget');
 //this function operate the calculation and update
 //input: user's email
 //output: on success: success message and users budget db data, else false message
-router.post('/calculateBudget', async function (req, res) {
+// router.post('/calculateBudget', async function (req, res) {
+//     var errors = []; //will contain all the errors
+//     try {
+//         //find the relevant schema in the user answers db. will contain all the questions and answers that user answered on and a relevant platform data
+//         var userAnswersData = await userAnswersSchema.findNewestUserAnswers(req.body.user_email);
+//         if (userAnswersData) {
+//             //budget distribution calculations and updates
+//             var result = await budgetCalculations(userAnswersData, errors);
+//            // var result = await BudgetSchema.fetchBudgetData(req.body.user_email)
+//             if (!errors.length) { //if everuthing was fine and there were no errors
+//                 res.status(200).send({ success: true, message: result })
+//             }
+//         } else {
+//             res.status(200).send({ success: false, errors: errors });
+//         }
+//     } catch (err) {
+//         errors.push("there is no such user");
+//         res.status(200).send({ success: false, message: errors })
+//     }
+// })
+
+
+//calculate and update user's budget distribution for the platforms that user selected.
+//this function operate the calculation and update
+//input: user's email
+//output: on success: success message and users budget db data, else false message
+
+ async function calculateBudget (user_email) {
     var errors = []; //will contain all the errors
-    try {
         //find the relevant schema in the user answers db. will contain all the questions and answers that user answered on and a relevant platform data
-        var userAnswersData = await userAnswersSchema.findNewestUserAnswers(req.body.user_email);
+        var userAnswersData = await userAnswersSchema.findNewestUserAnswers(user_email);
         if (userAnswersData) {
             //budget distribution calculations and updates
             var result = await budgetCalculations(userAnswersData, errors);
-           // var result = await BudgetSchema.fetchBudgetData(req.body.user_email)
-            if (!errors.length) { //if everuthing was fine and there were no errors
-                res.status(200).send({ success: true, message: result })
+           // var result = await BudgetSchema.fetchBudgetData(user_email)
+            if (!errors.length && result) { //if everuthing was fine and there were no errors
+                return true;
             }
         } else {
-            res.status(200).send({ success: false, errors: errors });
+            return errors
         }
-    } catch (err) {
-        errors.push("there is no such user");
-        res.status(200).send({ success: false, message: errors })
-    }
-})
+}
+
 
 
 //--------------------------------------------Calculation and update of the budget distribution functions----------------------------------//
@@ -161,8 +184,7 @@ async function calculatePlatformBudget(user_email, platformsArraySize, errors) {
                 var pbResult = await BudgetSchema.updateBudget(user_email, platform_name, new_budget);
             }
         }
-        var result = await BudgetSchema.fetchBudgetData(user_email);
-        return result;
+        return true;
     } else {
         errors.push("can't fetch budget's data")
         return false;
@@ -192,4 +214,4 @@ router.post('/fetchBudgetData', async function (req, res) {
 })
 
 module.exports = router;
-
+module.exports.calculateBudget = calculateBudget;
