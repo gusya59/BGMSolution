@@ -52,20 +52,18 @@ router.post('/changePassword', async function (req, res) {
 //input: user data to update
 //output: respond to the client side. true on success, otherwith false and an array of errors
 router.post('/changeUserData', verFuncs.getTokenFromHeaders, async function (req, res) {
+  console.log(req.body);
   var errors = []; //will contain all the errors
   var verifyToken = verFuncs.verifyToken(req.token, jwt);
   if (verifyToken) {
     var email = verFuncs.decodeUserEmail(req.token, jwt);
     var newData = req.body;
     //to add validation
-    console.log(errors);
     await userDataValidation(errors, newData); //data validation
-    console.log(errors);
     if (errors.length) {
       res.status(200).send({ success: false, errors: errors })
     }
     else {
-      console.log(newData);
       var changed = await registrationSchema.userDataRegistration(newData, email);
       if (true === changed) {
         res.status(200).send({ success: true, message: "data updated" });
@@ -81,22 +79,33 @@ router.post('/changeUserData', verFuncs.getTokenFromHeaders, async function (req
 //delete acount
 //input: email of the user that need to be deleted
 //output: true on success, else false
-router.post('/remove',verFuncs.getTokenFromHeaders, async function (req, res) {
+router.post('/remove', verFuncs.getTokenFromHeaders, async function (req, res) {
+  var verifyToken = verFuncs.verifyToken(req.token, jwt);
+  if (verifyToken) {
+ 
   var userEmail = await verFuncs.decodeUserEmail(req.token, jwt);
-  //find user in the db by it's email and check if the password that has been is correct
-  var passGood = await registrationSchema.checkUserWithPassword(userEmail, req.body.password)
-  if (passGood) {
-    //add password check
-    var deleteUser = await registrationSchema.deleteUser(userEmail);
-    if (deleteUser) {
-      res.status(200).send({ success: true, message: "user removed" });
+  if (userEmail) {
+    //find user in the db by it's email and check if the password that has been is correct
+    var passGood = await registrationSchema.checkUserWithPassword(userEmail, req.body.password)
+    if (passGood) {
+      //add password check
+      var deleteUser = await registrationSchema.deleteUser(userEmail);
+      if (deleteUser) {
+        console.log("removed");
+        res.status(200).send({ success: true, message: "user removed" });
+      }
+      else {
+        res.status(200).send({ success: false, message: "user wasn't removed" });
+      }
+    } else {
+      res.status(200).send({ success: false, message: "wrong password" });
     }
-    else {
-      res.status(200).send({ success: false, message: "user wasn't removed" });
-    }
-  } else {
-    res.status(200).send({ success: false, message: "wrong password" });
+  }else{
+    res.status(200).send({ success: false, message: "wrong user" });
   }
+}else {
+  res.status(200).send({ success: false, message: "session has expired" })
+}
 });
 
 //user data validation
@@ -124,22 +133,22 @@ router.post('/addUserAnswer', verFuncs.getTokenFromHeaders, async function (req,
     var check = verFuncs.decodeisAdmin(req.token, jwt);
     if (!check) {
       var data = req.body;
-     // if the servey is completed
-        //find or create new schema for the user if it is new entry. returns the user answers data object
-        var user = await userAnswersSchema.findOrCreateUserAnswer(data, userEmail);
-        if (user) {
-          var nextQuestion = await userAnswersSchema.insertPlatformsData(data, userEmail);       
-          if (nextQuestion) {
-            res.status(200).send({ success: true, nextQuestion: nextQuestion })
-          } else {
-            //if there no more questions to answer on
-            res.status(200).send({ success: false, message: "error" })
-          }      
-        }
-        else {
+      // if the servey is completed
+      //find or create new schema for the user if it is new entry. returns the user answers data object
+      var user = await userAnswersSchema.findOrCreateUserAnswer(data, userEmail);
+      if (user) {
+        var nextQuestion = await userAnswersSchema.insertPlatformsData(data, userEmail);
+        if (nextQuestion) {
+          res.status(200).send({ success: true, nextQuestion: nextQuestion })
+        } else {
+          //if there no more questions to answer on
           res.status(200).send({ success: false, message: "error" })
         }
-      }else {
+      }
+      else {
+        res.status(200).send({ success: false, message: "error" })
+      }
+    } else {
       res.status(200).send({ success: false, message: "it is an admin user" });
     }
   } else {

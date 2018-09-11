@@ -147,11 +147,15 @@ module.exports.changePassword = async function (data) {
 module.exports.checkUserWithPassword = async function (userEmail, passTocheck) {
   //find the user
   try {
+    console.log("email "+userEmail);
     var userToCheck = await this.findOne({ email: userEmail });
+    console.log("passTocheck "+passTocheck);
+    console.log("userTocheck.password "+userToCheck.password );
     if (userToCheck) {
       //hash the new password and check the db
-      var passCheck = await this.verifyPassword(passTocheck, userToCheck.password);
+      var passCheck = await this.verifyPassword(passTocheck, userToCheck.password); //(pass to verify, pass)
       if (true === passCheck) {
+        console.log("equal");
         return true;
       } else {
         return false;
@@ -192,5 +196,9 @@ module.exports.findAllByPermission = async function (data) {
 //output: removed object if succeded, null if not
 module.exports.deleteUser = async function (data) {
   var removed = await UsersSchemaExport.findOneAndDelete({ email: data })
-  return removed;
+  if(removed){
+    return true
+  }else{
+    return false
+  }
 }
