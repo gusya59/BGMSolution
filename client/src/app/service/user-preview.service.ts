@@ -11,7 +11,7 @@ interface respData {
   budgetGoogleMybuissness: number;
   budgetTwiiter: number;
   
-  message: {
+  data: {
     user_budget: number,
     platforms_budget: [
         {

@@ -171,14 +171,14 @@ public chartOptions:any = {
     //server up get request for data
     this.userPreview.getPreview().subscribe(Data =>{
 
-      this.platforms = Data.message.platforms_budget;
+      this.platforms = Data.data.platforms_budget;
       console.log(this.platforms)
 
         //insert values into chart data
         const budgets =[];
         const names =[];
         const colors =[];
-        Data.message.platforms_budget.forEach(budget => {
+        Data.data.platforms_budget.forEach(budget => {
           // console.log(budget.platform_budget_percent);
           //budgets
           budgets.push(budget.platform_budget_percent);
