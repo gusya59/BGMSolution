@@ -360,6 +360,7 @@
                             <label data-error="wrong" data-success="right" for="answer4Body">Answer #4: </label>
                         </div>
                     </div>
+                    <p class="bg-danger" *ngIf="newQuestionForm.touched && !newQuestionForm.valid">Question body and answers canot be empty</p>
                 <!-- warning area -->
                 <div class="row justify-content-center">
                     <h2 style="color:#ff4444;">Please note! <br></h2>
@@ -368,7 +369,7 @@
                 <div class="row justify-content-center">
                     <!-- button area -->
                     <button type="button" mdbBtn color="danger" class="waves-light btn-lg" aria-label="Close" (click)="addQuestionModalClose()" mdbWavesEffect>Close</button>
-                    <button type="submit" mdbBtn color="success" class="relative waves-light btn-lg" mdbWavesEffect>Save Question</button>
+                    <button type="submit" mdbBtn color="success" class="relative waves-light btn-lg" [disabled] = "!newQuestionForm.valid" mdbWavesEffect>Save Question</button>
                 </div>
             </form> 
         
