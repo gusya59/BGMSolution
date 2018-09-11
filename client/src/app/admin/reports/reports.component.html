@@ -92,7 +92,7 @@
 </div> 
 
 <!-- Users Print Modal -->
-<div mdbModal #usersModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myusersModalLabel"
+<div mdbModal #usersModal="mdbModal" style="overflow: auto" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myusersModalLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
@@ -114,6 +114,10 @@
                     <hr>
                 </div>
             </div>
+            <div class=" justify-content-end">
+                <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="usersModal.hide()" mdbWavesEffect>Close</button>
+                <button type="button" mdbBtn color="primary" class="relative waves-light" (click)="exportToPdf('users')" mdbWavesEffect>Print</button>    
+            </div>
         </div>
         <!-- !model body head -->
         <!--Table-->
@@ -131,7 +135,7 @@
                 <!--Table head-->
           
                 <!--Table body-->
-                <tbody *ngFor="let user of users | paginate: { itemsPerPage: 10, currentPage: p }">
+                <tbody *ngFor="let user of users | paginate: {id:'usersP', itemsPerPage: 10, currentPage: p }">
                   <tr >
                     <th scope="row">{{user.created |  date:'dd/MM/yyyy hh:mm:ss'}}</th>
                     <td>{{user.firstName}}</td>
@@ -139,32 +143,32 @@
                     <td>{{user.email}}</td>
                   </tr>
                 </tbody>
+                <p>{{p}}</p>
                 <pagination-controls 
-                      (pageChange)="p =$event"
-                      maxSize="9"
-                      directionLinks="true"
-                      autoHide="true"
-                      responsive="true"
-                      previousLabel="Previous"
-                      nextLabel="Next"
-                      screenReaderPaginationLabel="Pagination"
-                      screenReaderPageLabel="page"
-                      screenReaderCurrentLabel="You're on page">
+                    id='usersP'
+                    (pageChange)="p =$event"
+                    maxSize="9"
+                    directionLinks="true"
+                    autoHide="true"
+                    responsive="true"
+                    previousLabel="Previous"
+                    nextLabel="Next"
+                    screenReaderPaginationLabel="Pagination"
+                    screenReaderPageLabel="page"
+                    screenReaderCurrentLabel="You're on page">
                 </pagination-controls>
                 <!--Table body-->
               </table>
               <!--Table-->
       </div>
       <div class="modal-footer">
-        <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="usersModal.hide()" mdbWavesEffect>Close</button>
-        <button type="button" mdbBtn color="primary" class="relative waves-light" (click)="exportToPdf('users')" mdbWavesEffect>Print</button>
       </div>
     </div>
   </div>
 </div>
 
 <!-- Admins Print Modal -->
-<div mdbModal #adminsModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myadminsModalLabel"
+<div mdbModal #adminsModal="mdbModal" style="overflow: auto" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myadminsModalLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-lg " role="document">
     <div class="modal-content">
@@ -186,6 +190,10 @@
                     <hr>
                 </div>
             </div>
+            <div class="row justify-content-end">
+                <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="adminsModal.hide()" mdbWavesEffect>Close</button>
+                <button type="button" mdbBtn color="primary" class="relative waves-light" (click)="exportToPdf('admins')" mdbWavesEffect>Print</button>    
+            </div>
         </div>
         <!-- !model body head -->
           
@@ -204,7 +212,7 @@
                 <!--Table head-->
           
                 <!--Table body-->
-                <tbody *ngFor="let user of users | paginate: { itemsPerPage: 10, currentPage: p }">
+                <tbody *ngFor="let user of users | paginate: { id:'adminsP', itemsPerPage: 10, currentPage: p}">
                   <tr >
                     <th scope="row">{{user.created |  date:'dd/MM/yyyy hh:mm:ss'}}</th>
                     <td>{{user.firstName}}</td>
@@ -212,32 +220,29 @@
                     <td>{{user.email}}</td>
                   </tr>
                 </tbody>
+
                 <pagination-controls 
-                      (pageChange)="p =$event"
-                      maxSize="9"
-                      directionLinks="true"
-                      autoHide="true"
-                      responsive="true"
-                      previousLabel="Previous"
-                      nextLabel="Next"
-                      screenReaderPaginationLabel="Pagination"
-                      screenReaderPageLabel="page"
-                      screenReaderCurrentLabel="You're on page">
+                    id='adminsP'
+                    (pageChange)="p = $event"
+                    maxSize="9"
+                    directionLinks="true"
+                    autoHide="true"
+                    responsive="true"
+                    previousLabel="Previous"
+                    nextLabel="Next">
                 </pagination-controls>
                 <!--Table body-->
               </table>
               <!--Table-->
       </div>
       <div class="modal-footer">
-        <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="adminsModal.hide()" mdbWavesEffect>Close</button>
-        <button type="button" mdbBtn color="primary" class="relative waves-light" (click)="exportToPdf('admins')" mdbWavesEffect>Print</button>
       </div>
     </div>
   </div>
 </div>
 
 <!-- platforms Print Modal -->
-<div mdbModal #questionsModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myquestionsModalLabel"
+<div mdbModal #questionsModal="mdbModal" style="overflow: auto" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myquestionsModalLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-lg " role="document">
     <div class="modal-content">
@@ -245,7 +250,7 @@
         <button type="button" class="close pull-right" aria-label="Close" (click)="questionsModal.hide()">
           <span aria-hidden="true">×</span>
         </button>
-        <h4 class="modal-title w-100" id="myModalLabel">Admin Settings - Export Platforms</h4>
+        <h4 class="modal-title w-100" id="myModalLabel">Admin Settings - Export questions</h4>
       </div>
       <div class="modal-body" id="questions">
                   <!-- model body head -->
@@ -258,6 +263,10 @@
                     <h1>BreakingGap's - questions</h1>
                     <hr>
                 </div>
+            </div>
+            <div class="row justify-content-end">
+                <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="questionsModal.hide()" mdbWavesEffect>Close</button>
+                <button type="button" mdbBtn color="primary" class="relative waves-light" (click)="exportToPdf('questions')" mdbWavesEffect>Print</button>    
             </div>
         </div>
         <!-- !model body head -->
@@ -275,7 +284,7 @@
                 <!--Table head-->
          
                 <!--Table body-->
-                <tbody *ngFor="let data of surveyData | paginate: { itemsPerPage: 3, currentPage: p }">
+                <tbody *ngFor="let data of surveyData | paginate: { id:'quest', itemsPerPage: 5, currentPage: p} ">
                   <tr >
                     <th scope="row">{{data.question_id}}</th>
                     <td>{{data.question_text}}</td>
@@ -289,24 +298,22 @@
                   </tr>
                 </tbody>
                 <pagination-controls 
-                      (pageChange)="p =$event"
-                      maxSize="9"
-                      directionLinks="true"
-                      autoHide="true"
-                      responsive="true"
-                      previousLabel="Previous"
-                      nextLabel="Next"
-                      screenReaderPaginationLabel="Pagination"
-                      screenReaderPageLabel="page"
-                      screenReaderCurrentLabel="You're on page">
+                    id="quest"
+                    (pageChange)="p = $event"
+                    directionLinks="true"
+                    autoHide="true"
+                    responsive="true"
+                    previousLabel="Previous"
+                    nextLabel="Next"
+                    screenReaderPaginationLabel="Pagination"
+                    screenReaderPageLabel="page"
+                    screenReaderCurrentLabel="You're on page">
                 </pagination-controls>
                 <!--Table body-->
               </table>
               <!--Table-->
       </div>
       <div class="modal-footer">
-        <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="questionsModal.hide()" mdbWavesEffect>Close</button>
-        <button type="button" mdbBtn color="primary" class="relative waves-light" (click)="exportToPdf('questions')" mdbWavesEffect>Print</button>
       </div>
     </div>
   </div>

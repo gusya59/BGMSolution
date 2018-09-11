@@ -1,7 +1,7 @@
 import { ModalDirective } from 'angular-bootstrap-md';
 import { AdminServiceService } from '../../service/admin-service.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-adminQuestions',
@@ -93,11 +93,11 @@ export class AdminQuestionsComponent implements OnInit {
     });
     //create question form
     this.newQuestionForm = fb.group({
-      question_text: this.question_text,
-      answer1Body: this.answer1Body,
-      answer2Body: this.answer2Body,
-      answer3Body: this.answer3Body,
-      answer4Body: this.answer4Body
+      question_text: [this.question_text,Validators.required],
+      answer1Body: [this.answer1Body,Validators.required],
+      answer2Body: [this.answer2Body,Validators.required],
+      answer3Body: [this.answer3Body,Validators.required],
+      answer4Body: [this.answer4Body,Validators.required]
     });
   }
 

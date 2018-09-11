@@ -125,6 +125,7 @@ export class AdminsComponent implements OnInit {
         if(Data.success){
           // console.log("demoted " + this.email);
           this.demoteModal.hide();
+          location.reload();
         }
         else console.log(Data.message);
       }

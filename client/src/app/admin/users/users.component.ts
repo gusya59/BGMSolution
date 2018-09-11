@@ -135,6 +135,7 @@ export class UsersComponent implements OnInit {
         if(Data.success){
           // console.log("promoted " + this.email);
           this.promoteModal.hide();
+          location.reload();
         }
         else console.log(Data.message);
       }
