@@ -8,6 +8,7 @@ var userAnswersSchema = require('../models/UserAnswers.js');
 var BudgetSchema = require('../models/Budget');
 var verFuncs = require('../utils/verificationFunctions.js');
 var validFuncs = require('../utils/validationFunctions');
+var budgetCalculations = require('../routes/budget')
 
 //fetch user's data. the function get's user token, fetching an email and a user permission and searching for the user data in the db.
 //input: token
@@ -194,7 +195,12 @@ router.post('/updatePlatformsSelection', async function (req, res) {
     if (createdBudget && createdSelectedP) {
       var result = await sPlatformSchema.updatePlatformSelection(req.body)
       if (result) {
-        res.status(200).send({ success: true, message: "Updated" })
+          var calculated = await budgetCalculations.calculateBudget(req.body.user_email);
+          if(calculated){
+            res.status(200).send({ success: success, message: "Budget Calculated" })
+          }else{
+            res.status(200).send({ success: false, message: calculated })
+          }
       }
       else {
         res.status(200).send({ success: false, message: "Can't fetch data" })
