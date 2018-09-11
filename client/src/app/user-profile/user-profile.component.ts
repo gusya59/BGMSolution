@@ -387,6 +387,11 @@ public chartOptions:any = {
     return '#' + ('000000' + color).slice(-6);
   }
 
+  closePasswordModal(){
+    this.passwordFormGroup.reset();
+    this.changePasswordModal.hide();
+  }
+
 }
 
 
