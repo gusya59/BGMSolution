@@ -365,6 +365,8 @@ public chartOptions:any = {
         resp => {
         if(resp.success){
           console.log("Deleted user");
+          //destroy the session
+          localStorage.removeItem('token');
           this.router.navigate(['']);
           //here we will add token removal
         }
