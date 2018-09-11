@@ -306,6 +306,13 @@ export class AdminQuestionsComponent implements OnInit {
     )
   }
 
+  //destory edit modal on hide
+  addQuestionModalClose(){
+    this.newQuestionForm.reset();
+    this.newQuestionForm.clearAsyncValidators();
+    this.addQuestionModal.hide();
+  }
+
 }
   
  
