@@ -361,7 +361,7 @@ public chartOptions:any = {
 
      if(this.passwordTestFormGroup.valid){
       console.log(this.passwordTestFormGroup.value)
-      this.auth.deleteUser(this.passwordTestFormGroup.value).subscribe(
+      this.auth.deleteUser(this.passwordTestFormGroup.value.password).subscribe(
         resp => {
         if(resp.success){
           console.log("Deleted user");
