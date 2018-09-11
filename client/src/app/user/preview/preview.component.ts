@@ -47,7 +47,7 @@ export class PreviewComponent implements OnInit {
     //Budgets on page load
     setTimeout(() => {
       console.log(this.platforms)
-      },8000);
+      },10000);
   }
 
   //set bar settings
@@ -82,9 +82,9 @@ export class PreviewComponent implements OnInit {
     //server up get request for data
     this.userPreview.getPreview().subscribe(data =>{
 
-      console.log(data.message)
-      this.platforms = data.message.platforms_budget;
-      this.budgetTotal = data.message.user_budget;
+      console.log(data)
+      this.platforms = data.data.platforms_budget;
+      this.budgetTotal = data.data.user_budget;
       // console.log(this.platforms,this.budgetTotal)
   
     // console.log(this.budget);
