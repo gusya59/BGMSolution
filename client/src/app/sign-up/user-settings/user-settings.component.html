@@ -15,7 +15,7 @@
 
     <div class="row justify-content-center">
         <div class= "col-md-8">
-          <form #SettingsForm = "ngForm"  (ngSubmit)="userSettings()" >
+          <form #SettingsForm="ngForm"  (ngSubmit)="userSettings()" >
 
                   <!-- business Name Block -->
                   <div class="md-form">  
@@ -180,8 +180,10 @@
                         class="form-control"
                         required>
                     </div>
-
-                  
+<!-- 
+                  <p class="danger-color" *ngIf="phone.empty && phone.dirty">
+                      Test
+                  </p> -->
                  <!-- Buttons Block -->
                   <div class="md-form">
                       <button type="reset" class="btn btn-outline-default btn-lg" (click)="back();">Back</button>
