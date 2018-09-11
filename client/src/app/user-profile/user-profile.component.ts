@@ -365,6 +365,8 @@ public chartOptions:any = {
         resp => {
         if(resp.success){
           console.log("Deleted user");
+          //destroy the session
+          localStorage.removeItem('token');
           this.router.navigate(['']);
           //here we will add token removal
         }
@@ -383,6 +385,11 @@ public chartOptions:any = {
   getRandomColor() {
     var color = Math.floor(0x1000000 * Math.random()).toString(16);
     return '#' + ('000000' + color).slice(-6);
+  }
+
+  closePasswordModal(){
+    this.passwordFormGroup.reset();
+    this.changePasswordModal.hide();
   }
 
 }
