@@ -387,6 +387,7 @@ public chartOptions:any = {
     return '#' + ('000000' + color).slice(-6);
   }
 
+  //password modal closing function, will destroy formgroup
   closePasswordModal(){
     this.passwordFormGroup.reset();
     this.changePasswordModal.hide();
