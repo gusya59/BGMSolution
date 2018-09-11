@@ -38,7 +38,8 @@ var BudgetSchema = require('../models/Budget');
 //this function operate the calculation and update
 //input: user's email
 //output: on success: success message and users budget db data, else false message
-async function calculateBudget(user_email) {
+
+ async function calculateBudget (user_email) {
     var errors = []; //will contain all the errors
         //find the relevant schema in the user answers db. will contain all the questions and answers that user answered on and a relevant platform data
         var userAnswersData = await userAnswersSchema.findNewestUserAnswers(user_email);
@@ -213,4 +214,4 @@ router.post('/fetchBudgetData', async function (req, res) {
 })
 
 module.exports = router;
-
+module.exports.calculateBudget = calculateBudget;

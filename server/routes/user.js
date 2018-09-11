@@ -181,23 +181,21 @@ router.post('/fetchPlatformList', async function (req, res) {
 //input: user_email, platforms data
 //output: on success: success message ,else false message
 router.post('/updatePlatformsSelection', async function (req, res) {
-
-  var userFound = await registrationSchema.findByEmail(req.body.user_email);
-  console.log(userFound);
+console.log(req.body);
+  var userFound = await registrationSchema.findByEmail(req.body.user_email)
   if (userFound) {
     var budget = userFound.budget;
     //create budget schem for the user in the Budget Collection
     var createdBudget = await BudgetSchema.inputData(req.body.user_email, budget)
-    console.log(createdBudget);
     var createdSelectedP = await sPlatformSchema.inputData(req.body.user_email)
-    console.log(createdSelectedP);
 
     if (createdBudget && createdSelectedP) {
       var result = await sPlatformSchema.updatePlatformSelection(req.body)
+      console.log(result);
       if (result) {
           var calculated = await budgetCalculations.calculateBudget(req.body.user_email);
           if(calculated){
-            res.status(200).send({ success: success, message: "Budget Calculated" })
+            res.status(200).send({ success: true, message: "Budget Calculated" })
           }else{
             res.status(200).send({ success: false, message: calculated })
           }
