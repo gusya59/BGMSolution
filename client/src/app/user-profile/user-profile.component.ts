@@ -110,8 +110,8 @@ export class UserProfileComponent implements OnInit {
       city: ['',Validators.required],
       country: ['',Validators.required],
       address: ['',Validators.required],
-      firstName: ['',[ Validators.required,Validators.pattern('^[A-Za-z]+$')]], //only alphabet
-      lastName: ['',[ Validators.required,Validators.pattern('^[A-Za-z]+$')]], //only alphabet
+      firstName: ['',[ Validators.required,Validators.pattern('^[a-zA-Z \'\-]+$')]], // alphabet ' -
+      lastName: ['',[ Validators.required,Validators.pattern('^[a-zA-Z \'\-]+$')]], // alphabet ' -
       TotalBudget: ['',[ Validators.required,Validators.pattern('^([0-9]*)$')]] ///numbers
     })
 
