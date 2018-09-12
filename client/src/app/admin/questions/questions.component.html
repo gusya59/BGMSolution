@@ -78,7 +78,7 @@
                         <td class="questionCol">
                             
                                 <div class="md-form">
-                                    <input mdbInputDirective type="text" name="question_text" #question_text [(ngModel)]="data.question_text" class="form-control">
+                                    <input mdbInputDirective type="text" name="question_text" #question_text [(ngModel)]="data.question_text" class="form-control"required>
                                 </div>
                             
 
@@ -90,13 +90,13 @@
                                 <td class="answerCol">   
                                     
                                         <div class="md-form">
-                                            <input mdbInputDirective type="text" name="answer_text" #answer_text [(ngModel)]="answer.answer_text" class="form-control">
+                                            <input mdbInputDirective type="text" name="answer_text" #answer_text [(ngModel)]="answer.answer_text" class="form-control" required>
                                         </div>
                                     
                                 </td>
                                 <!-- fire request answers -->
                                 <td>
-                                    <button  class="btn btn-lg success-color" (click)="saveAnswer(answer_text.value, answer.answer_id, data.question_id)" >Save</button>
+                                    <button  class="btn btn-lg success-color" [disabled]="!answer_text.value" (click)="saveAnswer(answer_text.value, answer.answer_id, data.question_id)" >Save</button>
                                     <button  class="btn btn-lg info-color" (click)="editWeights(data.question_id, answer.answer_id)" >Edit</button>
                                 </td>
                             </tr>
@@ -104,7 +104,7 @@
                         <td align="right">
                             <button class="btn btn-lg danger-color" (click)="deleteQuestionShow(data)">Remove Question</button>
                             <!-- fire request questions -->
-                            <button  class="btn btn-lg success-color" (click)="saveQuestion(data.question_id, question_text.value)" >Save Question</button>
+                            <button  class="btn btn-lg success-color" [disabled]="!question_text.value" (click)="saveQuestion(data.question_id, question_text.value)" >Save Question</button>
 
                         </td>
                         </tr>
