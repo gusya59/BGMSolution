@@ -29,7 +29,7 @@ var SurveySchema = mongoose.Schema({
 var SurveySchemaExport = module.exports = mongoose.model('Survey', SurveySchema);
 
 //find specific question and update it's text
-//input:  the id and the text of specific question
+//input: the id and the text of the specific question
 //output: true on success, else false
 module.exports.updateQuestion = async function (data) {
   var updated = await this.findOneAndUpdate({ "question_id": data.question_id }, { $set: { "question_text": data.question_text } }, { lean: true }).sort({ created: -1 });
@@ -40,8 +40,8 @@ module.exports.updateQuestion = async function (data) {
   }
 }
 
-//find specific answer and update it's data
-//input: question id, answer id and answer's text
+//find specific answer and update it's text
+//input: question's id, answer's id and answer's text
 //output: true on success, else false
 module.exports.updateAnswer = async function (data) {
   var updated = await this.update({ "question_id": data.question_id, "answers.answer_id": data.answer_id }, { $set: { "answers.$.answer_text": data.answer_text } });
@@ -53,13 +53,13 @@ module.exports.updateAnswer = async function (data) {
 }
 
 //find specific platform and update it's weight
-//input: specific answer_id, platforms{platform's name, new platform's weight}
+//input: object with a specific answer_id, platforms{platform's name, new platform's weight}
 //output: true on success, else false
 module.exports.updatePlatform = async function (data) {
-  if(0==data.platforms.platform_weight || "0"==data.platforms.platform_weight){
+  if (0 == data.platforms.platform_weight || "0" == data.platforms.platform_weight) {
     data.platforms.platform_weight = 0.01;
   }
-  
+
   var updated = await this.update(
     {
       //find the relevant objects in the sub arrays and there positions in the arrays
@@ -85,14 +85,14 @@ module.exports.updatePlatform = async function (data) {
 }
 
 //find specific answer and update it's next question
-//input:answer id and next question
+//input:object with an answer id and next question
 //output: true on success, else false
 module.exports.updateNextQuestion = async function (data) {
   var updated = await this.update(
     {
       //find the relevant objects in the sub arrays and there positions in the arrays
       "answers": {
-        "$elemMatch": { "answer_id": data.answer_id}
+        "$elemMatch": { "answer_id": data.answer_id }
       }
     },
     {
@@ -104,7 +104,6 @@ module.exports.updateNextQuestion = async function (data) {
       "arrayFilters": [{ "outer.answer_id": data.answer_id }]
     }
   )
-
   //update function returns the WriteResult object: WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
   if (1 == updated.nModified) { //if the data was updated
     return true;
@@ -113,9 +112,9 @@ module.exports.updateNextQuestion = async function (data) {
   }
 }
 
-//insert specific data into the db
-//input: data
-//output:on success- object that has been created, on fail - false
+//insert data into the Survey collection
+//input: object with question_text, array of answers with answers texts
+//output:on success - object that has been created, on fail - false
 module.exports.insertDataIntoDB = async function (data) {
   //create new schrma
   var newQuestion = new SurveySchemaExport();
@@ -133,7 +132,7 @@ module.exports.insertDataIntoDB = async function (data) {
   //genearte and set an answer id according to the question id. q<number>ans<index in the answer array>7
   //and update answer array data
   for (var i = 0; i < 4; i++) {
-    newQuestion.answers[i].answer_id = await this.answerIdGenerator(newQuestion.question_id,i)
+    newQuestion.answers[i].answer_id = await this.answerIdGenerator(newQuestion.question_id, i)
     newQuestion.answers[i].answer_text = data.answers[i].answer_text
     newQuestion.answers[i].next_question = "0"
     // answersArray.push(platformObj);
@@ -230,22 +229,10 @@ module.exports.checkIfThereQuestion = async function (data) {
 }
 
 //generate answer_id
-//input: the latest answer's id in the db
+//input: relevant question's id, inex in the array (the place in the lis of answers)
 //output: new answer_id on success, else null
-module.exports.answerIdGenerator = async function (questionID,index) {
-  //find the newest survey
-  // var found = await this.findOne().sort({ created: -1 }).limit(1);
-  // console.log(found);
-  // if (null == found) {
-  //   //if the survey db is empty ant there are no questions
-  //   var latestQuestionId = "q1"
-  // } else {
-  //   var latestQuestionId = found.question_id; //q<number>
-  // }
-  //cut the string
- // var neQuestionId = latestQuestionId.substring(1);  //<number>
-  //create the new aswer_id
-  var newAnsId = questionID + "ans" + (index+1) //q<number>ans<index>
+module.exports.answerIdGenerator = async function (questionID, index) {
+  var newAnsId = questionID + "ans" + (index + 1) //q<number>ans<index>
   if (newAnsId) { //if the data has been created
     return newAnsId;
   } else {

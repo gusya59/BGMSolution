@@ -18,8 +18,8 @@ var SelectedPlatformsSchema = mongoose.Schema({
 var SelectedPlatformsSchemaExport = module.exports = mongoose.model('SelectedPlatforms', SelectedPlatformsSchema);
 
 //create selected platform scheme in the db
-//input:  user id and selected platform's data
-//output: data on success, else false
+//input:  user's id and selected platform's data (id, name, weight)
+//output: object that has been created on success, else false
 module.exports.inputData = async function (userEmail) {
   //  find the amount of platforms
   var platformsAmount = await PlatformsSchema.calculateLength();
@@ -54,8 +54,8 @@ module.exports.inputData = async function (userEmail) {
 }
 
 //fetch the first platform
-//input: user's id
-//output: user's data on success, else false
+//input: platform's id
+//output: platform's data object on success, else false
 module.exports.fetchSPData = async function (data) {
   var found = await this.findOne({});
   if (found) { //if the data was found
@@ -65,9 +65,9 @@ module.exports.fetchSPData = async function (data) {
   }
 }
 
-//fetch user selected platform data from the db 
+//fetch user's platform selections data from the db 
 //input: user's id
-//output: user's data on success, else false
+//output: user's data object on success, else false
 module.exports.fetchSelectedPlatformsData = async function (data) {
   var found = await this.findOne({ "user_email": data.user_email });
   if (found) { //if the data was found
@@ -77,9 +77,9 @@ module.exports.fetchSelectedPlatformsData = async function (data) {
   }
 }
 
-//finf specific user and updata it's selectedplatform data
+//finf specific user and updata platform selection
 //input: user's id, platforms data
-//output: user's data on success, else false
+//output: user's data object on success, else false
 module.exports.updatePlatformSelection = async function (data) {
   var found = await this.findOneAndUpdate({ "user_email": data.user_email }, { $set: { platforms: data.platforms } }).sort({ created: -1 });
   if (found) { //if the data was updated

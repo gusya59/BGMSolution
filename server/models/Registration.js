@@ -14,13 +14,13 @@ var UsersSchema = mongoose.Schema({
   termsConfirmCheck: { type: Boolean, required: true },
   isAdmin: { type: Boolean, required: true },  //true for admin, false for regular user
   ////
-  business_name: { type: String,required: true, },
-  business_type: { type: String,required: true, },
-  mobile: { type: String,required: true, trim: true },
+  business_name: { type: String, required: true, },
+  business_type: { type: String, required: true, },
+  mobile: { type: String, required: true, trim: true },
   phone: { type: String, trim: true },
-  country: { type: String,required: true,},
-  city: { type: String,required: true,},
-  address: { type: String,required: true,},
+  country: { type: String, required: true, },
+  city: { type: String, required: true, },
+  address: { type: String, required: true, },
   budget: { type: Number, required: true, trim: true },
   ////
   created: { type: Date, default: Date.now() }
@@ -29,6 +29,8 @@ var UsersSchema = mongoose.Schema({
 var UsersSchemaExport = module.exports = mongoose.model('Users', UsersSchema);
 
 //create user and hash it's password
+//input: user's registration data (email, first name, last name, password, confirmation password, termsConfirmation selection)
+//output: user that has been created on success, else false
 module.exports.inputData = async function (newUser) {
   //hash and store the password in the DB
   var hashedPassword = await bcrypt.hash(newUser.password, 10).then(hashedPassword => {
@@ -60,8 +62,8 @@ module.exports.inputData = async function (newUser) {
 };
 
 //input regestration data to the User database
-//input:user data, eser's email that was extracted from the token
-//output: true if succeded, else false
+//input:user data(business name, type, mobile, phone, country, city, address,budget), user's email that was extracted from the token
+//output: users data object on success, else false
 module.exports.userDataRegistration = async function (data, userEmail) {
   var update = await this.findByEmailAndUpdate(userEmail, { business_name: data.business_name });
   this.findByEmailAndUpdate(userEmail, { business_type: data.business_type });
@@ -79,13 +81,17 @@ module.exports.userDataRegistration = async function (data, userEmail) {
   }
 }
 
-//find specific user by email and update data
+//find specific user by email and update its data
+//input: user's email, data to update
+//output: user's updated schema object on success, else false
 module.exports.findByEmailAndUpdate = async function (email, updateData) {
   var ans = await UsersSchemaExport.findOneAndUpdate({ email: email }, updateData, { new: true })
   return ans;
 }
 
 //find user by email
+//input: user's email
+//output: user's schema object on success, else false
 module.exports.findByEmail = async function (email) {
   var userData = await UsersSchemaExport.findOne({ email: email })
   return userData;
@@ -101,6 +107,7 @@ module.exports.isEmailExists = async function (email) {
 }
 
 //find user by first name
+
 module.exports.findByFirstName = async function (name) {
   var userData = await UsersSchemaExport.findOne({ firstName: name })
   return userData;
@@ -110,14 +117,17 @@ module.exports.findByLastName = async function (name) {
   var userData = await UsersSchemaExport.findOne({ lastName: name })
   return userData;
 }
-//verify the password
+
+//password verification
+//input: password to verify, hash
+//output: true on success, else false
 module.exports.verifyPassword = async function (pass, hash) {  //(pass to verify, pass)
   var res = await bcrypt.compare(pass, hash)
   return res;
 }
 
-//change user password
-//input: object withusers email, old password, new password
+//change user's password
+//input: object with user's email, old password, new password
 //output: true on success, false otherwise
 module.exports.changePassword = async function (data) {
   //find the user
@@ -141,21 +151,17 @@ module.exports.changePassword = async function (data) {
 }
 
 
-//find user in the db by it's email and check if the password that has been is correct
+//find user in the db by it's email and check if the password is correct
 //input: email, password to check
 //output: true if the password is correct' else false
 module.exports.checkUserWithPassword = async function (userEmail, passTocheck) {
   //find the user
   try {
-    console.log("email "+userEmail);
     var userToCheck = await this.findOne({ email: userEmail });
-    console.log("passTocheck "+passTocheck);
-    console.log("userTocheck.password "+userToCheck.password );
     if (userToCheck) {
       //hash the new password and check the db
       var passCheck = await this.verifyPassword(passTocheck, userToCheck.password); //(pass to verify, pass)
       if (true === passCheck) {
-        console.log("equal");
         return true;
       } else {
         return false;
@@ -168,7 +174,9 @@ module.exports.checkUserWithPassword = async function (userEmail, passTocheck) {
   }
 }
 
-//count the amount of admins
+//count an amount of admins in the db
+//input: none
+//an amount on success, false otherwise
 module.exports.countRegularUsers = async function () {
   var userData = await UsersSchemaExport.countDocuments({ isAdmin: 'false' }, function (err, countDocuments) {
     return countDocuments
@@ -176,13 +184,16 @@ module.exports.countRegularUsers = async function () {
   return userData;
 }
 
-//count the amount of regular users
+//count an amount of regular users in the db
+//input: none
+//an amount on success, false otherwise
 module.exports.countAdminUsers = async function () {
   var userData = await UsersSchemaExport.countDocuments({ isAdmin: 'true' }, function (err, count) {
     return count;
   });
   return userData;
 }
+
 //find all users with specific type of permission :regular or admin
 //input: permision: true for admin, false for regular
 //output: object with all relevant users
@@ -193,12 +204,12 @@ module.exports.findAllByPermission = async function (data) {
 
 //delete specific user.
 //input: email of the user
-//output: removed object if succeded, null if not
+//output: true if succeded, else false
 module.exports.deleteUser = async function (data) {
   var removed = await UsersSchemaExport.findOneAndDelete({ email: data })
-  if(removed){
+  if (removed) {
     return true
-  }else{
+  } else {
     return false
   }
 }

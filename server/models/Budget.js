@@ -18,8 +18,8 @@ var BudgetSchema = mongoose.Schema({
 var BudgetSchemaExport = module.exports = mongoose.model('Budget', BudgetSchema);
 
 //create Budget scheme in the db
-//input:  relevant data
-//output: data on success, else false
+//input:  user's email, user's budget
+//output: created object on success, else false
 module.exports.inputData = async function (email, budget) {
   //find the amount of platforms
   var platformsAmount = await PlatformsSchema.calculateLength();
@@ -89,7 +89,7 @@ module.exports.updateBudgetPercent = async function (user_email, platform_name, 
   var update = { "$set": { "platforms_budget.$[outer].platform_budget_percent": p_budget } };
   //array's index
   var options = { arrayFilters: [{ "outer.platform_name": platform_name }] };
-  var updated = await this.findOneAndUpdate(query, update,options).sort({ created: -1 })
+  var updated = await this.findOneAndUpdate(query, update, options).sort({ created: -1 })
   if (updated) { //if the data was updated
     return true;
   } else {
@@ -111,7 +111,7 @@ module.exports.updateBudget = async function (user_email, platform_name, p_budge
   var update = { "$set": { "platforms_budget.$[outer].platform_budget": p_budget } };
   //array's index
   var options = { arrayFilters: [{ "outer.platform_name": platform_name }] };
-  var newDoc = {new: true};
+  var newDoc = { new: true };
   var updated = await this.findOneAndUpdate(query, update, options).sort({ created: -1 })
   if (updated) { //if the data was updated
     return updated;
