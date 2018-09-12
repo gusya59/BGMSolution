@@ -76,7 +76,7 @@ export class PreviewComponent implements OnInit {
     // console.log(this.widthBar)
   };
 
-
+  //function will initiate the budget values and bars
   setupBudgetPage(){
     console.log("function called")
     //server up get request for data
