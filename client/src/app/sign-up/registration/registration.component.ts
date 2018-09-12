@@ -84,7 +84,7 @@ export class RegistrationComponent implements OnInit {
       .pipe(first()).subscribe(resp => 
         { 
           if(resp.success){     
-            console.log(resp);
+            // console.log(resp);
             // this.auth.setLoggedIn(true);
             this.router.navigate([this.returnUrl]);
           }

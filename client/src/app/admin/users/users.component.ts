@@ -159,7 +159,7 @@ export class UsersComponent implements OnInit {
     this.adminservice.userInfo(this.email).subscribe(
       Data => {
         if(Data.success){
-          console.log(Data)
+          // console.log(Data)
           this.business_name = Data.userdata.business_name;
           this.business_type = Data.userdata.business_type;
           this.mobile  = Data.userdata.mobile;

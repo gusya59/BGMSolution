@@ -88,11 +88,11 @@ export class UserSettingsComponent implements OnInit {
       .subscribe(resp => 
         { 
           if(resp.success){     
-            console.log(resp);
+            // console.log(resp);
             this.router.navigate(['/signup/userSettings/questions']);
           }
           else {
-            console.log(resp);
+            // console.log(resp);
             for(let err of resp.errors)
             window.alert(err)
           }    
