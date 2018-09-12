@@ -59,6 +59,7 @@ module.exports.updatePlatform = async function (data) {
   if(0==data.platforms.platform_weight || "0"==data.platforms.platform_weight){
     data.platforms.platform_weight = 0.01;
   }
+  
   var updated = await this.update(
     {
       //find the relevant objects in the sub arrays and there positions in the arrays

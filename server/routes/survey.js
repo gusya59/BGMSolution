@@ -135,13 +135,20 @@ router.post('/saveAnswer', async function (req, res) {
 //input: answer_id, platform object with platform name ans platform weight
 //output: on success: success message , else false message
 router.post('/savePlatform', async function (req, res) {
-    var isCreated = await SurveySchema.updatePlatform(req.body);
-    if (isCreated) {
-        res.status(200).send({ success: true, message: "Answer's data has been updated" })
+    var platform_weight = req.body.platforms.platform_weight;
+    //check if the platfrom weight is correct. need to be 0<=platform weight<=1
+    if (0 <= platform_weight && platform_weight <= 1) {
+        var isCreated = await SurveySchema.updatePlatform(req.body);
+        if (isCreated) {
+            res.status(200).send({ success: true, message: "Answer's data has been updated" })
+        }
+        else {
+            res.status(200).send({ success: false, message: "Can't save the new question" })
+        }
+    } else {
+        res.status(200).send({ success: false, message: "Wrong weight parametr" })
     }
-    else {
-        res.status(200).send({ success: false, message: "Can't save the new question" })
-    }
+
 })
 
 //edit platforms data
