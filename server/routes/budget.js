@@ -12,33 +12,6 @@ var BudgetSchema = require('../models/Budget');
 //this function operate the calculation and update
 //input: user's email
 //output: on success: success message and users budget db data, else false message
-// router.post('/calculateBudget', async function (req, res) {
-//     var errors = []; //will contain all the errors
-//     try {
-//         //find the relevant schema in the user answers db. will contain all the questions and answers that user answered on and a relevant platform data
-//         var userAnswersData = await userAnswersSchema.findNewestUserAnswers(req.body.user_email);
-//         if (userAnswersData) {
-//             //budget distribution calculations and updates
-//             var result = await budgetCalculations(userAnswersData, errors);
-//            // var result = await BudgetSchema.fetchBudgetData(req.body.user_email)
-//             if (!errors.length) { //if everuthing was fine and there were no errors
-//                 res.status(200).send({ success: true, message: result })
-//             }
-//         } else {
-//             res.status(200).send({ success: false, errors: errors });
-//         }
-//     } catch (err) {
-//         errors.push("there is no such user");
-//         res.status(200).send({ success: false, message: errors })
-//     }
-// })
-
-
-//calculate and update user's budget distribution for the platforms that user selected.
-//this function operate the calculation and update
-//input: user's email
-//output: on success: success message and users budget db data, else false message
-
  async function calculateBudget (user_email) {
     var errors = []; //will contain all the errors
         //find the relevant schema in the user answers db. will contain all the questions and answers that user answered on and a relevant platform data
@@ -54,7 +27,6 @@ var BudgetSchema = require('../models/Budget');
             return errors
         }
 }
-
 
 
 //--------------------------------------------Calculation and update of the budget distribution functions----------------------------------//
@@ -98,7 +70,7 @@ async function budgetCalculations(userAnswersData, errors) {
 
 //calculate the total weigth of the platform per each platform and update the parametr in the budget db
 //input: user's email, amount of questions-answers to scan, amount of platforms
-//output: true
+//output: true on success, else false
 async function calculateAndUpdatePercentage(userAnswersData, questionsArraySize, platformsArraySize) {
     var pbpResult = 1; //platform budget percentage
     //scan all the platforms for each question, check if the platform was selected for calculations and later check if the data was updated in the db (on first run it always ok)

@@ -12,7 +12,7 @@ var budgetCalculations = require('../routes/budget')
 
 //fetch user's data. the function get's user token, fetching an email and a user permission and searching for the user data in the db.
 //input: token
-//outpit: object with user's data on success, else false message
+//output: object with user's data on success, else false message
 router.post('/profile', verFuncs.getTokenFromHeaders, async function (req, res) {
   //verify loged user
   var verifyToken = verFuncs.verifyToken(req.token, jwt);
@@ -38,8 +38,8 @@ router.post('/profile', verFuncs.getTokenFromHeaders, async function (req, res) 
 });
 
 //change passwords
-//input: email,old password, new password
-//output:
+//input: email ,old password, new password
+//output: relevant message
 router.post('/changePassword', async function (req, res) {
   var changed = await registrationSchema.changePassword(req.body);
   if (true === changed) {
@@ -109,8 +109,8 @@ router.post('/remove', verFuncs.getTokenFromHeaders, async function (req, res) {
 }
 });
 
-//user data validation
-//input: array that will contain validation errors, data to validate
+//user data validation functions
+//input: array that will contain validation errors, data to validate: first name, last name, phone, mobile, address, budget
 //output: promise 
 async function userDataValidation(errors, data) {
   await validFuncs.validateName(errors, data.firstName);

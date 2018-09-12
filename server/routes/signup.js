@@ -9,7 +9,9 @@ var verFuncs = require('../utils/verificationFunctions.js');
 var validFuncs = require('../utils/validationFunctions');
 
 
-//registration
+//user registration (including creation of a tokemn and hashing a password)
+//input: registration data: user's email, first name, last name, password, password confirmation, terms confirmation)
+//output: on success relevant message and token, else false message
 router.post('/registration', async function (req, res) {
   var user = req.body;
   var errors = []; //will contain all the errors
@@ -34,7 +36,9 @@ router.post('/registration', async function (req, res) {
 });
 
 
-//user settings
+//user settings data insertion
+//user settings data (business name, type, phone, mobile, country, city, address, budget)
+//output: relevant message
 router.post('/usersettings', verFuncs.getTokenFromHeaders, async function (req, res) {
   // token verification
   var tokenVerification = verFuncs.verifyToken(req.token, jwt);
@@ -69,7 +73,9 @@ router.post('/usersettings', verFuncs.getTokenFromHeaders, async function (req, 
   }
 });
 
-//log in function
+//log in 
+//input: email and password
+//output: on success - relevant message, on false error message 
 router.post('/login', async function (req, res) {
   var body = req.body;
   var errors = [];
@@ -101,8 +107,10 @@ router.post('/login', async function (req, res) {
   }
 })
 
-//functions
-//registaration validation
+
+//registaration validation functions
+//input: user's  first name, last name, email, password
+//output: promise
 async function RegistrationValidation(errors, user) {
   await validFuncs.validateName(errors, user.firstName);
   validFuncs.validateName(errors, user.lastName);

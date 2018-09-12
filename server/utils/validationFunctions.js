@@ -45,7 +45,7 @@ valid.validatePassword = function (errors, data) {
     errors.push("last password is empty"); //check if the string is empty or invalid
     return false;
   } else {
-    var reg = RegExp('^(?=.*?[A-Z])(?=.*?[a-z]).{7,}([0-9])$')  //at least 8 characters, one upper and one lower case, numbers - ,{7,}->more than 8. it's counting from 0
+    var reg = RegExp('^(?=.*?[A-Z])(?=.*?[a-z]).{7,}([0-9])$')  //at least 8 characters, one upper and one lower case, numbers 
     if (!reg.test(data)) {
       errors.push("the password is not right")
       return false;
@@ -85,10 +85,10 @@ valid.validatePhone = function (errors, data) {
 //input: an array that will contain errors if found, data to check 
 //output: true on success, else false
 valid.validateBudget = function (errors, data) {
-    var reg = RegExp('^([0-9]*)$')  //numbers and . for decimal
-    if (!reg.test(data)) {
-      errors.push("the budget is not right")
-      return false;
-    }
+  var reg = RegExp('^([0-9]*)$')  //numbers and . for decimal
+  if (!reg.test(data)) {
+    errors.push("the budget is not right")
+    return false;
+  }
 }
 
