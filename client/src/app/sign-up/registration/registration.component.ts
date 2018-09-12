@@ -58,9 +58,9 @@ export class RegistrationComponent implements OnInit {
 
     //other validators
     this.registrationFormGroup = this.fb.group({
-      inputfirstname: ['',[ Validators.required,Validators.pattern('([a-zA-Z\s\'\-])$')]],//only alphabet 
-      inputlastname: ['',[ Validators.required,Validators.pattern('([a-zA-Z\s\'\-])$')]],//only alphabet 
-      inputEmail: ['',[ Validators.required,Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],//check if email correct
+      inputfirstname: ['',[ Validators.required,Validators.pattern('^[a-zA-Z_\' ]*$')]],//only alphabet 
+      inputlastname: ['',[ Validators.required,Validators.pattern('^[a-zA-Z_\' ]*$')]],//only alphabet 
+      inputEmail: ['',[ Validators.required,Validators.pattern('([a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6})$')]],//check if email correct
       checkBox: ['', Validators.required],
       passwordFormGroup: this.passwordFormGroup
     });
