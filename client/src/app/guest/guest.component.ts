@@ -21,21 +21,24 @@ export class GuestComponent implements OnInit {
   //input: saved token
   //output: reroute
   ngOnInit() {
-    //get token
-    const token = localStorage.getItem('token');
-    // console.log(token)
-    // decode token
-    const tokenPayLoad = decode(token);
-    if(tokenPayLoad.isAdmin){
-      this.routeUrl = "/admin";
-    }
-    else this.routeUrl = "/user";
-    // get return url from route parameters or default to '/'
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || this.routeUrl;
-    //if logged in redirect to user page
     if(localStorage.getItem('token')){
-      this.router.navigate([this.returnUrl]);
+        //get token
+      const token = localStorage.getItem('token');
+      // console.log(token)
+      // decode token
+      const tokenPayLoad = decode(token);
+      if(tokenPayLoad.isAdmin){
+        this.routeUrl = "/admin";
+      }
+      else this.routeUrl = "/user";
+      // get return url from route parameters or default to '/'
+      this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || this.routeUrl;
+      //if logged in redirect to user page
+      if(localStorage.getItem('token')){
+        this.router.navigate([this.returnUrl]);
+      }
     }
+    
   }
 
 }
