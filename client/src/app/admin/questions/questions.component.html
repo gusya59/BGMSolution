@@ -179,14 +179,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>                    
-                                <td align="right" *ngFor="let data of platforms">
-                                    <div class="md-form">
-                                        <input type="number" min="0" max="1" step="0.01" #platform_weight name="platform_weight" [(ngModel)]="data.platform_weight"  class="form-control" mdbInputDirective>
-                                        <td align="right">
-                                            <button type="button" mdbBtn color="info"  class="relative waves-light btn-lg" (click)="updateAnswerData(platform_weight,data.platform_id,question_id,answer_id,data.platform_name)"mdbWavesEffect><i class="fas fa-save fa-2x"></i></button>
-                                        </td>
-                                    </div>
+                            <tr>                   
+                                <td align="right" *ngFor="let data of platforms" >
+                                    <form #platformsForm="ngForm"> 
+                                        <div class="md-form">
+                                            <input type="number" min="0" max="1" step="0.01" #platform_weight name="platform_weight" [(ngModel)]="data.platform_weight"  class="form-control" required pattern="^((0(\.[0-9]*)?)|(1(\.0)?))$" mdbInputDirective>
+                                            <td align="right">
+                                            <button type="button" mdbBtn color="info"  class="relative waves-light btn-lg" [disabled]="!(platformsForm.touched && platformsForm.valid)" (click)="updateAnswerData(platform_weight,data.platform_id,question_id,answer_id,data.platform_name)"mdbWavesEffect><i class="fas fa-save fa-2x"></i></button>
+                                            </td>  
+                                        </div>
+                                    </form>
                                 </td>   
                             </tr> 
                         </tbody>
