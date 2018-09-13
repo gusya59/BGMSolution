@@ -46,12 +46,15 @@ export class FinishComponent implements OnInit {
     }
 
 
+    
     // Auto redirect off
   //   setTimeout((router) => {
   //     this.router.navigate(['/user']);
   // }, this.timer);  //30s
 
   }
+  
+  get formData() { return <FormArray>this.platformForm.get('platforms'); }
 
   // get array function and build it.
   getArray(){
@@ -131,6 +134,7 @@ export class FinishComponent implements OnInit {
   //output: post selected data to server
   submit() {
     //send json to server if success redirect if error hold and log
+    // console.log(this.platformForm.value)
     this.settings.updatePlatformsSelection(this.platformForm.value).subscribe(
       resp => {
       if(resp.success){
