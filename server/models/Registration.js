@@ -8,7 +8,7 @@ var UsersSchema = mongoose.Schema({
 
   firstName: { type: String, required: true, trim: true },
   lastName: { type: String, required: true, trim: true },
-  email: { type: String, required: true, trim: true, index: true, sparse: true },
+  email: { type: String, required: true, trim: true, index: true, sparse: true, unique: true },
   password: { type: String, required: true, trim: true },
   passwordConfirmation: { type: String, required: true, trim: true },
   termsConfirmCheck: { type: Boolean, required: true },
