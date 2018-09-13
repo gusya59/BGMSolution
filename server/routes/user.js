@@ -53,7 +53,6 @@ router.post('/changePassword', async function (req, res) {
 //input: user data to update
 //output: respond to the client side. true on success, otherwith false and an array of errors
 router.post('/changeUserData', verFuncs.getTokenFromHeaders, async function (req, res) {
-  console.log(req.body);
   var errors = []; //will contain all the errors
   var verifyToken = verFuncs.verifyToken(req.token, jwt);
   if (verifyToken) {
@@ -67,7 +66,6 @@ router.post('/changeUserData', verFuncs.getTokenFromHeaders, async function (req
     else {
     
       var changed = await registrationSchema.userDataRegistration(newData, email);
-      console.log(changed);
       if (true === changed) {
         res.status(200).send({ success: true, message: "data updated" });
       } else {
