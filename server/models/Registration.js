@@ -77,7 +77,7 @@ module.exports.userDataRegistration = async function (data, userEmail) {
     return false;
   }
   else {
-    return update;
+    return true;
   }
 }
 

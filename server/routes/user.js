@@ -65,7 +65,9 @@ router.post('/changeUserData', verFuncs.getTokenFromHeaders, async function (req
       res.status(200).send({ success: false, errors: errors })
     }
     else {
+    
       var changed = await registrationSchema.userDataRegistration(newData, email);
+      console.log(changed);
       if (true === changed) {
         res.status(200).send({ success: true, message: "data updated" });
       } else {
