@@ -28,7 +28,7 @@ export class FinishComponent implements OnInit {
     platformForm: FormGroup;
 
 
-  constructor(private router: Router, private fb: FormBuilder, private settings: SettingsService ) {}
+  constructor(public router: Router, public fb: FormBuilder, public settings: SettingsService ) {}
 
   ngOnInit() {
 

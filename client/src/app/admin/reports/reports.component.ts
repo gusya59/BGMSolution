@@ -37,7 +37,7 @@ surveyData: {
 //allow to see adminsModal for adminsModal modal use
 @ViewChild('adminsModal') adminsModal: ModalDirective;
 
-  constructor(private adminservice: AdminServiceService) {
+  constructor(public adminservice: AdminServiceService) {
 
    }
 

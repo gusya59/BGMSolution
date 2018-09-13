@@ -32,7 +32,7 @@ export class UserProfileComponent implements OnInit {
   ];
 
   //business type
-   private businessType: string[];
+   public businessType: string[];
 
   //country and city
    countries: country[];
@@ -80,7 +80,7 @@ export class UserProfileComponent implements OnInit {
   oldPassword: string;
   confirmPassword: string;
 
-  constructor(private router: Router ,  private auth: AuthService ,private _countryService: countryService, private userdata: UserDataService, private userPreview: UserPreviewService, private fb: FormBuilder) {
+  constructor(public router: Router ,  public auth: AuthService ,public _countryService: countryService, public userdata: UserDataService, public userPreview: UserPreviewService, public fb: FormBuilder) {
     
     
     //define list of countries to use from service

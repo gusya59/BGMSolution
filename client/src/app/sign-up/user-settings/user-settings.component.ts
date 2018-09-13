@@ -32,20 +32,20 @@ export class UserSettingsComponent implements OnInit {
   budgetTotal: string;
 
       //Property for the user
-      private company: company;
+      public company: company;
       // Property for pre_mobile
-      private pre_mobile: string[];
+      public pre_mobile: string[];
       // property for pre_phone
-      private pre_phone: string[];
+      public pre_phone: string[];
       //business type
-      private businessType: string[];
+      public businessType: string[];
 
       
       selectedCountry: country = new country(0,'Israel');
       countries: country[];
       cities: city[];
 
-  constructor(private _countryService: countryService, private location: Location, private settings: SettingsService, private router: Router) {
+  constructor(public _countryService: countryService, public location: Location, public settings: SettingsService, public router: Router) {
     //define list of countries to use from service
     this.countries = this._countryService.getCountries();
     }
