@@ -81,7 +81,7 @@ export class FinishComponent implements OnInit {
   // get data from our Form as platforms
   //output: build form array 
   getData() {
-    return this.platformForm.get('platforms') as FormArray;
+    return <FormArray>this.platformForm.get('platforms') ;
   }
 
   // loop and add platforms to array
