@@ -45,9 +45,9 @@ export class PreviewComponent implements OnInit {
     },0);
 
     //Budgets on page load
-    setTimeout(() => {
-      console.log(this.platforms)
-      },10000);
+    // setTimeout(() => {
+    //   // console.log(this.platforms)
+    //   },10000);
   }
 
   //set bar settings
@@ -78,11 +78,11 @@ export class PreviewComponent implements OnInit {
 
   //function will initiate the budget values and bars
   setupBudgetPage(){
-    console.log("function called")
+    // console.log("function called")
     //server up get request for data
     this.userPreview.getPreview().subscribe(data =>{
 
-      console.log(data)
+      // console.log(data)
       this.platforms = data.data.platforms_budget;
       this.budgetTotal = data.data.user_budget;
       // console.log(this.platforms,this.budgetTotal)

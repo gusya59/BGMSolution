@@ -13,13 +13,14 @@
                         <!-- create form array name platforms -->
                             <div formArrayName="platforms">
                                 <!-- loop over generated form on platforms array with controls -->
-                                <div *ngFor="let item of platformForm.get('platforms').controls; let i = index;" [formGroupName]="i">
+                                <div *ngFor="let platform of platformsArray; let i = index;" [formGroupName]="i">
                                     <!-- testing only, print out json data -->
                                     <!-- <div style="margin: 10px;">{{item.value | json }}</div> -->
                                     <div class="row justify-content-center">
                                         <div class="col-lg-5">
                                             <!-- checkbox lable -->
-                                            <label><span class="badge secondary-color">{{platformForm.controls.platforms.controls[i].controls.platform_name.value}}</span></label>
+                                            <!-- {{platform.platform_name | json}} -->
+                                            <label><span class="badge secondary-color">{{platform.platform_name}}</span></label>
                                         </div>
                                         <div class="col-lg-5 text-right">
                                             <!-- checkbox control -->

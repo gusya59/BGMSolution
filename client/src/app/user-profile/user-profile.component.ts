@@ -332,6 +332,7 @@ public chartOptions:any = {
           lastName: this.dataformgroup.value.lastName,
           TotalBudget: this.dataformgroup.value.TotalBudget
         }
+        console.log(obj)
         this.userdata.changeUserData(obj).subscribe(
           data =>{
             if(data.success){                //if information was fatched successfuly show modal
