@@ -5,3 +5,5 @@ npm-debug.log*
 
 # IDE - VSCode
 .vscode
+
+.env
