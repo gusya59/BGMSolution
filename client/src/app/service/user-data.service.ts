@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import {ConnectionService} from './connection.service'
 
 // Data that will be pulled or bushed to known user
 interface respData {
@@ -29,14 +30,17 @@ interface respData {
 
 export class UserDataService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, public url: ConnectionService) { }
+
+//import string from service
+urlstring =  this.url.httpurl;
 
   //request server for user data
   //input:
   //output: request to server carring an payload with object
   getUserData(){
     //will get user info if correct
-    const uri = 'http://localhost:1234/user/profile';
+    const uri = this.urlstring + '/user/profile';
     //payload obj
     const obj = {
       token: localStorage.getItem('token')
@@ -51,7 +55,7 @@ export class UserDataService {
   //output: request to server carring an payload with object 
   changePassword(email, password, oldPassword){
     //will get user info if correct
-    const uri = 'http://localhost:1234/user/changePassword';
+    const uri = this.urlstring + '/user/changePassword';
 
     //object with old password, new password and confirmation
     const obj = {
@@ -70,7 +74,7 @@ export class UserDataService {
   //output: request to server carring an payload with object
   changeUserData(user){
     //posting new user data 
-    const uri = 'http://localhost:1234/user/changeUserData';
+    const uri = this.urlstring + '/user/changeUserData';
     //obj contains response from user and token
     const obj = {
       token: localStorage.getItem('token'),

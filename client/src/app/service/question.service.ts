@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import {ConnectionService} from './connection.service'
 
 //Created using mockServer
 // { "status": "ok",
@@ -54,7 +55,10 @@ interface respData {
 
 export class QuestionService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, public url: ConnectionService) { }
+
+  //import string from service
+  urlstring =  this.url.httpurl;
 
   //get question info from backend HTTP
   //input: question id and body text, answer id and body text
@@ -63,7 +67,7 @@ export class QuestionService {
   addUserAnswer(question_id,question_text,answer_id,answer_text){
     
     //will get user info if correct
-    const uri = 'http://localhost:1234/user/addUserAnswer';
+    const uri = this.urlstring + '/user/addUserAnswer';
     const obj ={
       token: localStorage.getItem('token'),
       question_id: question_id,
@@ -83,7 +87,7 @@ export class QuestionService {
   //output request to server carring an payload with object
   fetchQuestionQuestion(question_id){
     //will get user info if correct
-    const uri = 'http://localhost:1234/survey/fetchQuestion';
+    const uri = this.urlstring + '/survey/fetchQuestion';
     const obj ={
       token: localStorage.getItem('token'),
       question_id: question_id  
