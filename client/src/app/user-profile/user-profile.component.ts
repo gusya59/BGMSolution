@@ -204,7 +204,7 @@ public chartOptions:any = {
     document.getElementById('BGscerti').style.display = 'none';
 
     //business type settings
-    this.businessType = ['store','Webstore','manufacture','retailer','mobile','electronics'];
+    this.businessType = ['Store','Webstore','Manufacture','Retailer','Mobile','Electronics', 'Advertisement', 'Service', 'Nonprofit Organiazation'];
     
     // Request data from server
     this.userdata.getUserData().subscribe(

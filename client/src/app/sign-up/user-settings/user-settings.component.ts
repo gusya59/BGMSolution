@@ -60,7 +60,7 @@ export class UserSettingsComponent implements OnInit {
     //pre-phone settings
     this.pre_phone =  ['02', '03', '04','05','06','07','08','077'];
     //business type settings
-    this.businessType = ['store','Webstore','manufacture','retailer','mobile','electronics'];
+    this.businessType = ['Store','Webstore','Manufacture','Retailer','Mobile','Electronics', 'Advertisement', 'Service', 'Nonprofit Organiazation'];
     
   
 
