@@ -14,8 +14,6 @@ var userRouter = require ('./routes/user')
 var surveyRouter = require('./routes/survey')
 var budgetRouter = require('./routes/budget')
 
-var testRouter = require('./routes/test')
-
 var app = express();
 
 app.set('views', __dirname + '/views'); // general configuration
@@ -60,8 +58,6 @@ app.use('/admin',adminRouter);
 app.use('/user',userRouter); 
 app.use('/survey',surveyRouter);
 app.use('/budget',budgetRouter);
-
-app.use('/test',testRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
