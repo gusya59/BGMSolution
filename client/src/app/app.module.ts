@@ -66,6 +66,8 @@ import {AdminQuestionsComponent} from './admin/questions/questions.component';
 import { InfoComponent } from './admin/info/info.component'
 //paging import
 import {NgxPaginationModule} from 'ngx-pagination';
+//connection
+
 
 //function for token getter
 export function tokenGetter() {
@@ -126,11 +128,13 @@ export function tokenGetter() {
       { enableTracing: false } // <-- debugging purposes only
     ),
     //function to deal with web token.
+    //localhost:4200 as default
+    //localhost:4200/login/ as default
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        whitelistedDomains: ['localhost:4200'],
-        blacklistedRoutes: ['localhost:4200/login/']
+        whitelistedDomains: ['https://bgmsol.azurewebsites.net/'],
+        blacklistedRoutes: ['https://bgmsol.azurewebsites.net/login/']
       }
     })
   ],

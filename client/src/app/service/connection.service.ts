@@ -8,5 +8,6 @@ export class ConnectionService {
   constructor() { }
 
   //deffine connection string
-  httpurl = 'http://localhost:1234';
+  //localhost:1234
+  httpurl = 'https://bgmbackservice.azurewebsites.net';
 }
