@@ -85,7 +85,7 @@ surveyData: {
   //input: toExport <= name of our html element to print
   //output: pdf file with name of BGM + toExport + .pdf
   exportToPdf(toExport){
-       console.log(toExport)
+      //  console.log(toExport)
     // print to PDF file
       var data = document.getElementById(toExport);  
       html2canvas(data).then(canvas => {  

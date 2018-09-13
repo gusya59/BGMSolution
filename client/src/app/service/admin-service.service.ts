@@ -160,7 +160,7 @@ export class AdminServiceService {
           email: email,
           isAdminPer: isAdminPer
       };
-      console.log(obj)
+      // console.log(obj)
       return this.http.post<respData>(uri,obj);
 
     }

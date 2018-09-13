@@ -172,7 +172,7 @@ public chartOptions:any = {
     this.userPreview.getPreview().subscribe(Data =>{
 
       this.platforms = Data.data.platforms_budget;
-      console.log(this.platforms)
+      // console.log(this.platforms)
 
         //insert values into chart data
         const budgets =[];

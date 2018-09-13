@@ -287,7 +287,7 @@ export class AdminQuestionsComponent implements OnInit {
   //output: on success: save question on fail: error msg
 
   saveNewQuestion(){
-    console.log(this.newQuestionForm.value)
+    // console.log(this.newQuestionForm.value)
     return this.adminservice.saveNewQuestion(this.newQuestionForm.value).subscribe(
       resp => {
         if(resp.success){

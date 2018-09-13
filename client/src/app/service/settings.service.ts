@@ -50,7 +50,7 @@ export class SettingsService {
       token: localStorage.getItem('token') // will be used if necesery
     };
 
-    console.log(obj)
+    // console.log(obj)
     //post registration to server
     return this.http.post<respData>(uri, obj)
 
@@ -79,7 +79,7 @@ export class SettingsService {
       user_email: jwt_decode(localStorage.getItem("token")).userID,
       platforms: platformForm.platforms
     }
-     console.log(obj)
+    //  console.log(obj)
      return this.http.post<respData>(uri, obj)
   }
 

@@ -50,7 +50,7 @@ export class UserPreviewService {
     const obj = {
       user_email: jwt_decode(localStorage.getItem('token')).userID
     }
-    console.log(obj)
+    // console.log(obj)
     //get data from server
     return this.http.post<respData>(uri,obj)
     
