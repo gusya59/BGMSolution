@@ -2,7 +2,7 @@
 // https://github.com/angular/protractor/blob/master/lib/config.ts
 
 const { SpecReporter } = require('jasmine-spec-reporter');
-
+//baseUrl used to be localhost:4200
 exports.config = {
   allScriptsTimeout: 11000,
   specs: [
@@ -12,7 +12,7 @@ exports.config = {
     'browserName': 'chrome'
   },
   directConnect: true,
-  baseUrl: 'http://localhost:4200/',
+  baseUrl: 'https://bgmsol.azurewebsites.net/',
   framework: 'jasmine',
   jasmineNodeOpts: {
     showColors: true,

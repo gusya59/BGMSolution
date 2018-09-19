@@ -24,7 +24,7 @@ var mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 require('dotenv').config()
 
-mongoose.connect('mongodb+srv://BGM:' + process.env.DB_Configurations + '@bgmsoultion-znmku.mongodb.net/test1', { useNewUrlParser: true })
+mongoose.connect('mongodb+srv://BGM:' + 'BgM123456' + '@bgmsoultion-znmku.mongodb.net/test1', { useNewUrlParser: true })
   .then(() => console.log('connection succesful'))
   .catch((err) => console.error(err));
 
@@ -34,12 +34,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ 'extended': 'true' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-//connection between a backend and a frontend servers - C-O-R-S
-app.use(cors({ origin: 'http://localhost:4200' }));
+//connection between a backend and a frontend servers - C-O-R-S 
+//origin localhost:4200
+app.use(cors({ origin: 'https://bgmbackservice.azurewebsites.net' }));
 // Adding headers
 app.use(function (req, res, next) {
   // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+  //header localhost:4200
+  res.setHeader('Access-Control-Allow-Origin', 'https://bgmbackservice.azurewebsites.net');
   // Request methods you wish to allow
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   // Request headers you wish to allow

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as jwt_decode from "jwt-decode";
+import {ConnectionService} from './connection.service'
 
 interface respData {
   budgetFacebook: number;
@@ -36,7 +37,10 @@ interface respData {
 })
 export class UserPreviewService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, public url: ConnectionService) { }
+
+  //import string from service
+  urlstring =  this.url.httpurl;
 
   //get preview info from backend HTTP
   //input:
@@ -44,7 +48,7 @@ export class UserPreviewService {
   getPreview(){
 
     //will get user info if correct
-    const uri = 'http://localhost:1234/budget/fetchBudgetData';
+    const uri = this.urlstring + '/budget/fetchBudgetData';
 
     //object with email payload
     const obj = {

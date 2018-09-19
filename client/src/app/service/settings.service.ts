@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 //jwt decoder handler 
 import jwt_decode from 'jwt-decode';
+import {ConnectionService} from './connection.service'
 
 //interface for returning router resp
 interface respData {
@@ -30,13 +31,16 @@ interface respData {
 export class SettingsService {
   
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, public url: ConnectionService) {}
+
+  //import string from service
+  urlstring =  this.url.httpurl;
 
   //userSettings application to server, will send user compnay settings
   //input: company settings
   //output: request to server carring an payload with object
   userSettings(company){
-    const uri = 'http://localhost:1234/signup/usersettings';
+    const uri = this.urlstring + '/signup/usersettings';
     const obj = {
     
       business_name: company.b_name,
@@ -61,7 +65,7 @@ export class SettingsService {
   //output: request to server carring an payload with object
   fetchPlatformList(){
     //uri for Server
-    const uri = 'http://localhost:1234/user/fetchPlatformList';
+    const uri = this.urlstring + '/user/fetchPlatformList';
     const obj = {
       user_email: jwt_decode(localStorage.getItem("token")).userID
     }
@@ -73,7 +77,7 @@ export class SettingsService {
   //output: request to server carring an payload with object
   updatePlatformsSelection(platformForm){
      //uri for Server
-     const uri = 'http://localhost:1234/user/updatePlatformsSelection';
+     const uri = this.urlstring + '/user/updatePlatformsSelection';
     // return data to server
     const obj = {
       user_email: jwt_decode(localStorage.getItem("token")).userID,

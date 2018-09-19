@@ -4,6 +4,7 @@ import { Injectable, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from '../../../node_modules/rxjs/operators';
 import {JwtHelperService } from '@auth0/angular-jwt'
+import {ConnectionService} from './connection.service'
 
 //interface for returning router resp
 interface respData {
@@ -14,6 +15,8 @@ interface respData {
   token: string,
   Headers: any
 }
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +29,11 @@ export class AuthService {
   //component construction function
   //input: HttpClient imported as http and JwtHelperService imported as jwtHelper
   //output:  
-  constructor(private http: HttpClient, public jwtHelper: JwtHelperService) { }
+  constructor(private http: HttpClient, public jwtHelper: JwtHelperService, public url: ConnectionService) { }
+
+  //import string from service
+  urlstring =  this.url.httpurl;
+
 
   //function to check seasion
   //input:
@@ -54,7 +61,7 @@ export class AuthService {
   //output: success or fail
   UserLogin(InputEmail: string, InputPassword: string){
     //will get user info if correct
-    const uri = 'http://localhost:1234/signup/login';
+    const uri = this.urlstring + '/signup/login';
     // our object holding the login data
     const obj = {
       email: InputEmail,
@@ -87,7 +94,7 @@ export class AuthService {
   //input: users firstname, last name, email, password and confirmation and check box for aggrement
   //output: success or fail
   addUser(inputfirstname, inputlastname, inputEmail, inputPassword, confirmPassword,checkBox) {
-    const uri = 'http://localhost:1234/signup/registration';
+    const uri = this.urlstring + '/signup/registration';
     const obj = {
     
     firstName: inputfirstname,
@@ -119,7 +126,7 @@ export class AuthService {
   //input: user password
   //output: success or fail
   deleteUser(password){
-    const uri = 'http://localhost:1234/user/remove';
+    const uri = this.urlstring + '/user/remove';
     const obj ={
       token: localStorage.getItem("token"),
       password: password
