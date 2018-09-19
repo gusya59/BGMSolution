@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 var cors = require('cors');
 
 //routes configuration
-var indexRouter = require('./routes/index');
+var serverRouter = require('./routes/server');
 var signupRouter = require('./routes/signup');
 var adminRouter = require ('./routes/admin');
 var userRouter = require ('./routes/user')
@@ -53,7 +53,7 @@ app.use(function (req, res, next) {
 
 
 //routing
-app.use('/', indexRouter);
+app.use('/', serverRouter);
 app.use('/signup', signupRouter); 
 app.use('/admin',adminRouter); 
 app.use('/user',userRouter); 
