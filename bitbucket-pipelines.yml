@@ -6,4 +6,4 @@ pipelines:
         script: # The script below will build, test and deploy the application to Microsoft Azure App Service.
           - npm install
           - npm test
-          - git push https://$alinagusev:$BgM123456@bgmsolution.scm.azurewebsites.net/bgmsolution.git master
+          - git push https://$AZURE_LOGIN:$AZURE_PASSWORD@bgmsolution.scm.azurewebsites.net/bgmsolution.git master
