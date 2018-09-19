@@ -36,12 +36,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //connection between a backend and a frontend servers - C-O-R-S 
 //origin localhost:4200
-app.use(cors({ origin: 'https://bgmbackservice.azurewebsites.net' }));
+app.use(cors({ origin: 'https://bgmsolution.azurewebsites.net' }));
 // Adding headers
 app.use(function (req, res, next) {
   // Website you wish to allow to connect
   //header localhost:4200
-  res.setHeader('Access-Control-Allow-Origin', 'https://bgmbackservice.azurewebsites.net');
+  res.setHeader('Access-Control-Allow-Origin', 'https://bgmsolution.azurewebsites.net');
   // Request methods you wish to allow
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   // Request headers you wish to allow
