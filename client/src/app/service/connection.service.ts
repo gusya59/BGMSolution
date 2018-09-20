@@ -9,5 +9,5 @@ export class ConnectionService {
 
   //deffine connection string
   //localhost:1234
-  httpurl = 'https://bgmbackservice.azurewebsites.net';
+  httpurl = 'http://54.245.139.255:3000';
 }

@@ -12,7 +12,7 @@ exports.config = {
     'browserName': 'chrome'
   },
   directConnect: true,
-  baseUrl: 'https://bgmsol.azurewebsites.net/',
+  baseUrl: 'http://54.245.139.255:3000/',
   framework: 'jasmine',
   jasmineNodeOpts: {
     showColors: true,
