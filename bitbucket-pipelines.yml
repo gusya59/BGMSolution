@@ -1,0 +1,11 @@
+image: node:8.9.4
+
+pipelines:
+  default:
+    - step:
+        script: # The script below will build, test and deploy the application to Microsoft Azure App Service.
+          - pwd
+           - ls -al
+          - npm install
+          - npm test
+          - git push https://$AZURE_LOGIN:$AZURE_PASSWORD@bgmsolution.scm.azurewebsites.net/bgmsolution.git master
