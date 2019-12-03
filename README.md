@@ -6,8 +6,8 @@ BGM Solution allows company to plan and calculate it's budget for a digital medi
 Each individual calculation is based on the company specifications and preferences. The result presents the budget for a different types of media platforms that are easily adjustable.
 Strong sides: Fast speed of calculations, automated adjustable questionnaire, modularity, calculation values can be easily changed by admin and the app can be used for a different types of calculations.
 
-### Technologies: NodeJS, Express, MongoDB, Robomongo, Visual Studio Code, Angular, MDB, Microsoft Azure.
-### Languages: TypeScript, JavaScript, HTML, CSS.
+#### Technologies: NodeJS, Express, MongoDB, Robomongo, Visual Studio Code, Angular, MDB, Microsoft Azure.
+#### Languages: TypeScript, JavaScript, HTML, CSS.
 
 ## Installation
 
