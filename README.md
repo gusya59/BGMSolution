@@ -1,5 +1,7 @@
 # BGMSolution
 
+#### ![](bgm.png)
+
 This is a Graduation Project (Nominated for excellence). 
 
 BGM Solution allows company to plan and calculate it's budget for a digital media advertisement.
