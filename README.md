@@ -1,6 +1,6 @@
 # BGMSolution
 
-#### ![](bgm.png)
+#### ![](bgm.PNG)
 
 This is a Graduation Project (Nominated for excellence). 
 
